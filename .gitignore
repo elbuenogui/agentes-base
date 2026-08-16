@@ -1,0 +1,6 @@
+# OS
+.DS_Store
+Thumbs.db
+
+# Rascunho descartável do modo PM/EXEC (ver .claude/estado/README.md)
+.claude/tmp/
