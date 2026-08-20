@@ -9,10 +9,9 @@ Ferramenta de documentação contínua de um projeto de trabalho ao longo de vá
 chat deixa um rastro curado de decisões, artefatos, direcionamentos e pendências — para não
 depender da memória do chat nem da rolagem para reconstruir "por que decidimos assim".
 
-<Se este projeto alimenta um documento final separado (relatório, projeto de escrita, um
-DOCUMENTO_MESTRE.md, etc.), diga aqui qual é e ajuste a seção "Aplicar" abaixo. Se não houver
-destino separado, remova a seção "Aplicar" inteira — a coleta fica só como registro interno,
-sem o passo de "aplicar" a lugar nenhum.>
+Este projeto (Assistente de Pesquisa por Áudio) não alimenta nenhum documento final separado:
+a coleta é registro interno do próprio projeto, e o resumo consolidado é o produto final —
+não existe o passo de "aplicar".
 
 ## Regras de operação
 
@@ -31,12 +30,9 @@ sem o passo de "aplicar" a lugar nenhum.>
 
 3. **Consolidar (seção 2)**: no comando **"consolidar"** (ou ao encerrar o chat), gere o resumo
    agrupado nas 4 categorias — Decisões, Artefatos, Direcionamentos, Pendências. O resumo é a
-   forma útil; o registro bruto da seção 1 só é consultado quando preciso expandir algo.
-
-4. **Aplicar — só se houver um destino final separado.** O comando **"aplicar"** leva o resumo
-   consolidado até esse destino, sempre como proposta a validar, nunca automaticamente. Neste
-   projeto, se não houver destino separado, não use este comando — o resumo consolidado já é o
-   produto final da coleta.
+   forma útil; o registro bruto da seção 1 só é consultado quando preciso expandir algo. Como
+   não há destino final separado, o resumo consolidado já é o produto final da coleta (não
+   existe o passo "aplicar" neste projeto).
 
 ## Travas (antialucinação / human-in-the-loop)
 

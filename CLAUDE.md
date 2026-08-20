@@ -1,9 +1,9 @@
-# CLAUDE.md — <nome do projeto>
+# CLAUDE.md — Assistente de Pesquisa por Áudio
 
-> <1-2 linhas descrevendo o projeto e, se houver, a relação com um projeto de escrita/relatório
-> separado. Ex.: "Este repositório contém o código de <produto>. Além do trabalho de código,
-> todo chat de trabalho pode manter uma coleta contínua para documentar decisões — ver seção
-> abaixo — se o projeto tiver essa necessidade."
+> Este repositório contém o código do Assistente de Pesquisa por Áudio: MVP de um motor mínimo
+> de transcrição (áudio → API OpenAI → transcrição), na pasta `transcritor/`. Não há projeto de
+> escrita/relatório separado — a coleta contínua (seção abaixo) é registro interno do próprio
+> projeto.
 
 ## Modo PM/EXEC (opt-in — ligue quando quiser)
 
@@ -27,13 +27,20 @@ histórico em `.claude/estado/README.md`):
 Se `.claude/estado/` não existir, crie-a antes de escrever. Nenhum desses três arquivos deve
 existir como stub vazio — nascem no primeiro uso real.
 
+## Idioma
+
+Todo o trabalho deste repositório é em **português do Brasil** — a conversa nos dois papéis (PM e
+Executor), o `PROGRESSO.md`, o `PLANO.md`, a `PROXIMA_TAREFA.md`, a `coleta/`, o `README.md` do
+`transcritor/` e os comentários de código. Nomes de identificadores no código seguem o padrão que
+já existe no arquivo. Regra escrita em 2026-08-20, depois de o Executor responder em inglês num
+chat de execução.
+
 ## Duas camadas, não confundir
 
 - **Progressão** (execução) → `.claude/estado/`. Operacional; canal PM ↔ Executor.
 - **Documentação do projeto** (decisões, trade-offs, direcionamentos) → `coleta/`. Curada e
-  seletiva. <Se houver um projeto de escrita/relatório separado, diga o nome dele aqui e ajuste a
-  seção abaixo. Se não houver, remova a menção a "aplicar" e trate a coleta como registro interno
-  do próprio projeto.> **Dono da coleta é o PM** — o executor só reporta no PROGRESSO.
+  seletiva. Não há destino final separado: a coleta é registro interno do próprio projeto, sem
+  passo de "aplicar". **Dono da coleta é o PM** — o executor só reporta no PROGRESSO.
 
 ## Coleta contínua (opcional — mantenha se o projeto precisa reconstruir "por que decidimos assim")
 
@@ -44,8 +51,8 @@ Em todo chat de trabalho, use a skill `coleta-consolidacao`:
   reescreva linhas anteriores;
 - no comando **"consolidar"** (ou ao encerrar), gere o resumo nas quatro categorias para revisão.
 
-<Se existir um projeto de escrita/relatório separado:> **Não aplique ao mestre aqui** — leve o
-**resumo** para <nome do projeto de escrita> e lá use **"aplicar"**. Travas: não inventar; o
-resumo é proposta; nada entra no relatório sem sua aprovação.
+Como não há destino final separado, o comando **"aplicar"** não é usado neste projeto — o
+resumo consolidado já é o produto final da coleta. Travas: não inventar; o resumo é proposta
+para sua revisão.
 
 *(A skill `coleta-consolidacao` fica em `.claude/skills/coleta-consolidacao/SKILL.md`.)*

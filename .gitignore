@@ -4,3 +4,16 @@ Thumbs.db
 
 # Rascunho descartável do modo PM/EXEC (ver .claude/estado/README.md)
 .claude/tmp/
+
+# Segredos locais — nunca commitar a chave da API (usar transcritor/.env.example como modelo)
+transcritor/.env
+
+# Registro local de consumo (tokens/custo por requisição) — dado local, não versionado
+transcritor/consumo.jsonl
+
+# Registro local das transcrições (texto), ligado a consumo.jsonl pelo id — dado local, não versionado
+transcritor/transcricoes.jsonl
+
+# Ambiente virtual e caches do Python — locais, não versionar
+transcritor/.venv/
+transcritor/backend/__pycache__/

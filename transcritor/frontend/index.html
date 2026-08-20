@@ -1,0 +1,2040 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Assistente de Pesquisa por Áudio</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    [hidden] { display: none !important; }
+
+    body {
+      font-family: "Segoe UI", system-ui, sans-serif;
+      background: #f4f6f8;
+      color: #1f2933;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      padding: 3rem 1rem;
+    }
+
+    main { width: 100%; max-width: 40rem; }
+
+    h1 { font-size: 1.5rem; margin-bottom: 0.25rem; }
+
+    .subtitulo { color: #52606d; margin-bottom: 1.5rem; }
+
+    form {
+      background: #fff;
+      border: 1px solid #d9e2ec;
+      border-radius: 0.5rem;
+      padding: 1.5rem;
+      display: grid;
+      gap: 1rem;
+    }
+
+    label { font-weight: 600; display: block; margin-bottom: 0.35rem; }
+
+    input[type="file"], select {
+      width: 100%;
+      padding: 0.5rem;
+      border: 1px solid #bcccdc;
+      border-radius: 0.375rem;
+      background: #fff;
+      font: inherit;
+    }
+
+    button {
+      justify-self: start;
+      padding: 0.6rem 1.5rem;
+      border: none;
+      border-radius: 0.375rem;
+      background: #2563eb;
+      color: #fff;
+      font: inherit;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    button:hover:not(:disabled) { background: #1d4ed8; }
+    button:disabled { background: #9aa5b1; cursor: wait; }
+
+    #resultado {
+      margin-top: 1.5rem;
+      padding: 1.25rem;
+      border-radius: 0.5rem;
+      white-space: pre-wrap;
+      display: none;
+    }
+
+    #resultado.sucesso { display: block; background: #ecfdf5; border: 1px solid #6ee7b7; }
+    #resultado.erro { display: block; background: #fef2f2; border: 1px solid #fca5a5; color: #991b1b; }
+    #resultado.carregando { display: block; background: #eff6ff; border: 1px solid #93c5fd; color: #1e40af; }
+
+    .separador {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin: 1.5rem 0;
+      color: #9aa5b1;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+    }
+    .separador::before, .separador::after { content: ""; flex: 1; height: 1px; background: #d9e2ec; }
+
+    section#gravacao-rapida {
+      background: #fff;
+      border: 1px solid #d9e2ec;
+      border-radius: 0.5rem;
+      padding: 1.5rem;
+      display: grid;
+      gap: 1rem;
+      justify-items: center;
+      text-align: center;
+    }
+
+    .linha-gravacao-rapida { display: flex; align-items: center; justify-content: center; gap: 0.85rem; }
+
+    #botaoGravacaoRapida {
+      justify-self: center;
+      width: 4.5rem;
+      height: 4.5rem;
+      padding: 0;
+      border-radius: 50%;
+      background: #7c3aed;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    #botaoGravacaoRapida:hover:not(:disabled) { background: #6d28d9; }
+    #botaoGravacaoRapida svg { width: 1.75rem; height: 1.75rem; fill: #fff; }
+
+    #botaoGravacaoRapida.gravando { background: #dc2626; animation: pulsar 1.2s infinite; }
+    #botaoGravacaoRapida.gravando:hover:not(:disabled) { background: #b91c1c; }
+
+    #cronometroGravacaoRapida {
+      font-variant-numeric: tabular-nums;
+      font-weight: 600;
+      font-size: 1.1rem;
+      color: #334155;
+    }
+
+    @keyframes pulsar {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(220, 38, 38, 0.4); }
+      50% { box-shadow: 0 0 0 0.6rem rgba(220, 38, 38, 0); }
+    }
+
+    /* Estilo compartilhado pelos ícones "avançados" (configurações, e futuramente consumo). */
+    .icone-avancado {
+      justify-self: initial;
+      width: 2.75rem;
+      height: 2.75rem;
+      padding: 0;
+      border-radius: 50%;
+      background: #e4e7eb;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .icone-avancado:hover:not(:disabled) { background: #cbd2d9; }
+    .icone-avancado svg { width: 1.25rem; height: 1.25rem; fill: #334155; }
+
+    .fundo-modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.45);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+      z-index: 10;
+    }
+
+    .painel-config {
+      background: #fff;
+      border-radius: 0.5rem;
+      padding: 1.5rem;
+      width: min(90vw, 24rem);
+      display: grid;
+      gap: 0.75rem;
+      text-align: left;
+    }
+
+    .painel-config-cabecalho { display: flex; align-items: center; justify-content: space-between; }
+    .painel-config-cabecalho h2 { font-size: 1.1rem; }
+
+    #botaoFecharConfiguracoes, #botaoFecharConsumo {
+      justify-self: initial;
+      width: 2rem;
+      height: 2rem;
+      padding: 0;
+      border-radius: 50%;
+      background: #e4e7eb;
+      color: #334155;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+      line-height: 1;
+    }
+    #botaoFecharConfiguracoes:hover:not(:disabled), #botaoFecharConsumo:hover:not(:disabled) { background: #cbd2d9; }
+
+    #statusGravacaoRapida { min-height: 1.2rem; font-size: 0.9rem; }
+    #statusGravacaoRapida.erro { color: #b91c1c; }
+    #statusGravacaoRapida.sucesso { color: #047857; }
+    #statusGravacaoRapida.carregando { color: #1e40af; }
+
+    #consumoErro { color: #b91c1c; }
+    #consumoCarregando { color: #1e40af; }
+
+    #consumoSessaoTexto p { font-size: 0.9rem; padding: 0.1rem 0; }
+    #consumoSessaoTexto p strong { font-weight: 600; }
+
+    #botaoResetarSessaoConsumo {
+      background: #e4e7eb;
+      color: #334155;
+      padding: 0.4rem 0.9rem;
+      font-size: 0.85rem;
+    }
+    #botaoResetarSessaoConsumo:hover:not(:disabled) { background: #cbd2d9; }
+
+    .linha-consumo-dia {
+      font-size: 0.85rem;
+      padding: 0.2rem 0;
+      display: flex;
+      justify-content: space-between;
+      gap: 0.5rem;
+      border-bottom: 1px solid #f0f4f8;
+    }
+    #consumoDiarioLista { max-height: 8rem; overflow-y: auto; }
+
+    .grafico-consumo {
+      display: flex;
+      align-items: flex-end;
+      gap: 0.4rem;
+      height: 6rem;
+      padding-top: 0.5rem;
+      border-top: 1px solid #e4e7eb;
+      overflow-x: auto;
+    }
+    .coluna-grafico-consumo {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-end;
+      height: 100%;
+      min-width: 1.75rem;
+    }
+    .barra-grafico-consumo {
+      width: 0.9rem;
+      min-height: 4px;
+      border-radius: 999px 999px 0 0;
+      background: #2563eb;
+    }
+    .rotulo-grafico-consumo {
+      font-size: 0.65rem;
+      color: #52606d;
+      margin-top: 0.25rem;
+      white-space: nowrap;
+    }
+
+    #fundoConsumo .painel-config { width: min(95vw, 42rem); }
+
+    .linha-tempo-cabecalho {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.5rem;
+      margin-top: 0.5rem;
+    }
+    #botaoZoomLinhaTempo {
+      justify-self: initial;
+      padding: 0.3rem 0.8rem;
+      border: 1px solid #2563eb;
+      border-radius: 999px;
+      background: #eff6ff;
+      color: #1d4ed8;
+      font-weight: 600;
+      font-size: 0.8rem;
+    }
+    #botaoZoomLinhaTempo:hover:not(:disabled) { background: #dbeafe; }
+
+    #blocoLinhaTempoConsumo { min-width: 0; }
+
+    .linha-tempo-consumo {
+      min-width: 0;
+      overflow-x: auto;
+      overflow-y: hidden;
+      border-top: 1px solid #e4e7eb;
+      padding-top: 0.25rem;
+      margin-top: 0.35rem;
+    }
+    .linha-tempo-consumo svg { display: block; }
+    .ponto-linha-tempo { cursor: pointer; }
+    .ponto-linha-tempo:focus { outline: 2px solid #2563eb; outline-offset: 2px; }
+
+    #popupRequisicaoTexto {
+      white-space: pre-wrap;
+      font-size: 0.9rem;
+      max-height: 50vh;
+      overflow-y: auto;
+    }
+
+    .campo-transcript { width: 100%; text-align: left; }
+
+    #transcriptRapido {
+      width: 100%;
+      min-height: 8rem;
+      padding: 0.6rem;
+      border: 1px solid #bcccdc;
+      border-radius: 0.375rem;
+      font: inherit;
+      resize: vertical;
+    }
+
+    .dica { color: #52606d; font-size: 0.85rem; }
+
+    .alternador-modelo { display: flex; align-items: center; gap: 0.6rem; flex-wrap: wrap; margin-bottom: 1.5rem; }
+    .rotulo-modelo { font-weight: 600; }
+    .dica-modelo { color: #9aa5b1; font-size: 0.8rem; }
+
+    #botaoModelo, #botaoStreaming, #botaoTempoReal, #botaoControleTurno {
+      justify-self: initial;
+      padding: 0.35rem 0.9rem;
+      border: 1px solid #2563eb;
+      border-radius: 999px;
+      background: #eff6ff;
+      color: #1d4ed8;
+      font-weight: 600;
+    }
+    #botaoModelo:hover:not(:disabled), #botaoStreaming:hover:not(:disabled), #botaoTempoReal:hover:not(:disabled), #botaoControleTurno:hover:not(:disabled) { background: #dbeafe; }
+
+    #barrasNivel {
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      gap: 0.25rem;
+      height: 2.5rem;
+      width: 100%;
+    }
+    #barrasNivel .barra {
+      width: 0.3rem;
+      height: 15%;
+      min-height: 0.2rem;
+      border-radius: 999px;
+      background: #7c3aed;
+    }
+
+    .toast {
+      position: fixed;
+      left: 50%;
+      bottom: 2rem;
+      transform: translateX(-50%);
+      background: #1f2933;
+      color: #fff;
+      padding: 0.6rem 1.1rem;
+      border-radius: 0.375rem;
+      font-size: 0.9rem;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+      z-index: 20;
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>Assistente de Pesquisa por Áudio</h1>
+    <p class="subtitulo">MVP de transcrição — envie ou grave um áudio e receba o texto.</p>
+
+    <!-- gpt-4o-transcribe-diarize foi desativado deste alternador a pedido do usuário em
+         2026-08-18 (qualidade insatisfatória nos testes). O backend continua aceitando esse
+         modelo sem alteração; para reativar na interface, ver o array MODELOS_ATIVOS no script
+         abaixo. -->
+    <div class="alternador-modelo">
+      <span class="rotulo-modelo">Modelo de transcrição:</span>
+      <button type="button" id="botaoModelo"></button>
+      <span class="dica-modelo">(clique para alternar)</span>
+    </div>
+
+    <div class="alternador-modelo">
+      <span class="rotulo-modelo">Streaming do transcript:</span>
+      <button type="button" id="botaoStreaming"></button>
+      <span class="dica-modelo">(clique para alternar — texto aparece aos poucos em vez de esperar a resposta completa)</span>
+    </div>
+
+    <div class="alternador-modelo">
+      <span class="rotulo-modelo">Transcrição em tempo real:</span>
+      <button type="button" id="botaoTempoReal"></button>
+      <span class="dica-modelo">(só afeta a gravação rápida abaixo — texto aparece enquanto você ainda fala, via WebSocket direto com a OpenAI)</span>
+    </div>
+
+    <div class="alternador-modelo" id="linhaControleTurno" hidden>
+      <span class="rotulo-modelo">Controle de turno:</span>
+      <button type="button" id="botaoControleTurno"></button>
+      <span class="dica-modelo">(só aparece com a transcrição em tempo real ligada — decide quem fecha cada turno: um timer de 6s no navegador, ou a detecção de fala da própria API)</span>
+    </div>
+
+    <form id="formulario">
+      <div>
+        <label for="audio">Arquivo de áudio (.m4a, .wav, .mp3)</label>
+        <input type="file" id="audio" name="audio" accept=".m4a,.wav,.mp3,audio/*" required>
+      </div>
+
+      <button type="submit" id="botao">Transcrever</button>
+    </form>
+
+    <p class="separador">ou</p>
+
+    <section id="gravacao-rapida">
+      <div class="linha-gravacao-rapida">
+        <button type="button" id="botaoGravacaoRapida" aria-label="Iniciar gravação">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M12 15a3 3 0 0 0 3-3V6a3 3 0 0 0-6 0v6a3 3 0 0 0 3 3Z"/>
+            <path d="M19 11a1 1 0 0 0-2 0 5 5 0 0 1-10 0 1 1 0 0 0-2 0 7 7 0 0 0 6 6.93V20H9a1 1 0 0 0 0 2h6a1 1 0 0 0 0-2h-2v-2.07A7 7 0 0 0 19 11Z"/>
+          </svg>
+        </button>
+        <button type="button" id="botaoConfiguracoes" class="icone-avancado" aria-label="Abrir configurações" aria-haspopup="dialog" aria-expanded="false">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M12 15.5a3.5 3.5 0 1 1 0-7 3.5 3.5 0 0 1 0 7Zm8.94-3.5a7.4 7.4 0 0 0-.14-1.4l1.87-1.46a.6.6 0 0 0 .14-.76l-1.77-3.06a.6.6 0 0 0-.72-.26l-2.2.88a7.5 7.5 0 0 0-1.21-.7l-.34-2.34a.6.6 0 0 0-.6-.5h-3.54a.6.6 0 0 0-.6.5l-.33 2.34c-.44.18-.85.41-1.22.7l-2.2-.88a.6.6 0 0 0-.72.26L5.19 8.38a.6.6 0 0 0 .14.76l1.87 1.46c-.09.46-.14.92-.14 1.4s.05.94.14 1.4l-1.87 1.46a.6.6 0 0 0-.14.76l1.77 3.06c.15.25.46.35.72.26l2.2-.88c.37.29.78.52 1.22.7l.33 2.34c.05.29.3.5.6.5h3.54c.3 0 .55-.21.6-.5l.34-2.34c.43-.18.84-.41 1.21-.7l2.2.88c.26.09.57 0 .72-.26l1.77-3.06a.6.6 0 0 0-.14-.76l-1.87-1.46c.1-.46.14-.92.14-1.4Z"/>
+          </svg>
+        </button>
+        <button type="button" id="botaoConsumo" class="icone-avancado" aria-label="Abrir consumo" aria-haspopup="dialog" aria-expanded="false">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M4 20a1 1 0 0 1-1-1v-6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v6a1 1 0 0 1-1 1H4Zm7 0a1 1 0 0 1-1-1V9a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1h-2Zm7 0a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v15a1 1 0 0 1-1 1h-2Z"/>
+          </svg>
+        </button>
+      </div>
+      <p id="cronometroGravacaoRapida" aria-live="off" hidden>00:00</p>
+      <div id="barrasNivel" aria-hidden="true" hidden></div>
+      <p class="dica">Clique para gravar; clique de novo para parar e transcrever automaticamente. Usa o modelo do alternador acima.</p>
+      <p id="statusGravacaoRapida" aria-live="polite"></p>
+
+      <div class="campo-transcript">
+        <label for="transcriptRapido">Transcrição por voz (editável, soma cada gravação)</label>
+        <textarea id="transcriptRapido" placeholder="O texto de cada gravação aparece aqui — edite à vontade."></textarea>
+      </div>
+    </section>
+
+    <div id="resultado" aria-live="polite"></div>
+
+    <div id="toastSemFala" class="toast" role="status" hidden>Não foi identificado nenhuma fala</div>
+
+    <div id="fundoConfiguracoes" class="fundo-modal" hidden>
+      <div class="painel-config" role="dialog" aria-modal="true" aria-label="Configurações">
+        <div class="painel-config-cabecalho">
+          <h2>Configurações</h2>
+          <button type="button" id="botaoFecharConfiguracoes" aria-label="Fechar configurações">✕</button>
+        </div>
+        <div>
+          <label for="dispositivoAudio">Dispositivo de entrada (microfone)</label>
+          <select id="dispositivoAudio"></select>
+        </div>
+        <p class="dica">A escolha vale a partir da próxima gravação. Sem escolha, usa o microfone padrão do navegador.</p>
+      </div>
+    </div>
+
+    <div id="fundoConsumo" class="fundo-modal" hidden>
+      <div class="painel-config" role="dialog" aria-modal="true" aria-label="Consumo">
+        <div class="painel-config-cabecalho">
+          <h2>Consumo</h2>
+          <button type="button" id="botaoFecharConsumo" aria-label="Fechar consumo">✕</button>
+        </div>
+
+        <p id="consumoCarregando" class="dica">Carregando…</p>
+        <p id="consumoErro" hidden></p>
+
+        <div id="consumoSessaoTexto" hidden></div>
+        <button type="button" id="botaoResetarSessaoConsumo" hidden>Resetar sessão</button>
+
+        <div>
+          <p class="dica" style="margin-bottom: 0.35rem;">Histórico diário</p>
+          <div id="consumoDiarioLista" hidden></div>
+        </div>
+
+        <div id="consumoGrafico" class="grafico-consumo" hidden></div>
+
+        <div id="blocoLinhaTempoConsumo" hidden>
+          <div class="linha-tempo-cabecalho">
+            <p class="dica" style="margin-bottom: 0;">Linha do tempo das requisições</p>
+            <button type="button" id="botaoZoomLinhaTempo"></button>
+          </div>
+          <div id="linhaTempoConsumo" class="linha-tempo-consumo"></div>
+        </div>
+
+        <p class="dica">O reset zera só esta tela; o histórico salvo no backend não é apagado.</p>
+      </div>
+    </div>
+
+    <div id="fundoPopupRequisicao" class="fundo-modal" style="z-index: 11;" hidden>
+      <div class="painel-config" role="dialog" aria-modal="true" aria-label="Transcrição da requisição">
+        <div class="painel-config-cabecalho">
+          <h2>Transcrição</h2>
+          <button type="button" id="botaoFecharPopupRequisicao" aria-label="Fechar transcrição">✕</button>
+        </div>
+        <p id="popupRequisicaoMeta" class="dica"></p>
+        <div id="popupRequisicaoTexto"></div>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    const URL_BACKEND = "http://127.0.0.1:8000/transcrever";
+
+    const formulario = document.getElementById("formulario");
+    const botao = document.getElementById("botao");
+    const resultado = document.getElementById("resultado");
+
+    function mostrar(classe, texto) {
+      resultado.className = classe;
+      resultado.textContent = texto;
+    }
+
+    // --- Alternador de modelo (compartilhado entre upload e gravação) ---
+
+    // gpt-4o-transcribe-diarize desativado a pedido do usuário em 2026-08-18 (qualidade
+    // insatisfatória). Para reativar, descomente a linha abaixo.
+    const MODELOS_ATIVOS = [
+      "gpt-4o-transcribe",
+      "gpt-4o-mini-transcribe",
+      // "gpt-4o-transcribe-diarize",
+    ];
+
+    const botaoModelo = document.getElementById("botaoModelo");
+    let indiceModeloAtivo = 0;
+
+    function modeloAtivo() {
+      return MODELOS_ATIVOS[indiceModeloAtivo];
+    }
+
+    function atualizarBotaoModelo() {
+      botaoModelo.textContent = modeloAtivo();
+    }
+
+    botaoModelo.addEventListener("click", () => {
+      indiceModeloAtivo = (indiceModeloAtivo + 1) % MODELOS_ATIVOS.length;
+      atualizarBotaoModelo();
+    });
+
+    atualizarBotaoModelo();
+
+    // --- Alternador de streaming (compartilhado entre upload e gravação) ---
+
+    const botaoStreaming = document.getElementById("botaoStreaming");
+    let streamingLigado = false;
+
+    function streamingAtivo() {
+      return streamingLigado;
+    }
+
+    function atualizarBotaoStreaming() {
+      botaoStreaming.textContent = streamingLigado ? "Ligado" : "Desligado";
+    }
+
+    botaoStreaming.addEventListener("click", () => {
+      streamingLigado = !streamingLigado;
+      atualizarBotaoStreaming();
+    });
+
+    atualizarBotaoStreaming();
+
+    // --- Alternador de tempo real (só afeta a gravação rápida, abaixo) ---
+
+    const botaoTempoReal = document.getElementById("botaoTempoReal");
+    let tempoRealLigado = false;
+
+    function tempoRealAtivo() {
+      return tempoRealLigado;
+    }
+
+    function atualizarBotaoTempoReal() {
+      botaoTempoReal.textContent = tempoRealLigado ? "Ligado" : "Desligado";
+    }
+
+    botaoTempoReal.addEventListener("click", () => {
+      // Não deixa trocar de modo no meio de uma gravação em andamento (normal ou tempo real).
+      const gravandoNormal = mediaRecorderRapido && mediaRecorderRapido.state === "recording";
+      if (gravandoTempoRealEmAndamento || gravandoNormal) return;
+      tempoRealLigado = !tempoRealLigado;
+      atualizarBotaoTempoReal();
+      // O controle de turno só faz sentido com o tempo real ligado — some da tela junto com ele,
+      // em vez de ficar visível e sem efeito nenhum.
+      linhaControleTurno.hidden = !tempoRealLigado;
+    });
+
+    atualizarBotaoTempoReal();
+
+    // --- Controle de turno (só vale com o tempo real ligado, ver alternador acima) ---
+    // "tempo" (padrão): timer no navegador comita a cada 6s, igual à Etapa 1. "api": a própria
+    // Realtime API decide o fim de cada turno (server_vad) — ver justificativa e fonte da doc
+    // oficial no README, seção "Transcrição em tempo real".
+
+    const botaoControleTurno = document.getElementById("botaoControleTurno");
+    const linhaControleTurno = document.getElementById("linhaControleTurno");
+    let modoTurnoApi = false;
+
+    function atualizarBotaoControleTurno() {
+      botaoControleTurno.textContent = modoTurnoApi ? "turnos pela API" : "turnos por tempo (6s)";
+    }
+
+    botaoControleTurno.addEventListener("click", () => {
+      const gravandoNormal = mediaRecorderRapido && mediaRecorderRapido.state === "recording";
+      if (gravandoTempoRealEmAndamento || gravandoNormal) return;
+      modoTurnoApi = !modoTurnoApi;
+      atualizarBotaoControleTurno();
+    });
+
+    atualizarBotaoControleTurno();
+
+    // Lê a resposta em streaming do backend (NDJSON: uma linha JSON por evento — "delta" com um
+    // pedaço de texto, "final" com o texto completo, ou "erro" com uma mensagem). Chama os
+    // callbacks conforme os eventos chegam; devolve { ok, teveErro } ao final — "ok" indica se um
+    // evento "final" foi recebido antes da conexão fechar, e "teveErro" indica se um evento "erro"
+    // já foi mostrado pelo callback aoErro (para o chamador não duplicar a mensagem).
+    async function consumirStreamTranscricao(resposta, { aoDelta, aoFinal, aoErro }) {
+      const leitor = resposta.body.getReader();
+      const decodificador = new TextDecoder();
+      let buffer = "";
+      let textoAcumulado = "";
+      let recebeuFinal = false;
+      let teveErro = false;
+
+      while (true) {
+        const { value, done } = await leitor.read();
+        if (done) break;
+        buffer += decodificador.decode(value, { stream: true });
+
+        let indiceQuebra;
+        while ((indiceQuebra = buffer.indexOf("\n")) !== -1) {
+          const linha = buffer.slice(0, indiceQuebra).trim();
+          buffer = buffer.slice(indiceQuebra + 1);
+          if (!linha) continue;
+
+          let evento;
+          try {
+            evento = JSON.parse(linha);
+          } catch (_) {
+            continue; // linha incompleta/corrompida: ignora, não derruba o resto do stream
+          }
+
+          if (evento.tipo === "delta" && typeof evento.texto === "string") {
+            textoAcumulado += evento.texto;
+            aoDelta(textoAcumulado);
+          } else if (evento.tipo === "final" && typeof evento.texto === "string") {
+            textoAcumulado = evento.texto;
+            recebeuFinal = true;
+            aoFinal(textoAcumulado);
+          } else if (evento.tipo === "erro") {
+            teveErro = true;
+            aoErro(evento.detail || "Erro desconhecido durante o streaming.");
+          }
+        }
+      }
+
+      return { ok: recebeuFinal, teveErro };
+    }
+
+    formulario.addEventListener("submit", async (evento) => {
+      evento.preventDefault();
+
+      const dados = new FormData(formulario);
+      dados.append("modelo", modeloAtivo());
+      dados.append("stream", streamingAtivo() ? "true" : "false");
+      botao.disabled = true;
+      botao.textContent = "Transcrevendo…";
+
+      if (streamingAtivo()) {
+        mostrar("carregando", "Conectando ao streaming…");
+        try {
+          const resposta = await fetch(URL_BACKEND, { method: "POST", body: dados });
+
+          if (!resposta.ok || !resposta.body) {
+            let corpo = null;
+            try { corpo = await resposta.json(); } catch (_) { /* resposta sem JSON */ }
+            const detalhe = corpo && corpo.detail
+              ? (typeof corpo.detail === "string" ? corpo.detail : JSON.stringify(corpo.detail))
+              : `Resposta inesperada do servidor (HTTP ${resposta.status}).`;
+            mostrar("erro", "Erro ao transcrever: " + detalhe);
+          } else {
+            const resultadoStream = await consumirStreamTranscricao(resposta, {
+              aoDelta: (texto) => mostrar("carregando", texto),
+              aoFinal: (texto) => mostrar("sucesso", texto),
+              aoErro: (detalhe) => mostrar("erro", "Erro ao transcrever: " + detalhe),
+            });
+            if (!resultadoStream.ok && !resultadoStream.teveErro) {
+              mostrar("erro", "A conexão de streaming foi interrompida antes da transcrição terminar. Tente novamente.");
+            }
+          }
+        } catch (_) {
+          mostrar("erro", "Não foi possível conectar ao backend. Confirme que o servidor está rodando na porta 8000 (veja o README).");
+        } finally {
+          botao.disabled = false;
+          botao.textContent = "Transcrever";
+        }
+        return;
+      }
+
+      mostrar("carregando", "Enviando o áudio e aguardando a transcrição… isso pode levar alguns segundos.");
+
+      try {
+        const resposta = await fetch(URL_BACKEND, { method: "POST", body: dados });
+
+        let corpo = null;
+        try { corpo = await resposta.json(); } catch (_) { /* resposta sem JSON */ }
+
+        if (resposta.ok && corpo && typeof corpo.transcricao === "string") {
+          mostrar("sucesso", corpo.transcricao);
+        } else {
+          const detalhe = corpo && corpo.detail
+            ? (typeof corpo.detail === "string" ? corpo.detail : JSON.stringify(corpo.detail))
+            : `Resposta inesperada do servidor (HTTP ${resposta.status}).`;
+          mostrar("erro", "Erro ao transcrever: " + detalhe);
+        }
+      } catch (_) {
+        mostrar("erro", "Não foi possível conectar ao backend. Confirme que o servidor está rodando na porta 8000 (veja o README).");
+      } finally {
+        botao.disabled = false;
+        botao.textContent = "Transcrever";
+      }
+    });
+
+    // --- Configurações (seletor de dispositivo de entrada) ---
+
+    const botaoConfiguracoes = document.getElementById("botaoConfiguracoes");
+    const fundoConfiguracoes = document.getElementById("fundoConfiguracoes");
+    const botaoFecharConfiguracoes = document.getElementById("botaoFecharConfiguracoes");
+    const seletorDispositivo = document.getElementById("dispositivoAudio");
+
+    let dispositivoEscolhido = "";
+
+    function adicionarOpcaoUnica(texto) {
+      seletorDispositivo.innerHTML = "";
+      const opcao = document.createElement("option");
+      opcao.value = "";
+      opcao.textContent = texto;
+      seletorDispositivo.appendChild(opcao);
+      seletorDispositivo.disabled = true;
+    }
+
+    async function popularDispositivos() {
+      if (!navigator.mediaDevices || !navigator.mediaDevices.enumerateDevices) {
+        adicionarOpcaoUnica("Navegador sem suporte a seleção de microfone");
+        return;
+      }
+
+      try {
+        const dispositivos = await navigator.mediaDevices.enumerateDevices();
+        const entradas = dispositivos.filter((d) => d.kind === "audioinput");
+
+        if (entradas.length === 0) {
+          adicionarOpcaoUnica("Nenhum microfone detectado");
+          return;
+        }
+
+        seletorDispositivo.innerHTML = "";
+        seletorDispositivo.disabled = false;
+
+        const opcaoPadrao = document.createElement("option");
+        opcaoPadrao.value = "";
+        opcaoPadrao.textContent = "Padrão do navegador";
+        seletorDispositivo.appendChild(opcaoPadrao);
+
+        entradas.forEach((dispositivo, indice) => {
+          const opcao = document.createElement("option");
+          opcao.value = dispositivo.deviceId;
+          opcao.textContent = dispositivo.label || `Microfone ${indice + 1}`;
+          seletorDispositivo.appendChild(opcao);
+        });
+
+        seletorDispositivo.value = dispositivoEscolhido || "";
+      } catch (erro) {
+        adicionarOpcaoUnica("Não foi possível listar os microfones: " + erro.message);
+      }
+    }
+
+    seletorDispositivo.addEventListener("change", () => {
+      dispositivoEscolhido = seletorDispositivo.value;
+    });
+
+    function abrirConfiguracoes() {
+      fundoConfiguracoes.hidden = false;
+      botaoConfiguracoes.setAttribute("aria-expanded", "true");
+      popularDispositivos();
+    }
+
+    function fecharConfiguracoes() {
+      fundoConfiguracoes.hidden = true;
+      botaoConfiguracoes.setAttribute("aria-expanded", "false");
+    }
+
+    botaoConfiguracoes.addEventListener("click", abrirConfiguracoes);
+    botaoFecharConfiguracoes.addEventListener("click", fecharConfiguracoes);
+    fundoConfiguracoes.addEventListener("click", (evento) => {
+      if (evento.target === fundoConfiguracoes) fecharConfiguracoes();
+    });
+    document.addEventListener("keydown", (evento) => {
+      if (evento.key === "Escape" && !fundoConfiguracoes.hidden) fecharConfiguracoes();
+    });
+
+    // --- Consumo (sessão atual, histórico diário e gráfico de custo) ---
+
+    const URL_CONSUMO = "http://127.0.0.1:8000/consumo";
+
+    const botaoConsumo = document.getElementById("botaoConsumo");
+    const fundoConsumo = document.getElementById("fundoConsumo");
+    const botaoFecharConsumo = document.getElementById("botaoFecharConsumo");
+    const botaoResetarSessaoConsumo = document.getElementById("botaoResetarSessaoConsumo");
+    const consumoCarregando = document.getElementById("consumoCarregando");
+    const consumoErro = document.getElementById("consumoErro");
+    const consumoSessaoTexto = document.getElementById("consumoSessaoTexto");
+    const consumoDiarioLista = document.getElementById("consumoDiarioLista");
+    const consumoGrafico = document.getElementById("consumoGrafico");
+    const blocoLinhaTempoConsumo = document.getElementById("blocoLinhaTempoConsumo");
+    const linhaTempoConsumo = document.getElementById("linhaTempoConsumo");
+    const botaoZoomLinhaTempo = document.getElementById("botaoZoomLinhaTempo");
+    const fundoPopupRequisicao = document.getElementById("fundoPopupRequisicao");
+    const botaoFecharPopupRequisicao = document.getElementById("botaoFecharPopupRequisicao");
+    const popupRequisicaoMeta = document.getElementById("popupRequisicaoMeta");
+    const popupRequisicaoTexto = document.getElementById("popupRequisicaoTexto");
+
+    // Baseline usada pelo reset: guarda os totais de sessão do backend no momento do clique em
+    // "Resetar sessão". A partir daí, a sessão exibida é (backend atual - baseline), então volta
+    // a zero na hora e cresce de novo com as próximas transcrições — sem tocar no backend nem no
+    // consumo.jsonl. Reinicia junto com a página (variável em memória, não persistida).
+    let sessaoBaseReset = { requisicoes: 0, tokens: 0, custo_usd: 0 };
+    let ultimoConsumoCarregado = null;
+
+    function formatarUsd(valor) {
+      return "US$ " + Number(valor || 0).toFixed(4);
+    }
+
+    function formatarUsdCompacto(valor) {
+      return "$" + Number(valor || 0).toFixed(4);
+    }
+
+    // --- Linha do tempo das requisições (SVG à mão, sem biblioteca de gráfico) ---
+    // Ver skill dataviz: forma = ponto por ocorrência num eixo de tempo (não há "categoria" a
+    // codificar por cor — uma única série, então sem legenda, conforme marks-and-anatomy.md);
+    // marca = círculo r=4 (≥8px) com anel de 2px na cor da superfície (stroke branco), separando
+    // pontos que se sobrepõem; preço rotulado diretamente acima de cada ponto só na escala
+    // "minuto" (onde os pontos estão espaçados o bastante para o rótulo caber e a comparação de
+    // custo entre pontos próximos é o objetivo do painel) — na escala "hora" os rótulos colidiam
+    // com muitas requisições próximas e viravam ruído; o preço continua acessível por ali via
+    // <title> no hover e no popup de clique; alvo de clique/hover de raio 14 (~28px), maior que
+    // o desenho do ponto.
+    const SVG_NS = "http://www.w3.org/2000/svg";
+    const PX_POR_SEGUNDO_ESCALA_MINUTO = 10;
+    let escalaLinhaTempo = "hora"; // "hora" (cabe o dia todo) | "minuto" (separa pontos próximos)
+    let ultimasRequisicoesConsumo = [];
+
+    // Escada de passos "redondos" para as marcas do eixo — sempre em fronteira de tempo local
+    // legível (minuto/hora/dia cheios), nunca múltiplo cru de epoch (ver primeiraMarcaAlinhada).
+    const ESCADA_PASSOS_EIXO_TEMPO = [
+      { ms: 10 * 1000, unidade: "segundo", multiplo: 10 },
+      { ms: 30 * 1000, unidade: "segundo", multiplo: 30 },
+      { ms: 60 * 1000, unidade: "minuto", multiplo: 1 },
+      { ms: 5 * 60 * 1000, unidade: "minuto", multiplo: 5 },
+      { ms: 15 * 60 * 1000, unidade: "minuto", multiplo: 15 },
+      { ms: 30 * 60 * 1000, unidade: "minuto", multiplo: 30 },
+      { ms: 60 * 60 * 1000, unidade: "hora", multiplo: 1 },
+      { ms: 3 * 60 * 60 * 1000, unidade: "hora", multiplo: 3 },
+      { ms: 6 * 60 * 60 * 1000, unidade: "hora", multiplo: 6 },
+      { ms: 12 * 60 * 60 * 1000, unidade: "hora", multiplo: 12 },
+      { ms: 24 * 60 * 60 * 1000, unidade: "dia", multiplo: 1 },
+    ];
+    const ESPACAMENTO_MINIMO_PX_ROTULO_EIXO = 80; // mira ~80–120px por rótulo (ver README)
+
+    // Menor passo da escada cujo espaçamento em pixels já respeita o alvo — dado o pxPorMs atual.
+    function escolherPassoEixo(pxPorMs) {
+      for (const passo of ESCADA_PASSOS_EIXO_TEMPO) {
+        if (passo.ms * pxPorMs >= ESPACAMENTO_MINIMO_PX_ROTULO_EIXO) return passo;
+      }
+      return ESCADA_PASSOS_EIXO_TEMPO[ESCADA_PASSOS_EIXO_TEMPO.length - 1];
+    }
+
+    // Primeira marca >= data, alinhada a uma fronteira de tempo local (não a um múltiplo cru de
+    // epoch — em fusos com offset não múltiplo de hora isso desalinharia da hora de relógio).
+    function primeiraMarcaAlinhada(data, passo) {
+      const d = new Date(data.getTime());
+      d.setMilliseconds(0);
+      if (passo.unidade === "segundo") {
+        d.setSeconds(Math.ceil(d.getSeconds() / passo.multiplo) * passo.multiplo);
+      } else if (passo.unidade === "minuto") {
+        d.setSeconds(0);
+        d.setMinutes(Math.ceil(d.getMinutes() / passo.multiplo) * passo.multiplo);
+      } else if (passo.unidade === "hora") {
+        d.setSeconds(0);
+        d.setMinutes(0);
+        d.setHours(Math.ceil(d.getHours() / passo.multiplo) * passo.multiplo);
+      } else {
+        d.setSeconds(0);
+        d.setMinutes(0);
+        d.setHours(0);
+        if (d.getTime() < data.getTime()) d.setDate(d.getDate() + 1);
+      }
+      return d;
+    }
+
+    // Avança para a próxima marca via os setters locais (não soma ms crus) — imune a variação de
+    // duração de mês/dia.
+    function proximaMarcaEixo(data, passo) {
+      const d = new Date(data.getTime());
+      if (passo.unidade === "segundo") d.setSeconds(d.getSeconds() + passo.multiplo);
+      else if (passo.unidade === "minuto") d.setMinutes(d.getMinutes() + passo.multiplo);
+      else if (passo.unidade === "hora") d.setHours(d.getHours() + passo.multiplo);
+      else d.setDate(d.getDate() + passo.multiplo);
+      return d;
+    }
+
+    function formatarDataCurtaEixo(d) {
+      return String(d.getDate()).padStart(2, "0") + "/" + String(d.getMonth() + 1).padStart(2, "0");
+    }
+
+    // Precisão do horário acompanha o passo escolhido — evita rótulo repetido (ex.: "18:02"
+    // idêntico em vários ticks de 10s) quando o passo é mais fino que um minuto.
+    function rotuloHorarioEixo(d, passo) {
+      const hh = String(d.getHours()).padStart(2, "0");
+      if (passo.unidade === "segundo") {
+        return hh + ":" + String(d.getMinutes()).padStart(2, "0") + ":" + String(d.getSeconds()).padStart(2, "0");
+      }
+      if (passo.unidade === "minuto") {
+        return hh + ":" + String(d.getMinutes()).padStart(2, "0");
+      }
+      return hh + "h";
+    }
+
+    function atualizarRotuloBotaoZoomLinhaTempo() {
+      botaoZoomLinhaTempo.textContent = escalaLinhaTempo === "hora" ? "Zoom: Hora" : "Zoom: Minuto";
+    }
+    atualizarRotuloBotaoZoomLinhaTempo();
+
+    function abrirPopupRequisicao(requisicao) {
+      const dataHora = new Date(requisicao.timestamp);
+      popupRequisicaoMeta.textContent =
+        (requisicao.modelo || "modelo desconhecido") + " — " + formatarUsd(requisicao.custo_usd) +
+        " — " + (isNaN(dataHora) ? String(requisicao.timestamp) : dataHora.toLocaleString());
+      popupRequisicaoTexto.textContent = requisicao.texto
+        ? requisicao.texto
+        : "Não há transcrição guardada para esta requisição.";
+      fundoPopupRequisicao.hidden = false;
+    }
+
+    function fecharPopupRequisicao() {
+      fundoPopupRequisicao.hidden = true;
+    }
+
+    botaoFecharPopupRequisicao.addEventListener("click", fecharPopupRequisicao);
+    fundoPopupRequisicao.addEventListener("click", (evento) => {
+      if (evento.target === fundoPopupRequisicao) fecharPopupRequisicao();
+    });
+    document.addEventListener("keydown", (evento) => {
+      if (evento.key === "Escape" && !fundoPopupRequisicao.hidden) fecharPopupRequisicao();
+    });
+
+    function renderizarLinhaTempoConsumo(requisicoes) {
+      ultimasRequisicoesConsumo = Array.isArray(requisicoes) ? requisicoes : [];
+      linhaTempoConsumo.innerHTML = "";
+
+      const validas = ultimasRequisicoesConsumo
+        .map((requisicao) => Object.assign({}, requisicao, { dataHora: new Date(requisicao.timestamp) }))
+        .filter((requisicao) => !isNaN(requisicao.dataHora));
+
+      if (validas.length === 0) {
+        const vazio = document.createElement("p");
+        vazio.className = "dica";
+        vazio.textContent = "Nenhuma requisição registrada ainda.";
+        linhaTempoConsumo.appendChild(vazio);
+        return;
+      }
+
+      const tempos = validas.map((requisicao) => requisicao.dataHora.getTime());
+      let inicio = Math.min.apply(null, tempos);
+      let fim = Math.max.apply(null, tempos);
+      if (fim === inicio) {
+        inicio -= 5 * 60 * 1000;
+        fim += 5 * 60 * 1000;
+      } else {
+        const folga = (fim - inicio) * 0.08;
+        inicio -= folga;
+        fim += folga;
+      }
+      const duracaoSegundos = (fim - inicio) / 1000;
+
+      const larguraDisponivel = Math.max(linhaTempoConsumo.clientWidth || 0, 480);
+      const altura = 110;
+      const yPonto = 68;
+
+      // Escala "hora": largura = a do painel, então o intervalo inteiro sempre cabe sem rolagem.
+      // Escala "minuto": pixels por segundo fixos, então dois pontos a poucos segundos de
+      // distância ficam visivelmente separados — a largura resultante rola horizontalmente.
+      const largura = escalaLinhaTempo === "hora"
+        ? larguraDisponivel
+        : Math.max(larguraDisponivel, duracaoSegundos * PX_POR_SEGUNDO_ESCALA_MINUTO);
+      const pxPorMs = largura / (fim - inicio);
+
+      const svg = document.createElementNS(SVG_NS, "svg");
+      svg.setAttribute("width", String(largura));
+      svg.setAttribute("height", String(altura));
+      svg.setAttribute("viewBox", "0 0 " + largura + " " + altura);
+      svg.setAttribute("role", "img");
+      svg.setAttribute(
+        "aria-label",
+        "Linha do tempo das requisições: um ponto por requisição, posicionado pelo horário" +
+        (escalaLinhaTempo === "minuto" ? ", com o preço acima de cada ponto." : ".")
+      );
+
+      const eixo = document.createElementNS(SVG_NS, "line");
+      eixo.setAttribute("x1", "0");
+      eixo.setAttribute("x2", String(largura));
+      eixo.setAttribute("y1", String(yPonto));
+      eixo.setAttribute("y2", String(yPonto));
+      eixo.setAttribute("stroke", "#e4e7eb");
+      eixo.setAttribute("stroke-width", "1");
+      svg.appendChild(eixo);
+
+      const passo = escolherPassoEixo(pxPorMs);
+      let diaAnteriorRotulado = null;
+      for (
+        let marca = primeiraMarcaAlinhada(new Date(inicio), passo);
+        marca.getTime() <= fim;
+        marca = proximaMarcaEixo(marca, passo)
+      ) {
+        const x = (marca.getTime() - inicio) * pxPorMs;
+        const tick = document.createElementNS(SVG_NS, "line");
+        tick.setAttribute("x1", String(x));
+        tick.setAttribute("x2", String(x));
+        tick.setAttribute("y1", String(yPonto));
+        tick.setAttribute("y2", String(yPonto + 5));
+        tick.setAttribute("stroke", "#c3c2b7");
+        tick.setAttribute("stroke-width", "1");
+        svg.appendChild(tick);
+
+        // Primeira marca do eixo e toda virada de dia trazem a data junto (dd/mm) — assim o eixo
+        // desambigua quando o intervalo exibido cruza a meia-noite, sem repetir a data em toda
+        // marca quando tudo cabe num único dia (só a primeira marca ganharia data, uma vez só).
+        const diaChave = marca.getFullYear() + "-" + marca.getMonth() + "-" + marca.getDate();
+        const mostrarData = diaChave !== diaAnteriorRotulado;
+        diaAnteriorRotulado = diaChave;
+
+        const rotulo = document.createElementNS(SVG_NS, "text");
+        rotulo.textContent = (mostrarData ? formatarDataCurtaEixo(marca) + " " : "") + rotuloHorarioEixo(marca, passo);
+        rotulo.setAttribute("x", String(x));
+        rotulo.setAttribute("y", String(yPonto + 17));
+        rotulo.setAttribute("text-anchor", "middle");
+        rotulo.setAttribute("font-size", "9");
+        rotulo.setAttribute("fill", "#898781");
+        svg.appendChild(rotulo);
+      }
+
+      let xUltimoPonto = 0;
+      validas
+        .slice()
+        .sort((a, b) => a.dataHora - b.dataHora)
+        .forEach((requisicao) => {
+          const x = (requisicao.dataHora.getTime() - inicio) * pxPorMs;
+          xUltimoPonto = Math.max(xUltimoPonto, x);
+
+          if (escalaLinhaTempo === "minuto") {
+            const preco = document.createElementNS(SVG_NS, "text");
+            preco.textContent = formatarUsdCompacto(requisicao.custo_usd);
+            preco.setAttribute("x", String(x));
+            preco.setAttribute("y", String(yPonto - 12));
+            preco.setAttribute("text-anchor", "middle");
+            preco.setAttribute("font-size", "9");
+            preco.setAttribute("fill", "#52606d");
+            svg.appendChild(preco);
+          }
+
+          const grupo = document.createElementNS(SVG_NS, "g");
+          grupo.setAttribute("class", "ponto-linha-tempo");
+          grupo.setAttribute("tabindex", "0");
+          grupo.setAttribute("role", "button");
+          grupo.setAttribute(
+            "aria-label",
+            (requisicao.modelo || "modelo desconhecido") + ", " + formatarUsd(requisicao.custo_usd) +
+            (requisicao.texto ? ", com transcrição" : ", sem transcrição")
+          );
+
+          const alvo = document.createElementNS(SVG_NS, "circle");
+          alvo.setAttribute("cx", String(x));
+          alvo.setAttribute("cy", String(yPonto));
+          alvo.setAttribute("r", "14");
+          alvo.setAttribute("fill", "transparent");
+          grupo.appendChild(alvo);
+
+          const ponto = document.createElementNS(SVG_NS, "circle");
+          ponto.setAttribute("cx", String(x));
+          ponto.setAttribute("cy", String(yPonto));
+          ponto.setAttribute("r", "4");
+          ponto.setAttribute("fill", "#2563eb");
+          ponto.setAttribute("stroke", "#fff");
+          ponto.setAttribute("stroke-width", "2");
+          grupo.appendChild(ponto);
+
+          const titulo = document.createElementNS(SVG_NS, "title");
+          titulo.textContent =
+            (requisicao.modelo || "modelo desconhecido") + " — " + formatarUsd(requisicao.custo_usd) +
+            " — " + requisicao.dataHora.toLocaleString();
+          grupo.appendChild(titulo);
+
+          grupo.addEventListener("click", () => abrirPopupRequisicao(requisicao));
+          grupo.addEventListener("keydown", (evento) => {
+            if (evento.key === "Enter" || evento.key === " ") {
+              evento.preventDefault();
+              abrirPopupRequisicao(requisicao);
+            }
+          });
+
+          svg.appendChild(grupo);
+        });
+
+      linhaTempoConsumo.appendChild(svg);
+      // O painel mostra tudo que existe em consumo.jsonl (decisão registrada no plano — sem
+      // filtrar por dia/janela). Em "minuto", isso pode gerar uma faixa bem mais larga que o
+      // painel; abre já rolada até o último ponto real (não até scrollWidth — a folga de domínio
+      // adicionada acima deixaria só espaço vazio visível), que é o caso de uso principal
+      // (comparar custo entre requisições próximas no tempo).
+      const margemDireita = 40;
+      linhaTempoConsumo.scrollLeft = Math.max(0, xUltimoPonto - larguraDisponivel + margemDireita);
+    }
+
+    function trocarEscalaLinhaTempo(novaEscala) {
+      if (novaEscala === escalaLinhaTempo) return;
+      escalaLinhaTempo = novaEscala;
+      atualizarRotuloBotaoZoomLinhaTempo();
+      renderizarLinhaTempoConsumo(ultimasRequisicoesConsumo);
+    }
+
+    botaoZoomLinhaTempo.addEventListener("click", () => {
+      trocarEscalaLinhaTempo(escalaLinhaTempo === "hora" ? "minuto" : "hora");
+    });
+
+    // Roda do mouse sobre a linha do tempo alterna a escala (dois estados: rolar para baixo vai
+    // para "minuto", para cima volta para "hora" — mapeado pelo sinal do deltaY, não por
+    // contagem de eventos, porque um trackpad dispara dezenas de eventos "wheel" por gesto e
+    // alternar a cada evento faria a escala piscar/voltar; mapear pelo sinal é idempotente,
+    // então repetir o mesmo sentido não faz nada depois da primeira troca).
+    // Escala "minuto" navega horizontalmente por scroll — a roda pura fica reservada para o
+    // zoom, então a navegação horizontal passa a usar Shift+roda, que é o gesto nativo do
+    // navegador para rolagem horizontal (não precisa de código: some o preventDefault e o
+    // browser já rola o container sozinho).
+    linhaTempoConsumo.addEventListener("wheel", (evento) => {
+      if (evento.shiftKey) return; // deixa o navegador rolar horizontalmente, sem interferir
+      evento.preventDefault();
+      trocarEscalaLinhaTempo(evento.deltaY > 0 ? "minuto" : "hora");
+    }, { passive: false });
+
+    function sessaoExibida(sessaoBackend) {
+      const base = sessaoBaseReset;
+      return {
+        requisicoes: Math.max(0, (sessaoBackend.requisicoes || 0) - base.requisicoes),
+        tokens: Math.max(0, (sessaoBackend.tokens || 0) - base.tokens),
+        custo_usd: Math.max(0, (sessaoBackend.custo_usd || 0) - base.custo_usd),
+      };
+    }
+
+    function renderizarConsumo(dados) {
+      ultimoConsumoCarregado = dados;
+      const sessao = sessaoExibida(dados.sessao || { requisicoes: 0, tokens: 0, custo_usd: 0 });
+
+      consumoSessaoTexto.innerHTML = "";
+      [
+        ["Requisições", sessao.requisicoes],
+        ["Tokens", sessao.tokens],
+        ["Custo estimado", formatarUsd(sessao.custo_usd)],
+      ].forEach(([rotulo, valor]) => {
+        const p = document.createElement("p");
+        p.innerHTML = "<strong>" + rotulo + ":</strong> " + valor;
+        consumoSessaoTexto.appendChild(p);
+      });
+
+      const porDia = Array.isArray(dados.por_dia) ? dados.por_dia : [];
+
+      consumoDiarioLista.innerHTML = "";
+      if (porDia.length === 0) {
+        const vazio = document.createElement("p");
+        vazio.className = "dica";
+        vazio.textContent = "Nenhum consumo registrado ainda.";
+        consumoDiarioLista.appendChild(vazio);
+      } else {
+        porDia.forEach((dia) => {
+          const linha = document.createElement("div");
+          linha.className = "linha-consumo-dia";
+          const rotulo = document.createElement("span");
+          rotulo.textContent = dia.data;
+          const valor = document.createElement("span");
+          valor.textContent = (dia.tokens || 0) + " tokens — " + formatarUsd(dia.custo_usd);
+          linha.appendChild(rotulo);
+          linha.appendChild(valor);
+          consumoDiarioLista.appendChild(linha);
+        });
+      }
+
+      consumoGrafico.innerHTML = "";
+      if (porDia.length > 0) {
+        const maiorCusto = Math.max.apply(null, porDia.map((d) => Number(d.custo_usd) || 0).concat([0.000001]));
+        porDia.forEach((dia) => {
+          const coluna = document.createElement("div");
+          coluna.className = "coluna-grafico-consumo";
+          const barra = document.createElement("div");
+          barra.className = "barra-grafico-consumo";
+          const altura = Math.max(4, Math.round(((Number(dia.custo_usd) || 0) / maiorCusto) * 100));
+          barra.style.height = altura + "%";
+          barra.title = dia.data + ": " + formatarUsd(dia.custo_usd);
+          const rotuloDia = document.createElement("span");
+          rotuloDia.className = "rotulo-grafico-consumo";
+          rotuloDia.textContent = (dia.data || "").slice(5) || dia.data;
+          coluna.appendChild(barra);
+          coluna.appendChild(rotuloDia);
+          consumoGrafico.appendChild(coluna);
+        });
+      }
+
+      renderizarLinhaTempoConsumo(dados.requisicoes);
+    }
+
+    async function carregarConsumo() {
+      consumoErro.hidden = true;
+      consumoCarregando.hidden = false;
+      consumoSessaoTexto.hidden = true;
+      botaoResetarSessaoConsumo.hidden = true;
+      consumoDiarioLista.hidden = true;
+      consumoGrafico.hidden = true;
+      blocoLinhaTempoConsumo.hidden = true;
+
+      try {
+        const resposta = await fetch(URL_CONSUMO);
+        if (!resposta.ok) throw new Error("HTTP " + resposta.status);
+        const dados = await resposta.json();
+        // Desoculta antes de renderizar: a linha do tempo mede a largura real do container
+        // (clientWidth) para a escala "hora", e um elemento com [hidden] mede 0.
+        consumoSessaoTexto.hidden = false;
+        botaoResetarSessaoConsumo.hidden = false;
+        consumoDiarioLista.hidden = false;
+        consumoGrafico.hidden = false;
+        blocoLinhaTempoConsumo.hidden = false;
+        renderizarConsumo(dados);
+      } catch (_) {
+        consumoErro.hidden = false;
+        consumoErro.textContent = "Não foi possível carregar o consumo. Confirme que o backend está rodando na porta 8000 (veja o README).";
+      } finally {
+        consumoCarregando.hidden = true;
+      }
+    }
+
+    function abrirConsumo() {
+      fundoConsumo.hidden = false;
+      botaoConsumo.setAttribute("aria-expanded", "true");
+      carregarConsumo();
+    }
+
+    function fecharConsumo() {
+      fundoConsumo.hidden = true;
+      botaoConsumo.setAttribute("aria-expanded", "false");
+    }
+
+    botaoConsumo.addEventListener("click", abrirConsumo);
+    botaoFecharConsumo.addEventListener("click", fecharConsumo);
+    fundoConsumo.addEventListener("click", (evento) => {
+      if (evento.target === fundoConsumo) fecharConsumo();
+    });
+    document.addEventListener("keydown", (evento) => {
+      if (evento.key === "Escape" && !fundoConsumo.hidden) fecharConsumo();
+    });
+
+    botaoResetarSessaoConsumo.addEventListener("click", () => {
+      if (ultimoConsumoCarregado && ultimoConsumoCarregado.sessao) {
+        sessaoBaseReset = {
+          requisicoes: ultimoConsumoCarregado.sessao.requisicoes || 0,
+          tokens: ultimoConsumoCarregado.sessao.tokens || 0,
+          custo_usd: ultimoConsumoCarregado.sessao.custo_usd || 0,
+        };
+        renderizarConsumo(ultimoConsumoCarregado);
+      }
+    });
+
+    // --- Gravação rápida (clique único: grava, clica de novo, transcreve sozinho) ---
+
+    const botaoGravacaoRapida = document.getElementById("botaoGravacaoRapida");
+    const statusGravacaoRapida = document.getElementById("statusGravacaoRapida");
+    const cronometroGravacaoRapida = document.getElementById("cronometroGravacaoRapida");
+    const transcriptRapido = document.getElementById("transcriptRapido");
+    const barrasNivel = document.getElementById("barrasNivel");
+    const toastSemFala = document.getElementById("toastSemFala");
+
+    let mediaRecorderRapido = null;
+    let streamRapido = null;
+    let pedacosRapidos = [];
+
+    // --- Barras de nível + validação de silêncio (AnalyserNode sobre o mesmo MediaStream) ---
+
+    const NUM_BARRAS_NIVEL = 12;
+    for (let i = 0; i < NUM_BARRAS_NIVEL; i++) {
+      const barra = document.createElement("span");
+      barra.className = "barra";
+      barrasNivel.appendChild(barra);
+    }
+    const listaBarrasNivel = Array.from(barrasNivel.children);
+
+    let audioContextRapido = null;
+    let analiserRapido = null;
+    let dadosAnaliserRapido = null;
+    let animacaoBarrasId = null;
+    let analisadorAtivoNestaGravacao = false;
+    let picoVolumeRapido = 0;
+
+    // Limiar de silêncio: comparado ao pico de amplitude (0 a 1) observado nas amostras do
+    // AnalyserNode via getByteTimeDomainData (desvio em relação ao centro 128, escala de byte).
+    // Calibrado empiricamente: ruído de fundo/silêncio de ambiente fica tipicamente abaixo de
+    // ~0.01; fala normal a distância de conversa ultrapassa facilmente 0.05-0.1. 0.02 dá margem
+    // sem deixar passar silêncio óbvio nem bloquear fala baixa. Ajustar aqui se necessário.
+    const LIMIAR_SILENCIO = 0.02;
+
+    let timeoutToastSemFala = null;
+
+    function mostrarToastSemFala() {
+      if (timeoutToastSemFala) clearTimeout(timeoutToastSemFala);
+      toastSemFala.hidden = false;
+      timeoutToastSemFala = setTimeout(() => {
+        toastSemFala.hidden = true;
+        timeoutToastSemFala = null;
+      }, 3000);
+    }
+
+    function iniciarAnalisadorNivel(stream) {
+      const ContextoAudio = window.AudioContext || window.webkitAudioContext;
+      if (!ContextoAudio) return; // navegador sem suporte: segue sem barras nem validação de silêncio
+
+      audioContextRapido = new ContextoAudio();
+      const fonte = audioContextRapido.createMediaStreamSource(stream);
+      analiserRapido = audioContextRapido.createAnalyser();
+      analiserRapido.fftSize = 256;
+      fonte.connect(analiserRapido);
+      dadosAnaliserRapido = new Uint8Array(analiserRapido.fftSize);
+
+      picoVolumeRapido = 0;
+      analisadorAtivoNestaGravacao = true;
+      barrasNivel.hidden = false;
+      animarBarrasNivel();
+    }
+
+    function animarBarrasNivel() {
+      if (!analiserRapido) return;
+      analiserRapido.getByteTimeDomainData(dadosAnaliserRapido);
+
+      let somaQuadrados = 0;
+      let picoAmostra = 0;
+      for (let i = 0; i < dadosAnaliserRapido.length; i++) {
+        const desvio = Math.abs(dadosAnaliserRapido[i] - 128) / 128;
+        somaQuadrados += desvio * desvio;
+        if (desvio > picoAmostra) picoAmostra = desvio;
+      }
+      const rms = Math.sqrt(somaQuadrados / dadosAnaliserRapido.length);
+      if (picoAmostra > picoVolumeRapido) picoVolumeRapido = picoAmostra;
+
+      listaBarrasNivel.forEach((barra, indice) => {
+        const variacao = 0.7 + 0.3 * Math.sin(indice * 1.3 + Date.now() / 150);
+        const altura = Math.max(0.15, Math.min(1, rms * 6 * variacao));
+        barra.style.height = (altura * 100) + "%";
+      });
+
+      animacaoBarrasId = requestAnimationFrame(animarBarrasNivel);
+    }
+
+    function pararAnalisadorNivel() {
+      if (animacaoBarrasId) {
+        cancelAnimationFrame(animacaoBarrasId);
+        animacaoBarrasId = null;
+      }
+      if (audioContextRapido) {
+        audioContextRapido.close();
+        audioContextRapido = null;
+      }
+      analiserRapido = null;
+      dadosAnaliserRapido = null;
+      barrasNivel.hidden = true;
+      listaBarrasNivel.forEach((barra) => { barra.style.height = "15%"; });
+    }
+
+    // Corte de segurança: se o usuário esquecer o botão gravando, a gravação para sozinha.
+    const LIMITE_GRAVACAO_MS = 150000; // 2min30s
+    const AVISO_CORTE_SEGURANCA = "Gravação interrompida automaticamente por segurança ao atingir o limite de 2min30s. Enviando o áudio gravado até aqui para transcrição…";
+
+    let inicioGravacaoRapida = null;
+    let intervaloCronometroRapido = null;
+    let timeoutCorteSeguranca = null;
+    let corteSegurancaAtivado = false;
+
+    function formatarTempoCronometro(ms) {
+      const totalSegundos = Math.floor(ms / 1000);
+      const minutos = Math.floor(totalSegundos / 60);
+      const segundos = totalSegundos % 60;
+      return String(minutos).padStart(2, "0") + ":" + String(segundos).padStart(2, "0");
+    }
+
+    function atualizarCronometroGravacaoRapida() {
+      if (!inicioGravacaoRapida) return;
+      cronometroGravacaoRapida.textContent = formatarTempoCronometro(Date.now() - inicioGravacaoRapida);
+    }
+
+    function pararTemporizadoresGravacaoRapida() {
+      if (intervaloCronometroRapido) {
+        clearInterval(intervaloCronometroRapido);
+        intervaloCronometroRapido = null;
+      }
+      if (timeoutCorteSeguranca) {
+        clearTimeout(timeoutCorteSeguranca);
+        timeoutCorteSeguranca = null;
+      }
+    }
+
+    function cortarPorSegurancaGravacaoRapida() {
+      timeoutCorteSeguranca = null;
+      corteSegurancaAtivado = true;
+      pararGravacaoRapida();
+    }
+
+    function suportaGravacao() {
+      return !!(navigator.mediaDevices && navigator.mediaDevices.getUserMedia && window.MediaRecorder);
+    }
+
+    function extensaoParaMime(mime) {
+      if (mime && mime.includes("ogg")) return "ogg";
+      if (mime && mime.includes("mp4")) return "mp4";
+      return "webm";
+    }
+
+    function mostrarStatusGravacao(classe, texto) {
+      statusGravacaoRapida.className = classe;
+      statusGravacaoRapida.textContent = texto;
+    }
+
+    async function iniciarGravacaoRapida() {
+      if (!suportaGravacao()) {
+        mostrarStatusGravacao("erro", "Este navegador não oferece suporte à gravação pelo microfone.");
+        return;
+      }
+
+      const restricoesAudio = dispositivoEscolhido ? { deviceId: { exact: dispositivoEscolhido } } : true;
+
+      try {
+        streamRapido = await navigator.mediaDevices.getUserMedia({ audio: restricoesAudio });
+      } catch (erro) {
+        if (erro.name === "NotAllowedError" || erro.name === "PermissionDeniedError") {
+          mostrarStatusGravacao("erro", "Permissão de microfone negada. Autorize o acesso ao microfone no navegador para gravar.");
+        } else if (erro.name === "NotFoundError" || erro.name === "OverconstrainedError") {
+          mostrarStatusGravacao("erro", "Nenhum dispositivo de entrada de áudio disponível.");
+        } else {
+          mostrarStatusGravacao("erro", "Não foi possível iniciar a gravação: " + erro.message);
+        }
+        return;
+      }
+
+      // Labels dos dispositivos só ficam disponíveis após a permissão ser concedida — atualiza
+      // a lista do painel de configurações em segundo plano.
+      popularDispositivos();
+
+      pedacosRapidos = [];
+      try {
+        mediaRecorderRapido = new MediaRecorder(streamRapido);
+      } catch (erro) {
+        mostrarStatusGravacao("erro", "Não foi possível iniciar a gravação: " + erro.message);
+        streamRapido.getTracks().forEach((faixa) => faixa.stop());
+        streamRapido = null;
+        return;
+      }
+
+      mediaRecorderRapido.addEventListener("dataavailable", (evento) => {
+        if (evento.data && evento.data.size > 0) pedacosRapidos.push(evento.data);
+      });
+
+      mediaRecorderRapido.addEventListener("stop", () => {
+        streamRapido.getTracks().forEach((faixa) => faixa.stop());
+        streamRapido = null;
+
+        const avisoSeguranca = corteSegurancaAtivado ? AVISO_CORTE_SEGURANCA : null;
+        corteSegurancaAtivado = false;
+
+        if (analisadorAtivoNestaGravacao && picoVolumeRapido < LIMIAR_SILENCIO) {
+          mostrarStatusGravacao("", "");
+          mostrarToastSemFala();
+          return;
+        }
+
+        const mime = mediaRecorderRapido.mimeType || "audio/webm";
+        const blob = new Blob(pedacosRapidos, { type: mime });
+        enviarGravacaoRapida(blob, avisoSeguranca);
+      });
+
+      analisadorAtivoNestaGravacao = false;
+      iniciarAnalisadorNivel(streamRapido);
+      mediaRecorderRapido.start();
+      botaoGravacaoRapida.classList.add("gravando");
+      botaoGravacaoRapida.setAttribute("aria-label", "Parar gravação");
+      mostrarStatusGravacao("", "Gravando… clique novamente para parar.");
+
+      corteSegurancaAtivado = false;
+      inicioGravacaoRapida = Date.now();
+      cronometroGravacaoRapida.textContent = "00:00";
+      cronometroGravacaoRapida.hidden = false;
+      intervaloCronometroRapido = setInterval(atualizarCronometroGravacaoRapida, 1000);
+      timeoutCorteSeguranca = setTimeout(cortarPorSegurancaGravacaoRapida, LIMITE_GRAVACAO_MS);
+    }
+
+    function pararGravacaoRapida() {
+      pararTemporizadoresGravacaoRapida();
+      pararAnalisadorNivel();
+      inicioGravacaoRapida = null;
+      cronometroGravacaoRapida.hidden = true;
+
+      if (mediaRecorderRapido && mediaRecorderRapido.state !== "inactive") {
+        mediaRecorderRapido.stop();
+      }
+      botaoGravacaoRapida.classList.remove("gravando");
+      botaoGravacaoRapida.setAttribute("aria-label", "Iniciar gravação");
+    }
+
+    async function enviarGravacaoRapida(blob, avisoSeguranca) {
+      botaoGravacaoRapida.disabled = true;
+
+      if (avisoSeguranca) {
+        mostrarStatusGravacao("erro", avisoSeguranca);
+        await new Promise((resolve) => setTimeout(resolve, 1800));
+      }
+
+      mostrarStatusGravacao("carregando", "Transcrevendo…");
+
+      const dados = new FormData();
+      dados.append("audio", blob, "gravacao." + extensaoParaMime(blob.type));
+      dados.append("modelo", modeloAtivo());
+      dados.append("stream", streamingAtivo() ? "true" : "false");
+
+      if (streamingAtivo()) {
+        const textoBase = transcriptRapido.value;
+        const separadorBase = textoBase && !textoBase.endsWith("\n") ? "\n" : "";
+
+        try {
+          const resposta = await fetch(URL_BACKEND, { method: "POST", body: dados });
+
+          if (!resposta.ok || !resposta.body) {
+            let corpo = null;
+            try { corpo = await resposta.json(); } catch (_) { /* resposta sem JSON */ }
+            const detalhe = corpo && corpo.detail
+              ? (typeof corpo.detail === "string" ? corpo.detail : JSON.stringify(corpo.detail))
+              : `Resposta inesperada do servidor (HTTP ${resposta.status}).`;
+            mostrarStatusGravacao("erro", "Erro ao transcrever: " + detalhe);
+          } else {
+            const resultadoStream = await consumirStreamTranscricao(resposta, {
+              aoDelta: (texto) => { transcriptRapido.value = textoBase + separadorBase + texto; },
+              aoFinal: (texto) => {
+                transcriptRapido.value = textoBase + separadorBase + texto;
+                mostrarStatusGravacao("sucesso", "Transcrição adicionada ao texto abaixo.");
+              },
+              aoErro: (detalhe) => mostrarStatusGravacao("erro", "Erro ao transcrever: " + detalhe),
+            });
+            if (!resultadoStream.ok && !resultadoStream.teveErro) {
+              mostrarStatusGravacao("erro", "A conexão de streaming foi interrompida antes da transcrição terminar. Tente novamente.");
+            }
+          }
+        } catch (_) {
+          mostrarStatusGravacao("erro", "Não foi possível conectar ao backend. Confirme que o servidor está rodando na porta 8000 (veja o README).");
+        } finally {
+          botaoGravacaoRapida.disabled = false;
+        }
+        return;
+      }
+
+      try {
+        const resposta = await fetch(URL_BACKEND, { method: "POST", body: dados });
+
+        let corpo = null;
+        try { corpo = await resposta.json(); } catch (_) { /* resposta sem JSON */ }
+
+        if (resposta.ok && corpo && typeof corpo.transcricao === "string") {
+          const textoAtual = transcriptRapido.value;
+          const separador = textoAtual && !textoAtual.endsWith("\n") ? "\n" : "";
+          transcriptRapido.value = textoAtual + separador + corpo.transcricao;
+          mostrarStatusGravacao("sucesso", "Transcrição adicionada ao texto abaixo.");
+        } else {
+          const detalhe = corpo && corpo.detail
+            ? (typeof corpo.detail === "string" ? corpo.detail : JSON.stringify(corpo.detail))
+            : `Resposta inesperada do servidor (HTTP ${resposta.status}).`;
+          mostrarStatusGravacao("erro", "Erro ao transcrever: " + detalhe);
+        }
+      } catch (_) {
+        mostrarStatusGravacao("erro", "Não foi possível conectar ao backend. Confirme que o servidor está rodando na porta 8000 (veja o README).");
+      } finally {
+        botaoGravacaoRapida.disabled = false;
+      }
+    }
+
+    botaoGravacaoRapida.addEventListener("click", () => {
+      if (tempoRealAtivo()) {
+        if (gravandoTempoRealEmAndamento) {
+          pararGravacaoTempoReal();
+        } else {
+          iniciarGravacaoTempoReal();
+        }
+        return;
+      }
+
+      const gravando = mediaRecorderRapido && mediaRecorderRapido.state === "recording";
+      if (gravando) {
+        pararGravacaoRapida();
+      } else {
+        iniciarGravacaoRapida();
+      }
+    });
+
+    // --- Transcrição em tempo real (WebSocket direto navegador↔OpenAI, PCM 24kHz) ---
+    // Formato dos eventos cliente→servidor confirmado na documentação oficial da Realtime API
+    // (consultada nesta etapa, 2026-08-19, https://developers.openai.com/api/docs/guides/realtime-transcription):
+    // o áudio é enviado com o evento "input_audio_buffer.append" (campo "audio", PCM16 mono em
+    // base64). No modo "por tempo" (Etapa 1, turn_detection: null), o cliente precisa enviar
+    // "input_audio_buffer.commit" explicitamente para fechar cada turno e disparar a transcrição —
+    // a doc não recomenda um intervalo de commit, então o valor abaixo foi calibrado testando com
+    // fala real. No modo "pela API" (Etapa 2, alternador "Controle de turno"), a sessão usa
+    // turn_detection: {"type": "server_vad"} (formato confirmado no guia de VAD da Realtime API,
+    // https://developers.openai.com/api/docs/guides/realtime-vad, consulta em 2026-08-20) e é a
+    // própria API que decide e comita o fim de cada turno — o cliente nunca manda commit nesse
+    // modo (ver pararGravacaoTempoReal e o handler do evento "open").
+
+    const URL_TOKEN_TEMPO_REAL = "http://127.0.0.1:8000/tempo-real/token";
+    const URL_CONSUMO_TEMPO_REAL = "http://127.0.0.1:8000/consumo/tempo-real";
+    const TAXA_AMOSTRAGEM_TEMPO_REAL = 24000;
+    const TAMANHO_BUFFER_PCM_TEMPO_REAL = 4096;
+    const INTERVALO_COMMIT_TEMPO_REAL_MS = 6000;
+    // ~100ms de áudio em PCM16 mono a 24kHz (24000 amostras/s * 0.1s * 2 bytes/amostra) — a API
+    // rejeita um commit se o buffer tiver menos áudio do que isso.
+    const MINIMO_BYTES_PARA_COMMIT_TEMPO_REAL = 4800;
+    // Corte de segurança ao parar: se o `completed` do último turno não chegar dentro desse prazo
+    // (token expirado, rede caiu, etc.), fecha mesmo assim em vez de deixar a interface travada em
+    // "encerrando…". Folga generosa sobre o tempo de resposta observado nos testes (< 1s) sem
+    // deixar o usuário esperando por muito tempo se algo realmente travou.
+    const TIMEOUT_ESPERA_ULTIMO_TURNO_TEMPO_REAL_MS = 5000;
+    // Corte de segurança por tempo: mesmo limite (LIMITE_GRAVACAO_MS, 150s) da gravação normal —
+    // decisão do usuário em 2026-08-20 de usar o mesmo valor nos dois modos.
+    const AVISO_CORTE_SEGURANCA_TEMPO_REAL = "Gravação em tempo real interrompida automaticamente por segurança ao atingir o limite de 2min30s.";
+    // Gate de silêncio contínuo: quanto tempo de silêncio sustentado tolerar antes de parar de
+    // enviar áudio (hangover). Evita cortar o meio de uma fala por causa de uma pausa curta entre
+    // frases — só depois desse tempo sem nada acima de LIMIAR_SILENCIO é que o envio para de
+    // verdade. Ver justificativa completa (por que "não enviar" e não "não comitar") no PROGRESSO.
+    const HANGOVER_SILENCIO_TEMPO_REAL_MS = 2000;
+
+    let wsTempoReal = null;
+    let streamTempoReal = null;
+    let audioContextTempoReal = null;
+    let processadorPcmTempoReal = null;
+    let gainNuloTempoReal = null;
+    let intervaloCommitTempoReal = null;
+    let bytesDesdeUltimoCommitTempoReal = 0;
+    let fechandoTempoRealDeliberadamente = false;
+    let gravandoTempoRealEmAndamento = false;
+    let textoFinalizadoTempoReal = "";
+    let turnoAtualTempoReal = "";
+    let corteSegurancaTempoRealAtivado = false;
+    // Timestamp (Date.now()) até quando o gate de silêncio ainda considera que há fala em
+    // andamento (hangover) — atualizado a cada bloco de áudio acima do limiar.
+    let fimHangoverSilencioTempoReal = 0;
+    // Quantos commits foram enviados (timer ou final) e ainda não tiveram o "completed"
+    // correspondente recebido — usado para saber quando o último turno realmente terminou.
+    let commitsPendentesTempoReal = 0;
+    let aguardandoUltimoTurnoTempoReal = false;
+    let timeoutEsperaUltimoTurnoTempoReal = null;
+
+    // Concatena o texto de um novo turno ao texto já finalizado, inserindo um espaço na emenda
+    // só quando nenhum dos dois lados já tiver espaço ali (evita palavras coladas sem criar
+    // espaço duplo, e não mexe no texto se for o primeiro turno).
+    function concatenarTurnoTempoReal(base, novoTrecho) {
+      if (!base || !novoTrecho) return base + novoTrecho;
+      const ladoEsquerdo = base.slice(-1);
+      const ladoDireito = novoTrecho.slice(0, 1);
+      const precisaEspaco = ladoEsquerdo !== " " && ladoDireito !== " ";
+      return base + (precisaEspaco ? " " : "") + novoTrecho;
+    }
+
+    // Envia o `usage` (e o texto) de um turno concluído do modo ao vivo para o backend registrar
+    // em consumo.jsonl e transcricoes.jsonl (só o backend tem o preço por minuto e escreve os
+    // arquivos). Acessório: falha aqui (backend fora do ar, rede) não pode afetar a transcrição
+    // já exibida na tela.
+    function reportarConsumoTempoReal(usage, texto) {
+      if (!usage) return;
+      fetch(URL_CONSUMO_TEMPO_REAL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ ...usage, texto: texto || null }),
+      }).catch(() => { /* acessório — sem usage registrado, a sessão continua normalmente */ });
+    }
+
+    function suportaTempoReal() {
+      return !!(
+        navigator.mediaDevices && navigator.mediaDevices.getUserMedia &&
+        window.WebSocket && (window.AudioContext || window.webkitAudioContext)
+      );
+    }
+
+    // Resample linear simples: o AudioContext normalmente roda na taxa nativa do dispositivo
+    // (ex.: 48kHz), mas a Realtime API espera PCM 24kHz — reamostra antes de converter para PCM16.
+    function resampleParaTaxa(entrada, taxaOrigem, taxaDestino) {
+      if (taxaOrigem === taxaDestino) return entrada;
+      const razao = taxaOrigem / taxaDestino;
+      const comprimentoDestino = Math.round(entrada.length / razao);
+      const saida = new Float32Array(comprimentoDestino);
+      for (let i = 0; i < comprimentoDestino; i++) {
+        const posOrigem = i * razao;
+        const indiceBase = Math.floor(posOrigem);
+        const fracao = posOrigem - indiceBase;
+        const amostraA = entrada[indiceBase] || 0;
+        const amostraB = entrada[indiceBase + 1] !== undefined ? entrada[indiceBase + 1] : amostraA;
+        saida[i] = amostraA + (amostraB - amostraA) * fracao;
+      }
+      return saida;
+    }
+
+    function float32ParaPcm16(float32Array) {
+      const pcm16 = new Int16Array(float32Array.length);
+      for (let i = 0; i < float32Array.length; i++) {
+        const amostra = Math.max(-1, Math.min(1, float32Array[i]));
+        pcm16[i] = amostra < 0 ? amostra * 0x8000 : amostra * 0x7fff;
+      }
+      return pcm16;
+    }
+
+    function pcm16ParaBase64(pcm16) {
+      const bytes = new Uint8Array(pcm16.buffer, pcm16.byteOffset, pcm16.byteLength);
+      let binario = "";
+      const tamanhoBloco = 0x8000;
+      for (let i = 0; i < bytes.length; i += tamanhoBloco) {
+        binario += String.fromCharCode.apply(null, bytes.subarray(i, i + tamanhoBloco));
+      }
+      return btoa(binario);
+    }
+
+    // Pico de amplitude (0 a 1) de um bloco PCM float32 — mesma escala de LIMIAR_SILENCIO.
+    function calcularPicoAmplitudeTempoReal(float32Array) {
+      let pico = 0;
+      for (let i = 0; i < float32Array.length; i++) {
+        const abs = Math.abs(float32Array[i]);
+        if (abs > pico) pico = abs;
+      }
+      return pico;
+    }
+
+    function iniciarCapturaPcmTempoReal(stream) {
+      const ContextoAudio = window.AudioContext || window.webkitAudioContext;
+      audioContextTempoReal = new ContextoAudio();
+      const fonte = audioContextTempoReal.createMediaStreamSource(stream);
+      processadorPcmTempoReal = audioContextTempoReal.createScriptProcessor(TAMANHO_BUFFER_PCM_TEMPO_REAL, 1, 1);
+
+      processadorPcmTempoReal.onaudioprocess = (evento) => {
+        if (!wsTempoReal || wsTempoReal.readyState !== WebSocket.OPEN) return;
+        const entrada = evento.inputBuffer.getChannelData(0);
+
+        // Gate de silêncio contínuo: ao vivo o áudio é transmitido (e cobrado) o tempo todo, então
+        // a checagem não pode esperar o fim da gravação como na gravação normal — precisa decidir
+        // a cada bloco se vale a pena enviar. Sobe o hangover sempre que houver som acima do
+        // limiar; enquanto o hangover não expirar, continua enviando normalmente (preserva pausas
+        // curtas dentro de uma fala contínua, sem cortar emenda). Só para de enviar depois de
+        // HANGOVER_SILENCIO_TEMPO_REAL_MS sem nenhum som relevante.
+        if (calcularPicoAmplitudeTempoReal(entrada) >= LIMIAR_SILENCIO) {
+          fimHangoverSilencioTempoReal = Date.now() + HANGOVER_SILENCIO_TEMPO_REAL_MS;
+        }
+        // No modo "turnos pela API", quem decide quando a fala parou é o server_vad da própria
+        // API — e ele só consegue decidir isso recebendo o silêncio (não só a fala). Se o gate
+        // continuasse cortando o envio depois do hangover, a API podia nunca ver esse silêncio e
+        // nunca fechar o turno (ver PROGRESSO). Por isso o gate só se aplica no modo "por tempo";
+        // no modo "pela API" o áudio é enviado o tempo todo, inclusive as pausas — o efeito é
+        // pagar pelo silêncio também nesse modo (perde a otimização de custo da Etapa 1), limitado
+        // só pelo corte de 150s e por o usuário parar manualmente.
+        if (!modoTurnoApi && Date.now() > fimHangoverSilencioTempoReal) return;
+
+        const reamostrado = resampleParaTaxa(entrada, audioContextTempoReal.sampleRate, TAXA_AMOSTRAGEM_TEMPO_REAL);
+        const pcm16 = float32ParaPcm16(reamostrado);
+        bytesDesdeUltimoCommitTempoReal += pcm16.byteLength;
+        wsTempoReal.send(JSON.stringify({ type: "input_audio_buffer.append", audio: pcm16ParaBase64(pcm16) }));
+      };
+
+      // ScriptProcessorNode só dispara onaudioprocess se estiver conectado a um destino — usa um
+      // GainNode com volume zero para não reproduzir o áudio capturado nas caixas de som.
+      gainNuloTempoReal = audioContextTempoReal.createGain();
+      gainNuloTempoReal.gain.value = 0;
+      fonte.connect(processadorPcmTempoReal);
+      processadorPcmTempoReal.connect(gainNuloTempoReal);
+      gainNuloTempoReal.connect(audioContextTempoReal.destination);
+    }
+
+    function limparRecursosTempoReal() {
+      if (intervaloCommitTempoReal) {
+        clearInterval(intervaloCommitTempoReal);
+        intervaloCommitTempoReal = null;
+      }
+      pararTemporizadoresGravacaoRapida();
+      pararAnalisadorNivel();
+      cronometroGravacaoRapida.hidden = true;
+      inicioGravacaoRapida = null;
+
+      if (processadorPcmTempoReal) {
+        processadorPcmTempoReal.disconnect();
+        processadorPcmTempoReal.onaudioprocess = null;
+        processadorPcmTempoReal = null;
+      }
+      if (gainNuloTempoReal) {
+        gainNuloTempoReal.disconnect();
+        gainNuloTempoReal = null;
+      }
+      if (audioContextTempoReal) {
+        audioContextTempoReal.close();
+        audioContextTempoReal = null;
+      }
+      if (streamTempoReal) {
+        streamTempoReal.getTracks().forEach((faixa) => faixa.stop());
+        streamTempoReal = null;
+      }
+    }
+
+    async function iniciarGravacaoTempoReal() {
+      if (!suportaTempoReal()) {
+        mostrarStatusGravacao("erro", "Este navegador não oferece suporte ao modo tempo real (requer WebSocket e Web Audio API).");
+        return;
+      }
+
+      botaoGravacaoRapida.disabled = true;
+      botaoTempoReal.disabled = true;
+      mostrarStatusGravacao("carregando", "Conectando ao modo tempo real…");
+
+      let tokenResposta;
+      try {
+        const respostaToken = await fetch(URL_TOKEN_TEMPO_REAL + "?modo_turno=" + (modoTurnoApi ? "api" : "tempo"));
+        let corpo = null;
+        try { corpo = await respostaToken.json(); } catch (_) { /* resposta sem JSON */ }
+        if (!respostaToken.ok || !corpo || typeof corpo.client_secret !== "string") {
+          const detalhe = corpo && corpo.detail
+            ? (typeof corpo.detail === "string" ? corpo.detail : JSON.stringify(corpo.detail))
+            : `Resposta inesperada do servidor (HTTP ${respostaToken.status}).`;
+          throw new Error(detalhe);
+        }
+        tokenResposta = corpo;
+      } catch (erro) {
+        mostrarStatusGravacao("erro", "Não foi possível obter o token do modo tempo real: " + erro.message);
+        botaoGravacaoRapida.disabled = false;
+        botaoTempoReal.disabled = false;
+        return;
+      }
+
+      const restricoesAudio = dispositivoEscolhido ? { deviceId: { exact: dispositivoEscolhido } } : true;
+      try {
+        streamTempoReal = await navigator.mediaDevices.getUserMedia({ audio: restricoesAudio });
+      } catch (erro) {
+        if (erro.name === "NotAllowedError" || erro.name === "PermissionDeniedError") {
+          mostrarStatusGravacao("erro", "Permissão de microfone negada. Autorize o acesso ao microfone no navegador para gravar.");
+        } else if (erro.name === "NotFoundError" || erro.name === "OverconstrainedError") {
+          mostrarStatusGravacao("erro", "Nenhum dispositivo de entrada de áudio disponível.");
+        } else {
+          mostrarStatusGravacao("erro", "Não foi possível iniciar a gravação: " + erro.message);
+        }
+        botaoGravacaoRapida.disabled = false;
+        botaoTempoReal.disabled = false;
+        return;
+      }
+
+      // Labels dos dispositivos só ficam disponíveis após a permissão ser concedida.
+      popularDispositivos();
+
+      fechandoTempoRealDeliberadamente = false;
+      bytesDesdeUltimoCommitTempoReal = 0;
+      textoFinalizadoTempoReal = "";
+      turnoAtualTempoReal = "";
+      corteSegurancaTempoRealAtivado = false;
+      fimHangoverSilencioTempoReal = 0;
+
+      const textoBaseTranscript = transcriptRapido.value;
+      const separadorBase = textoBaseTranscript && !textoBaseTranscript.endsWith("\n") ? "\n" : "";
+
+      function atualizarTranscriptTempoReal() {
+        transcriptRapido.value = textoBaseTranscript + separadorBase + textoFinalizadoTempoReal + turnoAtualTempoReal;
+      }
+
+      try {
+        wsTempoReal = new WebSocket("wss://api.openai.com/v1/realtime", [
+          "realtime",
+          "openai-insecure-api-key." + tokenResposta.client_secret,
+        ]);
+      } catch (erro) {
+        mostrarStatusGravacao("erro", "Não foi possível abrir a conexão em tempo real: " + erro.message);
+        streamTempoReal.getTracks().forEach((faixa) => faixa.stop());
+        streamTempoReal = null;
+        botaoGravacaoRapida.disabled = false;
+        botaoTempoReal.disabled = false;
+        return;
+      }
+
+      wsTempoReal.addEventListener("open", () => {
+        iniciarCapturaPcmTempoReal(streamTempoReal);
+        // No modo "turnos pela API" quem fecha o turno é o server_vad da própria sessão — mandar
+        // commit por cima disso tende a dar erro de buffer vazio ou turno duplicado (ver
+        // PROGRESSO), então o timer de commit periódico só roda no modo "por tempo".
+        if (!modoTurnoApi) {
+          intervaloCommitTempoReal = setInterval(() => {
+            if (wsTempoReal && wsTempoReal.readyState === WebSocket.OPEN && bytesDesdeUltimoCommitTempoReal >= MINIMO_BYTES_PARA_COMMIT_TEMPO_REAL) {
+              wsTempoReal.send(JSON.stringify({ type: "input_audio_buffer.commit" }));
+              bytesDesdeUltimoCommitTempoReal = 0;
+              commitsPendentesTempoReal++;
+            }
+          }, INTERVALO_COMMIT_TEMPO_REAL_MS);
+        }
+
+        iniciarAnalisadorNivel(streamTempoReal);
+
+        botaoGravacaoRapida.classList.add("gravando");
+        botaoGravacaoRapida.setAttribute("aria-label", "Parar gravação");
+        botaoGravacaoRapida.disabled = false;
+        gravandoTempoRealEmAndamento = true;
+        mostrarStatusGravacao("", "Gravando em tempo real… clique novamente para parar.");
+
+        inicioGravacaoRapida = Date.now();
+        cronometroGravacaoRapida.textContent = "00:00";
+        cronometroGravacaoRapida.hidden = false;
+        intervaloCronometroRapido = setInterval(atualizarCronometroGravacaoRapida, 1000);
+        timeoutCorteSeguranca = setTimeout(cortarPorSegurancaTempoReal, LIMITE_GRAVACAO_MS);
+      });
+
+      wsTempoReal.addEventListener("message", (eventoMsg) => {
+        let dado;
+        try {
+          dado = JSON.parse(eventoMsg.data);
+        } catch (_) {
+          return;
+        }
+
+        if (dado.type === "conversation.item.input_audio_transcription.delta" && typeof dado.delta === "string") {
+          turnoAtualTempoReal += dado.delta;
+          atualizarTranscriptTempoReal();
+        } else if (dado.type === "conversation.item.input_audio_transcription.completed" && typeof dado.transcript === "string") {
+          if (commitsPendentesTempoReal > 0) commitsPendentesTempoReal--;
+          textoFinalizadoTempoReal = concatenarTurnoTempoReal(textoFinalizadoTempoReal, dado.transcript);
+          turnoAtualTempoReal = "";
+          atualizarTranscriptTempoReal();
+          reportarConsumoTempoReal(dado.usage, dado.transcript);
+          // No modo "por tempo" só fecha quando todos os commits mandados já voltaram. No modo
+          // "pela API" não há commit nosso para contar — fecha assim que o primeiro "completed"
+          // chegar depois do stop, dando por encerrado o turno que estava em andamento.
+          if (aguardandoUltimoTurnoTempoReal && (modoTurnoApi || commitsPendentesTempoReal === 0)) {
+            finalizarFechamentoTempoReal();
+          }
+        } else if (dado.type === "error") {
+          const mensagem = dado.error && dado.error.message ? dado.error.message : "erro desconhecido do servidor";
+          mostrarStatusGravacao("erro", "Erro no modo tempo real: " + mensagem);
+        }
+      });
+
+      wsTempoReal.addEventListener("close", () => {
+        if (fechandoTempoRealDeliberadamente) return; // encerramento manual já tratado por pararGravacaoTempoReal
+
+        wsTempoReal = null;
+        limparRecursosTempoReal();
+        botaoGravacaoRapida.classList.remove("gravando");
+        botaoGravacaoRapida.setAttribute("aria-label", "Iniciar gravação");
+        botaoGravacaoRapida.disabled = false;
+        botaoTempoReal.disabled = false;
+        gravandoTempoRealEmAndamento = false;
+        mostrarStatusGravacao(
+          "erro",
+          "A conexão com o modo tempo real caiu (token pode ter expirado, ou falha de rede). Clique no botão para tentar de novo, ou desligue o alternador \"Transcrição em tempo real\"."
+        );
+      });
+    }
+
+    function cortarPorSegurancaTempoReal() {
+      timeoutCorteSeguranca = null;
+      corteSegurancaTempoRealAtivado = true;
+      pararGravacaoTempoReal();
+    }
+
+    function pararGravacaoTempoReal() {
+      fechandoTempoRealDeliberadamente = true;
+
+      // Para a captura local (microfone, timers, análise de nível) imediatamente em qualquer
+      // modo — não há motivo para continuar mandando áudio novo depois do stop. O WebSocket em si
+      // só fecha depois de aguardarmos (ou desistirmos de aguardar) o fim do turno em andamento.
+      if (modoTurnoApi) {
+        // Não há commit manual pra mandar: quem fecha o turno é o server_vad, e não temos como
+        // saber se a API ainda está processando o que acabou de ser falado. Reaproveita o mesmo
+        // timeout de segurança do modo "por tempo" como prazo de tolerância — fecha assim que o
+        // "completed" do turno em andamento chegar (ver handler de mensagens), ou ao esgotar o
+        // prazo, o que vier primeiro. Sem isso a interface travaria esperando um evento que pode
+        // nunca chegar (ex.: sessão já estava em silêncio havia tempo).
+        limparRecursosTempoReal();
+        aguardandoUltimoTurnoTempoReal = true;
+        botaoGravacaoRapida.disabled = true;
+        mostrarStatusGravacao("carregando", "Encerrando… aguardando a transcrição do último trecho.");
+        timeoutEsperaUltimoTurnoTempoReal = setTimeout(() => {
+          timeoutEsperaUltimoTurnoTempoReal = null;
+          finalizarFechamentoTempoReal();
+        }, TIMEOUT_ESPERA_ULTIMO_TURNO_TEMPO_REAL_MS);
+        return;
+      }
+
+      const podeComitarFinal = wsTempoReal && wsTempoReal.readyState === WebSocket.OPEN &&
+        bytesDesdeUltimoCommitTempoReal >= MINIMO_BYTES_PARA_COMMIT_TEMPO_REAL;
+
+      if (podeComitarFinal) {
+        try {
+          wsTempoReal.send(JSON.stringify({ type: "input_audio_buffer.commit" }));
+          commitsPendentesTempoReal++;
+        } catch (_) { /* conexão já pode estar fechando */ }
+      }
+      bytesDesdeUltimoCommitTempoReal = 0;
+
+      limparRecursosTempoReal();
+
+      if (commitsPendentesTempoReal > 0) {
+        aguardandoUltimoTurnoTempoReal = true;
+        botaoGravacaoRapida.disabled = true;
+        mostrarStatusGravacao("carregando", "Encerrando… aguardando a transcrição do último trecho.");
+        timeoutEsperaUltimoTurnoTempoReal = setTimeout(() => {
+          timeoutEsperaUltimoTurnoTempoReal = null;
+          finalizarFechamentoTempoReal();
+        }, TIMEOUT_ESPERA_ULTIMO_TURNO_TEMPO_REAL_MS);
+        return;
+      }
+
+      finalizarFechamentoTempoReal();
+    }
+
+    function finalizarFechamentoTempoReal() {
+      aguardandoUltimoTurnoTempoReal = false;
+      if (timeoutEsperaUltimoTurnoTempoReal) {
+        clearTimeout(timeoutEsperaUltimoTurnoTempoReal);
+        timeoutEsperaUltimoTurnoTempoReal = null;
+      }
+
+      if (wsTempoReal) {
+        try {
+          wsTempoReal.close();
+        } catch (_) { /* já fechado */ }
+      }
+      wsTempoReal = null;
+      commitsPendentesTempoReal = 0;
+
+      botaoGravacaoRapida.classList.remove("gravando");
+      botaoGravacaoRapida.setAttribute("aria-label", "Iniciar gravação");
+      botaoGravacaoRapida.disabled = false;
+      botaoTempoReal.disabled = false;
+      gravandoTempoRealEmAndamento = false;
+
+      // Sessão inteira em silêncio: picoVolumeRapido guarda o pico observado ao longo de toda a
+      // sessão que acabou de terminar (só é resetado no início da próxima gravação) — mesma
+      // checagem de "nenhuma fala" da gravação normal, adaptada para avisar mesmo sem bloquear o
+      // envio (aqui o envio já é decidido continuamente pelo gate de silêncio, não no fim).
+      if (analisadorAtivoNestaGravacao && picoVolumeRapido < LIMIAR_SILENCIO) {
+        mostrarToastSemFala();
+      }
+
+      if (corteSegurancaTempoRealAtivado) {
+        corteSegurancaTempoRealAtivado = false;
+        mostrarStatusGravacao("erro", AVISO_CORTE_SEGURANCA_TEMPO_REAL);
+      } else {
+        mostrarStatusGravacao("sucesso", "Gravação em tempo real encerrada.");
+      }
+    }
+  </script>
+</body>
+</html>
