@@ -93,8 +93,6 @@
       text-align: center;
     }
 
-    .linha-gravacao-rapida { display: flex; align-items: center; justify-content: center; gap: 0.85rem; }
-
     #botaoGravacaoRapida {
       justify-self: center;
       width: 4.5rem;
@@ -109,8 +107,94 @@
     #botaoGravacaoRapida:hover:not(:disabled) { background: #6d28d9; }
     #botaoGravacaoRapida svg { width: 1.75rem; height: 1.75rem; fill: #fff; }
 
+    /* Ícone do botão: microfone (parado), quadrado (gravando) ou spinner (processando — enviando
+       para transcrição, ou aguardando o último turno do tempo real). Os três ficam sempre no DOM;
+       só a classe do botão decide qual aparece. */
+    #botaoGravacaoRapida #iconeParar,
+    #botaoGravacaoRapida #spinnerGravacao { display: none; }
+    #botaoGravacaoRapida.gravando #iconeMicrofone { display: none; }
+    #botaoGravacaoRapida.gravando #iconeParar { display: block; }
+    #botaoGravacaoRapida.processando #iconeMicrofone { display: none; }
+    #botaoGravacaoRapida.processando #spinnerGravacao { display: block; }
+
     #botaoGravacaoRapida.gravando { background: #dc2626; animation: pulsar 1.2s infinite; }
     #botaoGravacaoRapida.gravando:hover:not(:disabled) { background: #b91c1c; }
+
+    /* Processando (spinner): o botão fica desabilitado (ver JS), então a regra genérica
+       "button:disabled" pintaria de cinza — a especificidade do ID+classe aqui vence e mantém a
+       cor de "em andamento" em vez do cinza padrão de desabilitado. */
+    #botaoGravacaoRapida.processando { background: #2563eb; }
+
+    .spinner-botao {
+      width: 1.6rem;
+      height: 1.6rem;
+      border: 3px solid rgba(255, 255, 255, 0.35);
+      border-top-color: #fff;
+      border-radius: 50%;
+      animation: girar 0.8s linear infinite;
+    }
+    @keyframes girar { to { transform: rotate(360deg); } }
+
+    #botaoCancelarGravacaoRapida {
+      justify-self: start;
+      width: 2.75rem;
+      height: 2.75rem;
+      padding: 0;
+      border-radius: 50%;
+      background: #fee2e2;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    #botaoCancelarGravacaoRapida:hover:not(:disabled) { background: #fecaca; }
+    #botaoCancelarGravacaoRapida svg { width: 1.25rem; height: 1.25rem; fill: #b91c1c; }
+
+    /* Faixa de controles no topo da seção de gravação: coluna central de largura FIXA (4.5rem —
+       exatamente o tamanho do botão de gravar) ladeada por duas colunas flexíveis e SIMÉTRICAS
+       (1fr cada). Como as duas laterais têm o mesmo tamanho flexível, elas se equilibram e
+       mantêm o centro fixo geometricamente no meio do contêiner — e como nem a largura da coluna
+       central nem o gap mudam quando o cancelar aparece/some (display:none não afeta o tamanho de
+       uma coluna do grid), o botão de gravar nunca se move. O "vão pequeno" pedido no acabamento
+       vem do próprio column-gap; a proximidade vem de alinhar o conteúdo de cada lateral para a
+       borda que encosta na coluna central (justify-self: end/start abaixo), em vez de para a
+       borda externa do contêiner.  */
+    .controles-gravacao-rapida {
+      display: grid;
+      grid-template-columns: 1fr 4.5rem 1fr;
+      column-gap: 0.6rem;
+      align-items: center;
+      width: 100%;
+    }
+    .coluna-centro-gravacao { justify-self: center; }
+
+    .wrapper-menu-avancado { position: relative; justify-self: end; }
+    .popup-menu-avancado {
+      position: absolute;
+      top: calc(100% + 0.4rem);
+      left: 0;
+      background: #fff;
+      border: 1px solid #d9e2ec;
+      border-radius: 0.5rem;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      padding: 0.4rem;
+      display: grid;
+      gap: 0.2rem;
+      z-index: 15;
+      min-width: 11rem;
+    }
+    .item-menu-avancado {
+      justify-self: stretch;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      background: transparent;
+      color: #1f2933;
+      padding: 0.5rem 0.6rem;
+      font-weight: 500;
+      border-radius: 0.375rem;
+    }
+    .item-menu-avancado:hover:not(:disabled) { background: #f0f4f8; }
+    .item-menu-avancado svg { width: 1.15rem; height: 1.15rem; fill: #334155; flex-shrink: 0; }
 
     #cronometroGravacaoRapida {
       font-variant-numeric: tabular-nums;
@@ -179,10 +263,12 @@
     }
     #botaoFecharConfiguracoes:hover:not(:disabled), #botaoFecharConsumo:hover:not(:disabled) { background: #cbd2d9; }
 
-    #statusGravacaoRapida { min-height: 1.2rem; font-size: 0.9rem; }
-    #statusGravacaoRapida.erro { color: #b91c1c; }
-    #statusGravacaoRapida.sucesso { color: #047857; }
-    #statusGravacaoRapida.carregando { color: #1e40af; }
+    /* Status vira balão efêmero (reaproveita a classe .toast, ver mais abaixo) — some sozinho depois
+       de alguns segundos (ver JS, mostrarStatusGravacao). Cor de fundo diferencia confirmação de
+       erro; "em andamento" não usa mais texto (o botão vira spinner), então não tem cor própria
+       aqui. */
+    #statusGravacaoRapida.confirmacao { background: #047857; }
+    #statusGravacaoRapida.erro { background: #b91c1c; }
 
     #consumoErro { color: #b91c1c; }
     #consumoCarregando { color: #1e40af; }
@@ -273,6 +359,33 @@
     .ponto-linha-tempo { cursor: pointer; }
     .ponto-linha-tempo:focus { outline: 2px solid #2563eb; outline-offset: 2px; }
 
+    /* Estado "ativada": liga quando o usuário clica no container (fora dos pontos) — sinaliza
+       que a roda passou a deslizar a janela em vez de trocar de escala. */
+    .linha-tempo-consumo.ativada {
+      outline: 2px solid #7c3aed;
+      outline-offset: 2px;
+      border-radius: 0.25rem;
+    }
+
+    .linha-tempo-cabecalho-controles { display: flex; align-items: center; gap: 0.5rem; }
+    #estadoRodaLinhaTempo { font-size: 0.75rem; color: #52606d; white-space: nowrap; }
+    #estadoRodaLinhaTempo.ativada { color: #7c3aed; font-weight: 600; }
+
+    .navegacao-janela-linha-tempo { margin-top: 0.35rem; }
+    .controles-janela-linha-tempo { display: flex; align-items: center; gap: 0.5rem; }
+    .controles-janela-linha-tempo input[type="range"] { flex: 1 1 auto; }
+    .botao-navegacao-janela {
+      justify-self: initial;
+      padding: 0.3rem 0.6rem;
+      border: 1px solid #bcccdc;
+      border-radius: 0.375rem;
+      background: #fff;
+      color: #334155;
+      font-size: 0.75rem;
+      white-space: nowrap;
+    }
+    .botao-navegacao-janela:hover:not(:disabled) { background: #f0f4f8; }
+
     #popupRequisicaoTexto {
       white-space: pre-wrap;
       font-size: 0.9rem;
@@ -292,13 +405,43 @@
       resize: vertical;
     }
 
+    /* Linha de ações abaixo da caixa de texto (fora dela, não mais sobreposta ao conteúdo) —
+       lixeira/desfazer à esquerda, copiar à direita, mesmos lados de antes. */
+    .acoes-campo-transcript {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 0.4rem;
+    }
+
+    .botao-icone-campo {
+      width: 2rem;
+      height: 2rem;
+      padding: 0;
+      border-radius: 50%;
+      background: #e4e7eb;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .botao-icone-campo:hover:not(:disabled) { background: #cbd2d9; }
+    .botao-icone-campo:disabled { background: transparent; opacity: 0.35; cursor: default; }
+    .botao-icone-campo svg { width: 1.05rem; height: 1.05rem; fill: #334155; }
+    /* Sem nada pra desfazer ainda: o botão de limpar some, mas com "visibility" (não "hidden" /
+       display:none) — assim ele continua ocupando o lugar dele na linha, e o de copiar não pula
+       para a ponta esquerda por falta de par no "justify-content: space-between". */
+    #botaoLimparTranscript.invisivel { visibility: hidden; }
+    /* Ícone de lixeira/desfazer: os dois ficam no DOM, a classe do botão decide qual aparece. */
+    #botaoLimparTranscript #iconeDesfazer { display: none; }
+    #botaoLimparTranscript.modo-desfazer #iconeLixeira { display: none; }
+    #botaoLimparTranscript.modo-desfazer #iconeDesfazer { display: block; }
+
     .dica { color: #52606d; font-size: 0.85rem; }
 
     .alternador-modelo { display: flex; align-items: center; gap: 0.6rem; flex-wrap: wrap; margin-bottom: 1.5rem; }
     .rotulo-modelo { font-weight: 600; }
     .dica-modelo { color: #9aa5b1; font-size: 0.8rem; }
 
-    #botaoModelo, #botaoStreaming, #botaoTempoReal, #botaoControleTurno {
+    #botaoModelo, #botaoStreaming, #botaoTempoReal {
       justify-self: initial;
       padding: 0.35rem 0.9rem;
       border: 1px solid #2563eb;
@@ -307,21 +450,27 @@
       color: #1d4ed8;
       font-weight: 600;
     }
-    #botaoModelo:hover:not(:disabled), #botaoStreaming:hover:not(:disabled), #botaoTempoReal:hover:not(:disabled), #botaoControleTurno:hover:not(:disabled) { background: #dbeafe; }
+    #botaoModelo:hover:not(:disabled), #botaoStreaming:hover:not(:disabled), #botaoTempoReal:hover:not(:disabled) { background: #dbeafe; }
 
     #barrasNivel {
       display: flex;
-      align-items: flex-end;
+      align-items: center; /* espelha: cada barra cresce pra cima E pra baixo a partir do centro */
       justify-content: center;
-      gap: 0.25rem;
+      gap: 1px;
       height: 2.5rem;
       width: 100%;
+      overflow: hidden; /* segurança extra contra transbordo em telas muito estreitas */
     }
     #barrasNivel .barra {
-      width: 0.3rem;
+      /* Largura em flex (não em rem fixo): com dezenas de barras, um valor fixo ou transborda em
+         telas largas ou aperta demais em telas estreitas — flex:1 faz a faixa sempre caber na
+         largura do painel, distribuindo o espaço disponível igualmente entre as barras. */
+      flex: 1 1 0;
+      min-width: 1px;
+      max-width: 3px; /* fina de verdade — o acabamento pediu, largura da barra já não limita mais a faixa */
       height: 15%;
-      min-height: 0.2rem;
-      border-radius: 999px;
+      min-height: 2px;
+      border-radius: 999px; /* arredondamento total nas duas pontas — em repouso vira um ponto/círculo */
       background: #7c3aed;
     }
 
@@ -367,12 +516,6 @@
       <span class="dica-modelo">(só afeta a gravação rápida abaixo — texto aparece enquanto você ainda fala, via WebSocket direto com a OpenAI)</span>
     </div>
 
-    <div class="alternador-modelo" id="linhaControleTurno" hidden>
-      <span class="rotulo-modelo">Controle de turno:</span>
-      <button type="button" id="botaoControleTurno"></button>
-      <span class="dica-modelo">(só aparece com a transcrição em tempo real ligada — decide quem fecha cada turno: um timer de 6s no navegador, ou a detecção de fala da própria API)</span>
-    </div>
-
     <form id="formulario">
       <div>
         <label for="audio">Arquivo de áudio (.m4a, .wav, .mp3)</label>
@@ -385,36 +528,75 @@
     <p class="separador">ou</p>
 
     <section id="gravacao-rapida">
-      <div class="linha-gravacao-rapida">
-        <button type="button" id="botaoGravacaoRapida" aria-label="Iniciar gravação">
+      <div class="controles-gravacao-rapida">
+        <div class="wrapper-menu-avancado">
+          <button type="button" id="botaoMenuAvancado" class="icone-avancado" aria-label="Mais opções" aria-haspopup="menu" aria-expanded="false">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <circle cx="12" cy="5" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="12" cy="19" r="2"/>
+            </svg>
+          </button>
+          <div id="popupMenuAvancado" class="popup-menu-avancado" role="menu" hidden>
+            <button type="button" id="botaoConfiguracoes" class="item-menu-avancado" role="menuitem" aria-label="Abrir configurações" aria-haspopup="dialog">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M12 15.5a3.5 3.5 0 1 1 0-7 3.5 3.5 0 0 1 0 7Zm8.94-3.5a7.4 7.4 0 0 0-.14-1.4l1.87-1.46a.6.6 0 0 0 .14-.76l-1.77-3.06a.6.6 0 0 0-.72-.26l-2.2.88a7.5 7.5 0 0 0-1.21-.7l-.34-2.34a.6.6 0 0 0-.6-.5h-3.54a.6.6 0 0 0-.6.5l-.33 2.34c-.44.18-.85.41-1.22.7l-2.2-.88a.6.6 0 0 0-.72.26L5.19 8.38a.6.6 0 0 0 .14.76l1.87 1.46c-.09.46-.14.92-.14 1.4s.05.94.14 1.4l-1.87 1.46a.6.6 0 0 0-.14.76l1.77 3.06c.15.25.46.35.72.26l2.2-.88c.37.29.78.52 1.22.7l.33 2.34c.05.29.3.5.6.5h3.54c.3 0 .55-.21.6-.5l.34-2.34c.43-.18.84-.41 1.21-.7l2.2.88c.26.09.57 0 .72-.26l1.77-3.06a.6.6 0 0 0-.14-.76l-1.87-1.46c.1-.46.14-.92.14-1.4Z"/>
+              </svg>
+              Configurações
+            </button>
+            <button type="button" id="botaoConsumo" class="item-menu-avancado" role="menuitem" aria-label="Abrir consumo" aria-haspopup="dialog">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M4 20a1 1 0 0 1-1-1v-6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v6a1 1 0 0 1-1 1H4Zm7 0a1 1 0 0 1-1-1V9a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1h-2Zm7 0a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v15a1 1 0 0 1-1 1h-2Z"/>
+              </svg>
+              Consumo
+            </button>
+          </div>
+        </div>
+
+        <div class="coluna-centro-gravacao">
+          <button type="button" id="botaoGravacaoRapida" aria-label="Iniciar gravação">
+            <svg id="iconeMicrofone" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M12 15a3 3 0 0 0 3-3V6a3 3 0 0 0-6 0v6a3 3 0 0 0 3 3Z"/>
+              <path d="M19 11a1 1 0 0 0-2 0 5 5 0 0 1-10 0 1 1 0 0 0-2 0 7 7 0 0 0 6 6.93V20H9a1 1 0 0 0 0 2h6a1 1 0 0 0 0-2h-2v-2.07A7 7 0 0 0 19 11Z"/>
+            </svg>
+            <svg id="iconeParar" viewBox="0 0 24 24" aria-hidden="true">
+              <rect x="6" y="6" width="12" height="12" rx="2"/>
+            </svg>
+            <span id="spinnerGravacao" class="spinner-botao" aria-hidden="true"></span>
+          </button>
+        </div>
+
+        <button type="button" id="botaoCancelarGravacaoRapida" aria-label="Cancelar gravação" hidden>
           <svg viewBox="0 0 24 24" aria-hidden="true">
-            <path d="M12 15a3 3 0 0 0 3-3V6a3 3 0 0 0-6 0v6a3 3 0 0 0 3 3Z"/>
-            <path d="M19 11a1 1 0 0 0-2 0 5 5 0 0 1-10 0 1 1 0 0 0-2 0 7 7 0 0 0 6 6.93V20H9a1 1 0 0 0 0 2h6a1 1 0 0 0 0-2h-2v-2.07A7 7 0 0 0 19 11Z"/>
-          </svg>
-        </button>
-        <button type="button" id="botaoConfiguracoes" class="icone-avancado" aria-label="Abrir configurações" aria-haspopup="dialog" aria-expanded="false">
-          <svg viewBox="0 0 24 24" aria-hidden="true">
-            <path d="M12 15.5a3.5 3.5 0 1 1 0-7 3.5 3.5 0 0 1 0 7Zm8.94-3.5a7.4 7.4 0 0 0-.14-1.4l1.87-1.46a.6.6 0 0 0 .14-.76l-1.77-3.06a.6.6 0 0 0-.72-.26l-2.2.88a7.5 7.5 0 0 0-1.21-.7l-.34-2.34a.6.6 0 0 0-.6-.5h-3.54a.6.6 0 0 0-.6.5l-.33 2.34c-.44.18-.85.41-1.22.7l-2.2-.88a.6.6 0 0 0-.72.26L5.19 8.38a.6.6 0 0 0 .14.76l1.87 1.46c-.09.46-.14.92-.14 1.4s.05.94.14 1.4l-1.87 1.46a.6.6 0 0 0-.14.76l1.77 3.06c.15.25.46.35.72.26l2.2-.88c.37.29.78.52 1.22.7l.33 2.34c.05.29.3.5.6.5h3.54c.3 0 .55-.21.6-.5l.34-2.34c.43-.18.84-.41 1.21-.7l2.2.88c.26.09.57 0 .72-.26l1.77-3.06a.6.6 0 0 0-.14-.76l-1.87-1.46c.1-.46.14-.92.14-1.4Z"/>
-          </svg>
-        </button>
-        <button type="button" id="botaoConsumo" class="icone-avancado" aria-label="Abrir consumo" aria-haspopup="dialog" aria-expanded="false">
-          <svg viewBox="0 0 24 24" aria-hidden="true">
-            <path d="M4 20a1 1 0 0 1-1-1v-6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v6a1 1 0 0 1-1 1H4Zm7 0a1 1 0 0 1-1-1V9a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1h-2Zm7 0a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v15a1 1 0 0 1-1 1h-2Z"/>
+            <path d="M6.4 4.98 12 10.59l5.6-5.61L19.02 6.4 13.41 12l5.61 5.6-1.42 1.42L12 13.41l-5.6 5.61-1.42-1.42L10.59 12 4.98 6.4Z"/>
           </svg>
         </button>
       </div>
+
       <p id="cronometroGravacaoRapida" aria-live="off" hidden>00:00</p>
       <div id="barrasNivel" aria-hidden="true" hidden></div>
-      <p class="dica">Clique para gravar; clique de novo para parar e transcrever automaticamente. Usa o modelo do alternador acima.</p>
-      <p id="statusGravacaoRapida" aria-live="polite"></p>
 
       <div class="campo-transcript">
-        <label for="transcriptRapido">Transcrição por voz (editável, soma cada gravação)</label>
-        <textarea id="transcriptRapido" placeholder="O texto de cada gravação aparece aqui — edite à vontade."></textarea>
+        <textarea id="transcriptRapido" aria-label="Transcrição por voz (editável, soma cada gravação)"></textarea>
+        <div class="acoes-campo-transcript">
+          <button type="button" id="botaoLimparTranscript" class="botao-icone-campo invisivel" aria-label="Apagar transcrição" title="Apagar transcrição" disabled>
+            <svg id="iconeLixeira" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M9 3a1 1 0 0 0-1 1v1H5a1 1 0 0 0 0 2h1v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V7h1a1 1 0 1 0 0-2h-3V4a1 1 0 0 0-1-1H9Zm1 2h4v1h-4V5ZM8 7h8v12H8V7Zm2 2a1 1 0 0 0-1 1v6a1 1 0 1 0 2 0v-6a1 1 0 0 0-1-1Zm4 0a1 1 0 0 0-1 1v6a1 1 0 1 0 2 0v-6a1 1 0 0 0-1-1Z"/>
+            </svg>
+            <svg id="iconeDesfazer" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M12.5 8c-2.65 0-5.05.99-6.9 2.6L2 7v9h9l-3.62-3.62c1.39-1.16 3.16-1.88 5.12-1.88 3.54 0 6.55 2.31 7.6 5.5l2.37-.78C21.08 11.03 17.15 8 12.5 8Z"/>
+            </svg>
+          </button>
+          <button type="button" id="botaoCopiarTranscript" class="botao-icone-campo" aria-label="Copiar texto" title="Copiar texto">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M16 1H4a2 2 0 0 0-2 2v14h2V3h12V1Zm3 4H8a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h11a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2Zm0 16H8V7h11v14Z"/>
+            </svg>
+          </button>
+        </div>
       </div>
     </section>
 
     <div id="resultado" aria-live="polite"></div>
+
+    <p id="statusGravacaoRapida" aria-live="polite" hidden></p>
 
     <div id="toastSemFala" class="toast" role="status" hidden>Não foi identificado nenhuma fala</div>
 
@@ -455,7 +637,25 @@
         <div id="blocoLinhaTempoConsumo" hidden>
           <div class="linha-tempo-cabecalho">
             <p class="dica" style="margin-bottom: 0;">Linha do tempo das requisições</p>
-            <button type="button" id="botaoZoomLinhaTempo"></button>
+            <div class="linha-tempo-cabecalho-controles">
+              <span id="estadoRodaLinhaTempo"></span>
+              <button type="button" id="botaoZoomLinhaTempo"></button>
+            </div>
+          </div>
+          <div id="navegacaoDiaLinhaTempo" class="navegacao-janela-linha-tempo" hidden>
+            <p id="periodoDiaLinhaTempo" class="dica" style="margin-bottom: 0.25rem;"></p>
+            <div class="controles-janela-linha-tempo">
+              <button type="button" id="botaoDiaAnterior" class="botao-navegacao-janela">◀ Dia anterior</button>
+              <button type="button" id="botaoDiaSeguinte" class="botao-navegacao-janela">Dia seguinte ▶</button>
+            </div>
+          </div>
+          <div id="navegacaoJanelaLinhaTempo" class="navegacao-janela-linha-tempo" hidden>
+            <p id="periodoJanelaLinhaTempo" class="dica" style="margin-bottom: 0.25rem;"></p>
+            <div class="controles-janela-linha-tempo">
+              <button type="button" id="botaoInicioJanela" class="botao-navegacao-janela">Início (24h atrás)</button>
+              <input type="range" id="deslizadorJanelaLinhaTempo" aria-label="Posição da janela dentro das últimas 24 horas">
+              <button type="button" id="botaoFimJanela" class="botao-navegacao-janela">Mais recente</button>
+            </div>
           </div>
           <div id="linhaTempoConsumo" class="linha-tempo-consumo"></div>
         </div>
@@ -555,34 +755,9 @@
       if (gravandoTempoRealEmAndamento || gravandoNormal) return;
       tempoRealLigado = !tempoRealLigado;
       atualizarBotaoTempoReal();
-      // O controle de turno só faz sentido com o tempo real ligado — some da tela junto com ele,
-      // em vez de ficar visível e sem efeito nenhum.
-      linhaControleTurno.hidden = !tempoRealLigado;
     });
 
     atualizarBotaoTempoReal();
-
-    // --- Controle de turno (só vale com o tempo real ligado, ver alternador acima) ---
-    // "tempo" (padrão): timer no navegador comita a cada 6s, igual à Etapa 1. "api": a própria
-    // Realtime API decide o fim de cada turno (server_vad) — ver justificativa e fonte da doc
-    // oficial no README, seção "Transcrição em tempo real".
-
-    const botaoControleTurno = document.getElementById("botaoControleTurno");
-    const linhaControleTurno = document.getElementById("linhaControleTurno");
-    let modoTurnoApi = false;
-
-    function atualizarBotaoControleTurno() {
-      botaoControleTurno.textContent = modoTurnoApi ? "turnos pela API" : "turnos por tempo (6s)";
-    }
-
-    botaoControleTurno.addEventListener("click", () => {
-      const gravandoNormal = mediaRecorderRapido && mediaRecorderRapido.state === "recording";
-      if (gravandoTempoRealEmAndamento || gravandoNormal) return;
-      modoTurnoApi = !modoTurnoApi;
-      atualizarBotaoControleTurno();
-    });
-
-    atualizarBotaoControleTurno();
 
     // Lê a resposta em streaming do backend (NDJSON: uma linha JSON por evento — "delta" com um
     // pedaço de texto, "final" com o texto completo, ou "erro" com uma mensagem). Chama os
@@ -696,6 +871,34 @@
       }
     });
 
+    // --- Menu de três pontos (agrupa configurações e consumo, que hoje ficavam soltos na linha) ---
+
+    const botaoMenuAvancado = document.getElementById("botaoMenuAvancado");
+    const popupMenuAvancado = document.getElementById("popupMenuAvancado");
+
+    function abrirMenuAvancado() {
+      popupMenuAvancado.hidden = false;
+      botaoMenuAvancado.setAttribute("aria-expanded", "true");
+    }
+
+    function fecharMenuAvancado() {
+      popupMenuAvancado.hidden = true;
+      botaoMenuAvancado.setAttribute("aria-expanded", "false");
+    }
+
+    botaoMenuAvancado.addEventListener("click", () => {
+      if (popupMenuAvancado.hidden) abrirMenuAvancado(); else fecharMenuAvancado();
+    });
+    document.addEventListener("click", (evento) => {
+      if (popupMenuAvancado.hidden) return;
+      if (evento.target === botaoMenuAvancado || botaoMenuAvancado.contains(evento.target)) return;
+      if (popupMenuAvancado.contains(evento.target)) return;
+      fecharMenuAvancado();
+    });
+    document.addEventListener("keydown", (evento) => {
+      if (evento.key === "Escape" && !popupMenuAvancado.hidden) fecharMenuAvancado();
+    });
+
     // --- Configurações (seletor de dispositivo de entrada) ---
 
     const botaoConfiguracoes = document.getElementById("botaoConfiguracoes");
@@ -755,6 +958,7 @@
     });
 
     function abrirConfiguracoes() {
+      fecharMenuAvancado();
       fundoConfiguracoes.hidden = false;
       botaoConfiguracoes.setAttribute("aria-expanded", "true");
       popularDispositivos();
@@ -790,6 +994,16 @@
     const blocoLinhaTempoConsumo = document.getElementById("blocoLinhaTempoConsumo");
     const linhaTempoConsumo = document.getElementById("linhaTempoConsumo");
     const botaoZoomLinhaTempo = document.getElementById("botaoZoomLinhaTempo");
+    const estadoRodaLinhaTempo = document.getElementById("estadoRodaLinhaTempo");
+    const navegacaoJanelaLinhaTempo = document.getElementById("navegacaoJanelaLinhaTempo");
+    const periodoJanelaLinhaTempo = document.getElementById("periodoJanelaLinhaTempo");
+    const deslizadorJanelaLinhaTempo = document.getElementById("deslizadorJanelaLinhaTempo");
+    const botaoInicioJanela = document.getElementById("botaoInicioJanela");
+    const botaoFimJanela = document.getElementById("botaoFimJanela");
+    const navegacaoDiaLinhaTempo = document.getElementById("navegacaoDiaLinhaTempo");
+    const periodoDiaLinhaTempo = document.getElementById("periodoDiaLinhaTempo");
+    const botaoDiaAnterior = document.getElementById("botaoDiaAnterior");
+    const botaoDiaSeguinte = document.getElementById("botaoDiaSeguinte");
     const fundoPopupRequisicao = document.getElementById("fundoPopupRequisicao");
     const botaoFecharPopupRequisicao = document.getElementById("botaoFecharPopupRequisicao");
     const popupRequisicaoMeta = document.getElementById("popupRequisicaoMeta");
@@ -821,9 +1035,55 @@
     // <title> no hover e no popup de clique; alvo de clique/hover de raio 14 (~28px), maior que
     // o desenho do ponto.
     const SVG_NS = "http://www.w3.org/2000/svg";
-    const PX_POR_SEGUNDO_ESCALA_MINUTO = 10;
-    let escalaLinhaTempo = "hora"; // "hora" (cabe o dia todo) | "minuto" (separa pontos próximos)
+    // Escala "minuto" virou uma janela móvel (Etapa 2 do PLANO): em vez de desenhar o histórico
+    // inteiro, mostra um recorte de largura fixa dentro das últimas 24h, e o usuário desliza esse
+    // recorte. Isso prende a largura do SVG a um teto fixo, que não cresce com quanto
+    // consumo.jsonl já acumulou — a 10px/s (valor antigo), só as 24h já dariam 864.000px, e o
+    // histórico real (~30h) dava 1,08 milhão. Com janela de 3min a 15px/s o teto passa a ser
+    // sempre 2.700px, não importa quanto histórico exista.
+    const PX_POR_SEGUNDO_ESCALA_MINUTO = 15; // 50% mais zoom que o valor anterior (10px/s)
+    const LARGURA_JANELA_MINUTO_MS = 3 * 60 * 1000; // "poucos minutos" — a 15px/s, 3s de distância já viram 45px, bem além do alvo de clique (r=14 -> 28px)
+    const JANELA_24H_MS = 24 * 60 * 60 * 1000;
+    // Folga nas duas pontas do recorte desenhado (não da janela "real" usada para decidir quais
+    // pontos aparecem, nem do deslizador): sem isto, quando a janela encosta numa ponta das 24h
+    // (o caso mais comum — abre sempre no trecho mais recente), o ponto exatamente na borda cai
+    // em cima do limite do SVG e metade do alvo de clique fica cortada pelo container.
+    const MARGEM_BORDA_JANELA_MS = 3000;
+    // Duração de um dia civil, para a navegação por dias da escala "hora" (correção aprovada em
+    // 2026-08-20). Mesma folga de desenho da escala "minuto" (MARGEM_BORDA_JANELA_MS), aplicada
+    // aqui às bordas do dia — sem ela, um ponto bem em cima da meia-noite ficaria com o alvo de
+    // clique colado na borda do SVG.
+    const DURACAO_DIA_MS = 24 * 60 * 60 * 1000;
+    const MARGEM_BORDA_DIA_MS = 3000;
+    let escalaLinhaTempo = "hora"; // "hora" (um dia por vez) | "minuto" (janela móvel de 24h)
     let ultimasRequisicoesConsumo = [];
+    // Auto-scroll do container para o último ponto do recorte renderizado: só faz sentido em
+    // momentos em que o usuário ainda não está olhando um trecho específico — abrir o painel,
+    // trocar de escala, ou pular para uma ponta pelos botões. Em qualquer redesenho disparado pelo
+    // próprio ato de deslizar (roda ativada, arrastar o deslizador) ele é destrutivo: o redesenho
+    // reaplicaria o scroll pro fim a cada giro, e é exatamente esse o bug relatado ("vai direto pro
+    // fim" em vez de deslizar). A flag abaixo é ligada nos poucos pontos em que o pulo faz sentido
+    // e consumida (desligada) no próprio render — nos demais casos o container abre pelo início do
+    // recorte redesenhado (scrollLeft = 0); como o recorte em si se desloca de forma equivalente ao
+    // giro, o efeito visual é uma rolagem contínua no mesmo sentido do giro, nunca um salto.
+    let rolarParaUltimoPontoNaProximaRenderizacao = true;
+    // Dia (meia-noite local, em ms) mostrado na escala "hora" — null até a primeira renderização
+    // depois de abrir o painel (garantirDiaSelecionado recalcula para o dia da requisição mais
+    // recente). Ver sincronizarDiaComMinuto/sincronizarMinutoComDia para como as duas escalas
+    // concordam sobre o período ao trocar de uma para a outra.
+    let diaSelecionadoHora = null;
+
+    // Âncora do fim da janela de 24h: a requisição mais recente, não Date.now() — senão quem
+    // abre o painel depois de dias sem usar o app vê a janela vazia (decisão do PLANO). Fica null
+    // até a primeira renderização depois de abrir o painel (ver abrirConsumo), que a recalcula.
+    let ancoraFimJanela = null;
+    // Deslocamento do início da janela em relação ao início das 24h (0 = início das 24h; máximo
+    // = janela encostada no fim, isto é, no trecho mais recente).
+    let deslocamentoJanelaMs = 0;
+    // Estado "ativada" da linha do tempo: liga por clique em qualquer área do container que não
+    // seja um ponto, desliga por clique fora ou Esc. Enquanto ativada, a roda desliza a janela em
+    // vez de trocar de escala (ver handlers mais abaixo e o listener de "wheel").
+    let linhaTempoAtivada = false;
 
     // Escada de passos "redondos" para as marcas do eixo — sempre em fronteira de tempo local
     // legível (minuto/hora/dia cheios), nunca múltiplo cru de epoch (ver primeiraMarcaAlinhada).
@@ -906,6 +1166,249 @@
     }
     atualizarRotuloBotaoZoomLinhaTempo();
 
+    // --- Janela móvel de 24h (escala "minuto") ---
+
+    function formatarHoraCurta(data) {
+      return String(data.getHours()).padStart(2, "0") + ":" + String(data.getMinutes()).padStart(2, "0") + ":" + String(data.getSeconds()).padStart(2, "0");
+    }
+
+    // Calcula a âncora (fim das 24h = requisição mais recente) só na primeira renderização depois
+    // de abrir o painel — chamadas seguintes (trocar escala, deslizar, resetar sessão) preservam
+    // a âncora e a posição da janela que o usuário já escolheu.
+    function garantirAncoraJanela(validasTodas) {
+      if (ancoraFimJanela !== null) return;
+      ancoraFimJanela = validasTodas.length > 0
+        ? Math.max.apply(null, validasTodas.map((r) => r.dataHora.getTime()))
+        : Date.now();
+      deslocamentoJanelaMs = JANELA_24H_MS - LARGURA_JANELA_MINUTO_MS; // começa no trecho mais recente
+    }
+
+    function limitesJanela24h() {
+      return { inicio24h: ancoraFimJanela - JANELA_24H_MS, fim24h: ancoraFimJanela };
+    }
+
+    function deslocamentoMaximoJanela() {
+      return JANELA_24H_MS - LARGURA_JANELA_MINUTO_MS;
+    }
+
+    function limitesJanelaAtual() {
+      const { inicio24h } = limitesJanela24h();
+      const inicio = inicio24h + deslocamentoJanelaMs;
+      return { inicio, fim: inicio + LARGURA_JANELA_MINUTO_MS };
+    }
+
+    function moverJanelaPara(novoDeslocamentoMs) {
+      deslocamentoJanelaMs = Math.max(0, Math.min(deslocamentoMaximoJanela(), novoDeslocamentoMs));
+      renderizarLinhaTempoConsumo(ultimasRequisicoesConsumo);
+    }
+
+    // Roda desliza a janela quando ativada — sensibilidade amarrada à mesma escala de pixels do
+    // desenho (PX_POR_SEGUNDO_ESCALA_MINUTO), então girar a roda move o recorte no mesmo ritmo em
+    // que ele se desenharia arrastando o próprio SVG. É ajuste fino; alcançar as pontas das 24h é
+    // trabalho do deslizador/botões abaixo, não da roda (a distância é grande demais para isso).
+    // Na escala "hora" não há janela para deslizar (o dia inteiro já cabe fixo) — em vez disso a
+    // roda ativada navega entre dias, um dia por evento de roda, respeitando os limites de dias
+    // com dado (mesma checagem de navegarDia usada pelos botões "Dia anterior/seguinte"). Mesmo
+    // sentido de gesto nas duas escalas: deltaY positivo avança no tempo (decisão do usuário,
+    // 2026-08-20).
+    function deslizarJanela(deltaYpx) {
+      if (escalaLinhaTempo === "minuto") {
+        const pxPorMs = PX_POR_SEGUNDO_ESCALA_MINUTO / 1000;
+        moverJanelaPara(deslocamentoJanelaMs + deltaYpx / pxPorMs);
+        return;
+      }
+      navegarDia(deltaYpx > 0 ? 1 : -1, requisicoesValidas(ultimasRequisicoesConsumo));
+    }
+
+    function atualizarNavegacaoJanela() {
+      const emMinuto = escalaLinhaTempo === "minuto";
+      navegacaoJanelaLinhaTempo.hidden = !emMinuto;
+      if (!emMinuto) return;
+
+      const max = deslocamentoMaximoJanela();
+      deslizadorJanelaLinhaTempo.min = "0";
+      deslizadorJanelaLinhaTempo.max = String(Math.round(max / 1000));
+      deslizadorJanelaLinhaTempo.step = "1";
+      deslizadorJanelaLinhaTempo.value = String(Math.round(deslocamentoJanelaMs / 1000));
+
+      const { inicio24h, fim24h } = limitesJanela24h();
+      const { inicio, fim } = limitesJanelaAtual();
+      periodoJanelaLinhaTempo.textContent =
+        "Janela: " + formatarHoraCurta(new Date(inicio)) + " – " + formatarHoraCurta(new Date(fim)) +
+        " (recorte de " + Math.round(LARGURA_JANELA_MINUTO_MS / 60000) + " min) — dentro das últimas 24h, de " +
+        new Date(inicio24h).toLocaleString() + " a " + new Date(fim24h).toLocaleString() + ".";
+    }
+
+    deslizadorJanelaLinhaTempo.addEventListener("input", () => {
+      deslocamentoJanelaMs = Number(deslizadorJanelaLinhaTempo.value) * 1000;
+      renderizarLinhaTempoConsumo(ultimasRequisicoesConsumo);
+    });
+
+    botaoInicioJanela.addEventListener("click", () => moverJanelaPara(0));
+    botaoFimJanela.addEventListener("click", () => {
+      // Pular para a ponta mais recente é um dos poucos casos em que o salto de scroll faz
+      // sentido de novo (o usuário pediu explicitamente para ver o fim) — ver a flag no topo do
+      // arquivo. "Início" não precisa disso: scrollLeft = 0 (comportamento padrão do render) já é
+      // o começo do recorte, que é exatamente o que esse botão quer mostrar.
+      rolarParaUltimoPontoNaProximaRenderizacao = true;
+      moverJanelaPara(deslocamentoMaximoJanela());
+    });
+
+    // --- Navegação por dias (escala "hora") ---
+    // Correção aprovada em 2026-08-20, a pedido do usuário: em vez de comprimir o histórico
+    // inteiro na largura do painel, a escala "hora" passa a mostrar um dia por vez, com navegação
+    // para o dia anterior/seguinte — simetria com o recorte da escala "minuto" acima.
+
+    // Mapeia/filtra requisições cruas (timestamp string) para objetos com dataHora (Date) válida —
+    // mesma transformação que o render já fazia inline; extraída para ser reaproveitada pela
+    // navegação por dias (que precisa da mesma lista fora do render, para calcular limites).
+    function requisicoesValidas(requisicoes) {
+      return (Array.isArray(requisicoes) ? requisicoes : [])
+        .map((requisicao) => Object.assign({}, requisicao, { dataHora: new Date(requisicao.timestamp) }))
+        .filter((requisicao) => !isNaN(requisicao.dataHora));
+    }
+
+    function inicioDoDia(data) {
+      const d = new Date(data.getTime());
+      d.setHours(0, 0, 0, 0);
+      return d;
+    }
+
+    // Requisições fora do intervalo de dias com dado não são navegáveis (critério de pronto) —
+    // esse intervalo é [dia da requisição mais antiga, dia da requisição mais recente], não
+    // [ancoraFimJanela - 24h, ancoraFimJanela] (que é só o alcance da escala "minuto").
+    function limitesDiasComDados(validasTodas) {
+      const dias = validasTodas.map((requisicao) => inicioDoDia(requisicao.dataHora).getTime());
+      return { min: Math.min.apply(null, dias), max: Math.max.apply(null, dias) };
+    }
+
+    // Só recalcula se ainda não há dia escolhido nesta abertura do painel — chamadas seguintes
+    // (deslizar, trocar escala, resetar sessão) preservam o dia que o usuário já está olhando,
+    // mesmo espírito de garantirAncoraJanela.
+    function garantirDiaSelecionado(validasTodas) {
+      if (diaSelecionadoHora !== null) return;
+      const maisRecente = validasTodas.length > 0
+        ? new Date(Math.max.apply(null, validasTodas.map((requisicao) => requisicao.dataHora.getTime())))
+        : new Date();
+      diaSelecionadoHora = inicioDoDia(maisRecente).getTime();
+    }
+
+    function navegarDia(deltaDias, validasTodas) {
+      if (diaSelecionadoHora === null) return;
+      const alvo = new Date(diaSelecionadoHora);
+      alvo.setDate(alvo.getDate() + deltaDias);
+      const { min, max } = limitesDiasComDados(validasTodas);
+      if (alvo.getTime() < min || alvo.getTime() > max) return; // fora do intervalo com dados: não navega
+      diaSelecionadoHora = alvo.getTime();
+      renderizarLinhaTempoConsumo(ultimasRequisicoesConsumo);
+    }
+
+    botaoDiaAnterior.addEventListener("click", () => navegarDia(-1, requisicoesValidas(ultimasRequisicoesConsumo)));
+    botaoDiaSeguinte.addEventListener("click", () => navegarDia(1, requisicoesValidas(ultimasRequisicoesConsumo)));
+
+    function atualizarNavegacaoDia(validasTodas) {
+      const emHora = escalaLinhaTempo === "hora";
+      navegacaoDiaLinhaTempo.hidden = !emHora;
+      if (!emHora) return;
+
+      const { min, max } = limitesDiasComDados(validasTodas);
+      botaoDiaAnterior.disabled = diaSelecionadoHora <= min;
+      botaoDiaSeguinte.disabled = diaSelecionadoHora >= max;
+      periodoDiaLinhaTempo.textContent = "Dia: " + new Date(diaSelecionadoHora).toLocaleDateString();
+    }
+
+    // --- Concordância entre as duas escalas sobre o período exibido ---
+    // Trocar de escala não pode voltar para o trecho mais recente quando o usuário já escolheu um
+    // período específico numa das duas (ponto mais fácil de errar da tarefa, por pedido explícito
+    // do PLANO). A "âncora" de cada escala vem de fontes diferentes por natureza (o dia escolhido
+    // vs. a posição do deslizador dentro de uma janela fixa de 24h) — as funções abaixo traduzem
+    // uma para a outra no momento da troca.
+
+    // hora → minuto: reancora a janela de 24h da escala "minuto" na última requisição do dia
+    // selecionado (não em Date.now() nem na requisição mais recente de todo o histórico) e encosta
+    // o recorte nessa ponta — mesma régua de "abre no trecho mais recente" de sempre, só que
+    // relativa ao dia em vez de ao histórico inteiro. Reduz exatamente ao comportamento antigo
+    // quando o dia escolhido é o de hoje (a última requisição do dia É a mais recente de todo o
+    // histórico, mesmo valor de antes) — sem essa cautela, ancorar direto na meia-noite do dia
+    // faria o caso comum (trocar de escala sem nunca ter navegado por dia) abrir com a janela
+    // encostada numa meia-noite sem nenhuma requisição por perto, regressão do critério já validado
+    // na Etapa 2. Se o dia não tiver nenhuma requisição, não há onde ancorar de verdade — cai no
+    // fim do próprio dia (meia-noite do dia seguinte); o recorte abre vazio (mesmo aviso de
+    // "nenhuma requisição neste recorte"), e o usuário ainda pode deslizar dentro das 24h ancoradas
+    // nesse dia para conferir que realmente não há nada ali perto.
+    function sincronizarMinutoComDia(validasTodas) {
+      if (diaSelecionadoHora === null) return; // "hora" nunca foi renderizada nesta abertura: deixa o próximo render escolher o padrão de sempre
+      const doDia = validasTodas.filter(
+        (requisicao) => inicioDoDia(requisicao.dataHora).getTime() === diaSelecionadoHora
+      );
+      ancoraFimJanela = doDia.length > 0
+        ? Math.max.apply(null, doDia.map((requisicao) => requisicao.dataHora.getTime()))
+        : diaSelecionadoHora + DURACAO_DIA_MS;
+      deslocamentoJanelaMs = deslocamentoMaximoJanela();
+    }
+
+    // minuto → hora: o dia mostrado passa a ser o dia civil do início do recorte visível (não o do
+    // fim — com o recorte quase sempre bem menor que um dia, início e fim caem no mesmo dia; usar o
+    // início evita ambiguidade no raro caso do recorte cruzar a meia-noite). Arredondado (clamp)
+    // para dentro do intervalo de dias com dado, para nunca violar o próprio critério de pronto da
+    // escala "hora" mesmo que a janela de minutos esteja momentaneamente fora dele.
+    function sincronizarDiaComMinuto(validasTodas) {
+      if (ancoraFimJanela === null) return; // "minuto" nunca foi renderizada nesta abertura: mantém o dia já escolhido
+      const { inicio } = limitesJanelaAtual();
+      const diaDaJanela = inicioDoDia(new Date(inicio)).getTime();
+      const { min, max } = limitesDiasComDados(validasTodas);
+      diaSelecionadoHora = Math.max(min, Math.min(max, diaDaJanela));
+    }
+
+    // --- Estado "ativada" (o que a roda faz sobre a linha do tempo) ---
+
+    function atualizarBadgeEstadoRoda() {
+      linhaTempoConsumo.classList.toggle("ativada", linhaTempoAtivada);
+      const textoAtivada = escalaLinhaTempo === "minuto"
+        ? "Roda: deslizando a janela (Esc ou clique fora para sair)"
+        : "Roda: navegando entre dias (Esc ou clique fora para sair)";
+      estadoRodaLinhaTempo.textContent = linhaTempoAtivada
+        ? textoAtivada
+        : "Roda: trocando de escala (clique na linha do tempo para deslizar a janela)";
+      estadoRodaLinhaTempo.classList.toggle("ativada", linhaTempoAtivada);
+    }
+
+    function ativarLinhaTempo() {
+      if (linhaTempoAtivada) return;
+      linhaTempoAtivada = true;
+      atualizarBadgeEstadoRoda();
+    }
+
+    function desativarLinhaTempo() {
+      if (!linhaTempoAtivada) return;
+      linhaTempoAtivada = false;
+      atualizarBadgeEstadoRoda();
+    }
+
+    // Todo o container ativa, exceto os pontos (que continuam abrindo o popup de transcrição —
+    // esclarecimento do usuário, 2026-08-20).
+    linhaTempoConsumo.addEventListener("click", (evento) => {
+      if (evento.target.closest(".ponto-linha-tempo")) return;
+      ativarLinhaTempo();
+    });
+
+    document.addEventListener("click", (evento) => {
+      if (!linhaTempoAtivada) return;
+      if (linhaTempoConsumo.contains(evento.target)) return;
+      desativarLinhaTempo();
+    });
+
+    document.addEventListener("keydown", (evento) => {
+      if (evento.key !== "Escape" || !linhaTempoAtivada) return;
+      desativarLinhaTempo();
+      // Sem isto, o mesmo Esc também cairia no handler mais abaixo que fecha o modal de consumo
+      // inteiro (registrado depois deste, para !fundoConsumo.hidden) — o primeiro Esc só sai do
+      // modo de deslizar; um segundo Esc (já sem a linha do tempo ativada) fecha o modal.
+      evento.stopImmediatePropagation();
+    });
+
+    atualizarBadgeEstadoRoda();
+
     function abrirPopupRequisicao(requisicao) {
       const dataHora = new Date(requisicao.timestamp);
       popupRequisicaoMeta.textContent =
@@ -933,41 +1436,59 @@
       ultimasRequisicoesConsumo = Array.isArray(requisicoes) ? requisicoes : [];
       linhaTempoConsumo.innerHTML = "";
 
-      const validas = ultimasRequisicoesConsumo
-        .map((requisicao) => Object.assign({}, requisicao, { dataHora: new Date(requisicao.timestamp) }))
-        .filter((requisicao) => !isNaN(requisicao.dataHora));
+      const validas = requisicoesValidas(ultimasRequisicoesConsumo);
 
       if (validas.length === 0) {
         const vazio = document.createElement("p");
         vazio.className = "dica";
         vazio.textContent = "Nenhuma requisição registrada ainda.";
         linhaTempoConsumo.appendChild(vazio);
+        navegacaoJanelaLinhaTempo.hidden = true;
+        navegacaoDiaLinhaTempo.hidden = true;
         return;
       }
 
-      const tempos = validas.map((requisicao) => requisicao.dataHora.getTime());
-      let inicio = Math.min.apply(null, tempos);
-      let fim = Math.max.apply(null, tempos);
-      if (fim === inicio) {
-        inicio -= 5 * 60 * 1000;
-        fim += 5 * 60 * 1000;
-      } else {
-        const folga = (fim - inicio) * 0.08;
-        inicio -= folga;
-        fim += folga;
-      }
-      const duracaoSegundos = (fim - inicio) / 1000;
+      garantirAncoraJanela(validas);
+      garantirDiaSelecionado(validas);
 
-      const larguraDisponivel = Math.max(linhaTempoConsumo.clientWidth || 0, 480);
       const altura = 110;
       const yPonto = 68;
 
-      // Escala "hora": largura = a do painel, então o intervalo inteiro sempre cabe sem rolagem.
-      // Escala "minuto": pixels por segundo fixos, então dois pontos a poucos segundos de
-      // distância ficam visivelmente separados — a largura resultante rola horizontalmente.
-      const largura = escalaLinhaTempo === "hora"
-        ? larguraDisponivel
-        : Math.max(larguraDisponivel, duracaoSegundos * PX_POR_SEGUNDO_ESCALA_MINUTO);
+      let inicio, fim, largura, pontosVisiveis;
+
+      if (escalaLinhaTempo === "hora") {
+        // Escala "hora": um dia por vez (correção aprovada em 2026-08-20 — antes comprimia o
+        // histórico inteiro na largura do painel). Domínio = o dia selecionado (meia-noite a
+        // meia-noite), com a mesma folga de desenho da escala "minuto" nas bordas, para o ponto
+        // bem em cima da virada não ficar com o alvo de clique colado no limite do SVG. largura =
+        // a do painel, então o dia inteiro sempre cabe sem precisar rolar.
+        const inicioDiaMs = diaSelecionadoHora;
+        const fimDiaMs = inicioDiaMs + DURACAO_DIA_MS;
+        inicio = inicioDiaMs - MARGEM_BORDA_DIA_MS;
+        fim = fimDiaMs + MARGEM_BORDA_DIA_MS;
+        largura = Math.max(linhaTempoConsumo.clientWidth || 0, 480);
+        // Filtra pelo dia "real" (sem a folga de desenho) — mesmo raciocínio da escala "minuto"
+        // abaixo: a folga é só para o ponto na borda não ficar cortado.
+        pontosVisiveis = validas.filter((requisicao) => {
+          const t = requisicao.dataHora.getTime();
+          return t >= inicioDiaMs && t < fimDiaMs;
+        });
+      } else {
+        // Escala "minuto": janela móvel de largura fixa (LARGURA_JANELA_MINUTO_MS) dentro das
+        // últimas 24h, não dos limites dos dados — a largura do SVG é sempre a mesma, não importa
+        // quanto histórico consumo.jsonl já acumulou (ver constantes no topo do arquivo).
+        const janela = limitesJanelaAtual();
+        inicio = janela.inicio - MARGEM_BORDA_JANELA_MS;
+        fim = janela.fim + MARGEM_BORDA_JANELA_MS;
+        largura = ((LARGURA_JANELA_MINUTO_MS + 2 * MARGEM_BORDA_JANELA_MS) / 1000) * PX_POR_SEGUNDO_ESCALA_MINUTO;
+        // Filtra pela janela "real" (sem a folga de desenho) — a folga é só para o ponto na borda
+        // não ficar cortado, não para mostrar pontos fora do recorte que o usuário escolheu.
+        pontosVisiveis = validas.filter((requisicao) => {
+          const t = requisicao.dataHora.getTime();
+          return t >= janela.inicio && t <= janela.fim;
+        });
+      }
+
       const pxPorMs = largura / (fim - inicio);
 
       const svg = document.createElementNS(SVG_NS, "svg");
@@ -1025,7 +1546,7 @@
       }
 
       let xUltimoPonto = 0;
-      validas
+      pontosVisiveis
         .slice()
         .sort((a, b) => a.dataHora - b.dataHora)
         .forEach((requisicao) => {
@@ -1087,19 +1608,53 @@
         });
 
       linhaTempoConsumo.appendChild(svg);
-      // O painel mostra tudo que existe em consumo.jsonl (decisão registrada no plano — sem
-      // filtrar por dia/janela). Em "minuto", isso pode gerar uma faixa bem mais larga que o
-      // painel; abre já rolada até o último ponto real (não até scrollWidth — a folga de domínio
-      // adicionada acima deixaria só espaço vazio visível), que é o caso de uso principal
-      // (comparar custo entre requisições próximas no tempo).
-      const margemDireita = 40;
-      linhaTempoConsumo.scrollLeft = Math.max(0, xUltimoPonto - larguraDisponivel + margemDireita);
+
+      if (pontosVisiveis.length === 0) {
+        const vazio = document.createElement("p");
+        vazio.className = "dica";
+        vazio.textContent = escalaLinhaTempo === "minuto"
+          ? "Nenhuma requisição neste recorte — deslize a janela para outro trecho das 24h."
+          : "Nenhuma requisição neste dia.";
+        linhaTempoConsumo.appendChild(vazio);
+      }
+
+      // Escala "hora" sempre cabe sem rolar (largura = a do painel, scrollWidth == clientWidth —
+      // scrollLeft é clampado a 0 pelo próprio navegador, então o que roda abaixo é inofensivo).
+      // Escala "minuto" pode ser mais larga que o painel (largura fixa da janela, ver constantes).
+      // Rolar para o último ponto do recorte só quando a flag abaixo estiver ligada — ver o
+      // comentário dela lá no topo do arquivo para os poucos casos em que isso ainda faz sentido
+      // (abrir o painel, trocar de escala, pular pro "Mais recente"). Nos demais redesenhos
+      // (deslizar a janela, seja pela roda ou pelo próprio deslizador) o container abre pelo
+      // início do recorte novo — como o recorte se desloca de forma equivalente ao gesto, o
+      // resultado visual é uma rolagem contínua no mesmo sentido a cada giro, sem saltar pro fim.
+      if (rolarParaUltimoPontoNaProximaRenderizacao) {
+        const margemDireita = 40;
+        const larguraVisivel = Math.max(linhaTempoConsumo.clientWidth || 0, 1);
+        linhaTempoConsumo.scrollLeft = Math.max(0, xUltimoPonto - larguraVisivel + margemDireita);
+        rolarParaUltimoPontoNaProximaRenderizacao = false;
+      } else {
+        linhaTempoConsumo.scrollLeft = 0;
+      }
+
+      atualizarNavegacaoJanela();
+      atualizarNavegacaoDia(validas);
     }
 
     function trocarEscalaLinhaTempo(novaEscala) {
       if (novaEscala === escalaLinhaTempo) return;
+      const validas = requisicoesValidas(ultimasRequisicoesConsumo);
+      if (novaEscala === "minuto") {
+        sincronizarMinutoComDia(validas);
+      } else {
+        sincronizarDiaComMinuto(validas);
+      }
       escalaLinhaTempo = novaEscala;
       atualizarRotuloBotaoZoomLinhaTempo();
+      atualizarBadgeEstadoRoda(); // o texto "Roda: ..." depende da escala (deslizar janela vs. navegar dias)
+      // Trocar de escala é um dos momentos em que abrir vendo o trecho mais recente (dentro do
+      // período recém-sincronizado acima) ainda é útil — não é um redesenho "no meio" de um gesto
+      // de deslizar.
+      rolarParaUltimoPontoNaProximaRenderizacao = true;
       renderizarLinhaTempoConsumo(ultimasRequisicoesConsumo);
     }
 
@@ -1119,7 +1674,11 @@
     linhaTempoConsumo.addEventListener("wheel", (evento) => {
       if (evento.shiftKey) return; // deixa o navegador rolar horizontalmente, sem interferir
       evento.preventDefault();
-      trocarEscalaLinhaTempo(evento.deltaY > 0 ? "minuto" : "hora");
+      if (linhaTempoAtivada) {
+        deslizarJanela(evento.deltaY);
+      } else {
+        trocarEscalaLinhaTempo(evento.deltaY > 0 ? "minuto" : "hora");
+      }
     }, { passive: false });
 
     function sessaoExibida(sessaoBackend) {
@@ -1221,8 +1780,13 @@
     }
 
     function abrirConsumo() {
+      fecharMenuAvancado();
       fundoConsumo.hidden = false;
       botaoConsumo.setAttribute("aria-expanded", "true");
+      ancoraFimJanela = null; // recalcula a âncora e volta a janela para o trecho mais recente
+      diaSelecionadoHora = null; // idem, para o dia mostrado na escala "hora"
+      rolarParaUltimoPontoNaProximaRenderizacao = true;
+      desativarLinhaTempo();
       carregarConsumo();
     }
 
@@ -1254,19 +1818,156 @@
     // --- Gravação rápida (clique único: grava, clica de novo, transcreve sozinho) ---
 
     const botaoGravacaoRapida = document.getElementById("botaoGravacaoRapida");
+    const botaoCancelarGravacaoRapida = document.getElementById("botaoCancelarGravacaoRapida");
     const statusGravacaoRapida = document.getElementById("statusGravacaoRapida");
     const cronometroGravacaoRapida = document.getElementById("cronometroGravacaoRapida");
     const transcriptRapido = document.getElementById("transcriptRapido");
+    const botaoCopiarTranscript = document.getElementById("botaoCopiarTranscript");
+    const botaoLimparTranscript = document.getElementById("botaoLimparTranscript");
     const barrasNivel = document.getElementById("barrasNivel");
+
+    // --- Estado visual do botão de gravar: microfone (parado) | quadrado (gravando) | spinner
+    // (processando — enviando pra transcrição, ou aguardando o último turno do tempo real). Um
+    // único ponto que decide classe, aria-label, disabled e visibilidade do X de cancelar (que só
+    // faz sentido durante "gravando" — durante o spinner o áudio já foi enviado, não há o que
+    // cancelar), em vez de espalhar essas quatro coisas em cada função que muda o estado.
+    const ROTULOS_ESTADO_BOTAO_GRAVACAO = {
+      parado: "Iniciar gravação",
+      gravando: "Parar gravação",
+      processando: "Processando…",
+    };
+
+    function definirEstadoBotaoGravacao(estado) {
+      botaoGravacaoRapida.classList.toggle("gravando", estado === "gravando");
+      botaoGravacaoRapida.classList.toggle("processando", estado === "processando");
+      botaoGravacaoRapida.disabled = estado === "processando";
+      botaoCancelarGravacaoRapida.hidden = estado !== "gravando";
+      botaoGravacaoRapida.setAttribute("aria-label", ROTULOS_ESTADO_BOTAO_GRAVACAO[estado]);
+    }
+
+    // --- Copiar e limpar/desfazer a transcrição da gravação ---
+
+    // Copiar: reaproveita a área de status já usada pela gravação rápida (mostrarStatusGravacao)
+    // para confirmar a cópia, em vez de um mecanismo novo.
+    botaoCopiarTranscript.addEventListener("click", async () => {
+      const texto = transcriptRapido.value;
+      if (!texto.trim()) {
+        mostrarStatusGravacao("erro", "Nada para copiar — a caixa de transcrição está vazia.");
+        return;
+      }
+      try {
+        await navigator.clipboard.writeText(texto);
+        mostrarStatusGravacao("confirmacao", "Texto copiado para a área de transferência.");
+      } catch (erro) {
+        mostrarStatusGravacao("erro", "Não foi possível copiar: " + erro.message);
+      }
+    });
+
+    // Limpar/desfazer: um só botão que troca de função conforme o estado da caixa (lixeira com
+    // texto, desfazer vazia com algo guardado, escondido vazia sem nada guardado) — não importa
+    // COMO a caixa esvaziou (lixeira, backspace, Ctrl+A+Delete, gravação nova sobre texto antigo).
+    //
+    // O snapshot para o desfazer só é gravado quando a caixa fica OCIOSA (sem mudança por
+    // INTERVALO_OCIOSIDADE_TRANSCRIPT_MS) e não vazia — nunca a cada evento de mudança. Isso é o
+    // que evita a armadilha clássica: apagar com backspace segurado dispara dezenas de eventos
+    // "input" em sequência rápida (bem mais rápido que o intervalo de ociosidade), cada um
+    // reagendando o timeout sem nunca deixá-lo disparar até o usuário soltar a tecla — quando isso
+    // acontece, a caixa já está vazia, e o snapshot só é sobrescrito quando o valor atual é
+    // NÃO-vazio (ver `agendarSnapshotTranscript` abaixo), então o último valor não-vazio antes da
+    // rajada (o texto inteiro) é o que sobrevive como snapshot. Uma implementação ingênua que
+    // guardasse "o valor anterior" a cada tecla devolveria só o último caractere antes do vazio.
+    const INTERVALO_OCIOSIDADE_TRANSCRIPT_MS = 800;
+    let snapshotTranscript = null;
+    let timeoutOciosidadeTranscript = null;
+
+    function agendarSnapshotTranscript() {
+      if (timeoutOciosidadeTranscript) clearTimeout(timeoutOciosidadeTranscript);
+      timeoutOciosidadeTranscript = setTimeout(() => {
+        timeoutOciosidadeTranscript = null;
+        const valorAtual = transcriptRapido.value;
+        if (valorAtual.trim()) snapshotTranscript = valorAtual;
+      }, INTERVALO_OCIOSIDADE_TRANSCRIPT_MS);
+    }
+
+    function atualizarBotaoLimparTranscript() {
+      const temTexto = !!transcriptRapido.value.trim();
+      if (temTexto) {
+        botaoLimparTranscript.classList.remove("invisivel");
+        botaoLimparTranscript.disabled = false;
+        botaoLimparTranscript.classList.remove("modo-desfazer");
+        botaoLimparTranscript.setAttribute("aria-label", "Apagar transcrição");
+        botaoLimparTranscript.title = "Apagar transcrição";
+      } else if (snapshotTranscript) {
+        botaoLimparTranscript.classList.remove("invisivel");
+        botaoLimparTranscript.disabled = false;
+        botaoLimparTranscript.classList.add("modo-desfazer");
+        botaoLimparTranscript.setAttribute("aria-label", "Desfazer — restaurar texto apagado");
+        botaoLimparTranscript.title = "Desfazer — restaurar texto apagado";
+      } else {
+        // Caixa vazia e nunca houve nada guardado (página recém-aberta): sem desfazer falso. Some
+        // por "visibility" (ver CSS de #botaoLimparTranscript.invisivel), não por "hidden" — o
+        // lugar dele na linha continua reservado, então o botão de copiar não pula para a ponta
+        // esquerda por falta de par no "justify-content: space-between".
+        botaoLimparTranscript.classList.add("invisivel");
+        botaoLimparTranscript.disabled = true;
+      }
+    }
+
+    // Ponto único de escrita na caixa (digitação do usuário não passa por aqui — só as gravações
+    // chamam isto). Centraliza o que precisa acontecer toda vez que o conteúdo muda, venha de onde
+    // vier: reagenda o snapshot de ociosidade e atualiza o botão lixeira/desfazer.
+    function escreverTranscript(valor) {
+      transcriptRapido.value = valor;
+      atualizarBotaoLimparTranscript();
+      agendarSnapshotTranscript();
+    }
+
+    transcriptRapido.addEventListener("input", () => {
+      atualizarBotaoLimparTranscript();
+      agendarSnapshotTranscript();
+    });
+
+    botaoLimparTranscript.addEventListener("click", () => {
+      if (botaoLimparTranscript.classList.contains("modo-desfazer")) {
+        // Desfazer: restaura e consome o snapshot — esvaziar de novo depois de escrever algo novo
+        // precisa gerar um snapshot novo, não reaproveitar este.
+        const valorRestaurado = snapshotTranscript;
+        snapshotTranscript = null;
+        if (timeoutOciosidadeTranscript) { clearTimeout(timeoutOciosidadeTranscript); timeoutOciosidadeTranscript = null; }
+        transcriptRapido.value = valorRestaurado;
+        atualizarBotaoLimparTranscript();
+      } else {
+        // Lixeira: guarda o snapshot na hora (equivalente a já estar "ocioso" com esse conteúdo)
+        // antes de apagar — não espera o timeout de ociosidade, que só faz sentido pra digitação.
+        const valorAntes = transcriptRapido.value;
+        if (valorAntes.trim()) snapshotTranscript = valorAntes;
+        if (timeoutOciosidadeTranscript) { clearTimeout(timeoutOciosidadeTranscript); timeoutOciosidadeTranscript = null; }
+        transcriptRapido.value = "";
+        atualizarBotaoLimparTranscript();
+      }
+    });
+
+    atualizarBotaoLimparTranscript(); // estado inicial: caixa vazia, nada guardado — botão escondido
+
     const toastSemFala = document.getElementById("toastSemFala");
 
     let mediaRecorderRapido = null;
     let streamRapido = null;
     let pedacosRapidos = [];
+    // Ligada só entre o clique em "cancelar" e o evento "stop" do MediaRecorder que ele dispara —
+    // o handler de "stop" checa esta flag para descartar o áudio em vez de enviar (ver mais abaixo).
+    let cancelamentoGravacaoRapidaEmAndamento = false;
 
     // --- Barras de nível + validação de silêncio (AnalyserNode sobre o mesmo MediaStream) ---
 
-    const NUM_BARRAS_NIVEL = 12;
+    // 80 barras a 60ms/amostra: ~16,7 atualizações/s — rápido o bastante para não parecer em
+    // degraus (o valor anterior, 12 barras a 250ms = 4 atualizações/s, dava pra ver o "pulo" de
+    // cada amostra a olho nu, confirmado antes desta correção). Densidade e cadência sobem juntas
+    // de propósito: só aumentar barras com o mesmo intervalo mantém os degraus (mais pontos, mesma
+    // velocidade de atualização); só diminuir o intervalo com as mesmas 12 barras faz a faixa
+    // cobrir menos de 1s e piscar. Ver INTERVALO_AMOSTRA_BARRAS_MS abaixo para a conta do
+    // histórico total.
+    const NUM_BARRAS_NIVEL = 80;
     for (let i = 0; i < NUM_BARRAS_NIVEL; i++) {
       const barra = document.createElement("span");
       barra.className = "barra";
@@ -1277,9 +1978,18 @@
     let audioContextRapido = null;
     let analiserRapido = null;
     let dadosAnaliserRapido = null;
-    let animacaoBarrasId = null;
+    let intervaloAmostraBarrasId = null;
     let analisadorAtivoNestaGravacao = false;
     let picoVolumeRapido = 0;
+
+    // Cada barra é um instante do passado: a cada amostra, o valor mais novo entra numa ponta e o
+    // mais antigo sai da outra — é isso que faz a faixa "andar" em vez de ficar decorativa (antes,
+    // todas as barras mostravam o mesmo RMS do quadro atual, diferenciadas só por um seno cosmético
+    // sem guardar nada). Amostrar em intervalo fixo (não a cada quadro de animação) é o que garante
+    // que a faixa inteira represente um período de tempo previsível: NUM_BARRAS_NIVEL barras *
+    // INTERVALO_AMOSTRA_BARRAS_MS = 80 * 60ms = 4,8s de histórico com os valores atuais.
+    const INTERVALO_AMOSTRA_BARRAS_MS = 60;
+    let amostrasNivel = new Array(NUM_BARRAS_NIVEL).fill(0);
 
     // Limiar de silêncio: comparado ao pico de amplitude (0 a 1) observado nas amostras do
     // AnalyserNode via getByteTimeDomainData (desvio em relação ao centro 128, escala de byte).
@@ -1312,11 +2022,13 @@
 
       picoVolumeRapido = 0;
       analisadorAtivoNestaGravacao = true;
+      amostrasNivel = new Array(NUM_BARRAS_NIVEL).fill(0); // gravação nova começa com a faixa limpa
       barrasNivel.hidden = false;
-      animarBarrasNivel();
+      renderizarBarrasNivel();
+      intervaloAmostraBarrasId = setInterval(amostrarNivel, INTERVALO_AMOSTRA_BARRAS_MS);
     }
 
-    function animarBarrasNivel() {
+    function amostrarNivel() {
       if (!analiserRapido) return;
       analiserRapido.getByteTimeDomainData(dadosAnaliserRapido);
 
@@ -1330,19 +2042,40 @@
       const rms = Math.sqrt(somaQuadrados / dadosAnaliserRapido.length);
       if (picoAmostra > picoVolumeRapido) picoVolumeRapido = picoAmostra;
 
+      // Desloca a janela: a amostra nova entra numa ponta, a mais antiga sai da outra — é isto que
+      // faz a faixa inteira "andar" no tempo, com ou sem som (em silêncio real o ruído de fundo do
+      // microfone já varia o suficiente para as barras baixas continuarem se movendo).
+      amostrasNivel.push(rms);
+      amostrasNivel.shift();
+      renderizarBarrasNivel();
+    }
+
+    // Curva compressiva (raiz quadrada) em vez de proporcional direta ao RMS: numa escala linear,
+    // fala de conversa ficava espremida perto do piso, sobrando só pra fala bem alta usar o topo.
+    // Raiz quadrada estica a parte baixa da escala e comprime a alta — é côncava (cresce rápido no
+    // começo, devagar depois) — então fala normal passa a cair na região média da altura, e só
+    // fala bem forte (perto de RMS_TETO_BARRAS) satura perto do topo. RMS_TETO_BARRAS calibrado
+    // testando com fala real (voz sintetizada) contra fala amplificada 3x: com 0,4, a fala normal
+    // mede ~39% no p75 e ~76% no p90 (usa a região média/alta sem saturar sempre), a fala forte
+    // ~49%/~88% (mais perto do teto), e o silêncio fica abaixo de ~19% — números medidos, ver
+    // PROGRESSO.
+    const RMS_TETO_BARRAS = 0.4;
+    // Piso pequeno (não é clamp — continua somado, nunca substitui o valor calculado) para o
+    // repouso ficar do tamanho de um pontinho, já que agora a barra é fina e bem arredondada.
+    const PISO_BARRAS = 0.06;
+
+    function renderizarBarrasNivel() {
       listaBarrasNivel.forEach((barra, indice) => {
-        const variacao = 0.7 + 0.3 * Math.sin(indice * 1.3 + Date.now() / 150);
-        const altura = Math.max(0.15, Math.min(1, rms * 6 * variacao));
+        const magnitude = Math.sqrt(Math.min(1, amostrasNivel[indice] / RMS_TETO_BARRAS));
+        const altura = PISO_BARRAS + magnitude * (1 - PISO_BARRAS);
         barra.style.height = (altura * 100) + "%";
       });
-
-      animacaoBarrasId = requestAnimationFrame(animarBarrasNivel);
     }
 
     function pararAnalisadorNivel() {
-      if (animacaoBarrasId) {
-        cancelAnimationFrame(animacaoBarrasId);
-        animacaoBarrasId = null;
+      if (intervaloAmostraBarrasId) {
+        clearInterval(intervaloAmostraBarrasId);
+        intervaloAmostraBarrasId = null;
       }
       if (audioContextRapido) {
         audioContextRapido.close();
@@ -1351,7 +2084,8 @@
       analiserRapido = null;
       dadosAnaliserRapido = null;
       barrasNivel.hidden = true;
-      listaBarrasNivel.forEach((barra) => { barra.style.height = "15%"; });
+      amostrasNivel = new Array(NUM_BARRAS_NIVEL).fill(0);
+      listaBarrasNivel.forEach((barra) => { barra.style.height = (PISO_BARRAS * 100) + "%"; });
     }
 
     // Corte de segurança: se o usuário esquecer o botão gravando, a gravação para sozinha.
@@ -1389,6 +2123,7 @@
     function cortarPorSegurancaGravacaoRapida() {
       timeoutCorteSeguranca = null;
       corteSegurancaAtivado = true;
+      definirEstadoBotaoGravacao("processando"); // sempre há áudio até aqui — vai para envio
       pararGravacaoRapida();
     }
 
@@ -1402,9 +2137,36 @@
       return "webm";
     }
 
-    function mostrarStatusGravacao(classe, texto) {
-      statusGravacaoRapida.className = classe;
+    // Status vira balão efêmero (reaproveita a classe .toast já usada por #toastSemFala — não é um
+    // estilo novo). Três tipos, com durações diferentes porque nem toda mensagem tem o mesmo
+    // tamanho nem a mesma urgência: "confirmacao" (sucesso, curta) some em 2s; "erro" (às vezes
+    // mensagens longas, ex. corte de segurança) some em 6s, tempo maior pra dar pra ler;
+    // "andamento" não mostra texto nenhum — quem conta essa história é o botão de gravar virando
+    // spinner (ver definirEstadoBotaoGravacao), então aqui só escondemos qualquer balão anterior.
+    // Mensagens em sequência não se empilham: uma nova chamada sempre cancela o timeout pendente e
+    // substitui o balão atual na hora, nunca entra numa fila.
+    let timeoutStatusGravacao = null;
+
+    function esconderStatusGravacao() {
+      statusGravacaoRapida.hidden = true;
+      statusGravacaoRapida.className = "";
+      statusGravacaoRapida.textContent = "";
+    }
+
+    function mostrarStatusGravacao(tipo, texto) {
+      if (timeoutStatusGravacao) {
+        clearTimeout(timeoutStatusGravacao);
+        timeoutStatusGravacao = null;
+      }
+      if (tipo === "andamento") {
+        esconderStatusGravacao();
+        return;
+      }
+      statusGravacaoRapida.className = "toast " + tipo;
       statusGravacaoRapida.textContent = texto;
+      statusGravacaoRapida.hidden = false;
+      const duracaoMs = tipo === "erro" ? 6000 : 2000;
+      timeoutStatusGravacao = setTimeout(esconderStatusGravacao, duracaoMs);
     }
 
     async function iniciarGravacaoRapida() {
@@ -1453,8 +2215,15 @@
         const avisoSeguranca = corteSegurancaAtivado ? AVISO_CORTE_SEGURANCA : null;
         corteSegurancaAtivado = false;
 
+        if (cancelamentoGravacaoRapidaEmAndamento) {
+          cancelamentoGravacaoRapidaEmAndamento = false;
+          pedacosRapidos = [];
+          mostrarStatusGravacao("confirmacao", "Gravação cancelada.");
+          return;
+        }
+
         if (analisadorAtivoNestaGravacao && picoVolumeRapido < LIMIAR_SILENCIO) {
-          mostrarStatusGravacao("", "");
+          definirEstadoBotaoGravacao("parado"); // nada será enviado — não é "processando"
           mostrarToastSemFala();
           return;
         }
@@ -1467,9 +2236,7 @@
       analisadorAtivoNestaGravacao = false;
       iniciarAnalisadorNivel(streamRapido);
       mediaRecorderRapido.start();
-      botaoGravacaoRapida.classList.add("gravando");
-      botaoGravacaoRapida.setAttribute("aria-label", "Parar gravação");
-      mostrarStatusGravacao("", "Gravando… clique novamente para parar.");
+      definirEstadoBotaoGravacao("gravando"); // o quadrado pulsando + a faixa andando já contam a história
 
       corteSegurancaAtivado = false;
       inicioGravacaoRapida = Date.now();
@@ -1479,6 +2246,10 @@
       timeoutCorteSeguranca = setTimeout(cortarPorSegurancaGravacaoRapida, LIMITE_GRAVACAO_MS);
     }
 
+    // Só a limpeza (timers, analisador, MediaRecorder) — quem decide o próximo estado visual do
+    // botão é quem chama esta função, porque o destino certo depende do motivo da parada: "parar"
+    // de verdade vai para "processando" (vai enviar), "cancelar" vai direto para "parado" (nada
+    // será enviado). Ver definirEstadoBotaoGravacao nos pontos de chamada.
     function pararGravacaoRapida() {
       pararTemporizadoresGravacaoRapida();
       pararAnalisadorNivel();
@@ -1488,19 +2259,28 @@
       if (mediaRecorderRapido && mediaRecorderRapido.state !== "inactive") {
         mediaRecorderRapido.stop();
       }
-      botaoGravacaoRapida.classList.remove("gravando");
-      botaoGravacaoRapida.setAttribute("aria-label", "Iniciar gravação");
+    }
+
+    // Cancelar: descarta o áudio gravado até aqui — nenhuma requisição de transcrição sai, e a
+    // caixa de transcrição não é tocada (o handler de "stop" acima checa a flag e retorna cedo,
+    // antes de montar o blob ou chamar enviarGravacaoRapida). Reaproveita o mesmo caminho de parada
+    // de sempre (timers, analisador, MediaRecorder) — só muda o que acontece depois do "stop".
+    function cancelarGravacaoRapida() {
+      if (!mediaRecorderRapido || mediaRecorderRapido.state !== "recording") return;
+      cancelamentoGravacaoRapidaEmAndamento = true;
+      definirEstadoBotaoGravacao("parado"); // imediato — não há nada a "processar"
+      pararGravacaoRapida();
     }
 
     async function enviarGravacaoRapida(blob, avisoSeguranca) {
-      botaoGravacaoRapida.disabled = true;
+      definirEstadoBotaoGravacao("processando");
 
       if (avisoSeguranca) {
         mostrarStatusGravacao("erro", avisoSeguranca);
         await new Promise((resolve) => setTimeout(resolve, 1800));
       }
 
-      mostrarStatusGravacao("carregando", "Transcrevendo…");
+      mostrarStatusGravacao("andamento", "Transcrevendo…"); // sem texto — o botão já é o spinner
 
       const dados = new FormData();
       dados.append("audio", blob, "gravacao." + extensaoParaMime(blob.type));
@@ -1523,10 +2303,10 @@
             mostrarStatusGravacao("erro", "Erro ao transcrever: " + detalhe);
           } else {
             const resultadoStream = await consumirStreamTranscricao(resposta, {
-              aoDelta: (texto) => { transcriptRapido.value = textoBase + separadorBase + texto; },
+              aoDelta: (texto) => escreverTranscript(textoBase + separadorBase + texto),
               aoFinal: (texto) => {
-                transcriptRapido.value = textoBase + separadorBase + texto;
-                mostrarStatusGravacao("sucesso", "Transcrição adicionada ao texto abaixo.");
+                escreverTranscript(textoBase + separadorBase + texto);
+                mostrarStatusGravacao("confirmacao", "Transcrição adicionada ao texto abaixo.");
               },
               aoErro: (detalhe) => mostrarStatusGravacao("erro", "Erro ao transcrever: " + detalhe),
             });
@@ -1537,7 +2317,7 @@
         } catch (_) {
           mostrarStatusGravacao("erro", "Não foi possível conectar ao backend. Confirme que o servidor está rodando na porta 8000 (veja o README).");
         } finally {
-          botaoGravacaoRapida.disabled = false;
+          definirEstadoBotaoGravacao("parado");
         }
         return;
       }
@@ -1551,8 +2331,8 @@
         if (resposta.ok && corpo && typeof corpo.transcricao === "string") {
           const textoAtual = transcriptRapido.value;
           const separador = textoAtual && !textoAtual.endsWith("\n") ? "\n" : "";
-          transcriptRapido.value = textoAtual + separador + corpo.transcricao;
-          mostrarStatusGravacao("sucesso", "Transcrição adicionada ao texto abaixo.");
+          escreverTranscript(textoAtual + separador + corpo.transcricao);
+          mostrarStatusGravacao("confirmacao", "Transcrição adicionada ao texto abaixo.");
         } else {
           const detalhe = corpo && corpo.detail
             ? (typeof corpo.detail === "string" ? corpo.detail : JSON.stringify(corpo.detail))
@@ -1562,7 +2342,7 @@
       } catch (_) {
         mostrarStatusGravacao("erro", "Não foi possível conectar ao backend. Confirme que o servidor está rodando na porta 8000 (veja o README).");
       } finally {
-        botaoGravacaoRapida.disabled = false;
+        definirEstadoBotaoGravacao("parado");
       }
     }
 
@@ -1578,9 +2358,18 @@
 
       const gravando = mediaRecorderRapido && mediaRecorderRapido.state === "recording";
       if (gravando) {
+        definirEstadoBotaoGravacao("processando"); // vai verificar silêncio e, na maioria das vezes, enviar
         pararGravacaoRapida();
       } else {
         iniciarGravacaoRapida();
+      }
+    });
+
+    botaoCancelarGravacaoRapida.addEventListener("click", () => {
+      if (tempoRealAtivo()) {
+        cancelarGravacaoTempoReal();
+      } else {
+        cancelarGravacaoRapida();
       }
     });
 
@@ -1588,17 +2377,13 @@
     // Formato dos eventos cliente→servidor confirmado na documentação oficial da Realtime API
     // (consultada nesta etapa, 2026-08-19, https://developers.openai.com/api/docs/guides/realtime-transcription):
     // o áudio é enviado com o evento "input_audio_buffer.append" (campo "audio", PCM16 mono em
-    // base64). No modo "por tempo" (Etapa 1, turn_detection: null), o cliente precisa enviar
+    // base64). A sessão usa turn_detection: null, então o cliente precisa enviar
     // "input_audio_buffer.commit" explicitamente para fechar cada turno e disparar a transcrição —
     // a doc não recomenda um intervalo de commit, então o valor abaixo foi calibrado testando com
-    // fala real. No modo "pela API" (Etapa 2, alternador "Controle de turno"), a sessão usa
-    // turn_detection: {"type": "server_vad"} (formato confirmado no guia de VAD da Realtime API,
-    // https://developers.openai.com/api/docs/guides/realtime-vad, consulta em 2026-08-20) e é a
-    // própria API que decide e comita o fim de cada turno — o cliente nunca manda commit nesse
-    // modo (ver pararGravacaoTempoReal e o handler do evento "open").
+    // fala real.
 
     const URL_TOKEN_TEMPO_REAL = "http://127.0.0.1:8000/tempo-real/token";
-    const URL_CONSUMO_TEMPO_REAL = "http://127.0.0.1:8000/consumo/tempo-real";
+    const URL_TURNO_CONCLUIDO_TEMPO_REAL = "http://127.0.0.1:8000/tempo-real/turno-concluido";
     const TAXA_AMOSTRAGEM_TEMPO_REAL = 24000;
     const TAMANHO_BUFFER_PCM_TEMPO_REAL = 4096;
     const INTERVALO_COMMIT_TEMPO_REAL_MS = 6000;
@@ -1639,6 +2424,10 @@
     let commitsPendentesTempoReal = 0;
     let aguardandoUltimoTurnoTempoReal = false;
     let timeoutEsperaUltimoTurnoTempoReal = null;
+    // Ligada por cancelarGravacaoTempoReal: o handler de "message" checa esta flag antes de tocar
+    // em qualquer coisa, para garantir que nenhum evento em voo (delta ou completed de um commit já
+    // enviado antes do cancelamento) altere a caixa de transcrição depois do cancelamento.
+    let cancelamentoTempoRealEmAndamento = false;
 
     // Concatena o texto de um novo turno ao texto já finalizado, inserindo um espaço na emenda
     // só quando nenhum dos dois lados já tiver espaço ali (evita palavras coladas sem criar
@@ -1657,7 +2446,7 @@
     // já exibida na tela.
     function reportarConsumoTempoReal(usage, texto) {
       if (!usage) return;
-      fetch(URL_CONSUMO_TEMPO_REAL, {
+      fetch(URL_TURNO_CONCLUIDO_TEMPO_REAL, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ ...usage, texto: texto || null }),
@@ -1737,14 +2526,7 @@
         if (calcularPicoAmplitudeTempoReal(entrada) >= LIMIAR_SILENCIO) {
           fimHangoverSilencioTempoReal = Date.now() + HANGOVER_SILENCIO_TEMPO_REAL_MS;
         }
-        // No modo "turnos pela API", quem decide quando a fala parou é o server_vad da própria
-        // API — e ele só consegue decidir isso recebendo o silêncio (não só a fala). Se o gate
-        // continuasse cortando o envio depois do hangover, a API podia nunca ver esse silêncio e
-        // nunca fechar o turno (ver PROGRESSO). Por isso o gate só se aplica no modo "por tempo";
-        // no modo "pela API" o áudio é enviado o tempo todo, inclusive as pausas — o efeito é
-        // pagar pelo silêncio também nesse modo (perde a otimização de custo da Etapa 1), limitado
-        // só pelo corte de 150s e por o usuário parar manualmente.
-        if (!modoTurnoApi && Date.now() > fimHangoverSilencioTempoReal) return;
+        if (Date.now() > fimHangoverSilencioTempoReal) return;
 
         const reamostrado = resampleParaTaxa(entrada, audioContextTempoReal.sampleRate, TAXA_AMOSTRAGEM_TEMPO_REAL);
         const pcm16 = float32ParaPcm16(reamostrado);
@@ -1796,13 +2578,12 @@
         return;
       }
 
-      botaoGravacaoRapida.disabled = true;
+      definirEstadoBotaoGravacao("processando"); // "Conectando…" também é "em andamento" — sem texto, o botão já mostra o spinner
       botaoTempoReal.disabled = true;
-      mostrarStatusGravacao("carregando", "Conectando ao modo tempo real…");
 
       let tokenResposta;
       try {
-        const respostaToken = await fetch(URL_TOKEN_TEMPO_REAL + "?modo_turno=" + (modoTurnoApi ? "api" : "tempo"));
+        const respostaToken = await fetch(URL_TOKEN_TEMPO_REAL);
         let corpo = null;
         try { corpo = await respostaToken.json(); } catch (_) { /* resposta sem JSON */ }
         if (!respostaToken.ok || !corpo || typeof corpo.client_secret !== "string") {
@@ -1814,7 +2595,7 @@
         tokenResposta = corpo;
       } catch (erro) {
         mostrarStatusGravacao("erro", "Não foi possível obter o token do modo tempo real: " + erro.message);
-        botaoGravacaoRapida.disabled = false;
+        definirEstadoBotaoGravacao("parado");
         botaoTempoReal.disabled = false;
         return;
       }
@@ -1830,7 +2611,7 @@
         } else {
           mostrarStatusGravacao("erro", "Não foi possível iniciar a gravação: " + erro.message);
         }
-        botaoGravacaoRapida.disabled = false;
+        definirEstadoBotaoGravacao("parado");
         botaoTempoReal.disabled = false;
         return;
       }
@@ -1839,6 +2620,7 @@
       popularDispositivos();
 
       fechandoTempoRealDeliberadamente = false;
+      cancelamentoTempoRealEmAndamento = false;
       bytesDesdeUltimoCommitTempoReal = 0;
       textoFinalizadoTempoReal = "";
       turnoAtualTempoReal = "";
@@ -1849,7 +2631,7 @@
       const separadorBase = textoBaseTranscript && !textoBaseTranscript.endsWith("\n") ? "\n" : "";
 
       function atualizarTranscriptTempoReal() {
-        transcriptRapido.value = textoBaseTranscript + separadorBase + textoFinalizadoTempoReal + turnoAtualTempoReal;
+        escreverTranscript(textoBaseTranscript + separadorBase + textoFinalizadoTempoReal + turnoAtualTempoReal);
       }
 
       try {
@@ -1861,33 +2643,25 @@
         mostrarStatusGravacao("erro", "Não foi possível abrir a conexão em tempo real: " + erro.message);
         streamTempoReal.getTracks().forEach((faixa) => faixa.stop());
         streamTempoReal = null;
-        botaoGravacaoRapida.disabled = false;
+        definirEstadoBotaoGravacao("parado");
         botaoTempoReal.disabled = false;
         return;
       }
 
       wsTempoReal.addEventListener("open", () => {
         iniciarCapturaPcmTempoReal(streamTempoReal);
-        // No modo "turnos pela API" quem fecha o turno é o server_vad da própria sessão — mandar
-        // commit por cima disso tende a dar erro de buffer vazio ou turno duplicado (ver
-        // PROGRESSO), então o timer de commit periódico só roda no modo "por tempo".
-        if (!modoTurnoApi) {
-          intervaloCommitTempoReal = setInterval(() => {
-            if (wsTempoReal && wsTempoReal.readyState === WebSocket.OPEN && bytesDesdeUltimoCommitTempoReal >= MINIMO_BYTES_PARA_COMMIT_TEMPO_REAL) {
-              wsTempoReal.send(JSON.stringify({ type: "input_audio_buffer.commit" }));
-              bytesDesdeUltimoCommitTempoReal = 0;
-              commitsPendentesTempoReal++;
-            }
-          }, INTERVALO_COMMIT_TEMPO_REAL_MS);
-        }
+        intervaloCommitTempoReal = setInterval(() => {
+          if (wsTempoReal && wsTempoReal.readyState === WebSocket.OPEN && bytesDesdeUltimoCommitTempoReal >= MINIMO_BYTES_PARA_COMMIT_TEMPO_REAL) {
+            wsTempoReal.send(JSON.stringify({ type: "input_audio_buffer.commit" }));
+            bytesDesdeUltimoCommitTempoReal = 0;
+            commitsPendentesTempoReal++;
+          }
+        }, INTERVALO_COMMIT_TEMPO_REAL_MS);
 
         iniciarAnalisadorNivel(streamTempoReal);
 
-        botaoGravacaoRapida.classList.add("gravando");
-        botaoGravacaoRapida.setAttribute("aria-label", "Parar gravação");
-        botaoGravacaoRapida.disabled = false;
+        definirEstadoBotaoGravacao("gravando"); // o quadrado pulsando + a faixa andando já contam a história
         gravandoTempoRealEmAndamento = true;
-        mostrarStatusGravacao("", "Gravando em tempo real… clique novamente para parar.");
 
         inicioGravacaoRapida = Date.now();
         cronometroGravacaoRapida.textContent = "00:00";
@@ -1897,6 +2671,10 @@
       });
 
       wsTempoReal.addEventListener("message", (eventoMsg) => {
+        // Cancelado: nenhum evento em voo (de um commit já enviado antes do cancelamento) pode
+        // mais tocar na caixa de transcrição — regra sem exceção (ver cancelarGravacaoTempoReal).
+        if (cancelamentoTempoRealEmAndamento) return;
+
         let dado;
         try {
           dado = JSON.parse(eventoMsg.data);
@@ -1913,10 +2691,8 @@
           turnoAtualTempoReal = "";
           atualizarTranscriptTempoReal();
           reportarConsumoTempoReal(dado.usage, dado.transcript);
-          // No modo "por tempo" só fecha quando todos os commits mandados já voltaram. No modo
-          // "pela API" não há commit nosso para contar — fecha assim que o primeiro "completed"
-          // chegar depois do stop, dando por encerrado o turno que estava em andamento.
-          if (aguardandoUltimoTurnoTempoReal && (modoTurnoApi || commitsPendentesTempoReal === 0)) {
+          // Só fecha quando todos os commits mandados já voltaram (ver pararGravacaoTempoReal).
+          if (aguardandoUltimoTurnoTempoReal && commitsPendentesTempoReal === 0) {
             finalizarFechamentoTempoReal();
           }
         } else if (dado.type === "error") {
@@ -1930,9 +2706,7 @@
 
         wsTempoReal = null;
         limparRecursosTempoReal();
-        botaoGravacaoRapida.classList.remove("gravando");
-        botaoGravacaoRapida.setAttribute("aria-label", "Iniciar gravação");
-        botaoGravacaoRapida.disabled = false;
+        definirEstadoBotaoGravacao("parado");
         botaoTempoReal.disabled = false;
         gravandoTempoRealEmAndamento = false;
         mostrarStatusGravacao(
@@ -1948,29 +2722,40 @@
       pararGravacaoTempoReal();
     }
 
+    // Cancelar: encerra a sessão imediatamente, sem mandar o commit final (o trecho ainda não
+    // comitado não vira turno nem custo) e sem esperar por nenhum commit já em voo — o áudio
+    // enviado antes do cancelamento já foi cobrado pela API, cancelar não desfaz isso, só evita
+    // gerar um turno novo a partir daqui. A caixa de transcrição nunca é tocada: o handler de
+    // "message" já ignora qualquer evento que ainda chegue (ver cancelamentoTempoRealEmAndamento).
+    function cancelarGravacaoTempoReal() {
+      if (!gravandoTempoRealEmAndamento) return;
+      fechandoTempoRealDeliberadamente = true;
+      cancelamentoTempoRealEmAndamento = true;
+
+      limparRecursosTempoReal(); // pára captura local, timers e analisador — igual à parada normal
+
+      if (wsTempoReal) {
+        try { wsTempoReal.close(); } catch (_) { /* já pode estar fechando */ }
+      }
+      wsTempoReal = null;
+      commitsPendentesTempoReal = 0;
+      aguardandoUltimoTurnoTempoReal = false;
+      if (timeoutEsperaUltimoTurnoTempoReal) {
+        clearTimeout(timeoutEsperaUltimoTurnoTempoReal);
+        timeoutEsperaUltimoTurnoTempoReal = null;
+      }
+      corteSegurancaTempoRealAtivado = false;
+
+      definirEstadoBotaoGravacao("parado"); // imediato — não há nada a "processar"
+      botaoTempoReal.disabled = false;
+      gravandoTempoRealEmAndamento = false;
+
+      mostrarStatusGravacao("confirmacao", "Gravação cancelada.");
+    }
+
     function pararGravacaoTempoReal() {
       fechandoTempoRealDeliberadamente = true;
-
-      // Para a captura local (microfone, timers, análise de nível) imediatamente em qualquer
-      // modo — não há motivo para continuar mandando áudio novo depois do stop. O WebSocket em si
-      // só fecha depois de aguardarmos (ou desistirmos de aguardar) o fim do turno em andamento.
-      if (modoTurnoApi) {
-        // Não há commit manual pra mandar: quem fecha o turno é o server_vad, e não temos como
-        // saber se a API ainda está processando o que acabou de ser falado. Reaproveita o mesmo
-        // timeout de segurança do modo "por tempo" como prazo de tolerância — fecha assim que o
-        // "completed" do turno em andamento chegar (ver handler de mensagens), ou ao esgotar o
-        // prazo, o que vier primeiro. Sem isso a interface travaria esperando um evento que pode
-        // nunca chegar (ex.: sessão já estava em silêncio havia tempo).
-        limparRecursosTempoReal();
-        aguardandoUltimoTurnoTempoReal = true;
-        botaoGravacaoRapida.disabled = true;
-        mostrarStatusGravacao("carregando", "Encerrando… aguardando a transcrição do último trecho.");
-        timeoutEsperaUltimoTurnoTempoReal = setTimeout(() => {
-          timeoutEsperaUltimoTurnoTempoReal = null;
-          finalizarFechamentoTempoReal();
-        }, TIMEOUT_ESPERA_ULTIMO_TURNO_TEMPO_REAL_MS);
-        return;
-      }
+      definirEstadoBotaoGravacao("processando"); // vai comitar o trecho final e aguardar a transcrição
 
       const podeComitarFinal = wsTempoReal && wsTempoReal.readyState === WebSocket.OPEN &&
         bytesDesdeUltimoCommitTempoReal >= MINIMO_BYTES_PARA_COMMIT_TEMPO_REAL;
@@ -1987,8 +2772,7 @@
 
       if (commitsPendentesTempoReal > 0) {
         aguardandoUltimoTurnoTempoReal = true;
-        botaoGravacaoRapida.disabled = true;
-        mostrarStatusGravacao("carregando", "Encerrando… aguardando a transcrição do último trecho.");
+        mostrarStatusGravacao("andamento", "Encerrando… aguardando a transcrição do último trecho.");
         timeoutEsperaUltimoTurnoTempoReal = setTimeout(() => {
           timeoutEsperaUltimoTurnoTempoReal = null;
           finalizarFechamentoTempoReal();
@@ -2014,9 +2798,7 @@
       wsTempoReal = null;
       commitsPendentesTempoReal = 0;
 
-      botaoGravacaoRapida.classList.remove("gravando");
-      botaoGravacaoRapida.setAttribute("aria-label", "Iniciar gravação");
-      botaoGravacaoRapida.disabled = false;
+      definirEstadoBotaoGravacao("parado");
       botaoTempoReal.disabled = false;
       gravandoTempoRealEmAndamento = false;
 
@@ -2032,7 +2814,7 @@
         corteSegurancaTempoRealAtivado = false;
         mostrarStatusGravacao("erro", AVISO_CORTE_SEGURANCA_TEMPO_REAL);
       } else {
-        mostrarStatusGravacao("sucesso", "Gravação em tempo real encerrada.");
+        mostrarStatusGravacao("confirmacao", "Gravação em tempo real encerrada.");
       }
     }
   </script>

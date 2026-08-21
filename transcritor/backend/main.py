@@ -3,6 +3,7 @@
 
 import json
 import os
+import struct
 from datetime import datetime, timezone
 from pathlib import Path
 from uuid import uuid4
@@ -10,7 +11,7 @@ from uuid import uuid4
 from dotenv import load_dotenv
 from fastapi import FastAPI, File, Form, HTTPException, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import StreamingResponse
+from fastapi.responses import Response, StreamingResponse
 from fastapi.staticfiles import StaticFiles
 from openai import APIConnectionError, APIStatusError, AuthenticationError, OpenAI
 from pydantic import BaseModel, field_validator
@@ -49,18 +50,6 @@ PRECO_POR_MINUTO_USD = {
 # token efêmero — não é preciso o backend fazer relay de áudio.
 MODELO_TEMPO_REAL = "gpt-live-transcribe"
 
-# Alternador de controle de turno do modo tempo real (Etapa 2): "tempo" mantém o comportamento da
-# Etapa 1 (turn_detection: None, cliente comita a cada 6s); "api" delega ao server_vad da própria
-# Realtime API. Formato de `turn_detection` confirmado na doc oficial — guia de VAD da Realtime API
-# (https://developers.openai.com/api/docs/guides/realtime-vad, consulta em 2026-08-20): tipo
-# "server_vad" aceita threshold/prefix_padding_ms/silence_duration_ms (create_response e
-# interrupt_response só valem para conversas fala-fala, não para sessão de transcrição). Nenhum
-# desses campos numéricos é fixado aqui — sem confirmação de qual seria o valor certo para este
-# projeto, deixa a API aplicar seus próprios padrões em vez de presumir um número.
-MODO_TURNO_TEMPO = "tempo"
-MODO_TURNO_API = "api"
-MODOS_TURNO_PERMITIDOS = (MODO_TURNO_TEMPO, MODO_TURNO_API)
-
 # Registro de consumo: um JSON por linha, arquivo local (não versionado — ver .gitignore).
 CONSUMO_PATH = Path(__file__).resolve().parent.parent / "consumo.jsonl"
 
@@ -81,6 +70,31 @@ app.add_middleware(
     allow_methods=["GET", "POST"],
     allow_headers=["*"],
 )
+
+
+def _gerar_favicon_ico() -> bytes:
+    """Gera em memória um favicon.ico mínimo (quadrado sólido 16x16, cor da marca #7c3aed) — sem
+    depender de nenhum arquivo de imagem nem biblioteca externa. Formato: cabeçalho ICO + uma
+    imagem BITMAPINFOHEADER de 32bpp (canal alfa cobre a transparência, máscara AND zerada)."""
+    largura = altura = 16
+    pixel_bgra = bytes((237, 58, 124, 255))  # cor #7c3aed opaca, em ordem BGRA
+    dados_xor = pixel_bgra * (largura * altura)
+    dados_and = b"\x00" * (((largura + 31) // 32) * 4 * altura)
+
+    cabecalho_dib = struct.pack(
+        "<IiiHHIIiiII",
+        40, largura, altura * 2, 1, 32, 0, len(dados_xor) + len(dados_and), 0, 0, 0, 0,
+    )
+    imagem = cabecalho_dib + dados_xor + dados_and
+
+    cabecalho_ico = struct.pack("<HHH", 0, 1, 1)
+    entrada_ico = struct.pack(
+        "<BBBBHHII", largura, altura, 0, 0, 1, 32, len(imagem), len(cabecalho_ico) + 16,
+    )
+    return cabecalho_ico + entrada_ico + imagem
+
+
+FAVICON_ICO = _gerar_favicon_ico()
 
 
 def _calcular_custo_usd(modelo: str, usage) -> tuple[float, dict]:
@@ -272,28 +286,17 @@ async def transcrever(
 
 
 @app.get("/tempo-real/token")
-async def tempo_real_token(modo_turno: str = MODO_TURNO_TEMPO):
+async def tempo_real_token():
     """Gera um token efêmero (client secret) para o navegador abrir uma sessão de transcrição ao
     vivo direto com a OpenAI (WebSocket), sem que a chave real da API passe pelo navegador em
     nenhum momento. O token dura poucos minutos e só serve para abrir sessões de transcrição
-    (não dá acesso geral à API). `modo_turno` escolhe quem fecha cada turno: "tempo" (padrão,
-    cliente comita a cada 6s) ou "api" (server_vad da Realtime API decide). Ver
-    transcritor/README.md para o formato de uso no frontend."""
-    if modo_turno not in MODOS_TURNO_PERMITIDOS:
-        raise HTTPException(
-            status_code=422,
-            detail=f"modo_turno inválido: '{modo_turno}'. Valores aceitos: "
-            + ", ".join(MODOS_TURNO_PERMITIDOS),
-        )
-
+    (não dá acesso geral à API). Ver transcritor/README.md para o formato de uso no frontend."""
     chave = os.getenv("OPENAI_API_KEY")
     if not chave:
         raise HTTPException(
             status_code=503,
             detail="OPENAI_API_KEY não configurada — preencha transcritor/.env",
         )
-
-    turn_detection = None if modo_turno == MODO_TURNO_TEMPO else {"type": "server_vad"}
 
     cliente = OpenAI(api_key=chave)
     try:
@@ -303,7 +306,7 @@ async def tempo_real_token(modo_turno: str = MODO_TURNO_TEMPO):
                 "audio": {
                     "input": {
                         "transcription": {"model": MODELO_TEMPO_REAL},
-                        "turn_detection": turn_detection,
+                        "turn_detection": None,
                     }
                 },
             }
@@ -328,12 +331,11 @@ async def tempo_real_token(modo_turno: str = MODO_TURNO_TEMPO):
         "client_secret": resposta.value,
         "expira_em": resposta.expires_at,
         "modelo": MODELO_TEMPO_REAL,
-        "modo_turno": modo_turno,
     }
 
 
 class UsageTempoReal(BaseModel):
-    """Corpo esperado em POST /consumo/tempo-real: o campo `usage` do evento
+    """Corpo esperado em POST /tempo-real/turno-concluido: o campo `usage` do evento
     `conversation.item.input_audio_transcription.completed`, como o navegador recebe da OpenAI.
     Confirmado na doc oficial (consulta em 2026-08-19) que, para `gpt-live-transcribe` (modelo de
     ASR cobrado por duração), esse `usage` sempre vem no formato {"type": "duration", "seconds": N}
@@ -362,12 +364,13 @@ class UsageTempoReal(BaseModel):
         return valor
 
 
-@app.post("/consumo/tempo-real")
-async def consumo_tempo_real(usage: UsageTempoReal):
-    """Registra o consumo de um turno concluído do modo ao vivo. O frontend chama isso porque,
-    nesse modo, o navegador fala direto com a OpenAI (token efêmero) e o `usage` chega só lá — o
-    backend não tem outro jeito de saber quanto foi gasto. Quando o corpo traz `texto`, grava
-    também a transcrição daquele turno, ligada ao mesmo id do registro de consumo."""
+@app.post("/tempo-real/turno-concluido")
+async def turno_concluido_tempo_real(usage: UsageTempoReal):
+    """Registra o consumo e a transcrição de um turno concluído do modo ao vivo. O frontend chama
+    isso porque, nesse modo, o navegador fala direto com a OpenAI (token efêmero) e o `usage`
+    chega só lá — o backend não tem outro jeito de saber quanto foi gasto. Quando o corpo traz
+    `texto`, grava também a transcrição daquele turno, ligada ao mesmo id do registro de
+    consumo."""
     id_consumo = _registrar_consumo(MODELO_TEMPO_REAL, usage)
     if id_consumo is not None and usage.texto is not None:
         _registrar_transcricao(id_consumo, MODELO_TEMPO_REAL, usage.texto)
@@ -433,6 +436,11 @@ async def consumo():
         "por_dia": sorted(por_dia.values(), key=lambda item: item["data"]),
         "requisicoes": sorted(requisicoes, key=lambda item: item["timestamp"] or ""),
     }
+
+
+@app.get("/favicon.ico")
+async def favicon():
+    return Response(content=FAVICON_ICO, media_type="image/x-icon")
 
 
 # Serve o frontend como arquivo estático em http://127.0.0.1:8000/ — dá ao navegador uma origem
