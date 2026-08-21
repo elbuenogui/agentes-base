@@ -20,22 +20,19 @@
 
     main { width: 100%; max-width: 40rem; }
 
-    h1 { font-size: 1.5rem; margin-bottom: 0.25rem; }
-
-    .subtitulo { color: #52606d; margin-bottom: 1.5rem; }
-
-    form {
-      background: #fff;
-      border: 1px solid #d9e2ec;
-      border-radius: 0.5rem;
-      padding: 1.5rem;
-      display: grid;
-      gap: 1rem;
+    /* Cabeçalho continua existindo para quem navega por leitor de tela (a página não fica
+       anônima), mas sai da tela — display:none esconderia dos dois, não é isso que queremos. */
+    .oculto-visualmente {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+      clip-path: inset(50%);
     }
 
     label { font-weight: 600; display: block; margin-bottom: 0.35rem; }
 
-    input[type="file"], select {
+    select {
       width: 100%;
       padding: 0.5rem;
       border: 1px solid #bcccdc;
@@ -58,29 +55,6 @@
 
     button:hover:not(:disabled) { background: #1d4ed8; }
     button:disabled { background: #9aa5b1; cursor: wait; }
-
-    #resultado {
-      margin-top: 1.5rem;
-      padding: 1.25rem;
-      border-radius: 0.5rem;
-      white-space: pre-wrap;
-      display: none;
-    }
-
-    #resultado.sucesso { display: block; background: #ecfdf5; border: 1px solid #6ee7b7; }
-    #resultado.erro { display: block; background: #fef2f2; border: 1px solid #fca5a5; color: #991b1b; }
-    #resultado.carregando { display: block; background: #eff6ff; border: 1px solid #93c5fd; color: #1e40af; }
-
-    .separador {
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-      margin: 1.5rem 0;
-      color: #9aa5b1;
-      font-size: 0.85rem;
-      text-transform: uppercase;
-    }
-    .separador::before, .separador::after { content: ""; flex: 1; height: 1px; background: #d9e2ec; }
 
     section#gravacao-rapida {
       background: #fff;
@@ -434,23 +408,52 @@
     #botaoLimparTranscript #iconeDesfazer { display: none; }
     #botaoLimparTranscript.modo-desfazer #iconeLixeira { display: none; }
     #botaoLimparTranscript.modo-desfazer #iconeDesfazer { display: block; }
+    /* Ícone de copiar/recortar: mesmo padrão do lixeira/desfazer acima — os dois ficam no DOM, a
+       classe do botão (ligada ao interruptor "Recortar em vez de copiar" das Configurações) decide
+       qual aparece. */
+    #botaoCopiarTranscript #iconeRecortar { display: none; }
+    #botaoCopiarTranscript.modo-recortar #iconeCopiar { display: none; }
+    #botaoCopiarTranscript.modo-recortar #iconeRecortar { display: block; }
 
     .dica { color: #52606d; font-size: 0.85rem; }
 
-    .alternador-modelo { display: flex; align-items: center; gap: 0.6rem; flex-wrap: wrap; margin-bottom: 1.5rem; }
-    .rotulo-modelo { font-weight: 600; }
-    .dica-modelo { color: #9aa5b1; font-size: 0.8rem; }
-
-    #botaoModelo, #botaoStreaming, #botaoTempoReal {
-      justify-self: initial;
-      padding: 0.35rem 0.9rem;
-      border: 1px solid #2563eb;
-      border-radius: 999px;
-      background: #eff6ff;
-      color: #1d4ed8;
-      font-weight: 600;
+    /* Interruptores das Configurações (streaming, tempo real) — checkbox nativo estilizado como
+       trilha+bolinha, não um botão que escreve "Ligado"/"Desligado". */
+    .linha-interruptor {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
     }
-    #botaoModelo:hover:not(:disabled), #botaoStreaming:hover:not(:disabled), #botaoTempoReal:hover:not(:disabled) { background: #dbeafe; }
+    .linha-interruptor label { margin-bottom: 0; }
+
+    .interruptor {
+      appearance: none;
+      -webkit-appearance: none;
+      width: 2.75rem;
+      height: 1.5rem;
+      min-width: 2.75rem;
+      border-radius: 999px;
+      background: #cbd2d9;
+      position: relative;
+      cursor: pointer;
+      flex-shrink: 0;
+      transition: background 0.15s;
+    }
+    .interruptor::before {
+      content: "";
+      position: absolute;
+      top: 0.15rem;
+      left: 0.15rem;
+      width: 1.2rem;
+      height: 1.2rem;
+      border-radius: 50%;
+      background: #fff;
+      transition: transform 0.15s;
+    }
+    .interruptor:checked { background: #2563eb; }
+    .interruptor:checked::before { transform: translateX(1.25rem); }
+    .interruptor:disabled { opacity: 0.5; cursor: default; }
 
     #barrasNivel {
       display: flex;
@@ -491,41 +494,10 @@
 </head>
 <body>
   <main>
-    <h1>Assistente de Pesquisa por Áudio</h1>
-    <p class="subtitulo">MVP de transcrição — envie ou grave um áudio e receba o texto.</p>
-
-    <!-- gpt-4o-transcribe-diarize foi desativado deste alternador a pedido do usuário em
-         2026-08-18 (qualidade insatisfatória nos testes). O backend continua aceitando esse
-         modelo sem alteração; para reativar na interface, ver o array MODELOS_ATIVOS no script
-         abaixo. -->
-    <div class="alternador-modelo">
-      <span class="rotulo-modelo">Modelo de transcrição:</span>
-      <button type="button" id="botaoModelo"></button>
-      <span class="dica-modelo">(clique para alternar)</span>
-    </div>
-
-    <div class="alternador-modelo">
-      <span class="rotulo-modelo">Streaming do transcript:</span>
-      <button type="button" id="botaoStreaming"></button>
-      <span class="dica-modelo">(clique para alternar — texto aparece aos poucos em vez de esperar a resposta completa)</span>
-    </div>
-
-    <div class="alternador-modelo">
-      <span class="rotulo-modelo">Transcrição em tempo real:</span>
-      <button type="button" id="botaoTempoReal"></button>
-      <span class="dica-modelo">(só afeta a gravação rápida abaixo — texto aparece enquanto você ainda fala, via WebSocket direto com a OpenAI)</span>
-    </div>
-
-    <form id="formulario">
-      <div>
-        <label for="audio">Arquivo de áudio (.m4a, .wav, .mp3)</label>
-        <input type="file" id="audio" name="audio" accept=".m4a,.wav,.mp3,audio/*" required>
-      </div>
-
-      <button type="submit" id="botao">Transcrever</button>
-    </form>
-
-    <p class="separador">ou</p>
+    <!-- Cabeçalho visualmente oculto (ver .oculto-visualmente no CSS): a página não fica anônima
+         para quem navega por leitor de tela mesmo sem título visível na tela. O <title> da aba
+         continua nomeando o app. -->
+    <h1 class="oculto-visualmente">Assistente de Pesquisa por Áudio</h1>
 
     <section id="gravacao-rapida">
       <div class="controles-gravacao-rapida">
@@ -548,8 +520,15 @@
               </svg>
               Consumo
             </button>
+            <button type="button" id="botaoUpload" class="item-menu-avancado" role="menuitem" aria-label="Enviar arquivo de áudio para transcrever">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M5 20h14v-2H5v2Zm7-16-6 6h4v6h4v-6h4l-6-6Z"/>
+              </svg>
+              Enviar arquivo
+            </button>
           </div>
         </div>
+        <input type="file" id="inputUploadArquivo" accept=".m4a,.wav,.mp3,audio/*" hidden>
 
         <div class="coluna-centro-gravacao">
           <button type="button" id="botaoGravacaoRapida" aria-label="Iniciar gravação">
@@ -586,15 +565,16 @@
             </svg>
           </button>
           <button type="button" id="botaoCopiarTranscript" class="botao-icone-campo" aria-label="Copiar texto" title="Copiar texto">
-            <svg viewBox="0 0 24 24" aria-hidden="true">
+            <svg id="iconeCopiar" viewBox="0 0 24 24" aria-hidden="true">
               <path d="M16 1H4a2 2 0 0 0-2 2v14h2V3h12V1Zm3 4H8a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h11a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2Zm0 16H8V7h11v14Z"/>
+            </svg>
+            <svg id="iconeRecortar" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M9.64 7.64c.23-.5.36-1.05.36-1.64 0-2.21-1.79-4-4-4S2 3.79 2 6s1.79 4 4 4c.59 0 1.14-.13 1.64-.36L10 12l-2.36 2.36C7.14 14.13 6.59 14 6 14c-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4c0-.59-.13-1.14-.36-1.64L12 14l7 7h3v-1L9.64 7.64ZM6 8c-1.1 0-2-.89-2-2s.9-2 2-2 2 .89 2 2-.9 2-2 2Zm0 12c-1.1 0-2-.89-2-2s.9-2 2-2 2 .89 2 2-.9 2-2 2Zm6-7.5c-.28 0-.5-.22-.5-.5s.22-.5.5-.5.5.22.5.5-.22.5-.5.5ZM19 3l-6 6 2 2 7-7V3Z"/>
             </svg>
           </button>
         </div>
       </div>
     </section>
-
-    <div id="resultado" aria-live="polite"></div>
 
     <p id="statusGravacaoRapida" aria-live="polite" hidden></p>
 
@@ -606,11 +586,39 @@
           <h2>Configurações</h2>
           <button type="button" id="botaoFecharConfiguracoes" aria-label="Fechar configurações">✕</button>
         </div>
+
+        <!-- gpt-4o-transcribe-diarize foi desativado desta lista a pedido do usuário em
+             2026-08-18 (qualidade insatisfatória nos testes). O backend continua aceitando esse
+             modelo sem alteração; para reativar na interface, ver o array MODELOS_ATIVOS no
+             script abaixo. -->
+        <div>
+          <label for="seletorModelo">Modelo de transcrição</label>
+          <select id="seletorModelo" title="Modelo usado para transcrever, no envio de arquivo e na gravação"></select>
+        </div>
+
+        <div class="linha-interruptor">
+          <label for="botaoStreaming">Streaming do transcript</label>
+          <input type="checkbox" id="botaoStreaming" class="interruptor" role="switch"
+                 title="Mostra o texto aos poucos, conforme a API responde, em vez de esperar a resposta completa. Vale para o envio de arquivo e para a gravação.">
+        </div>
+
+        <div class="linha-interruptor">
+          <label for="botaoTempoReal">Transcrição em tempo real</label>
+          <input type="checkbox" id="botaoTempoReal" class="interruptor" role="switch"
+                 title="Só afeta a gravação rápida (não o envio de arquivo) — o texto aparece enquanto você ainda fala, via WebSocket direto com a OpenAI. Cobrado por minuto de áudio, diferente do modo padrão.">
+        </div>
+
         <div>
           <label for="dispositivoAudio">Dispositivo de entrada (microfone)</label>
           <select id="dispositivoAudio"></select>
         </div>
-        <p class="dica">A escolha vale a partir da próxima gravação. Sem escolha, usa o microfone padrão do navegador.</p>
+        <p class="dica">A escolha do microfone vale a partir da próxima gravação. Sem escolha, usa o microfone padrão do navegador.</p>
+
+        <div class="linha-interruptor">
+          <label for="botaoRecortar">Recortar em vez de copiar</label>
+          <input type="checkbox" id="botaoRecortar" class="interruptor" role="switch"
+                 title="O botão ao lado da caixa de transcrição passa a apagar o texto depois de copiar (como recortar), em vez de só copiar. O texto apagado continua recuperável pelo botão de desfazer.">
+        </div>
       </div>
     </div>
 
@@ -679,16 +687,7 @@
   <script>
     const URL_BACKEND = "http://127.0.0.1:8000/transcrever";
 
-    const formulario = document.getElementById("formulario");
-    const botao = document.getElementById("botao");
-    const resultado = document.getElementById("resultado");
-
-    function mostrar(classe, texto) {
-      resultado.className = classe;
-      resultado.textContent = texto;
-    }
-
-    // --- Alternador de modelo (compartilhado entre upload e gravação) ---
+    // --- Modelo de transcrição (select nas Configurações — compartilhado entre upload e gravação) ---
 
     // gpt-4o-transcribe-diarize desativado a pedido do usuário em 2026-08-18 (qualidade
     // insatisfatória). Para reativar, descomente a linha abaixo.
@@ -698,66 +697,42 @@
       // "gpt-4o-transcribe-diarize",
     ];
 
-    const botaoModelo = document.getElementById("botaoModelo");
-    let indiceModeloAtivo = 0;
+    const seletorModelo = document.getElementById("seletorModelo");
+    MODELOS_ATIVOS.forEach((modelo) => {
+      const opcao = document.createElement("option");
+      opcao.value = modelo;
+      opcao.textContent = modelo;
+      seletorModelo.appendChild(opcao);
+    });
 
     function modeloAtivo() {
-      return MODELOS_ATIVOS[indiceModeloAtivo];
+      return seletorModelo.value;
     }
 
-    function atualizarBotaoModelo() {
-      botaoModelo.textContent = modeloAtivo();
-    }
-
-    botaoModelo.addEventListener("click", () => {
-      indiceModeloAtivo = (indiceModeloAtivo + 1) % MODELOS_ATIVOS.length;
-      atualizarBotaoModelo();
-    });
-
-    atualizarBotaoModelo();
-
-    // --- Alternador de streaming (compartilhado entre upload e gravação) ---
+    // --- Streaming (interruptor nas Configurações — compartilhado entre upload e gravação) ---
 
     const botaoStreaming = document.getElementById("botaoStreaming");
-    let streamingLigado = false;
 
     function streamingAtivo() {
-      return streamingLigado;
+      return botaoStreaming.checked;
     }
 
-    function atualizarBotaoStreaming() {
-      botaoStreaming.textContent = streamingLigado ? "Ligado" : "Desligado";
-    }
-
-    botaoStreaming.addEventListener("click", () => {
-      streamingLigado = !streamingLigado;
-      atualizarBotaoStreaming();
-    });
-
-    atualizarBotaoStreaming();
-
-    // --- Alternador de tempo real (só afeta a gravação rápida, abaixo) ---
+    // --- Tempo real (interruptor nas Configurações — só afeta a gravação rápida) ---
 
     const botaoTempoReal = document.getElementById("botaoTempoReal");
-    let tempoRealLigado = false;
 
     function tempoRealAtivo() {
-      return tempoRealLigado;
+      return botaoTempoReal.checked;
     }
 
-    function atualizarBotaoTempoReal() {
-      botaoTempoReal.textContent = tempoRealLigado ? "Ligado" : "Desligado";
-    }
-
-    botaoTempoReal.addEventListener("click", () => {
-      // Não deixa trocar de modo no meio de uma gravação em andamento (normal ou tempo real).
+    // Não deixa trocar de modo no meio de uma gravação em andamento (normal ou tempo real) — o
+    // interruptor também fica com `disabled` nesses momentos (ver os pontos que mexem em
+    // botaoTempoReal.disabled mais abaixo); este guard é redundante de propósito, mesmo padrão
+    // que já existia antes da troca de botão para interruptor.
+    botaoTempoReal.addEventListener("click", (evento) => {
       const gravandoNormal = mediaRecorderRapido && mediaRecorderRapido.state === "recording";
-      if (gravandoTempoRealEmAndamento || gravandoNormal) return;
-      tempoRealLigado = !tempoRealLigado;
-      atualizarBotaoTempoReal();
+      if (gravandoTempoRealEmAndamento || gravandoNormal) evento.preventDefault();
     });
-
-    atualizarBotaoTempoReal();
 
     // Lê a resposta em streaming do backend (NDJSON: uma linha JSON por evento — "delta" com um
     // pedaço de texto, "final" com o texto completo, ou "erro" com uma mensagem). Chama os
@@ -807,71 +782,7 @@
       return { ok: recebeuFinal, teveErro };
     }
 
-    formulario.addEventListener("submit", async (evento) => {
-      evento.preventDefault();
-
-      const dados = new FormData(formulario);
-      dados.append("modelo", modeloAtivo());
-      dados.append("stream", streamingAtivo() ? "true" : "false");
-      botao.disabled = true;
-      botao.textContent = "Transcrevendo…";
-
-      if (streamingAtivo()) {
-        mostrar("carregando", "Conectando ao streaming…");
-        try {
-          const resposta = await fetch(URL_BACKEND, { method: "POST", body: dados });
-
-          if (!resposta.ok || !resposta.body) {
-            let corpo = null;
-            try { corpo = await resposta.json(); } catch (_) { /* resposta sem JSON */ }
-            const detalhe = corpo && corpo.detail
-              ? (typeof corpo.detail === "string" ? corpo.detail : JSON.stringify(corpo.detail))
-              : `Resposta inesperada do servidor (HTTP ${resposta.status}).`;
-            mostrar("erro", "Erro ao transcrever: " + detalhe);
-          } else {
-            const resultadoStream = await consumirStreamTranscricao(resposta, {
-              aoDelta: (texto) => mostrar("carregando", texto),
-              aoFinal: (texto) => mostrar("sucesso", texto),
-              aoErro: (detalhe) => mostrar("erro", "Erro ao transcrever: " + detalhe),
-            });
-            if (!resultadoStream.ok && !resultadoStream.teveErro) {
-              mostrar("erro", "A conexão de streaming foi interrompida antes da transcrição terminar. Tente novamente.");
-            }
-          }
-        } catch (_) {
-          mostrar("erro", "Não foi possível conectar ao backend. Confirme que o servidor está rodando na porta 8000 (veja o README).");
-        } finally {
-          botao.disabled = false;
-          botao.textContent = "Transcrever";
-        }
-        return;
-      }
-
-      mostrar("carregando", "Enviando o áudio e aguardando a transcrição… isso pode levar alguns segundos.");
-
-      try {
-        const resposta = await fetch(URL_BACKEND, { method: "POST", body: dados });
-
-        let corpo = null;
-        try { corpo = await resposta.json(); } catch (_) { /* resposta sem JSON */ }
-
-        if (resposta.ok && corpo && typeof corpo.transcricao === "string") {
-          mostrar("sucesso", corpo.transcricao);
-        } else {
-          const detalhe = corpo && corpo.detail
-            ? (typeof corpo.detail === "string" ? corpo.detail : JSON.stringify(corpo.detail))
-            : `Resposta inesperada do servidor (HTTP ${resposta.status}).`;
-          mostrar("erro", "Erro ao transcrever: " + detalhe);
-        }
-      } catch (_) {
-        mostrar("erro", "Não foi possível conectar ao backend. Confirme que o servidor está rodando na porta 8000 (veja o README).");
-      } finally {
-        botao.disabled = false;
-        botao.textContent = "Transcrever";
-      }
-    });
-
-    // --- Menu de três pontos (agrupa configurações e consumo, que hoje ficavam soltos na linha) ---
+    // --- Menu de três pontos (agrupa configurações, consumo e upload, que hoje ficavam soltos na linha) ---
 
     const botaoMenuAvancado = document.getElementById("botaoMenuAvancado");
     const popupMenuAvancado = document.getElementById("popupMenuAvancado");
@@ -897,6 +808,34 @@
     });
     document.addEventListener("keydown", (evento) => {
       if (evento.key === "Escape" && !popupMenuAvancado.hidden) fecharMenuAvancado();
+    });
+
+    // --- Upload (item do menu ⋮) — reaproveita o mesmo caminho de envio da gravação
+    // (enviarGravacaoRapida, definida mais abaixo — um File é um Blob, então serve quase pronta) ---
+
+    const botaoUpload = document.getElementById("botaoUpload");
+    const inputUploadArquivo = document.getElementById("inputUploadArquivo");
+
+    botaoUpload.addEventListener("click", () => {
+      fecharMenuAvancado();
+      // Não deixa começar um envio de arquivo por cima de uma gravação em andamento — os dois
+      // caminhos agora passam pelo mesmo estado do botão (definirEstadoBotaoGravacao) e pela
+      // mesma caixa de texto, então rodar ao mesmo tempo bagunçaria os dois.
+      const gravandoNormal = mediaRecorderRapido && mediaRecorderRapido.state === "recording";
+      if (gravandoNormal || gravandoTempoRealEmAndamento || botaoGravacaoRapida.classList.contains("processando")) {
+        return;
+      }
+      inputUploadArquivo.click();
+    });
+
+    inputUploadArquivo.addEventListener("change", () => {
+      const arquivo = inputUploadArquivo.files[0];
+      inputUploadArquivo.value = ""; // permite escolher o mesmo arquivo de novo em seguida
+      if (!arquivo) return;
+      // Preserva nome e extensão reais do arquivo escolhido (diferente da gravação, que sempre
+      // nomeia "gravacao.<ext>" — ver enviarGravacaoRapida) — um .mp3 enviado como .webm é
+      // pedido malformado para a API.
+      enviarGravacaoRapida(arquivo, null, arquivo.name);
     });
 
     // --- Configurações (seletor de dispositivo de entrada) ---
@@ -1824,6 +1763,7 @@
     const transcriptRapido = document.getElementById("transcriptRapido");
     const botaoCopiarTranscript = document.getElementById("botaoCopiarTranscript");
     const botaoLimparTranscript = document.getElementById("botaoLimparTranscript");
+    const botaoRecortar = document.getElementById("botaoRecortar");
     const barrasNivel = document.getElementById("barrasNivel");
 
     // --- Estado visual do botão de gravar: microfone (parado) | quadrado (gravando) | spinner
@@ -1845,21 +1785,45 @@
       botaoGravacaoRapida.setAttribute("aria-label", ROTULOS_ESTADO_BOTAO_GRAVACAO[estado]);
     }
 
-    // --- Copiar e limpar/desfazer a transcrição da gravação ---
+    // --- Copiar/recortar e limpar/desfazer a transcrição da gravação ---
 
-    // Copiar: reaproveita a área de status já usada pela gravação rápida (mostrarStatusGravacao)
-    // para confirmar a cópia, em vez de um mecanismo novo.
+    // Recortar (interruptor nas Configurações): o botão de copiar passa a apagar o texto depois de
+    // copiar, com ícone e rótulo trocados — a apagada em si reaproveita o mesmo caminho com
+    // snapshot da lixeira (função apagarTranscriptComSnapshot, definida mais abaixo), então o
+    // desfazer funciona sobre um recorte igual a qualquer outra forma de esvaziar a caixa.
+    function recortarAtivo() {
+      return botaoRecortar.checked;
+    }
+
+    function atualizarBotaoCopiarTranscript() {
+      const rotulo = recortarAtivo() ? "Recortar texto" : "Copiar texto";
+      botaoCopiarTranscript.classList.toggle("modo-recortar", recortarAtivo());
+      botaoCopiarTranscript.setAttribute("aria-label", rotulo);
+      botaoCopiarTranscript.title = rotulo;
+    }
+
+    botaoRecortar.addEventListener("change", atualizarBotaoCopiarTranscript);
+    atualizarBotaoCopiarTranscript(); // estado inicial
+
+    // Copiar/recortar: reaproveita a área de status já usada pela gravação rápida
+    // (mostrarStatusGravacao) para confirmar, em vez de um mecanismo novo.
     botaoCopiarTranscript.addEventListener("click", async () => {
       const texto = transcriptRapido.value;
+      const acao = recortarAtivo() ? "recortar" : "copiar";
       if (!texto.trim()) {
-        mostrarStatusGravacao("erro", "Nada para copiar — a caixa de transcrição está vazia.");
+        mostrarStatusGravacao("erro", `Nada para ${acao} — a caixa de transcrição está vazia.`);
         return;
       }
       try {
         await navigator.clipboard.writeText(texto);
-        mostrarStatusGravacao("confirmacao", "Texto copiado para a área de transferência.");
+        if (recortarAtivo()) {
+          apagarTranscriptComSnapshot();
+          mostrarStatusGravacao("confirmacao", "Texto recortado para a área de transferência.");
+        } else {
+          mostrarStatusGravacao("confirmacao", "Texto copiado para a área de transferência.");
+        }
       } catch (erro) {
-        mostrarStatusGravacao("erro", "Não foi possível copiar: " + erro.message);
+        mostrarStatusGravacao("erro", `Não foi possível ${acao}: ` + erro.message);
       }
     });
 
@@ -1927,6 +1891,18 @@
       agendarSnapshotTranscript();
     });
 
+    // Apagar com snapshot: guarda o snapshot na hora (equivalente a já estar "ocioso" com esse
+    // conteúdo) antes de apagar — não espera o timeout de ociosidade, que só faz sentido pra
+    // digitação. Usado pela lixeira e pelo recortar (ver "Copiar/recortar" acima), então o
+    // desfazer funciona do mesmo jeito nos dois casos.
+    function apagarTranscriptComSnapshot() {
+      const valorAntes = transcriptRapido.value;
+      if (valorAntes.trim()) snapshotTranscript = valorAntes;
+      if (timeoutOciosidadeTranscript) { clearTimeout(timeoutOciosidadeTranscript); timeoutOciosidadeTranscript = null; }
+      transcriptRapido.value = "";
+      atualizarBotaoLimparTranscript();
+    }
+
     botaoLimparTranscript.addEventListener("click", () => {
       if (botaoLimparTranscript.classList.contains("modo-desfazer")) {
         // Desfazer: restaura e consome o snapshot — esvaziar de novo depois de escrever algo novo
@@ -1937,13 +1913,7 @@
         transcriptRapido.value = valorRestaurado;
         atualizarBotaoLimparTranscript();
       } else {
-        // Lixeira: guarda o snapshot na hora (equivalente a já estar "ocioso" com esse conteúdo)
-        // antes de apagar — não espera o timeout de ociosidade, que só faz sentido pra digitação.
-        const valorAntes = transcriptRapido.value;
-        if (valorAntes.trim()) snapshotTranscript = valorAntes;
-        if (timeoutOciosidadeTranscript) { clearTimeout(timeoutOciosidadeTranscript); timeoutOciosidadeTranscript = null; }
-        transcriptRapido.value = "";
-        atualizarBotaoLimparTranscript();
+        apagarTranscriptComSnapshot();
       }
     });
 
@@ -2272,7 +2242,9 @@
       pararGravacaoRapida();
     }
 
-    async function enviarGravacaoRapida(blob, avisoSeguranca) {
+    // nomeArquivo: opcional — usada pelo upload (item do menu ⋮) para preservar o nome/extensão
+    // reais do arquivo escolhido. Sem ela (caminho da gravação), mantém o nome de sempre.
+    async function enviarGravacaoRapida(blob, avisoSeguranca, nomeArquivo) {
       definirEstadoBotaoGravacao("processando");
 
       if (avisoSeguranca) {
@@ -2283,7 +2255,7 @@
       mostrarStatusGravacao("andamento", "Transcrevendo…"); // sem texto — o botão já é o spinner
 
       const dados = new FormData();
-      dados.append("audio", blob, "gravacao." + extensaoParaMime(blob.type));
+      dados.append("audio", blob, nomeArquivo || ("gravacao." + extensaoParaMime(blob.type)));
       dados.append("modelo", modeloAtivo());
       dados.append("stream", streamingAtivo() ? "true" : "false");
 

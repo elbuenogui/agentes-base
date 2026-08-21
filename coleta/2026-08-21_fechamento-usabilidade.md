@@ -124,3 +124,42 @@
 - `consumo.jsonl` mistura uso real e teste; `.claude/tmp/` acumula 584 KB de rascunho, sendo
   `teste_tempo_real.py` o único com valor — ambos no Backlog.
 - Corte de palavras nas emendas do modo ao vivo — sem data, frente fora de foco.
+
+## Coleta — faxina executada e verificada (2026-08-21, depois do resumo acima)
+
+> Registro posterior ao resumo consolidado: as Etapas 2 e 3 rodaram no mesmo dia, num chat EXEC.
+
+- [ARTEFATO] Etapa 2 concluída: `.claude/estado/historico/` reorganizado — raiz com 17 arquivos
+  (7 marcos + 8 snapshots citados por nome na coleta do MVP + as 2 retomadas de frentes
+  encerradas) e `snapshots/` com 48. Total 65 = os 63 que havia + as 2 retomadas: **nada apagado**.
+  265 referências checadas, zero quebradas. Verificado no artefato real pelo PM.
+- [DECISÃO] O Executor manteve na raiz 8 snapshots que a estimativa do PM não previa, porque o
+  grep os achou citados por nome — trade-off: a raiz ficou com 17 arquivos em vez dos "cerca de 7"
+  estimados, mas nenhuma citação da `coleta/` virou link morto. A regra valia mais que o número, e
+  ele registrou a diferença em vez de forçar a estimativa.
+- [ARTEFATO] Etapa 3 concluída: 4 commits (`5e901ad` código do produto, `d0dc344` documentação do
+  produto, `7c2e5ab` estado do método e histórico com 57 arquivos, `c3c2cdb` coleta), 63 arquivos
+  ao todo, sem push. `git ls-files` filtrado por `.env`, os dois `.jsonl`, `.venv/`,
+  `__pycache__/` e `.claude/tmp/` devolve zero — nada sensível entrou. **O projeto voltou a ter
+  ponto de restauração.**
+- [DECISÃO] Mensagens de commit sem acentuação, por escolha declarada do Executor — trade-off:
+  fica esteticamente pior no `git log`, mas evita risco de mojibake permanente no histórico neste
+  ambiente Windows/Git Bash. Conteúdo em português, íntegro.
+- [DECISÃO] O `.git/index.lock` é apagado **pelo próprio Executor**, que roda local — a trava de
+  "Operation not permitted" só existe pelo bridge remoto. Confirmado na prática em 2026-08-21;
+  a nota de processo do `PLANO.md` foi corrigida.
+- [PENDÊNCIA] Lição de processo registrada pela 2ª vez: estimativa numérica do PM (o "cerca de 7")
+  não pode virar critério de pronto — vai como estimativa declarada.
+
+# Adendo ao resumo consolidado — faxina executada (2026-08-21, fim do dia)
+
+As Etapas 2 e 3 rodaram depois do resumo acima, no mesmo dia, e mudam duas linhas dele:
+
+- **Artefatos**: `historico/` reorganizado (raiz 17, `snapshots/` 48, total 65 = 63 + 2 retomadas,
+  nada apagado, 265 referências checadas e zero quebradas) e **4 commits** — `5e901ad` código do
+  produto, `d0dc344` documentação do produto, `7c2e5ab` estado do método e histórico (57
+  arquivos), `c3c2cdb` coleta. Sem push; `.env`, os dois `.jsonl`, `.venv/`, `__pycache__/` e
+  `.claude/tmp/` fora de todos eles.
+- **Pendências**: caem a do `.git/index.lock` (o Executor apaga sozinho, ele roda local) e as das
+  Etapas 2 e 3. Do plano de faxina sobra só o repasse da Etapa 4, que depende de a frente de
+  interface rodar primeiro.

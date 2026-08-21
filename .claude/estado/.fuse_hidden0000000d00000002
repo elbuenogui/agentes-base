@@ -1,7 +1,9 @@
 # Tarefa: Interface enxuta — configurações, upload no menu e topo da página
 Frente nova (interface enxuta), fora do plano de faxina — não é etapa do PLANO.md. Decisões
-registradas em `coleta/2026-08-21_interface-enxuta.md`. O commit de restauração (Etapa 3) já foi feito em
+registradas em
+`coleta/2026-08-21_interface-enxuta.md`. O commit de restauração (Etapa 3) já foi feito em
 2026-08-21, então pode mexer no `index.html` com segurança: `git diff` mostra só o seu trabalho.
+
 
 ## Contexto
 A tela hoje tem, no topo, três linhas de alternador (modelo, streaming, tempo real), um formulário

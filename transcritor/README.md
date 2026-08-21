@@ -50,31 +50,23 @@ recarregamentos da página.
 > pede a permissão de microfone de novo a cada vez, mesmo que você já tenha autorizado antes.
 > Prefira `http://127.0.0.1:8000/` para não repetir essa permissão sempre.
 
-Na página:
+Na página, a tela é enxuta: só o bloco de gravação rápida, descrito abaixo. Modelo de
+transcrição, streaming e tempo real ficam no painel de **Configurações**, aberto pelo botão **⋮**
+(veja "Configurações (modelo, streaming, tempo real e microfone)" mais abaixo); enviar um arquivo
+de áudio já gravado também é feito por esse mesmo botão **⋮**, item **"Enviar arquivo"** — escolher
+o arquivo já dispara a transcrição na hora, sem botão separado de "Transcrever".
 
-1. Escolha o modelo de transcrição no botão "Modelo de transcrição" no topo da página — cada
-   clique alterna entre `gpt-4o-transcribe` (padrão) e `gpt-4o-mini-transcribe`; o nome do
-   modelo ativo aparece no próprio botão. Esse alternador vale tanto para o upload de arquivo
-   quanto para a gravação pelo microfone, abaixo.
-2. Logo abaixo, o alternador **"Streaming do transcript"** ("Ligado"/"Desligado", desligado por
-   padrão) também vale para os dois fluxos — veja a seção "Streaming do transcript" abaixo.
-3. Logo abaixo desse, o alternador **"Transcrição em tempo real"** ("Ligado"/"Desligado",
-   desligado por padrão) só vale para a gravação rápida (não afeta o upload de arquivo) — veja a
-   seção "Transcrição em tempo real" abaixo.
-4. Selecione um arquivo de áudio (`.m4a`, `.wav` ou `.mp3`).
-5. Clique em **Transcrever** e aguarde — a transcrição (ou a mensagem de erro) aparece na
-   própria página.
-
-> O modelo `gpt-4o-transcribe-diarize` foi desativado desse alternador por decisão do usuário em
-> 2026-08-18 (qualidade insatisfatória nos testes). O código continua no `frontend/index.html`,
+> O modelo `gpt-4o-transcribe-diarize` foi desativado da lista de escolha por decisão do usuário
+> em 2026-08-18 (qualidade insatisfatória nos testes). O código continua no `frontend/index.html`,
 > comentado, e pode ser reativado incluindo-o de volta na lista `MODELOS_ATIVOS` do script. O
 > backend e o `benchmark.py` continuam aceitando os três modelos normalmente.
 
 ### Gravação rápida pelo microfone
 
-Em vez de enviar um arquivo existente, também dá para gravar direto na página, na faixa de
-controles "ou" abaixo do formulário de upload — clique único, usando o microfone padrão do
-sistema (ou o escolhido no painel de configurações, veja abaixo). Essa faixa tem três posições
+É o único bloco da página: grava direto pelo microfone, clique único, usando o microfone padrão
+do sistema (ou o escolhido no painel de configurações, veja abaixo) — para enviar um arquivo já
+gravado em vez de usar o microfone, veja "Enviar arquivo de áudio" logo abaixo. Essa faixa tem
+três posições
 fixas, da esquerda para a direita, **próximas umas das outras** (coluna central de largura fixa
 para o botão de gravar, ladeada por duas colunas simétricas): o botão **⋮ (mais opções)**, o
 botão redondo de gravar **no centro** e, só durante a gravação, o botão **✕ de cancelar** logo à
@@ -118,8 +110,8 @@ reservada à parte, de largura fixa, então o centro não é empurrado.
    nem soma nada, mesmo que um trecho já estivesse a caminho antes do clique. Depois de cancelar
    dá para gravar de novo normalmente. O botão some fora da gravação.
 3. Clique de novo no botão redondo (agora quadrado) para parar normalmente. Se foi captado algum
-   som relevante durante a gravação, ela é enviada automaticamente para transcrição (modelo ativo
-   no alternador do topo da página) — não tem botão separado de "enviar". Enquanto a transcrição
+   som relevante durante a gravação, ela é enviada automaticamente para transcrição (modelo
+   escolhido no painel de Configurações) — não tem botão separado de "enviar". Enquanto a transcrição
    está a caminho, o botão vira um **spinner** (terceiro estado, ver "Status da gravação" abaixo)
    em vez de mostrar um texto de "Transcrevendo…". O cronômetro some assim que a gravação para.
 4. O texto transcrito é **somado ao final** da caixa "Transcrição por voz" logo abaixo, sem
@@ -134,6 +126,14 @@ caixa está cheia) ficam dois botões só de ícone: à **esquerda**, o de apaga
 confirma com um balão (ver "Status da gravação" abaixo). Com a caixa vazia, o botão de copiar
 não copia nada e mostra um aviso em vez de fingir que copiou.
 
+**Recortar em vez de copiar:** o interruptor **"Recortar em vez de copiar"**, no painel de
+Configurações (desligado por padrão), muda o comportamento desse mesmo botão — ele passa a
+**apagar o texto depois de copiar** (recortar de verdade, não só copiar), com o ícone trocando de
+"copiar" para "tesoura" e o `aria-label`/`title` passando a dizer "Recortar texto". A apagada usa
+o mesmo caminho com snapshot da lixeira (ver "Apagar e desfazer" abaixo), então o botão de
+desfazer recupera um texto recortado do mesmo jeito que recupera qualquer outro apagado. Com a
+caixa vazia, mostra "Nada para recortar…" em vez de "Nada para copiar…".
+
 ### Status da gravação: balão efêmero + spinner no botão
 
 As mensagens de status da gravação (erro, confirmação, "transcrevendo…") não ocupam mais espaço
@@ -141,11 +141,12 @@ fixo na página — aparecem como um **balão flutuante efêmero**, no mesmo est
 usado pelo aviso "Não foi identificado nenhuma fala". Três tipos, com tempos diferentes:
 
 - **Confirmação** (sucesso — "Transcrição adicionada ao texto abaixo.", "Texto copiado para a
-  área de transferência.", "Gravação cancelada.", "Gravação em tempo real encerrada."): balão
-  verde, some sozinho em **~2 segundos**.
+  área de transferência." ou "Texto recortado para a área de transferência." (conforme o
+  interruptor de recortar — ver acima), "Gravação cancelada.", "Gravação em tempo real
+  encerrada."): balão verde, some sozinho em **~2 segundos**.
 - **Erro** (permissão negada, backend fora do ar, erro do modo tempo real, aviso do corte de
-  2min30s, "nada para copiar"): balão vermelho, some em **~6 segundos** — mais tempo porque
-  algumas dessas mensagens são longas.
+  2min30s, "nada para copiar"/"nada para recortar"): balão vermelho, some em **~6 segundos** —
+  mais tempo porque algumas dessas mensagens são longas.
 - **Em andamento** (transcrevendo, ou aguardando o último turno do tempo real ao encerrar): **não
   vira balão** — em vez de texto, o **botão de gravar vira um spinner**, ficando desabilitado
   (sem o X de cancelar, já que o áudio já foi enviado e não há mais o que cancelar) até a ação
@@ -200,32 +201,54 @@ erro clara aparece perto do botão, sem apagar o texto já transcrito e sem queb
 página (o upload de arquivo continua funcionando normalmente). O texto do transcript não é salvo
 entre sessões — fechar ou recarregar a página apaga o que estiver ali.
 
-### Escolher o microfone (configurações)
+### Enviar arquivo de áudio
 
-Clique no botão **⋮** (mais opções), à esquerda do botão redondo de gravação, para abrir um
-popup com dois itens — **Configurações** e **Consumo** (ver seção abaixo) — que agrupa os dois
-ícones avançados que antes ficavam soltos na faixa de controles. O popup fecha clicando fora dele
-ou com **Esc**, e cada item abre seu próprio painel (fechando o popup junto). Clique em
-**Configurações**:
+Clique no botão **⋮** (mais opções), à esquerda do botão redondo de gravação, para abrir um popup
+com três itens — **Configurações**, **Consumo** (ver seções abaixo) e **Enviar arquivo**. O popup
+fecha clicando fora dele ou com **Esc**. Clicar em **Enviar arquivo** abre direto o seletor de
+arquivo nativo do sistema (formatos aceitos: `.m4a`, `.wav`, `.mp3`); escolher um arquivo já
+dispara a transcrição na hora — não tem botão separado de "Transcrever", e o texto entra na caixa
+"Transcrição por voz" pelo mesmo caminho de uma gravação pelo microfone (mesma soma ao final,
+mesmo spinner no botão redondo enquanto transcreve, mesmo balão de confirmação/erro, e o
+copiar/lixeira-desfazer da caixa funcionam sobre esse texto igual). Escolher o mesmo arquivo de
+novo (duas vezes seguidas) dispara um novo envio normalmente. Enviar um arquivo enquanto uma
+gravação está em andamento é ignorado (silenciosamente — primeiro termine ou cancele a gravação).
 
-1. O painel lista os dispositivos de entrada de áudio disponíveis (inclui a opção "Padrão do
+### Configurações (modelo, streaming, tempo real e microfone)
+
+Clique em **Configurações**, no mesmo popup **⋮** acima, para abrir o painel:
+
+1. **Modelo de transcrição** — lista suspensa, com `gpt-4o-transcribe` (padrão) e
+   `gpt-4o-mini-transcribe`; vale tanto para o upload de arquivo quanto para a gravação pelo
+   microfone, abaixo.
+2. **Streaming do transcript** — interruptor, desligado por padrão; vale para os dois fluxos —
+   veja a seção "Streaming do transcript" abaixo.
+3. **Transcrição em tempo real** — interruptor, desligado por padrão; só vale para a gravação
+   rápida (não afeta o upload de arquivo) — veja a seção "Transcrição em tempo real" abaixo. A
+   explicação do custo desse modo (cobrado por duração, mesmo em silêncio comitado) fica no
+   `title`/`aria-label` do próprio interruptor, sem texto fixo ocupando espaço na tela.
+4. O painel lista os dispositivos de entrada de áudio disponíveis (inclui a opção "Padrão do
    navegador"). Os nomes reais dos microfones só aparecem depois que a permissão de microfone
    for concedida pela primeira vez — antes disso, ou se nenhum microfone for detectado, o painel
-   mostra uma mensagem clara no lugar da lista.
-2. Escolher um dispositivo na lista vale a partir da **próxima gravação** (não afeta uma
-   gravação já em andamento). Sem escolha feita, ou voltando para "Padrão do navegador", a
-   gravação usa o microfone padrão do sistema — comportamento de sempre.
-3. Feche o painel clicando no **✕** ou clicando fora dele (na área escurecida) — fechar não
-   cancela nada nem interrompe o resto da página.
+   mostra uma mensagem clara no lugar da lista. Escolher um dispositivo na lista vale a partir da
+   **próxima gravação** (não afeta uma gravação já em andamento). Sem escolha feita, ou voltando
+   para "Padrão do navegador", a gravação usa o microfone padrão do sistema — comportamento de
+   sempre.
+5. **Recortar em vez de copiar** — interruptor, desligado por padrão; muda o botão de copiar da
+   caixa "Transcrição por voz" (ver acima) para apagar o texto depois de copiar. Não afeta
+   modelo/streaming/tempo real nem o upload — é só o comportamento desse botão.
+6. Feche o painel clicando no **✕** ou clicando fora dele (na área escurecida) — fechar não
+   cancela nada nem interrompe o resto da página. Trocar modelo/streaming/tempo real durante uma
+   gravação em andamento é bloqueado (o clique no interruptor não tem efeito enquanto grava).
 
 ## Streaming do transcript
 
 Por padrão, o backend só devolve a transcrição depois que a API da OpenAI termina de processar o
-áudio inteiro (resposta JSON única, como descrito acima). Ligando o alternador **"Streaming do
-transcript"** no topo da página, o texto passa a aparecer **aos poucos**, conforme a API vai
-gerando cada pedaço — tanto no upload de arquivo (área `#resultado`) quanto na gravação rápida
-pelo microfone (caixa "Transcrição por voz"). O alternador é compartilhado entre os dois fluxos,
-no mesmo padrão do alternador de modelo, e começa **desligado**.
+áudio inteiro (resposta JSON única, como descrito acima). Ligando o interruptor **"Streaming do
+transcript"** no painel de Configurações, o texto passa a aparecer **aos poucos**, conforme a API
+vai gerando cada pedaço — tanto no upload de arquivo quanto na gravação rápida pelo microfone,
+ambos na mesma caixa "Transcrição por voz". O interruptor é compartilhado entre os dois fluxos,
+no mesmo padrão do seletor de modelo, e começa **desligado**.
 
 ### Formato da resposta em stream (backend)
 
@@ -254,17 +277,16 @@ streaming.
 
 ### Comportamento no frontend
 
-Com o alternador ligado, o JavaScript lê a resposta aos poucos (`response.body.getReader()`),
-interpreta cada linha NDJSON e vai atualizando a área de transcrição a cada evento `delta`
+Com o interruptor ligado, o JavaScript lê a resposta aos poucos (`response.body.getReader()`),
+interpreta cada linha NDJSON e vai atualizando a caixa "Transcrição por voz" a cada evento `delta`
 recebido; ao chegar o evento `final`, o texto final substitui o acumulado (proteção contra
 qualquer divergência entre a soma dos pedaços e o texto oficial da API) e o estado muda para
-sucesso. Um evento `erro` mostra a mensagem no lugar correspondente (área `#resultado` no
-upload; balão de erro em `#statusGravacaoRapida` na gravação — ver "Status da gravação" acima),
-sem travar a interface em "carregando"; se a conexão cair no meio sem nenhum evento `final` nem
-`erro` chegar, o frontend
-mostra uma mensagem genérica de conexão interrompida pelo mesmo motivo. Na gravação rápida, o
-texto que vai chegando é somado (aos poucos) ao final do que já estava na caixa antes dessa
-gravação — mesmo comportamento cumulativo do modo sem streaming, só que visível em tempo real.
+sucesso. Um evento `erro` mostra a mensagem no balão de erro em `#statusGravacaoRapida` (ver
+"Status da gravação" acima), sem travar a interface em "carregando"; se a conexão cair no meio sem
+nenhum evento `final` nem `erro` chegar, o frontend mostra uma mensagem genérica de conexão
+interrompida pelo mesmo motivo. O texto que vai chegando é somado (aos poucos) ao final do que já
+estava na caixa antes dessa gravação/upload — mesmo comportamento cumulativo do modo sem
+streaming, só que visível em tempo real.
 
 ### Consumo no modo streaming
 
@@ -464,8 +486,8 @@ mesma requisição deu certo (evita linha órfã sem `id_consumo` correspondente
 
 ## Transcrição em tempo real
 
-Ligando o alternador **"Transcrição em tempo real"** no topo da página (desligado por padrão,
-vale só para a gravação rápida — o upload de arquivo não é afetado), o botão redondo passa a
+Ligando o interruptor **"Transcrição em tempo real"** no painel de Configurações (desligado por
+padrão, vale só para a gravação rápida — o upload de arquivo não é afetado), o botão redondo passa a
 gravar e transcrever ao mesmo tempo: o texto vai aparecendo na caixa "Transcrição por voz"
 **enquanto você ainda está falando**, em vez de esperar a gravação terminar. Funciona assim:
 
@@ -492,7 +514,7 @@ gravar e transcrever ao mesmo tempo: o texto vai aparecendo na caixa "Transcriç
    foi cobrado pela API antes do cancelamento e continua cobrado — cancelar não desfaz o passado.
 6. Se a conexão cair (token expirado, rede instável, erro da API) durante a gravação, um balão de
    erro aparece, a interface volta ao estado "parado" (ícone de microfone, sem travar), e o
-   usuário pode clicar de novo para tentar reconectar ou desligar o alternador.
+   usuário pode clicar de novo para tentar reconectar ou desligar o interruptor.
 
 A transcrição de cada turno também é persistida em `transcricoes.jsonl` (ver seção "Registro de
 transcrição" acima), junto do consumo (ver "Consumo no modo tempo real" abaixo).

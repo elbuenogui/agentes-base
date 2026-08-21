@@ -87,7 +87,6 @@ depois, no Backlog.
 - Resíduo do fechamento do WebSocket (~100ms após commit periódico) — depende de: aprovação
 - Bordas de turno cortando palavras — sem data: o usuário tirou o modo ao vivo de foco em 2026-08-21
 - `consumo.jsonl` mistura uso real com testes do Executor — Backlog, sem separação prevista
-
 ## Onde ficam as coisas
 
 - Produto: `transcritor/` (`backend/main.py`, `frontend/index.html`, `README.md`, `BENCHMARK.md`)
@@ -118,6 +117,6 @@ depois, no Backlog.
 
 > PM. Estou retomando o Assistente de Pesquisa por Áudio. A pasta está conectada. Antes de
 > começar, leia `_RETOMADA_usabilidade-gravacao.md` e os itens de "Situar-se". Use a skill
-> `coleta-consolidacao` para ir registrando; ao fim, "consolidar". A faxina já rodou (Etapas 1, 2
-> e 3 conferidas, 4 commits feitos) e a tarefa da interface enxuta está em `PROXIMA_TAREFA.md`,
-> ainda não executada.
+> `coleta-consolidacao` para ir registrando; ao fim, "consolidar". A faxina está em andamento (a
+> tarefa do commit está em `PROXIMA_TAREFA.md`, ainda não executada, e a da interface enxuta está
+> guardada em `.claude/tmp/`).

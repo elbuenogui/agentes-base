@@ -119,9 +119,9 @@ neste plano.
   fora do plano por decisão do usuário. `.claude/tmp/` guarda 584 KB de rascunho
   (`teste_linha_tempo.wav` com 562 KB, `uvicorn.log`, `ROTEIRO_TESTE_ETAPA1.md`,
   `_teste_escrita.tmp`); `_to_delete/` guarda só o fóssil `index.lock.2026-08-16`, de 0 byte. Nada
-  disso é versionado — é ruído visual, não risco. Desde 2026-08-21 a pasta guarda também cópias das
-  tarefas `TAREFA_etapa2_faxina.md` e `TAREFA_interface-enxuta.md`, ambas já executadas ou
-  promovidas — podem ir junto na limpeza;
+  disso é versionado — é ruído visual, não risco. **Atenção**: desde 2026-08-21 a pasta guarda
+  também `TAREFA_etapa2_faxina.md` e `TAREFA_interface-enxuta.md`, tarefas escritas esperando a
+  vez — não limpar antes de promovê-las para `PROXIMA_TAREFA.md`;
 - **Promover `.claude/tmp/teste_tempo_real.py` a ferramenta versionada em `transcritor/`** — é o
   harness em Python que validou o protocolo da API ao vivo sem navegador (2026-08-20), o único
   arquivo com valor dentro de uma pasta descartável: some junto com o resto na primeira limpeza;
