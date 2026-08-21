@@ -72,32 +72,117 @@ Na página:
 
 ### Gravação rápida pelo microfone
 
-Em vez de enviar um arquivo existente, também dá para gravar direto na página, no botão redondo
-na seção "ou" abaixo do formulário de upload — clique único, usando o microfone padrão do
-sistema (ou o escolhido no painel de configurações, veja abaixo):
+Em vez de enviar um arquivo existente, também dá para gravar direto na página, na faixa de
+controles "ou" abaixo do formulário de upload — clique único, usando o microfone padrão do
+sistema (ou o escolhido no painel de configurações, veja abaixo). Essa faixa tem três posições
+fixas, da esquerda para a direita, **próximas umas das outras** (coluna central de largura fixa
+para o botão de gravar, ladeada por duas colunas simétricas): o botão **⋮ (mais opções)**, o
+botão redondo de gravar **no centro** e, só durante a gravação, o botão **✕ de cancelar** logo à
+direita dele. O botão de gravar **nunca muda de lugar** — o cancelar aparece/some numa coluna
+reservada à parte, de largura fixa, então o centro não é empurrado.
 
 1. Clique no botão redondo (ícone de microfone) — o navegador vai pedir permissão de acesso ao
    microfone (só na primeira vez) e a gravação começa imediatamente, usando o microfone padrão
-   do sistema. O botão fica vermelho e pulsando enquanto grava, e um cronômetro em `mm:ss`
-   aparece logo abaixo dele, contando o tempo decorrido a cada segundo. Um visualizador de barras
-   também aparece logo abaixo, reagindo em tempo real ao volume captado pelo microfone — serve
-   como feedback visual de que o som está sendo captado. As barras somem assim que a gravação
-   para (ou se nunca chegou a gravar nada).
-2. Clique de novo no mesmo botão para parar. Se foi captado algum som relevante durante a
-   gravação, ela é enviada automaticamente para transcrição (modelo ativo no alternador do topo
-   da página) — não tem botão separado de "enviar". Um texto de status abaixo do botão mostra
-   "Transcrevendo…" e depois o resultado. O cronômetro some assim que a gravação para.
-3. O texto transcrito é **somado ao final** da caixa "Transcrição por voz" logo abaixo, sem
+   do sistema. O botão fica vermelho e pulsando enquanto grava, e o ícone dentro dele troca de
+   microfone para um **quadrado**, sinalizando que o clique agora para a gravação (fora da
+   gravação, volta ao microfone — veja também "Status da gravação" abaixo para o terceiro estado,
+   o spinner). Um cronômetro em `mm:ss` aparece logo abaixo dele, contando o tempo decorrido a
+   cada segundo.
+
+   Abaixo do cronômetro aparece uma **faixa de barras com histórico**: cada barra é um instante
+   do passado, não o volume "ao vivo" — a cada nova amostra a faixa inteira se desloca, a mais
+   nova entra numa ponta e a mais antiga sai da outra, dando a sensação de continuidade de que a
+   captação está viva. Com as **80 barras** atuais, amostradas a cada **60ms** (~16,7
+   atualizações por segundo), a faixa representa **4,8 segundos** de histórico — rápido o
+   bastante para não parecer em degraus.
+
+   As barras são **espelhadas** (crescem do centro pra cima e pra baixo, como uma forma de onda),
+   **finas** e com as pontas **totalmente arredondadas** — em repouso (silêncio), cada uma vira um
+   pontinho/círculo no meio da faixa, o "pulso constante" que mostra que a captação está viva sem
+   som nenhum. A altura usa uma **curva compressiva (raiz quadrada)** sobre o volume captado, em
+   vez de proporcional direta: assim a fala de conversa normal usa a região **média/alta** da
+   faixa, sem ficar espremida perto do centro, e só fala bem forte chega perto do topo (medido:
+   silêncio abaixo de ~19%, fala normal por volta de ~39–76% nos trechos falados, fala forte perto
+   de ~49–100% — ver PROGRESSO da tarefa de acabamento para os números completos). Em silêncio as
+   barras ficam baixas mas continuam se deslocando — não travam. A largura de cada barra se ajusta
+   à largura do painel (não é um valor fixo em pixels, só um teto para ficar fina de verdade),
+   então a faixa sempre cabe sem transbordar nem quebrar linha, inclusive em tela estreita. A
+   faixa começa limpa a cada gravação nova e some assim que a gravação para (ou se nunca chegou a
+   gravar nada).
+2. Enquanto grava, aparece também o botão **✕ (cancelar)**, à direita do botão de gravar. Cancelar
+   descarta a gravação: no upload direto pelo microfone nenhuma requisição de transcrição sai; no
+   modo tempo real (veja abaixo) a sessão encerra sem mandar o trecho ainda não comitado, então
+   esse último pedaço falado não vira turno nem custo (o áudio já enviado antes do clique em
+   cancelar já foi cobrado — cancelar não desfaz isso, só evita gerar cobrança nova a partir
+   dali). **Em nenhum dos dois modos o cancelar toca na caixa "Transcrição por voz"** — nem apaga,
+   nem soma nada, mesmo que um trecho já estivesse a caminho antes do clique. Depois de cancelar
+   dá para gravar de novo normalmente. O botão some fora da gravação.
+3. Clique de novo no botão redondo (agora quadrado) para parar normalmente. Se foi captado algum
+   som relevante durante a gravação, ela é enviada automaticamente para transcrição (modelo ativo
+   no alternador do topo da página) — não tem botão separado de "enviar". Enquanto a transcrição
+   está a caminho, o botão vira um **spinner** (terceiro estado, ver "Status da gravação" abaixo)
+   em vez de mostrar um texto de "Transcrevendo…". O cronômetro some assim que a gravação para.
+4. O texto transcrito é **somado ao final** da caixa "Transcrição por voz" logo abaixo, sem
    apagar o que já estava lá — inclusive edições manuais. Grave quantas vezes quiser; cada
-   gravação nova soma um parágrafo. A caixa de texto é editável a qualquer momento.
+   gravação nova soma um parágrafo. A caixa de texto é editável a qualquer momento (sem rótulo
+   visível acima dela — tem `aria-label` para leitor de tela).
+
+Numa linha logo **abaixo** da caixa de texto (fora dela — não cobre o conteúdo, nem quando a
+caixa está cheia) ficam dois botões só de ícone: à **esquerda**, o de apagar/desfazer (veja
+"Apagar e desfazer" logo abaixo) e à **direita**, o de **"Copiar texto"** (`aria-label` e
+`title` com esse nome), que copia o conteúdo atual da caixa para a área de transferência e
+confirma com um balão (ver "Status da gravação" abaixo). Com a caixa vazia, o botão de copiar
+não copia nada e mostra um aviso em vez de fingir que copiou.
+
+### Status da gravação: balão efêmero + spinner no botão
+
+As mensagens de status da gravação (erro, confirmação, "transcrevendo…") não ocupam mais espaço
+fixo na página — aparecem como um **balão flutuante efêmero**, no mesmo estilo (`.toast`) já
+usado pelo aviso "Não foi identificado nenhuma fala". Três tipos, com tempos diferentes:
+
+- **Confirmação** (sucesso — "Transcrição adicionada ao texto abaixo.", "Texto copiado para a
+  área de transferência.", "Gravação cancelada.", "Gravação em tempo real encerrada."): balão
+  verde, some sozinho em **~2 segundos**.
+- **Erro** (permissão negada, backend fora do ar, erro do modo tempo real, aviso do corte de
+  2min30s, "nada para copiar"): balão vermelho, some em **~6 segundos** — mais tempo porque
+  algumas dessas mensagens são longas.
+- **Em andamento** (transcrevendo, ou aguardando o último turno do tempo real ao encerrar): **não
+  vira balão** — em vez de texto, o **botão de gravar vira um spinner**, ficando desabilitado
+  (sem o X de cancelar, já que o áudio já foi enviado e não há mais o que cancelar) até a ação
+  terminar. É por isso que o botão tem três estados visuais: **microfone** (parado) → **quadrado**
+  (gravando) → **spinner** (processando).
+
+Uma mensagem nova sempre substitui a anterior na hora (nunca empilha nem entra em fila). O balão
+usa `aria-live`, então continua sendo anunciado por leitor de tela mesmo desaparecendo sozinho.
+
+### Apagar e desfazer
+
+O botão à esquerda, na linha abaixo da caixa de texto, troca de ícone e de função conforme o
+estado da caixa, não conforme quem a esvaziou:
+
+- **Caixa com texto** → ícone de **lixeira**; clicar apaga tudo.
+- **Caixa vazia, com algo apagado recentemente** → ícone de **desfazer** (seta curva); clicar
+  devolve o texto inteiro, inclusive edições manuais feitas por cima do que veio de uma gravação.
+- **Caixa vazia sem nada guardado ainda** (página recém-aberta): o botão fica **escondido** — sem
+  fingir que há algo pra desfazer.
+
+O desfazer funciona **não importa como a caixa esvaziou** — pela lixeira, apagando à mão,
+segurando backspace, ou selecionando tudo (Ctrl+A) e apertando Delete. O "snapshot" usado pelo
+desfazer só é gravado quando a caixa fica **ociosa** (sem mudança por ~0,8s) com texto — nunca a
+cada tecla — para não perder o texto quando o usuário apaga tudo rápido demais (apagar com
+backspace segurado dispara dezenas de eventos de mudança em sequência, mais rápido que o
+intervalo de ociosidade; se o snapshot fosse gravado a cada tecla, o desfazer devolveria só o
+último caractere antes do vazio). Escrever algo novo depois de esvaziar (digitando ou gravando de
+novo) faz o botão voltar a ser lixeira; esvaziar de novo a partir daí desfaz para esse conteúdo
+mais recente, não para o texto antigo.
 
 **Corte de segurança (2min30s):** se a gravação continuar até atingir 2 minutos e 30 segundos
 sem o usuário parar manualmente, ela é interrompida automaticamente — o mesmo caminho do clique
 manual de parar — e, havendo som relevante captado, o áudio gravado até ali é enviado para
-transcrição normalmente, sem precisar de nenhuma ação. Quando isso acontece, a área de status
-mostra por alguns instantes um aviso explicando que a gravação foi cortada por segurança ao
-atingir o limite, antes de mudar para "Transcrevendo…". Esse limite é fixo (não configurável)
-nesta versão.
+transcrição normalmente, sem precisar de nenhuma ação. Quando isso acontece, aparece um balão de
+erro (~6s) explicando que a gravação foi cortada por segurança ao atingir o limite, e o botão
+passa pelo estado de spinner enquanto a transcrição está a caminho. Esse limite é fixo (não
+configurável) nesta versão.
 
 **Nenhuma fala detectada:** ao longo de toda a gravação, o volume captado pelo microfone é
 acompanhado (mesma peça técnica das barras acima, o `AnalyserNode` da Web Audio API) e o maior
@@ -117,8 +202,11 @@ entre sessões — fechar ou recarregar a página apaga o que estiver ali.
 
 ### Escolher o microfone (configurações)
 
-Ao lado do botão redondo de gravação tem um ícone de engrenagem — clique nele para abrir o
-painel de configurações:
+Clique no botão **⋮** (mais opções), à esquerda do botão redondo de gravação, para abrir um
+popup com dois itens — **Configurações** e **Consumo** (ver seção abaixo) — que agrupa os dois
+ícones avançados que antes ficavam soltos na faixa de controles. O popup fecha clicando fora dele
+ou com **Esc**, e cada item abre seu próprio painel (fechando o popup junto). Clique em
+**Configurações**:
 
 1. O painel lista os dispositivos de entrada de áudio disponíveis (inclui a opção "Padrão do
    navegador"). Os nomes reais dos microfones só aparecem depois que a permissão de microfone
@@ -170,9 +258,10 @@ Com o alternador ligado, o JavaScript lê a resposta aos poucos (`response.body.
 interpreta cada linha NDJSON e vai atualizando a área de transcrição a cada evento `delta`
 recebido; ao chegar o evento `final`, o texto final substitui o acumulado (proteção contra
 qualquer divergência entre a soma dos pedaços e o texto oficial da API) e o estado muda para
-sucesso. Um evento `erro` mostra a mensagem na área de erro correspondente
-(`#resultado` no upload, `#statusGravacaoRapida` na gravação), sem travar a interface em
-"carregando"; se a conexão cair no meio sem nenhum evento `final` nem `erro` chegar, o frontend
+sucesso. Um evento `erro` mostra a mensagem no lugar correspondente (área `#resultado` no
+upload; balão de erro em `#statusGravacaoRapida` na gravação — ver "Status da gravação" acima),
+sem travar a interface em "carregando"; se a conexão cair no meio sem nenhum evento `final` nem
+`erro` chegar, o frontend
 mostra uma mensagem genérica de conexão interrompida pelo mesmo motivo. Na gravação rápida, o
 texto que vai chegando é somado (aos poucos) ao final do que já estava na caixa antes dessa
 gravação — mesmo comportamento cumulativo do modo sem streaming, só que visível em tempo real.
@@ -224,8 +313,7 @@ A resposta traz três blocos:
 
 ### Painel de consumo no frontend
 
-Ao lado do ícone de configurações (engrenagem) tem um segundo ícone, de gráfico de barras —
-clique nele para abrir o painel de consumo:
+No mesmo popup **⋮** (mais opções) descrito acima, clique em **Consumo** para abrir o painel:
 
 1. Ao abrir, o painel busca `GET /consumo` na hora e mostra o consumo da **sessão atual**
    (requisições, tokens e custo estimado em USD), o **histórico diário** (lista com data, tokens
@@ -253,25 +341,90 @@ colidir). Na escala "hora", com requisições muito mais próximas entre si, o r
 colisão/ruído visual); o preço continua acessível ali via o `title` do hover e pelo popup de
 clique (ambos abaixo).
 
-1. **Zoom hora/minuto**: alterna a escala do eixo, tanto pelo botão quanto pela roda do mouse.
-   - **Hora**: a linha do tempo inteira (tudo que está em `requisicoes`) é comprimida na largura
-     do painel — cabe sem precisar rolar, mas requisições muito próximas podem se sobrepor; sem
-     rótulo de preço acima dos pontos (ver acima).
-   - **Minuto**: escala fixa de pixels por segundo, então duas requisições feitas com poucos
-     segundos de diferença aparecem como pontos distintos e clicáveis separadamente, cada um com
-     o preço escrito acima. Como o painel mostra **tudo que existe** em `consumo.jsonl` (sem
-     separar teste de uso real, nem filtrar por dia — decisão do projeto), essa escala pode ficar
-     bem mais larga que o painel; ela abre com a rolagem já no fim (as requisições mais recentes),
-     que é o caso de uso principal.
+1. **Zoom hora/minuto**: alterna a escala do eixo, tanto pelo botão quanto pela roda do mouse. As
+     duas escalas mostram um recorte por vez (nunca o histórico inteiro de uma vez) — **hora** um
+     dia, **minuto** uma janela de minutos — e trocar de escala preserva o período que você estava
+     olhando (ver "As duas escalas concordam sobre o período" mais abaixo).
+   - **Hora — um dia por vez** (correção aprovada em 2026-08-20; antes comprimia o histórico
+     inteiro na largura do painel, que ficava ilegível com muitas requisições próximas). Mostra as
+     24h de um único dia civil (meia-noite a meia-noite, hora local), com navegação para o **dia
+     anterior/seguinte** logo acima do gráfico — mesmo padrão visual da navegação da escala
+     "minuto" (um texto com o dia exibido + dois botões). Só é possível navegar dentro do
+     **intervalo de dias que têm alguma requisição**: o botão da ponta correspondente fica
+     desabilitado no primeiro/último dia com dado. Um dia sem nenhuma requisição (mas dentro desse
+     intervalo, por exemplo um dia sem uso entre dois dias de uso) ainda é navegável — o painel
+     mostra o aviso "Nenhuma requisição neste dia." em vez de um retângulo vazio sem explicação. O
+     painel sempre abre no dia da requisição mais recente. Sem rótulo de preço acima dos pontos
+     (ver acima).
+   - **Minuto — janela móvel nas últimas 24h**: em vez de desenhar o histórico inteiro numa régua
+     só (o que cresce sem limite — 30h de histórico a 10px/s já passavam de 1 milhão de pixels de
+     largura), a escala "minuto" mostra um **recorte fixo de 3 minutos**, a 15px/s — duas
+     requisições a poucos segundos de distância já ficam a dezenas de pixels uma da outra,
+     distintas e clicáveis em separado. A largura do SVG é sempre a mesma (não depende de quanto
+     `consumo.jsonl` já acumulou); o usuário desliza esse recorte dentro das **últimas 24 horas**,
+     contadas a partir de uma âncora que normalmente é a requisição mais recente (não o relógio do
+     computador — abrir o painel depois de dias sem uso não deixa a linha do tempo vazia; ver
+     abaixo o que muda quando a âncora vem de uma troca de escala). Requisições fora dessas 24h não
+     somem do painel: continuam na escala "hora" e nos números agregados (sessão e histórico
+     diário) acima.
+     - O painel sempre abre com a janela no **trecho mais recente**. Para deslizar: o **deslizador**
+       abaixo do cabeçalho (arrasta livremente, ou `Home`/`End`/setas com o foco nele — jeito mais
+       direto de pular para as pontas), ou os botões **"Início (24h atrás)"** / **"Mais recente"**
+       (pulo direto para cada ponta, sem precisar acertar o arrasto). O texto acima do deslizador
+       mostra o período exibido (janela atual e as 24h em volta).
+     - Quando o recorte visível não tem nenhuma requisição, o painel avisa em texto ("Nenhuma
+       requisição neste recorte…") em vez de mostrar um retângulo vazio sem explicação.
+   - **As duas escalas concordam sobre o período exibido** (correção aprovada em 2026-08-20):
+     trocar de escala não reinicia a navegação. Ao ir de "hora" (olhando o dia X) para "minuto", a
+     janela de minutos reancora nas últimas 24h **terminando na última requisição do dia X** (ou na
+     meia-noite seguinte, se esse dia não tiver nenhuma), então o recorte cai dentro do dia X — no
+     caso comum de X ser hoje, isso reduz exatamente ao comportamento de sempre (âncora = a
+     requisição mais recente de todo o histórico). Ao voltar de "minuto" para "hora", o dia
+     exibido passa a ser o dia civil do **início** do recorte que estava visível. Cada escala só
+     recalcula o próprio período do zero (âncora/dia mais recente) quando o painel é reaberto, ou
+     na primeíssima vez que aquela escala é usada numa sessão do painel — a partir daí, tanto
+     navegar dentro de uma escala quanto alternar entre elas preserva o que você escolheu.
    - **Botão "Zoom: Hora / Zoom: Minuto"**: alterna entre as duas escalas a cada clique; o texto
      do botão sempre reflete a escala atual, seja qual for a origem da troca (botão ou roda).
-   - **Roda do mouse sobre a linha do tempo**: também alterna a escala (dois estados — rolar para
-     um lado vai para "minuto", para o outro volta para "hora"). Só funciona com o cursor sobre a
-     linha do tempo; rolar o resto do painel de consumo (histórico diário, gráfico de barras)
-     continua rolando a página normalmente, sem mexer no zoom.
-   - **Navegação horizontal na escala "minuto"**: como a roda pura ficou reservada para o zoom,
-     role horizontalmente segurando **Shift** enquanto usa a roda (gesto nativo do navegador para
-     rolagem horizontal) — ou arraste a barra de rolagem do container.
+     Funciona em qualquer estado da linha do tempo (ver "ativação" abaixo) — é a saída garantida
+     se a roda confundir.
+   - **Roda do mouse sobre a linha do tempo — dois estados, sinalizados ao lado do botão de
+     zoom**:
+     - **Desativada** (estado inicial, ao abrir o painel): a roda **alterna a escala** hora/minuto
+       (dois estados — rolar para um lado vai para "minuto", para o outro volta para "hora"), como
+       sempre.
+     - **Ativada** (só tem efeito na escala "minuto" — na "hora" o modo pode ser ativado do mesmo
+       jeito, mas a roda fica sem efeito nenhum enquanto ativado, já que não há janela para
+       deslizar dentro de um dia inteiro fixo; para trocar de escala nesse estado, use o botão de
+       zoom ou desative primeiro com Esc/clique fora):
+       a roda **desliza a janela móvel** dentro das 24h, em vez de trocar de escala — útil para
+       ajuste fino sem tirar a mão do mouse (para pular direto às pontas, use o deslizador ou os
+       botões, bem mais rápidos que girar a roda até o fim). Sensibilidade: cada "clique" de roda
+       (deltaY = 100, o padrão normalizado por navegador) desliza a janela em **~6,7 segundos**;
+       são **~27 cliques de roda** para atravessar o recorte de 3 minutos inteiro, e **~6** para
+       percorrer uma tela cheia do painel (624px visíveis por vez, no tamanho de painel testado) —
+       medido e considerado confortável, sem necessidade de ajuste (nem lento nem rápido demais na
+       prática). Ativa com um clique em **qualquer lugar do container da linha do tempo** que não
+       seja um ponto — área vazia, acima/abaixo do eixo, margens, o SVG inteiro; **pontos
+       continuam abrindo o popup de transcrição** (ver abaixo), não ativam nem desativam nada. O
+       estado ativado tem um contorno roxo no container e o texto ao lado do botão de zoom muda
+       para "Roda: deslizando a janela". Desativa com **Esc** (sem fechar o painel de consumo — um
+       segundo Esc, já desativado, é que fecha o painel, como antes) ou **clicando fora** da linha
+       do tempo.
+     Em ambos os estados, rolar o resto do painel de consumo (histórico diário, gráfico de barras)
+     continua rolando a página normalmente, sem mexer na linha do tempo.
+   - **Navegação horizontal fina dentro do recorte da escala "minuto"**: como a roda pura fica
+     reservada para o zoom/deslizar (ver acima), role horizontalmente segurando **Shift** enquanto
+     usa a roda (gesto nativo do navegador para rolagem horizontal) — ou arraste a barra de
+     rolagem do container. **O recorte só abre já rolado até a requisição mais recente visível
+     nele em alguns momentos específicos** (abrir o painel, trocar de escala, clicar em "Mais
+     recente") — nos demais redesenhos, causados pelo próprio ato de deslizar (roda ativada ou
+     arrastar o deslizador), o container abre pelo **início** do recorte novo (correção aprovada em
+     2026-08-20: antes, esse scroll automático rodava em toda renderização, inclusive as
+     disparadas por deslizar — cada giro da roda redesenhava e imediatamente puxava a rolagem de
+     volta para o fim, dando a impressão de que rolar "pulava direto pro fim" em vez de deslizar).
+     Como o recorte em si se desloca de forma equivalente ao gesto, o efeito visual passa a ser uma
+     rolagem contínua no mesmo sentido a cada giro, nunca um salto.
 2. **Clique num ponto** abre um popup com o modelo, o preço, o horário e o texto transcrito
    daquela requisição (lido de `transcricoes.jsonl` via o campo `texto` de `requisicoes`). Quando
    `texto` é `null` (registro anterior ao campo `id`, ou transcrição que falhou ao gravar), o
@@ -316,81 +469,39 @@ vale só para a gravação rápida — o upload de arquivo não é afetado), o b
 gravar e transcrever ao mesmo tempo: o texto vai aparecendo na caixa "Transcrição por voz"
 **enquanto você ainda está falando**, em vez de esperar a gravação terminar. Funciona assim:
 
-1. Primeiro clique no botão redondo: o frontend busca um token de acesso em
-   `GET /tempo-real/token` (ponte de autenticação — ver abaixo), pede o microfone
+1. Primeiro clique no botão redondo: o botão já vira **spinner** nesse instante (conectar também
+   conta como "em andamento" — ver "Status da gravação" acima) enquanto o frontend busca um token
+   de acesso em `GET /tempo-real/token` (ponte de autenticação — ver abaixo), pede o microfone
    (`getUserMedia`, mesmo dispositivo escolhido no painel de configurações) e abre uma conexão
    WebSocket **direto com a OpenAI** (não passa pelo backend). O áudio capturado é convertido
    para PCM16 mono 24kHz e enviado continuamente à API, a cada pedaço capturado.
-2. O botão fica vermelho e pulsando (mesmo indicador visual da gravação normal), o cronômetro e
-   as barras de nível aparecem normalmente.
+2. Assim que a sessão abre, o botão fica vermelho e pulsando com o ícone de quadrado (mesmo
+   indicador visual da gravação normal), o cronômetro, a faixa de barras com histórico e o botão
+   ✕ de cancelar aparecem normalmente (ver seção "Gravação rápida pelo microfone" acima para o
+   que cada um faz).
 3. O texto vai sendo somado à caixa "Transcrição por voz" conforme os pedaços chegam da API —
    sem esperar o fim da gravação.
-4. Segundo clique: para a captura, fecha a conexão e mostra "Gravação em tempo real encerrada."
-   Não há upload nem chamada a `POST /transcrever` nesse modo — a transcrição inteira acontece
-   via WebSocket.
-5. Se a conexão cair (token expirado, rede instável, erro da API) durante a gravação, uma
-   mensagem de erro aparece no lugar do status, a interface volta ao estado "parado" (sem
-   travar), e o usuário pode clicar de novo para tentar reconectar ou desligar o alternador.
+4. Segundo clique no botão redondo (parar, não cancelar): o botão vira spinner de novo enquanto
+   comita o trecho que ainda não virou turno e aguarda a transcrição dele chegar; ao terminar,
+   fecha a conexão, volta ao ícone de microfone e mostra o balão de confirmação "Gravação em
+   tempo real encerrada." Não há upload nem chamada a `POST /transcrever` nesse modo — a
+   transcrição inteira acontece via WebSocket.
+5. Clicar em **✕ (cancelar)** em vez de parar: fecha a sessão na hora, **sem** mandar esse commit
+   final — o trecho ainda não comitado não vira turno nem custo, e a caixa de transcrição não é
+   tocada. Áudio de trechos anteriores já comitados (pelo timer periódico de 6s, ver abaixo) já
+   foi cobrado pela API antes do cancelamento e continua cobrado — cancelar não desfaz o passado.
+6. Se a conexão cair (token expirado, rede instável, erro da API) durante a gravação, um balão de
+   erro aparece, a interface volta ao estado "parado" (ícone de microfone, sem travar), e o
+   usuário pode clicar de novo para tentar reconectar ou desligar o alternador.
 
 A transcrição de cada turno também é persistida em `transcricoes.jsonl` (ver seção "Registro de
 transcrição" acima), junto do consumo (ver "Consumo no modo tempo real" abaixo).
 
-### Controle de turno: "por tempo" ou "pela API" (Etapa 2)
-
-Com o modo tempo real ligado, aparece um segundo alternador, **"Controle de turno"**, que decide
-**quem fecha cada turno** — objetivo desta etapa é poder comparar os dois, não eleger um vencedor
-(a escolha de padrão fica para depois, com dado na mão). Some da tela junto com o alternador de
-tempo real (não faz sentido sem ele) e não pode ser trocado no meio de uma gravação em andamento.
-
-- **"turnos por tempo (6s)"** (padrão, comportamento da Etapa 1, sem mudança): a sessão é aberta
-  com `turn_detection: null` e o navegador manda `input_audio_buffer.commit` a cada 6s (calibrado
-  testando com fala real) — é esse controle que corta palavra na emenda entre turnos, o problema
-  que motivou esta etapa (ver exemplos no `PROXIMA_TAREFA.md`/`PROGRESSO.md` da Etapa 2).
-- **"turnos pela API"**: a sessão é aberta com
-  `turn_detection: {"type": "server_vad"}` — formato confirmado no guia de VAD da Realtime API
-  (<https://developers.openai.com/api/docs/guides/realtime-vad>, consulta em 2026-08-20) — e é a
-  própria API que detecta o fim da fala e fecha o turno; o navegador nunca manda
-  `input_audio_buffer.commit` nesse modo.
-
-  > **Bloqueio conhecido, confirmado contra a API real em 2026-08-20:** o modelo usado por este
-  > projeto no modo ao vivo, `gpt-live-transcribe` (constante `MODELO_TEMPO_REAL` no backend), **não
-  > aceita nenhum valor de `turn_detection` além de `null`** — a API recusa a criação da sessão com
-  > `HTTP 400` e a mensagem `"Turn detection is not supported for this transcription model."`. Isso
-  > foi confirmado testando `server_vad` e `semantic_vad` diretamente contra a API (script ad-hoc,
-  > não commitado); os mesmos payloads funcionam normalmente com `gpt-4o-transcribe`,
-  > `gpt-4o-mini-transcribe` e `whisper-1`. Ou seja: **"turnos pela API" está implementado (backend
-  > e frontend) mas não funciona de verdade enquanto `MODELO_TEMPO_REAL` continuar sendo
-  > `gpt-live-transcribe`** — clicar em gravar nesse modo mostra o erro "Não foi possível obter o
-  > token do modo tempo real" ao tentar abrir a sessão. Trocar o modelo do modo ao vivo é uma
-  > decisão maior que esta etapa não cobria (afeta custo e comportamento dos dois modos, não só
-  > deste alternador) — fica para o PM decidir. Ver `PROGRESSO.md` da Etapa 2 para o log completo do
-  > teste e as opções levantadas.
-
-Os dois acoplamentos abaixo (gate de silêncio e fechamento) já levam em conta os dois modos, para
-o dia em que esse bloqueio for resolvido:
-
-- **Timer de commit periódico**: só roda no modo "por tempo". No modo "pela API" ele fica
-  desligado — mandar commit por cima do `server_vad` tende a dar erro de buffer vazio ou turno
-  duplicado.
-- **Gate de silêncio contínuo** (ver "Silêncio contínuo" abaixo): só se aplica no modo "por tempo".
-  No modo "pela API" o gate fica desligado — a detecção de fala do servidor precisa **receber** o
-  silêncio para saber que a fala acabou; se o navegador parasse de mandar áudio depois do hangover,
-  a API podia nunca fechar o turno. Efeito sobre o custo: nesse modo o áudio é enviado o tempo
-  todo, inclusive as pausas — perde a otimização de custo desta seção (só silêncio sustentado deixa
-  de ser enviado no modo "por tempo"), limitado apenas pelo corte de 150s e por o usuário parar
-  manualmente.
-- **Fechamento**: no modo "pela API" não há commit final para aguardar (quem fecha o turno é o
-  servidor). Ao parar, o navegador para a captura local na hora e reaproveita o mesmo timeout de
-  segurança de 5s do modo "por tempo" como prazo de tolerância — fecha assim que o `completed` do
-  turno em andamento chegar, ou ao esgotar o prazo, o que vier primeiro. Sem isso a interface
-  travaria esperando um evento que pode nunca chegar (por exemplo, se a sessão já estava em
-  silêncio havia tempo quando o usuário clicou em parar).
-
 **Corte de segurança (2min30s):** mesmo limite e mesmo espírito da gravação normal (ver acima) —
 se a gravação ao vivo continuar até os 2min30s sem o usuário parar manualmente, ela para sozinha,
 pelo **mesmo caminho** do clique manual de parar (não um atalho): o último turno em voo é aguardado
-e registrado normalmente antes de fechar a conexão. A área de status mostra um aviso específico do
-modo ao vivo por alguns instantes antes de voltar a "Gravação em tempo real encerrada."
+(botão em spinner) e registrado normalmente antes de fechar a conexão. Um balão de erro específico
+do modo ao vivo aparece por ~6s antes do balão de confirmação "Gravação em tempo real encerrada."
 
 **Silêncio contínuo — não paga por silêncio:** diferente da gravação normal, onde o silêncio só é
 avaliado **uma vez, no fim** (decide se o arquivo inteiro é enviado ou não), no modo ao vivo o
@@ -405,23 +516,21 @@ realmente sustentado deixa de ser enviado, e a fala normal (com pausas dentro do
 hangover) segue inteira, sem perder palavra. Se a sessão inteira transcorrer sem fala, o mesmo
 aviso "Não foi identificado nenhuma fala" da gravação normal aparece ao parar.
 
-**Fechamento sem perder turno em voo:** no modo "por tempo", ao parar (manual, corte de segurança,
-ou depois de um commit periódico disparado bem perto da hora de parar), a interface só fecha a
-conexão com a OpenAI depois de aguardar — ou desistir, com um timeout de segurança de 5s —
-**qualquer** commit ainda pendente, não só o commit final. Isso evita perder o texto e o custo do
-último trecho quando a parada cai a poucos milissegundos de um commit periódico que ainda não
-recebeu o `completed`. No modo "pela API" o fechamento é diferente — ver "Controle de turno" acima.
+**Fechamento sem perder turno em voo:** ao parar (manual, corte de segurança, ou depois de um
+commit periódico disparado bem perto da hora de parar), a interface só fecha a conexão com a
+OpenAI depois de aguardar — ou desistir, com um timeout de segurança de 5s — **qualquer** commit
+ainda pendente, não só o commit final. Isso evita perder o texto e o custo do último trecho quando
+a parada cai a poucos milissegundos de um commit periódico que ainda não recebeu o `completed`.
 
 ### Ponte de autenticação
 
 `GET /tempo-real/token` gera e devolve um **token efêmero** (`client_secret`, formato `ek_...`,
 válido por poucos minutos) que autoriza abrir uma sessão de transcrição ao vivo
 (`gpt-live-transcribe`) direto entre o navegador e a OpenAI, via WebSocket — a chave real da API
-nunca sai do backend. Aceita o parâmetro de query opcional `modo_turno` (Etapa 2, ver "Controle de
-turno" acima) — `tempo` (padrão) ou `api`; qualquer outro valor é rejeitado com HTTP 422. Resposta:
+nunca sai do backend. Resposta:
 
 ```json
-{"client_secret": "ek_...", "expira_em": 1234567890, "modelo": "gpt-live-transcribe", "modo_turno": "tempo"}
+{"client_secret": "ek_...", "expira_em": 1234567890, "modelo": "gpt-live-transcribe"}
 ```
 
 O navegador usa esse token para abrir a conexão (confirmado empiricamente contra a API real):
@@ -441,16 +550,11 @@ Confirmado na documentação oficial da Realtime API
 
 - **Envio de áudio**: evento `input_audio_buffer.append`, campo `audio` com um pedaço de PCM16
   mono 24kHz codificado em base64.
-- **Fechar um turno**: depende do "Controle de turno" (Etapa 2, ver seção acima). No modo "por
-  tempo" a sessão usa `turn_detection: null` e o cliente precisa enviar `input_audio_buffer.commit`
-  explicitamente para a API processar o áudio acumulado e disparar a transcrição — a doc não
-  recomenda um intervalo específico de commit; o frontend usa um intervalo fixo de 6s (só comita se
-  já houver pelo menos ~100ms de áudio no buffer, mínimo exigido pela API), calibrado testando com
-  fala real. No modo "pela API" a sessão usa `turn_detection: {"type": "server_vad"}` (formato
-  confirmado no guia de VAD da Realtime API,
-  <https://developers.openai.com/api/docs/guides/realtime-vad>, consulta em 2026-08-20) e é a
-  própria API que fecha o turno — o cliente nunca manda `input_audio_buffer.commit` nesse modo
-  (bloqueio conhecido com o modelo atual, ver seção "Controle de turno" acima).
+- **Fechar um turno**: a sessão usa `turn_detection: null`, então o cliente precisa enviar
+  `input_audio_buffer.commit` explicitamente para a API processar o áudio acumulado e disparar a
+  transcrição — a doc não recomenda um intervalo específico de commit; o frontend usa um intervalo
+  fixo de 6s (só comita se já houver pelo menos ~100ms de áudio no buffer, mínimo exigido pela
+  API), calibrado testando com fala real.
 - **Texto incremental**: `conversation.item.input_audio_transcription.delta`, campo `delta` —
   formato diferente do `transcript.text.delta` usado no streaming em lote (seção acima).
 - **Texto final de cada turno**: `conversation.item.input_audio_transcription.completed`, campo
@@ -470,7 +574,7 @@ Para registrar isso em `consumo.jsonl` (mesmo arquivo dos demais modelos), o fro
 `usage` ao backend a cada turno concluído:
 
 1. A cada evento `conversation.item.input_audio_transcription.completed`, o JavaScript envia
-   `POST /consumo/tempo-real` com o `usage` daquele turno **e o `transcript` daquele mesmo
+   `POST /tempo-real/turno-concluido` com o `usage` daquele turno **e o `transcript` daquele mesmo
    turno** (não o transcript acumulado da tela) como corpo JSON, no campo opcional `texto` (por
    exemplo, `{"type": "duration", "seconds": 12.5, "texto": "o que foi dito neste turno"}`).
 2. O backend valida o corpo (rejeita com HTTP 422 qualquer coisa que não seja `type: "duration"`
@@ -481,8 +585,8 @@ Para registrar isso em `consumo.jsonl` (mesmo arquivo dos demais modelos), o fro
    `consumo.jsonl` com `modelo: "gpt-live-transcribe"` e `tipo_usage: "duration"`. Quando o corpo
    traz `texto`, o backend grava também uma linha em `transcricoes.jsonl` (ver "Registro de
    transcrição" acima), ligada pelo mesmo `id`. O campo `texto` é opcional — corpo sem ele continua
-   válido e grava só o consumo, mantendo o contrato antigo da rota; a rota continua se chamando
-   `/consumo/tempo-real` apesar de agora também persistir texto.
+   válido e grava só o consumo, mantendo o contrato antigo do corpo da requisição (o nome da rota
+   já reflete que ela registra o turno inteiro — consumo e texto — não só o consumo).
 3. O envio é acessório: o `fetch` não é aguardado e qualquer falha é engolida em silêncio — se o
    backend estiver fora do ar, a transcrição na tela e a sessão de tempo real seguem normalmente,
    só aquele turno não é registrado (nem o consumo, nem o texto).
