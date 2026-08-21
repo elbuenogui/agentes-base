@@ -1,93 +1,58 @@
 ## Objetivo
-Tirar do modo tempo real os riscos que sobraram do plano anterior — custo sem freio e perda de
-turno no fechamento —, dar ao usuário um jeito de **comparar** o controle de turno próprio (commit
-a cada 6s) com o da própria API, e tornar a linha do tempo e a caixa de transcrição usáveis no dia
-a dia. Motivação: com as Etapas 4 a 6 do plano anterior o gasto virou visível; agora é hora de
-torná-lo controlável e de fechar o que atrapalha o uso real.
+Fechar a frente de usabilidade da interface de gravação e deixar o repositório arrumado e
+versionado antes de abrir a próxima frente de produto. Nenhuma mudança de comportamento do app
+neste plano.
 
 ## Escopo
-- Dentro:
-  - corte de segurança por tempo e detecção de silêncio no modo tempo real, nos moldes do que a
-    gravação normal já faz;
-  - fechar o resíduo do fechamento do WebSocket (turno em voo perdido quando a parada cai logo
-    depois de um commit periódico) e validar por teste dirigido o caso de dois commits simultâneos;
-  - alternador na interface entre **controle de turno próprio** (commit a cada 6s, como hoje) e
-    **`turn_detection` da API**, para comparar os dois com a mesma fala;
-  - escala "minuto" da linha do tempo passando a mostrar uma janela das últimas 24 horas, com mais
-    zoom, em vez do histórico inteiro;
-  - botão de copiar o texto da caixa de transcrição da gravação;
-  - renomear a rota `POST /consumo/tempo-real` e servir um favicon.
-- Fora (explícito):
-  - transcrição em blocos com sobreposição (segue no Backlog);
-  - banco de dados no lugar dos `.jsonl`, rotação/limpeza de registros antigos;
-  - CORS, suporte a outros dispositivos, pipeline de modelos especializados;
-  - qualquer mudança no modo em lote (upload e gravação normal), exceto o botão de copiar.
+- Dentro: arquivamento da virada (PLANO e PROGRESSO), enxugamento de
+  `.claude/estado/historico/` e das retomadas de frentes encerradas, commit de todo o trabalho de
+  2026-08-20 e 2026-08-21, atualização da retomada viva e abertura da coleta da frente nova.
+- Fora (explícito): limpeza de `.claude/tmp/` e de `_to_delete/` (decisão do usuário em
+  2026-08-21 de deixar fora deste plano — foi para o Backlog); separação de uso real e de teste no
+  `consumo.jsonl` (Backlog); qualquer mudança em `transcritor/frontend/index.html` ou
+  `transcritor/backend/main.py`; a escolha da próxima frente de produto.
 
 ## Etapas
-1. [Modo tempo real: freios de custo e fechamento] — critério de pronto: o modo tempo real para
-   sozinho ao atingir um limite de tempo (mesmo espírito dos 2min30s da gravação normal, valor
-   proposto pelo Executor e confirmado no PROGRESSO), avisando o usuário; áudio em silêncio não é
-   enviado, seguindo o gate que a gravação normal já tem; parar a gravação dentro de ~100ms de um
-   commit periódico **não perde mais** o turno em voo (entrar na espera sempre que houver commit
-   pendente, não só quando houver commit final); e existe teste dirigido do caso de dois commits em
-   voo simultâneos, que nunca foi validado na prática. Testado com fala real, conferindo que o
-   último turno de cada caso gera registro em `consumo.jsonl` e `transcricoes.jsonl` com o mesmo id.
-   > **Agrupamento (decisão do usuário, 2026-08-20):** os três itens eram etapas separadas e foram
-   > juntados porque vivem na mesma região de `frontend/index.html` (a lógica de tempo real) e
-   > compartilham o mesmo aparato de teste — uma sessão ao vivo com fala real exercita os três. O
-   > ganho é de tempo e de token: um chat EXEC e um preparo de ambiente em vez de dois.
-   — Status: **parcial (2026-08-20)** — falta validação com navegador e voz humana real. Verificado
-   no artefato real pelo PM: corte de 150s por `cortarPorSegurancaTempoReal` chamando
-   `pararGravacaoTempoReal()` (mesmo caminho da parada manual, não atalho); gate de silêncio
-   contínuo no `onaudioprocess`, com `HANGOVER_SILENCIO_TEMPO_REAL_MS = 2000` e
-   `bytesDesdeUltimoCommitTempoReal` só incrementando quando o áudio é de fato enviado (então o
-   commit periódico não dispara sobre silêncio); condição de espera trocada para
-   `if (commitsPendentesTempoReal > 0)`, sem `podeComitarFinal`. Conferi também o risco de timer
-   compartilhado: `limparRecursosTempoReal` chama `pararTemporizadoresGravacaoRapida()`, então o
-   `timeoutCorteSeguranca` do modo ao vivo não sobrevive para cortar uma gravação seguinte.
-   **Justificativa do gate aceita**: não fazer `append` do silêncio é o único mecanismo que evita o
-   custo — com `turn_detection: null` o áudio não comitado permanece no buffer do servidor e é
-   absorvido pelo commit seguinte, sendo cobrado junto; "não comitar" apenas adiaria o gasto.
-   **O que falta**: o ambiente do chat EXEC desta vez não tinha navegador nem microfone (os
-   anteriores tinham), então o Executor validou o protocolo por um harness em Python contra a API
-   real — o que prova o comportamento no servidor, mas não o JavaScript no navegador nem a
-   qualidade com fala humana. Faltam: texto aparecendo na tela, fala real com pausas sem perder
-   palavra, regressão da gravação normal e console limpo.
-   **Concluída em 2026-08-20** após validação manual do usuário, conferida pelo PM nos arquivos
-   reais (o teste deixa rastro em `consumo.jsonl`/`transcricoes.jsonl`): sessão de **150s de parede
-   com 139s de áudio cobrado** — o corte de segurança disparou no tempo certo e o gate poupou ~11s
-   de silêncio (US$ 0,0031 naquela sessão); o **último turno da sessão cortada tem texto completo**
-   ("Esta é a terceira frase do teste, depois de uma pausa bem maior que as outras."), provando que
-   o corte passa pelo caminho de fechamento com espera; vários turnos com 4s e 5s de áudio dentro
-   de janelas de 6s, que é o gate funcionando; e regressão exercitada logo depois (registros
-   `gpt-4o-transcribe` de gravação normal e upload). **O risco levantado pelo PM não se
-   confirmou**: "Isso e um teste da transcricao em tempo real." aparece íntegro em todos os turnos
-   iniciais — a primeira palavra não perde o ataque. O cenário de silêncio não deixa rastro por
-   construção (o acerto é a ausência de registro), então vale o relato do usuário.
-2. [Janela de 24 horas na escala "minuto" da linha do tempo] — critério de pronto: a escala
-   "minuto" passa a mostrar as últimas 24 horas em vez do histórico inteiro, com mais pixels por
-   segundo do que hoje (leitura mais folgada); a largura do SVG deixa de crescer sem limite com o
-   histórico acumulado; a escala "hora" continua mostrando tudo; requisições fora da janela não
-   somem do painel (continuam na escala "hora" e nos números agregados). Medido: largura do SVG e
-   contagem de marcas antes e depois, com o histórico real.
-3. [Faxina: remover o alternador de controle de turno, copiar transcrição, renomear rota, favicon] — critério de pronto: (a) **remover da interface o alternador "Controle de turno"** e o caminho `modo_turno=api` do backend, que ficaram sem uso com o encerramento da antiga Etapa 2 — antes de apagar, salve o trecho removido em `.claude/estado/historico/`, porque nada deste projeto foi commitado e o código só existe no arquivo vivo; (b) botão que copia
-   o texto da caixa de transcrição da gravação, com confirmação visível de que copiou; (c) a rota
-   `POST /consumo/tempo-real` renomeada para um nome que descreva o que ela faz hoje (recebe texto
-   + usage e grava nos dois arquivos), com o frontend atualizado junto e o README acompanhando;
-   (d) o backend serve um favicon, encerrando o 404 no console. Testado cada um separadamente.
-   > **Agrupamento (decisão do usuário, 2026-08-20):** quatro dívidas pequenas e mecânicas, sem
-   > decisão de desenho, juntadas para caber num único chat EXEC. Instrução ao gerar a tarefa:
-   > pedir que sejam feitas **na ordem (a) → (b) → (c) → (d) e reportadas separadamente**, para que um
-   > item bloqueado não segure os outros dois.
+1. [Arquivamento da virada] — critério de pronto: as 15 entradas do `PROGRESSO.md` movidas palavra
+   por palavra para `historico/PROGRESSO_usabilidade-gravacao_2026-08-20_a_2026-08-21.md`, com
+   cabeçalho dizendo de qual plano e de que período é; `PROGRESSO.md` vivo só com o cabeçalho,
+   apontando para o arquivo; contagem de linhas fechando (1.398 movidas + 7 no vivo, contra as
+   1.404 originais); plano encerrado salvo em
+   `historico/PLANO_2026-08-21b_usabilidade-encerrado.md`.
+   — Status: **concluída (2026-08-21)**, feita pelo PM neste chat, pela exceção datada de
+   2026-08-19 (arquivamento do PROGRESSO na virada). Contagem conferida: arquivo arquivado com
+   1.404 linhas (6 de cabeçalho novo + 1.398 movidas), vivo com 7, 15 entradas `## [` no arquivado.
 
-> Plano com 3 etapas (limite do papel PM é 7) — sobra folga proposital para o que aparecer durante
-> a execução, já que o plano anterior precisou de duas correções fora da numeração. Plano anterior
-> (transcrição em tempo real + linha do tempo, 7/7 etapas + 2 correções aprovadas, encerrado em
-> 2026-08-20) arquivado em `.claude/estado/historico/PLANO_2026-08-20b_tempo-real-encerrado.md`. Snapshot antes do encerramento da
-> antiga Etapa 2 (detecção de turno pela API) em `.claude/estado/historico/PLANO_2026-08-20f.md`.
-> `PROGRESSO.md` arquivado na mesma virada, em três arquivos `historico/PROGRESSO_*.md`.
+2. [Enxugar o histórico do método] — critério de pronto: os snapshots de edição de plano movidos
+   para `.claude/estado/historico/snapshots/`, deixando na raiz de `historico/` só os marcos
+   citados por nome em outros arquivos (as viradas de plano e os arquivos `PROGRESSO_*.md`); os
+   dois `_RETOMADA_*.md` de frentes encerradas (`_RETOMADA_robustez-consumo.md` e
+   `_RETOMADA_transcricao-tempo-real.md`) movidos da raiz do repositório para
+   `.claude/estado/historico/`; **nenhum arquivo apagado**, só movido; e um `grep` no repositório
+   inteiro confirmando que nenhuma referência por caminho quebrou. Alvo: a raiz de `historico/`
+   sai de 60 arquivos para cerca de 7.
+
+3. [Commit do trabalho de 2026-08-20 e 2026-08-21] — critério de pronto: `git status --short`
+   vazio fora do que o `.gitignore` cobre; o trabalho em commits separados por natureza (código do
+   produto, documentação do produto, estado do método e histórico), com mensagens em português
+   dizendo o que mudou e por quê; `git log --oneline` mostrando os novos commits; **sem push**.
+   > **Depende do usuário**: `.git/index.lock` existe e o bridge remoto não consegue apagar. Tem
+   > de ser apagado no Windows antes desta etapa, ou o commit falha.
+
+4. [Retomada e coleta da frente nova] — critério de pronto: `_RETOMADA_usabilidade-gravacao.md`
+   refletindo o estado real (frente encerrada, o que ficou em aberto, ponteiros certos) e
+   `coleta/2026-08-21_fechamento-usabilidade.md` criado com as entregas de 2026-08-21, as decisões
+   deste chat e o resumo consolidado nas quatro categorias.
+   — Status: **parcial (2026-08-21)** — feita antecipadamente, a pedido do usuário, para o chat
+   poder fechar antes das Etapas 2 e 3. A retomada e a coleta já refletem o estado real e o rumo
+   (modo ao vivo fora de foco; frente nova de funcionalidade, a ser escolhida pelo usuário no
+   próximo chat). **Falta o repasse final** depois que as Etapas 2 e 3 rodarem: confirmar na
+   retomada que os snapshots e as retomadas encerradas mudaram de lugar e que o commit saiu.
 
 ## Backlog (não aprovado)
+- **Arrastar e soltar áudio na área central** para enviar sem passar pelo menu — pedido do
+  usuário em 2026-08-21, adiado por ele mesmo para depois da frente de interface enxuta
+  ("posteriormente vamos voltar com o drag de áudio");
 - **Baratear o modo ao vivo trocando o modelo** (`gpt-live-transcribe` US$ 0,017/min →
   `gpt-4o-transcribe` US$ 0,006/min) — **avaliado e recusado pelo usuário em 2026-08-20**, não será
   executado. Fica registrado com a estimativa para o dia em que custo virar prioridade.
@@ -135,6 +100,17 @@ torná-lo controlável e de fechar o que atrapalha o uso real.
   AnythingLLM, Dify, LobeHub) como possível motor para uma fase futura — discutido em 2026-08-18,
   decisão de continuar em outro chat, nenhuma ação tomada neste projeto ainda.
 
+- **Limpeza de `.claude/tmp/` e de `_to_delete/`** — levantado na faxina de 2026-08-21 e deixado
+  fora do plano por decisão do usuário. `.claude/tmp/` guarda 584 KB de rascunho
+  (`teste_linha_tempo.wav` com 562 KB, `uvicorn.log`, `ROTEIRO_TESTE_ETAPA1.md`,
+  `_teste_escrita.tmp`); `_to_delete/` guarda só o fóssil `index.lock.2026-08-16`, de 0 byte. Nada
+  disso é versionado — é ruído visual, não risco. **Atenção**: desde 2026-08-21 a pasta guarda
+  também `TAREFA_etapa2_faxina.md` e `TAREFA_interface-enxuta.md`, tarefas escritas esperando a
+  vez — não limpar antes de promovê-las para `PROXIMA_TAREFA.md`;
+- **Promover `.claude/tmp/teste_tempo_real.py` a ferramenta versionada em `transcritor/`** — é o
+  harness em Python que validou o protocolo da API ao vivo sem navegador (2026-08-20), o único
+  arquivo com valor dentro de uma pasta descartável: some junto com o resto na primeira limpeza;
+
 ## Nota de processo (lembrete para o PM)
 - Ao gerar `PROXIMA_TAREFA.md` com passo de documentação, incluir `transcritor/README.md`
   explicitamente em "Arquivos envolvidos".
@@ -150,3 +126,9 @@ torná-lo controlável e de fechar o que atrapalha o uso real.
   (lote) US$ 0,0045/min; `gpt-live-transcribe` (tempo real) US$ 0,017/min — cerca de 3,8x mais caro.
 - Armadilha recorrente (4 ocorrências): backend antigo esquecido na porta 8000 servindo código
   obsoleto. Lembrar o Executor de conferir e derrubar antes de testar.
+- Armadilha do `.git/index.lock` (2 ocorrências: 2026-08-16 e 2026-08-21): qualquer `git status`
+  rodado pelo bridge remoto deixa o lock para trás, porque a pasta montada não permite apagar
+  arquivo ("Operation not permitted"), e o commit seguinte falha. Antes de qualquer etapa que
+  commite, peça ao usuário para apagar `.git\index.lock` pelo Windows.
+- Arquivar o `PROGRESSO.md` **na hora** em que o plano fecha, não no chat seguinte: na virada de
+  2026-08-21 o arquivo já estava em 101 KB e 1.404 linhas, acima do alarme de 60 KB.
