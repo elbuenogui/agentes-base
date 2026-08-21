@@ -1338,3 +1338,316 @@ modo ao vivo), pendente de confirmação do usuário para gerar a PROXIMA_TAREFA
 - [PENDÊNCIA → Backlog] O commit guiado por silêncio (ideia do usuário: 6s viram piso, turno fecha
   na primeira pausa) continua sendo o caminho de menor custo para resolver as emendas mantendo o
   modelo atual — não aprovado, mas é o candidato natural se o corte de palavras voltar a incomodar.
+
+## [2026-08-20] Tarefa da Etapa 2 (janela móvel) gerada
+
+- [DECISÃO] A conta feita antes de gerar a tarefa mudou o desenho: limitar a escala "minuto" a 24h
+  resolve o crescimento sem limite, mas **não** resolve a navegação — a 10px/s, 24h dão 864.000px
+  (o histórico atual, de 30h, dá 1,08 milhão), e "mais zoom" piora, porque alarga ainda mais. Não
+  dá para ter recorte largo e zoom alto numa escala fixa. O usuário escolheu **janela móvel**:
+  recorte de poucos minutos por vez, deslizando dentro das últimas 24h.
+- [DIRECIONAMENTO] Trava anotada na tarefa: **ancorar o fim da janela na requisição mais recente,
+  não em `Date.now()`** — senão quem abre o painel depois de dois dias sem usar o app vê uma linha
+  do tempo vazia e acha que perdeu os dados.
+- [DIRECIONAMENTO] Três escolhas de desenho delegadas ao Executor **com obrigação de justificar**:
+  largura do recorte, mecanismo de deslizar, e o que fazer com a roda do mouse (hoje ela alterna
+  escala; com janela móvel talvez faça mais sentido ela deslizar). A tarefa proíbe mudar o
+  comportamento validado sem dizer.
+- [ARTEFATO] `PROXIMA_TAREFA.md` da Etapa 2 gerada, nível `completo`, com a instrução (nova desde a
+  Etapa 1) de parar e reportar se o ambiente não tiver navegador, em vez de buscar contorno.
+- [ARTEFATO] Estado do git mudou: o usuário destravou o `index.lock` e **commitou** o projeto. Pela
+  primeira vez desde 2026-08-16 o código está versionado — o que reduz o risco da remoção do
+  alternador prevista na Etapa 3.
+
+- [DECISÃO] **Roda do mouse na linha do tempo, decidido pelo usuário em 2026-08-20**: sem ativação,
+  a roda alterna entre as escalas (comportamento atual); **ativada por clique**, a roda desliza a
+  janela no tempo. Resolve o conflito entre os dois gestos sem perder nenhum. Ambiguidade travada
+  pelo PM ao escrever a tarefa: clicar num **ponto** continua abrindo o popup do texto — a ativação
+  é o clique na área da linha do tempo **fora** dos pontos. Exigido também que o estado seja visível
+  (senão a roda vira loteria), reversível, e que o botão de zoom siga funcionando nos dois estados
+  como saída garantida.
+
+## [2026-08-20] Bug da rolagem da janela + navegação por dias
+
+- [DIRECIONAMENTO] Usuário usou a janela móvel e reportou que rolar com a linha do tempo ativada
+  "vai diretamente pro fim". **Causa localizada pelo PM, e é uma correção antiga brigando com a
+  etapa nova**: `linhaTempoConsumo.scrollLeft = xUltimoPonto - larguraVisivel + margemDireita`
+  (~linha 1309) roda a **cada renderização**. Veio da Etapa 6 do plano anterior, quando o SVG era o
+  histórico inteiro e abrir no ponto mais recente era o certo; com a janela móvel virou hostil,
+  porque cada giro da roda redesenha e o redesenho reposiciona o scroll. A janela se move — quem
+  volta é a rolagem interna do container.
+- [DIRECIONAMENTO] Padrão que vale registrar: **comportamento "conveniente" amarrado ao ciclo de
+  render sobrevive à mudança de arquitetura e vira defeito.** Já é a segunda vez neste projeto que
+  algo assim aparece (a primeira foi o auto-scroll caindo na folga de 8% do eixo, na própria Etapa
+  6). Ao revisar render, perguntar sempre: isto deveria rodar em toda renderização, ou só na
+  primeira?
+- [DECISÃO] Navegação por dias na escala "hora", a pedido do usuário: um dia por vez, com ida e
+  volta, em vez do histórico inteiro comprimido. Dá simetria ao painel — "hora" mostra um dia,
+  "minuto" mostra um recorte de minutos dentro de um dia.
+- [DIRECIONAMENTO] Ponto mais fácil de errar, travado na tarefa: **as duas escalas precisam
+  concordar sobre o período olhado**. Trocar de "hora" (olhando o dia 18) para "minuto" não pode
+  jogar o usuário de volta ao trecho mais recente. O Executor tem de propor e justificar como
+  amarrou as duas.
+- [DECISÃO] Bug e pedido agrupados numa tarefa só, a pedido do usuário — mesma função de render,
+  mesmo aparato de teste.
+
+## [2026-08-20] Correção da rolagem concluída + tarefa da Etapa 3 (faxina)
+
+- [ARTEFATO] Correção fechada e verificada no código pelo PM: a flag
+  `rolarParaUltimoPontoNaProximaRenderizacao` é ligada em exatamente três pontos (abrir painel,
+  trocar escala, botão "Mais recente") e consumida numa única renderização; em qualquer outro
+  redesenho o `scrollLeft` fica em 0. É o recorte que anda, não a rolagem interna.
+- [ARTEFATO] Sensibilidade da roda medida e registrada em número, como a tarefa exigia: **6,7s por
+  giro, 27 giros para atravessar a janela de 3min, ~6,2 giros por tela cheia (624px)** — mantida sem
+  ajuste, com o dado justificando a decisão em vez de adjetivo.
+- [DECISÃO] Concordância entre as escalas resolvida por **tradução no momento da troca**
+  (`sincronizarMinutoComDia`/`sincronizarDiaComMinuto`), não por estado compartilhado — as duas
+  guardam o período de formas estruturalmente diferentes. Cuidado que salvou o caso comum: ancorar
+  na **última requisição do dia**, não na meia-noite; ancorar na meia-noite faria trocar de escala no
+  dia de hoje abrir a janela num horário sem requisição por perto. O Executor relatou ter escrito a
+  versão ingênua, visto quebrar e corrigido antes de entregar.
+- [DIRECIONAMENTO] **Estado morto achado pelo Executor**: ativar a linha do tempo na escala "hora"
+  deixava a roda sem efeito nenhum (não desliza, não troca de escala), prendendo o usuário até Esc.
+  Decisão do usuário: ativada na "hora", a roda **navega entre dias**. Fecha a regra do painel numa
+  frase só — *ativada, a roda anda no tempo; desativada, alterna as escalas*. Entrou como item (a0)
+  da faxina.
+- [ARTEFATO] `PROXIMA_TAREFA.md` da Etapa 3 gerada (última do plano): cinco itens mecânicos, nível
+  `curto` **por item**, com instrução de reportar cada um separadamente e não deixar um bloqueio
+  segurar os outros.
+
+## [2026-08-20] Etapa 4 aprovada — faixa de áudio com histórico + botão de cancelar
+
+- [DIRECIONAMENTO] Pedido do usuário a partir da interface de ditado do Claude (captura de tela
+  trazida por ele): faixa de barras mostrando o **histórico** do áudio, dando continuidade visual de
+  que o áudio está sendo enviado, mais um **botão de cancelar** para quando ele fala algo e quer
+  reiniciar.
+- [ARTEFATO] Achado do PM ao ler o código: as barras de nível de hoje são **decorativas** —
+  `animarBarrasNivel` aplica o mesmo RMS a todas as barras, com uma variação senoidal por índice só
+  para parecerem distintas; sobem e descem juntas. Virar histórico é trocar o valor único por um
+  buffer de amostras deslocando no tempo: pouco código, mas mudança de conceito.
+- [DECISÃO] **O cancelar nunca altera a caixa de texto**, regra dada pelo usuário sem exceção, depois
+  de o PM propor três alternativas que mexiam no texto. Na gravação normal ele interrompe antes de
+  enviar; no modo tempo real apenas interrompe o envio, e o texto já recebido permanece. Registrado
+  porque o PM havia assumido que "reiniciar" implicaria limpar o que apareceu — não implica.
+- [PENDÊNCIA] A resolver antes de gerar a tarefa: "só pausa" significa encerrar sem enviar, ou pausar
+  de forma retomável (conexão aberta, volta de onde parou)? Muda bastante a implementação no modo
+  tempo real.
+- [DECISÃO] Entra como **Etapa 4**, depois da faxina — a tarefa da faxina já está escrita e pronta
+  para o EXEC, e misturar decisão de desenho numa etapa mecânica desfaria o motivo de tê-la agrupado.
+
+## [2026-08-20] Faxina concluída + tarefa da Etapa 4
+
+- [ARTEFATO] Etapa 3 (faxina) fechada e verificada item a item pelo PM: roda na escala "hora"
+  navegando dias com o mesmo sentido de gesto da escala "minuto"; `modo_turno` com **zero**
+  ocorrências no frontend e no backend; botão de copiar com confirmação pela área de status
+  existente e tratamento de caixa vazia; rota renomeada para `POST /tempo-real/turno-concluido`;
+  favicon gerado em memória, sem arquivo novo no repositório. O Executor reportou cada item em
+  entrada separada, como pedido — o agrupamento funcionou sem virar entrada única ilegível.
+- [DECISÃO] **Desenho do cancelar fechado pelo usuário**: o botão **X cancela, nada será enviado**, e
+  **só aparece enquanto grava**; o botão redondo do microfone **vira quadrado durante a gravação**,
+  sinalizando parada. Gravando, existem dois controles: quadrado (parar) e X (cancelar).
+- [DECISÃO] **Pausa retomável descartada** — manteria o WebSocket aberto e parado, com o token
+  efêmero expirando em poucos minutos e a sessão tendo limite próprio; o botão prometeria algo que
+  às vezes não cumpriria. Trade-off aceito: para continuar depois de cancelar, aperta gravar de novo.
+- [DIRECIONAMENTO] Regra reafirmada na tarefa em três lugares diferentes (o que fazer, critério de
+  pronto e o que não fazer): **o cancelar nunca altera a caixa de transcrição**, em nenhum modo. Foi
+  a correção que o usuário fez sobre uma suposição errada do PM, e é o tipo de regra que um chat
+  futuro reinventaria se estivesse escrita só uma vez.
+- [DIRECIONAMENTO] Critério de pronto exige **comprovar o deslocamento das barras** (amostrar
+  alturas em dois instantes e mostrar que o padrão andou), não "ficou parecido com a referência" —
+  senão o critério passaria com a animação decorativa que já existe hoje.
+
+## [2026-08-20] Etapa 4 concluída + correção de cadência da faixa
+
+- [ARTEFATO] Etapa 4 entregue e verificada no código pelo PM: `amostrasNivel` é um buffer que
+  desloca (histórico de verdade, não mais o RMS único replicado com seno cosmético), amostrado por
+  `setInterval` em intervalo fixo e zerado a cada gravação nova; `#botaoCancelarGravacaoRapida`
+  nasce `hidden` e só aparece gravando; o ícone do botão principal troca de microfone para quadrado
+  durante a gravação.
+- [DIRECIONAMENTO] Usuário reportou que a movimentação ficou "meio lenta". **Causa localizada pelo
+  PM: são os números, não a lógica** — `NUM_BARRAS_NIVEL = 12` com `INTERVALO_AMOSTRA_BARRAS_MS =
+  250` dão 4 atualizações por segundo numa faixa de 3,0s; o olho vê degraus, não fluxo. A referência
+  (ditado do Claude) tem mais de cem barras finas atualizando rápido.
+- [DECISÃO] A correção precisa mexer em **densidade e cadência juntas** — só uma das duas não
+  resolve: mais barras no mesmo intervalo continua em degraus; intervalo menor com 12 barras faz a
+  faixa cobrir menos de um segundo e piscar. Ponto de partida sugerido: ~60ms com ~80 barras
+  (~17 atualizações/s, ~4,8s de histórico), com o Executor livre para ajustar e obrigado a registrar
+  os números finais.
+- [DIRECIONAMENTO] Tarefa explicita **não refazer a lógica de histórico** — ela está correta e
+  verificada. É o tipo de correção em que um executor sem essa trava reescreveria a parte boa junto.
+
+## [2026-08-20] Etapa 5 — reorganização da interface de gravação
+
+- [DIRECIONAMENTO] Pedido do usuário depois de usar a tela: tirar os textos explicativos ("clique
+  para gravar", rótulo "Transcrição por voz (editável, soma cada gravação)", mensagem de
+  "gravando"); botão de copiar só com ícone, no canto inferior direito da caixa de texto; e os
+  controles reorganizados numa faixa em cima, com **gravar fixo no centro**, cancelar à direita só
+  durante a gravação, e **três pontos à esquerda** agrupando configurações e consumo num popup.
+- [DECISÃO] **Interpretação do PM, sinalizada ao usuário antes de executar**: o campo que mostra
+  "Gravando…" é o **mesmo** (`#statusGravacaoRapida`) que mostra "Permissão de microfone negada",
+  "Não foi possível conectar ao backend", o aviso do corte de 2min30s e "Texto copiado". Remover o
+  campo levaria os erros junto e deixaria o usuário sem diagnóstico. Decidido remover só as
+  mensagens redundantes e manter o canal — com critério de pronto exigindo **forçar um erro e provar
+  que ele ainda aparece**.
+- [DIRECIONAMENTO] Detalhe de acessibilidade travado na tarefa: tirar o `<label>` do transcript
+  deixaria a textarea sem nome acessível, e o botão de copiar só com ícone idem — exigido
+  `aria-label` nos dois. Remoção de texto visível não pode virar remoção de semântica.
+- [DIRECIONAMENTO] Ponto técnico do "centro fixo": `.linha-gravacao-rapida` é hoje um flex com
+  `justify-content: center` e `gap`, então qualquer botão que apareça ao lado empurra o do meio. Um
+  grid de três colunas com laterais iguais resolve. Critério de pronto **mede**
+  `getBoundingClientRect().left` parado e gravando, em vez de aceitar avaliação a olho.
+- [DECISÃO] A correção de cadência da faixa foi **dobrada nesta etapa** em vez de virar tarefa
+  própria: ainda não tinha ido para execução, mexe na mesma região e no mesmo aparato de teste, e
+  reorganizar primeiro obrigaria a testar as barras duas vezes.
+
+- [DECISÃO] **Status vira balão efêmero** (usuário, 2026-08-20), reaproveitando a classe `.toast` já
+  existente do aviso de "nenhuma fala" — sem inventar um segundo estilo de notificação. Tempos:
+  **confirmação 2s, erro 6s**; o erro ganha mais tempo porque algumas mensagens são longas
+  ("Não foi possível conectar ao backend. Confirme que o servidor está rodando na porta 8000...") e
+  2s não dariam tempo de ler.
+- [DIRECIONAMENTO] **Terceiro tipo de mensagem levantado pelo PM, fora do enquadramento
+  confirmação/erro**: "Transcrevendo…" e "Encerrando… aguardando a transcrição do último trecho" são
+  **estado em andamento**, não notificação. Se sumissem em 2s, o usuário ficaria diante de uma tela
+  parada sem saber se travou — justamente enquanto o app espera a API. Devem durar enquanto a ação
+  durar e sumir quando ela termina. Critério de pronto exige testar os três tempos separadamente.
+- [DECISÃO] O terceiro tipo de mensagem ("em andamento") foi **resolvido pelo usuário eliminando a
+  mensagem**: em vez de texto persistente, o **botão principal vira spinner** enquanto a ação corre.
+  O botão passa a ter três estados e conta a história sozinho — **microfone (parado) → quadrado
+  (gravando) → spinner (processando)**. Durante o spinner ele fica desabilitado e o X não aparece,
+  porque o áudio já foi enviado e não há o que cancelar. Solução melhor que a proposta do PM: mantém
+  o sinal de "está trabalhando" sem devolver texto à tela que o usuário quer limpa.
+- [DECISÃO] **Lixeira que vira desfazer** (usuário, 2026-08-20): botão só com ícone no canto inferior
+  esquerdo da caixa de texto, espelhando o de copiar no direito. Ao apagar e a caixa ficar vazia, o
+  **próprio botão troca de função** e vira uma seta curva de desfazer — mesmo lugar, sem botão extra
+  nem balão de confirmação. Resolve a perda acidental sem sujar a tela, que era a preocupação do PM
+  (apagar destrói texto acumulado de várias gravações e edições manuais, e zerar `value` mata o
+  Ctrl+Z nativo).
+- [DIRECIONAMENTO] Quatro casos de borda travados na tarefa pelo PM: (1) caixa vazia sem nada a
+  restaurar não pode oferecer desfazer falso; (2) **texto novo depois de apagar faz o botão voltar a
+  ser lixeira** e descarta o snapshot — senão apertar "desfazer" apagaria o texto novo, o oposto do
+  que promete; (3) apertar a lixeira duas vezes não pode perder o snapshot original; (4) o desfazer
+  restaura o conteúdo inteiro, incluindo edições manuais, não só a última gravação.
+- [DIRECIONAMENTO] **Esclarecimento do usuário sobre a lixeira/desfazer**: o gatilho é o **estado da
+  caixa**, não quem a esvaziou. Caixa vazia com conteúdo anterior guardado → botão é desfazer,
+  mesmo que o usuário tenha apagado à mão em vez de usar a lixeira.
+- [DIRECIONAMENTO] **Armadilha de implementação travada pelo PM**: guardar "o valor anterior" a cada
+  evento de digitação quebra no caso mais comum — apagando com backspace segurado, o valor anterior
+  ao vazio é **uma única letra**, e o desfazer devolveria "a" em vez do texto. O snapshot precisa ser
+  do conteúdo **antes da rajada de edição** (ex.: guardar quando a caixa fica ociosa e não vazia).
+  Critério de pronto exige demonstrar justamente esse caso, com o texto antes e depois colado.
+
+## [2026-08-20] Etapa 5 aprovada + acabamento visual da faixa
+
+- [ARTEFATO] Etapa 5 entregue e aprovada pelo usuário ("gostei muito de tudo"). Executor: 80 barras
+  a 60ms (4,8s de histórico, ~16,7 atualizações/s), barras em `flex: 1 1 0` para caberem em qualquer
+  largura, snapshot do desfazer guardado por **ociosidade de 800ms** — que é justamente o que
+  sobrevive à armadilha do backspace segurado levantada pelo PM —, e posição do botão central medida
+  antes/depois.
+- [DIRECIONAMENTO] Pedido de acabamento: barras mais finas e arredondadas, **espelhadas no centro**,
+  placeholder fora, e botões laterais próximos do central. O usuário pediu explicitamente ajuda para
+  teorizar o visual.
+- [DECISÃO] Teorização do PM, registrada no `PLANO.md`: (1) espelhar é quase de graça — trocar
+  `align-items: flex-end` por `center` faz cada barra crescer para os dois lados sozinha; (2)
+  silêncio vira fileira de pontos no centro se a altura mínima igualar a largura da barra com
+  arredondamento total, que é o "pulso constante" pedido e serve de prova de vida; (3) **a curva de
+  amplitude é o que mais muda a sensação** — altura proporcional direta ao RMS espreme a fala normal
+  embaixo, e só uma curva compressiva (raiz, dB) põe a conversa na região média e reserva o topo à
+  ênfase, que é o "picos crescentes" desejado. Sem ela, espelhar só duplica um traço achatado.
+- [DIRECIONAMENTO] Honestidade registrada junto: **a metade de baixo não carrega informação** — é a
+  mesma medida refletida. A simetria é escolha estética (legibilidade, "cara de áudio"), não ganho
+  de dado. Registrado para que ninguém no futuro ache que está lendo dois canais.
+- [DIRECIONAMENTO] Risco do pedido de aproximar os botões: aproximar mexendo nas colunas quebraria o
+  **centro fixo** validado na Etapa 5. Tarefa instrui manter as colunas laterais simétricas e
+  alinhar o conteúdo para dentro, e o critério de pronto **mede** a posição do botão de novo.
+- [DECISÃO] Copiar e lixeira/desfazer saem de **dentro** da caixa de texto para uma linha **abaixo**
+  dela (usuário, 2026-08-20), mantendo os lados já escolhidos — lixeira à esquerda, copiar à direita.
+  Motivo: sobrepostos ao conteúdo, com a caixa cheia eles ficam flutuando por cima de palavras e o
+  texto passa por baixo deles. Critério de pronto acrescentado: texto longo não pode passar sob
+  nenhum botão.
+
+---
+
+# Resumo consolidado — encerramento do chat de 2026-08-19/20 (PM)
+
+> Proposta de consolidação, a validar. Cobre o período de 2026-08-19 a 2026-08-20 deste chat de PM:
+> o fechamento do plano de tempo real + linha do tempo, a virada de plano, e o plano de usabilidade
+> que veio depois. O registro bruto por interação está acima, na ordem em que aconteceu.
+
+## Decisões
+
+- **Modo ao vivo mantido com `gpt-live-transcribe`**, recusando a troca para um modelo ~3x mais
+  barato — trade-off: paga-se mais para preservar nuance de fala; a estimativa de economia (~50% numa
+  sessão típica) ficou registrada no Backlog para o dia em que custo virar prioridade.
+- **Detecção de turno pela API encerrada sem uso** — trade-off: perde-se a chance de corrigir o corte
+  de palavras nas emendas, em troca de não trocar de modelo; `gpt-live-transcribe` recusa
+  `turn_detection` diferente de `null` (HTTP 400, confirmado na documentação e por teste trocando só
+  o modelo).
+- **Corte de segurança do modo ao vivo em 150s**, igual à gravação normal — trade-off: pode
+  interromper uso legítimo longo, em troca de consistência e de limitar a ~US$ 0,04 o custo de uma
+  gravação esquecida.
+- **Gate de silêncio implementado como "não enviar"**, não "enviar e não comitar" — trade-off:
+  nenhum; foi o achado técnico do período, porque com `turn_detection: null` o áudio não comitado
+  fica no buffer do servidor e é cobrado junto no commit seguinte.
+- **Registro do PROGRESSO ganhou três níveis** (`recibo`/`curto`/`completo`), declarados pelo PM na
+  tarefa — trade-off: perde-se o relato detalhado do "como fiz", ganha-se um canal legível; o que
+  nunca encolhe é como testou, com o dado que prova.
+- **Arquivamento do PROGRESSO passou a ter a virada de plano como gatilho**, com 60 KB só como
+  alarme — trade-off: fura a regra de o PROGRESSO ser exclusivo do executor (exceção datada ao PM),
+  em troca de não queimar um chat EXEC em recortar e colar.
+- **Botão principal com três estados** (microfone → quadrado → spinner) substituindo as mensagens de
+  "em andamento" — trade-off: nenhum; mantém o sinal de "está trabalhando" sem devolver texto à tela.
+- **Status virou balão efêmero**: confirmação 2s, erro 6s — trade-off: uniformidade menor, em troca
+  de mensagens longas de erro darem tempo de ler.
+- **Lixeira que vira desfazer pelo estado da caixa** (não por quem esvaziou) — trade-off: exige
+  snapshot por ociosidade em vez do valor anterior, sob pena de o desfazer devolver uma única letra
+  quando o usuário apaga com backspace segurado.
+
+## Artefatos
+
+- **Plano de tempo real + linha do tempo encerrado**: 7 etapas + 2 correções, todas verificadas no
+  artefato real pelo PM. Arquivado em `historico/PLANO_2026-08-20b_tempo-real-encerrado.md`.
+- **`POST /tempo-real/turno-concluido`** (ex-`/consumo/tempo-real`): recebe texto + `usage` do modo
+  ao vivo e grava `consumo.jsonl` e `transcricoes.jsonl` com o mesmo id `uuid4`.
+- **`transcricoes.jsonl`**: texto de cada requisição ligado ao consumo.
+- **Linha do tempo no painel de consumo**: janela móvel de 3min dentro das últimas 24h, navegação
+  por dias na escala "hora", eixo com hora de relógio e passo dinâmico, popup com o texto.
+- **Freios de custo do modo ao vivo**: corte de 150s e gate de silêncio contínuo com hangover de 2s.
+- **Interface de gravação reorganizada**: faixa de barras com histórico real (80 barras a 60ms),
+  botão central fixo com três estados, X de cancelar, três pontos agrupando configurações e consumo,
+  copiar e lixeira/desfazer.
+- **`PROGRESSO.md` arquivado**: de 187 KB para 304 bytes, 2.565 linhas movidas para três arquivos em
+  `historico/`, integridade conferida (conteúdo rejuntado idêntico ao original).
+- **Regras de método escritas** em `.claude/PM.md`, `.claude/EXECUTOR.md` e `CLAUDE.md` (níveis de
+  registro, arquivamento por virada de plano, exceção datada ao PM, idioma português).
+
+## Direcionamentos
+
+- **EXEC reporta e recomenda, não decide.** Confirmado em uso: os freios de custo, a correção da
+  nota da Etapa 1, o estado morto da roda na escala "hora" e o bloqueio do `turn_detection` saíram
+  todos de recomendações dele.
+- **Executor deve parar e reportar quando o ambiente não tiver navegador**, em vez de buscar
+  contorno para dar critério por atendido — regra criada depois de uma etapa voltar parcial.
+- **Critério de pronto precisa pedir o dado que prova**, não adjetivo. Lições do período: pedir
+  contagem presumindo densidade (erro do PM, corrigido pelo Executor com medição); pedir "ficou
+  parecido" deixaria passar a animação decorativa que já existia.
+- **Comportamento amarrado ao ciclo de render sobrevive à mudança de arquitetura e vira defeito** —
+  aconteceu duas vezes com o mesmo `scrollLeft`. Ao revisar render, perguntar se aquilo deve rodar em
+  toda renderização ou só na primeira.
+- **Remoção de texto visível não pode virar remoção de semântica** — `aria-label` obrigatório onde o
+  rótulo saiu.
+- **Todo o trabalho do repositório é em português do Brasil** (regra escrita depois de o EXEC
+  responder em inglês).
+
+## Pendências
+
+- **Etapa de acabamento visual da faixa** (espelhamento, curva de amplitude, botões fora da caixa,
+  laterais próximas do central) — `PROXIMA_TAREFA.md` gerada e **não executada**; depende de: abrir
+  um chat EXEC.
+- **Bordas de turno cortando palavras** ("frase" → "fra" + "Base") — sem solução aprovada; o
+  candidato natural é o commit guiado por silêncio (6s viram piso, turno fecha na primeira pausa),
+  ideia do usuário, que não muda custo e mantém o modelo; depende de: o usuário decidir se incomoda.
+- **Resíduo do fechamento do WebSocket** (~100ms após commit periódico) — depende de: aprovação.
+- **`consumo.jsonl` mistura uso real com testes do Executor** — sem separação prevista.
+- **Arquivamento do PROGRESSO na próxima virada** — o vivo voltou a crescer com o plano novo.
+- **Backlog maior** (banco de dados no lugar dos `.jsonl`, blocos com sobreposição, rotação de
+  transcrições, CORS aberto, plataforma self-hosted) — sem data.
