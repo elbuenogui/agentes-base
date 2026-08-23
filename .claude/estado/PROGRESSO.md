@@ -1,271 +1,172 @@
 # PROGRESSO — log de execução (append-only)
 
-> Vivo desde a virada de plano de 2026-08-21 (plano de faxina e fechamento). As entradas dos
-> planos anteriores foram movidas para `.claude/estado/historico/` (arquivos `PROGRESSO_*.md`),
-> sem edição — o vivo guarda só o plano em andamento. O plano imediatamente anterior
-> (usabilidade da interface de gravação, 2026-08-20 a 2026-08-21) está em
-> `.claude/estado/historico/PROGRESSO_usabilidade-gravacao_2026-08-20_a_2026-08-21.md`.
+> Vivo desde a virada de plano de 2026-08-21 (abertura da **Fase 1 — Núcleo de transcrição**, sob
+> o método Spec-Driven Development). As entradas dos planos anteriores foram movidas para
+> `.claude/estado/historico/` (arquivos `PROGRESSO_*.md`), sem edição. O plano imediatamente
+> anterior (faxina e interface enxuta, 2026-08-21) está em
+> `.claude/estado/historico/PROGRESSO_faxina-e-interface_2026-08-21.md`.
 
-## [2026-08-21] — Enxugar o histórico do método, Etapa 2
+## [2026-08-23 16:18] — Fase 1, Etapa 1: Levantar por medição o contrato do núcleo e escrevê-lo
 Status: concluído
 
 ### Feito
-Só movimentação de arquivo (`mv`), nenhum conteúdo editado — o `.git/index.lock` já estava
-presente (esperado, é o que bloqueia a Etapa 3 até o usuário apagar), então nada aqui passou por
-`git` (nem `git mv`), só sistema de arquivos direto.
 
-- Criei `.claude/estado/historico/snapshots/`.
-- Descobri por `grep` (não de memória) todo `PLANO_2026-08-*.md` citado por nome fora de
-  `historico/` — 8 além dos marcos já listados na tarefa, todos em `coleta/2026-08-16_mvp-transcricao.md`
-  (citações de "snapshot arquivado em..." junto de decisões/artefatos, não citações dentro de
-  outro snapshot): `PLANO_2026-08-18c.md`, `PLANO_2026-08-18f.md`, `PLANO_2026-08-19b.md`,
-  `PLANO_2026-08-19c.md`, `PLANO_2026-08-19d.md`, `PLANO_2026-08-19e.md`, `PLANO_2026-08-19f.md`,
-  `PLANO_2026-08-19g.md`. Ficaram na raiz de `historico/` junto dos marcos.
-- Movi os outros 48 arquivos (a série de edição sem citação externa) para `snapshots/`.
-- Movi `_RETOMADA_robustez-consumo.md` e `_RETOMADA_transcricao-tempo-real.md` da raiz do
-  repositório para `.claude/estado/historico/` (raiz, não `snapshots/`).
+**0. Armadilha da porta 8000, confirmada de novo (5ª ocorrência).** Havia um backend antigo na
+porta 8000 (PID 34028, `python.exe`, subido em 22/08 15:40) — derrubado antes de medir. Subi um
+backend novo a partir do código atual (`uvicorn main:app --app-dir backend --port 8000`).
 
-### Contagens (pedidas explicitamente)
-- `historico/` antes: **63 arquivos** (a tarefa estimava "60" — contei de verdade,
-  `ls -1 | wc -l`, deu 63).
-- `historico/` depois: raiz **17** (7 marcos + 8 citados pelo grep + as 2 retomadas que chegaram)
-  + `snapshots/` **48** = **65** no total — bate com 63 (o que já havia) + 2 (retomadas que
-  entraram), nada apagado.
-- Raiz do repositório: `_RETOMADA_*.md` foi de 4 para 2 (`_RETOMADA_TEMPLATE.md` e
-  `_RETOMADA_usabilidade-gravacao.md`, intocados).
+**Uso real concorrente detectado durante a medição.** Entre eu subir o backend novo e começar meus
+testes, o log (`uvicorn.log`) mostra um `GET /` seguido de uma transcrição real (não é texto de
+teste meu — "Então, aqui é um exemplo de um dado específico..."), e depois mais três transcrições
+reais enquanto eu reiniciava o backend para os testes de erro (`gpt-4o-transcribe`, textos sobre
+"R3 da conclusão" e "como tratar esses casos"/"sessão que quebrou tabela"). Ou seja: **alguém usou
+o app de verdade, ao vivo, durante esta sessão de medição** — perguntei ao usuário antes de seguir
+com os testes que quebram o `.env` (ver pergunta no chat), ele autorizou explicitamente. Registro
+aqui porque confirma, com evidência de log e não só suspeita, o item já existente no Backlog do
+`PLANO.md` ("`consumo.jsonl` mistura consumo de uso real com o de sessões de teste do Executor") —
+inclusive dentro da *mesma* janela de tempo, não só no mesmo dia.
 
-### Verificação de referências (repositório inteiro, fora de `.git/` e `.venv/`)
-Grep por todo padrão `historico/ARQUIVO.md` e `_RETOMADA_*.md` no repo (265 referências
-encontradas) e conferido se o arquivo existe no caminho citado (raiz de `historico/` ou
-`snapshots/`, ou raiz do repo para as retomadas vivas): **zero referências quebradas**. As duas
-únicas ocorrências que o grep sinalizou como "não resolve" eram o padrão-modelo
-`PLANO_AAAA-MM-DD.md` (data literal, não um arquivo real) em `.claude/PM.md` e
-`.claude/estado/README.md` — documentação do formato de nome, não uma citação de arquivo.
-Nenhuma referência precisou de correção.
+**1. Caminho feliz — todos os campos e formatos batem com a SPEC-001.**
+- `POST /transcrever` sem streaming, modelo padrão: `200 {"transcricao": "..."}` — confirmado.
+- Com `stream=true`: `200`, `application/x-ndjson`, sequência de `delta` (33 eventos para ~12,7s de
+  áudio) seguida de um `final` — confirmado, texto do `final` bate com a soma dos `delta`.
+- `gpt-4o-mini-transcribe` e `gpt-4o-transcribe-diarize` sem streaming: mesmo formato
+  `{"transcricao": ...}` — confirmado.
+- **Achado novo, fora da SPEC-001**: `gpt-4o-transcribe-diarize` **com** `stream=true` não emitiu
+  nenhum evento `delta` — só o `final`, direto. Documentado no contrato como divergência.
+- `GET /consumo`: as três seções (`sessao`, `por_dia`, `requisicoes`) vieram na forma descrita; o
+  campo `texto` de cada requisição de teste bateu com a transcrição feita logo antes.
+- **Achado novo, fora da SPEC-001**: toda requisição com `gpt-4o-transcribe-diarize` grava
+  `custo_usd: 0.0` em `consumo.jsonl` — a tabela de preços por token (`main.py:35-38`) não tem
+  entrada para esse modelo e cai no default zerado. Bug de cálculo, não lacuna de contrato — sub-
+  relata o gasto real sempre que esse modelo é usado. Não corrigi (fora do escopo desta tarefa).
 
-Os dois `_RETOMADA_*.md` movidos se auto-citam como "(raiz)" no próprio texto (ex.: linha 81 de
-`_RETOMADA_robustez-consumo.md`) — ficou desatualizado depois da mudança de lugar, mas não
-mexi: é conteúdo de retomada arquivada, e a tarefa proíbe editar conteúdo de retomada.
+**2. As seis situações de erro, provocadas de verdade, cada uma com e sem streaming (12
+provocações).** Todas bateram com a SPEC-001 no padrão geral (erro antes de abrir o stream vira
+status HTTP; erro durante a chamada à OpenAI vira evento `erro` dentro de um `200`, mesmo mensagem
+idêntica ao `detail` do modo sem streaming):
 
-### Critério de pronto
-- [x] `historico/snapshots/` existe e contém os snapshots de edição (48)
-- [x] Raiz de `historico/` com 17 arquivos (7 marcos + 8 citados pelo grep + 2 retomadas) — mais
-      que os "~7" estimados na tarefa, porque o grep achou 8 citações reais que a estimativa não
-      previa; contagem colada acima
-- [x] Nenhum arquivo apagado — conta colada acima (63+2=65 = 17+48)
-- [x] As duas retomadas de frentes encerradas saíram da raiz; `_RETOMADA_usabilidade-gravacao.md`
-      e `_RETOMADA_TEMPLATE.md` continuam lá, intocados
-- [x] Nenhuma referência quebrada — resultado colado acima (265 checadas, 0 quebradas)
-- [x] Nenhum arquivo teve o conteúdo alterado — só `mv`, nenhuma correção de referência foi
-      necessária
+- Modelo inválido (`modelo=inexistente`): `422` nos dois modos.
+- Áudio vazio (arquivo de 0 byte): `400` nos dois modos.
+- `OPENAI_API_KEY` ausente (renomeei `.env`, reiniciei o backend, restaurei ao final — conferido
+  `diff` byte a byte contra a cópia de segurança antes de restaurar): `503` nos dois modos.
+- Falha de autenticação (chave `sk-chave-propositalmente-invalida-...` no `.env`, backend
+  reiniciado): `502` sem streaming, evento `erro` dentro de `200` com streaming.
+- Sem conexão (`OPENAI_BASE_URL=http://127.0.0.1:1/` no `.env`, backend reiniciado): `502` sem
+  streaming (~8s até desistir), evento `erro` dentro de `200` com streaming (~7,6s) — tempo
+  consistente com o timeout de conexão de 5s do SDK mais uma repetição.
+- OpenAI recusa a requisição (arquivo de texto disfarçado de `.wav`): `502`
+  `"A API da OpenAI recusou a requisição (HTTP 400) — verifique o formato do arquivo de áudio"` sem
+  streaming, evento `erro` com o mesmo texto dentro de `200` com streaming.
 
-### Novas demandas / riscos
-- Nenhum novo.
+Depois de cada teste que mexeu no `.env`, restaurei o arquivo original (`diff` confirmou
+identidade byte a byte) e reiniciei o backend; a última chamada da sessão foi uma transcrição
+normal bem-sucedida, confirmando que o `.env` restaurado funciona.
 
-### Ajuste no plano necessário?
-Não.
+**3. Lacunas L1–L8: todas confirmadas, refutadas ou reclassificadas com evidência — ver a tabela
+completa em `spec/contrato/NUCLEO.md`, seção final.** Resumo:
+- **L1** (sem código de erro) — confirmada, sem mudança.
+- **L2** (sem limite de tamanho): enviei um WAV de ~64MB de silêncio puro; levou ~14s até a
+  resposta, que foi o **mesmo** erro genérico "verifique o formato do arquivo de áudio" — confirma
+  a suspeita da spec de que a mensagem engana sobre a causa real.
+- **L3** (sem timeout): **não estimei — medi o código instalado.** `openai==3.1.0`,
+  `openai._constants.DEFAULT_TIMEOUT` = `Timeout(connect=5.0, read=600, write=600, pool=600)`,
+  `max_retries=2`, nenhum dos dois sobrescrito pelo backend. Bate com o tempo observado (~8s) no
+  teste de "sem conexão" (5s de conexão + repetição rápida). Não tentei esperar os 600s completos
+  (custo de tempo desproporcional ao valor da evidência, já com a fonte primária em mãos).
+- **L4** (evento final sem custo/modelo): confirmada em todas as capturas de streaming — só
+  `{"tipo": "final", "texto": ...}`.
+- **L6** (áudio sem fala): **reclassificada**. Não é "comportamento indefinido" — é definido e
+  ruim. Enviei 5s de silêncio puro (PCM zerado) nos dois modos: sem streaming voltou
+  `{"transcricao":"Sélectionnez la."}` (francês, alucinado); com streaming voltou eventos delta em
+  chinês e final `"都没有。"` ("não tem nada"). **Nos dois casos, `200`, sem erro, sem texto vazio**
+  — alucinação em idioma aleatório. Este era o resultado que o PM disse não conseguir prever, e é
+  esse mesmo.
+- **L8** (parâmetro de idioma): **refutada como problema.** Gravei um áudio real com voz sintética
+  pt-BR (TTS do Windows, voz "Microsoft Maria Desktop" — recurso local, sem custo de API) com
+  frases em português cheias de termos técnicos em inglês ("commit", "deploy", "pull request",
+  "code review", "branch", "prompt"), simulando o uso real do usuário. Chamei a API da OpenAI
+  diretamente (fora da rota do backend, só para medir — não alterei `main.py`) duas vezes: sem
+  `language` e com `language="pt"`. Resultado: **texto idêntico caractere por caractere**,
+  **tokens idênticos** (`input=158, output=46, total=204` nas duas chamadas — custo idêntico),
+  tempo de resposta 1,86s vs 1,25s (diferença dentro do ruído de rede, amostra única, não prova
+  nada). Forçar `pt` não mudou nada mensurável. Por isso a Etapa 5 do `PLANO.md` **cai** (condição
+  já registrada no próprio plano: "se a medição não mostrar diferença, esta etapa cai").
+- **L7** (CORS aberto): confirmada com `OPTIONS /transcrever` e `Origin` arbitrário —
+  `access-control-allow-origin: *`. Sem mudança nesta fase.
 
-## [2026-08-21] — Commit do trabalho de 2026-08-20 e 2026-08-21, Etapa 3
-Status: concluído
+**4. `spec/contrato/NUCLEO.md` escrito** — documento completo para quem for escrever um cliente
+novo, com cada operação, campo, formato de resposta (exemplos reais capturados), tabela de erros
+completa e a lista de divergências/achados desta medição.
 
-### Feito
-- `.git/index.lock` estava presente (sobra de sessão via bridge remoto); confirmei que não havia
-  processo `git` rodando (`Get-Process | Where-Object ProcessName -like '*git*'`, vazio) e apaguei.
-- Conferi `.gitignore` antes de qualquer `git add` — ver prova abaixo.
-- 4 commits, um por natureza, nenhum `git add .`/`-A` (sempre caminhos explícitos por grupo):
-  código do produto, documentação do produto, estado do método + histórico, coleta.
-- Nenhum `git push`.
+**5. Custo do levantamento e gasto do projeto (pedido extra do PM).** Via `GET /consumo` ao final:
 
-### git status --short (depois dos 4 commits)
-Vazio.
+| Data | Requisições | Tokens | Custo (USD) |
+|---|---|---|---|
+| 2026-08-18 | 4 | 825 | $0,00302 |
+| 2026-08-19 | 84 | 13.372 | $0,10645 |
+| 2026-08-20 | 89 | 23.148 | $0,14532 |
+| 2026-08-21 | 121 | 33.569 | $0,21158 |
+| 2026-08-22 | 1 | 270 | $0,00116 |
+| 2026-08-23 (inclui esta medição + uso real concorrente, ver acima) | 44 | 19.033 | $0,06342 |
+| **Total histórico** | **343** | — | **$0,53096** |
 
-### Prova de que nada sensível/local entrou
-`git check-ignore -v` nos 6 caminhos (`.env`, os dois `.jsonl`, `.venv/`, `__pycache__/`,
-`.claude/tmp/`) — os 6 resolvem para regras do `.gitignore`. `git show --stat` dos 4 commits novos,
-filtrado por esses mesmos padrões — nenhuma ocorrência em nenhum dos 4.
+Não dá para separar com precisão total, nesta consulta, o que é uso real do dia 23 do que é teste
+meu — os dois aconteceram entrelaçados na mesma janela (ver "uso real concorrente" acima), e o
+`/consumo` não distingue a origem. Por amostragem manual das últimas linhas de `consumo.jsonl`, o
+custo do meu levantamento (chamadas que geraram cobrança: caminho feliz ×5, silêncio ×2, verificação
+final ×1, mais 2 chamadas diretas à API para o teste de idioma) fica na casa de **US$ 0,01–0,02** —
+pequeno frente ao total do dia. As chamadas que só provocaram erro (modelo inválido, áudio vazio,
+sem chave, autenticação falha, sem conexão, arquivo não-áudio, arquivo grande) **não geraram
+cobrança** — nenhuma delas chegou a processar áudio de verdade na API.
 
-### git log --oneline (4 novos)
-```
-c3c2cdb Registra na coleta as decisoes do fechamento do tempo real e da usabilidade da gravacao
-7c2e5ab Vira a pagina do metodo: fecha os planos de tempo real e usabilidade, reorganiza o historico
-d0dc344 Atualiza o README do transcritor para o fechamento do tempo real e a nova gravacao rapida
-5e901ad Fecha o modo tempo real e reformula a gravacao rapida da interface
-```
-(mensagens completas sem acentuação — escolha deliberada para evitar risco de mojibake permanente
-no histórico do git neste ambiente Windows/Git Bash; conteúdo em português íntegro, só sem
-diacríticos.)
+### O que não consegui provocar / não medi
 
-### Critério de pronto
-- [x] `.git/index.lock` não existe mais
-- [x] `git status --short` vazio — colado acima
-- [x] Nenhum dos 6 caminhos sensíveis/locais em nenhum commit — prova colada acima
-- [x] Commits agrupados por natureza, mensagens em português explicando o quê e o porquê — log
-      colado acima
-- [x] Nenhum `git push` executado
-- [x] Nenhum arquivo do repositório editado por esta tarefa (fora deste próprio registro em
-      PROGRESSO.md, que por natureza é escrito depois do commit existir)
-
-### Novas demandas / riscos
-- Nenhum.
-
-### Ajuste no plano necessário?
-Não.
-
-## [2026-08-21] — Interface enxuta — configurações, upload no menu e topo da página
-Status: concluído
-
-### Feito
-- Removidos do topo: `<h1>`, `.subtitulo`, os três `.alternador-modelo`, `<form id="formulario">`
-  e o separador "ou". `<section id="gravacao-rapida">` é agora o primeiro bloco do `<main>`. CSS
-  órfão removido junto (`.alternador-modelo`, `.rotulo-modelo`, `.dica-modelo`, `.subtitulo`,
-  `.separador`, `#botaoModelo/#botaoStreaming/#botaoTempoReal` como botão de texto, `#resultado.*`).
-- Cabeçalho: `<h1>` continua no DOM, primeiro filho do `<main>`, com classe utilitária
-  `.oculto-visualmente` (`position:absolute; width:1px; height:1px; overflow:hidden;
-  clip-path:inset(50%)` — não `display:none`). `<title>` da aba intocado.
-- Configurações passa a ter, nessa ordem: modelo (`<select id="seletorModelo">`, mesmo conteúdo de
-  `MODELOS_ATIVOS`, diarize continua desativado e comentado), streaming
-  (`<input type="checkbox" id="botaoStreaming">`) e tempo real
-  (`<input type="checkbox" id="botaoTempoReal">`), depois o seletor de microfone que já existia.
-  Sem texto de dica na tela; a explicação do tempo real (efeito no custo) foi para o
-  `title`/`aria-label` do interruptor. `modeloAtivo()`, `streamingAtivo()` e `tempoRealAtivo()`
-  mantidas com a mesma assinatura, só trocando de onde leem o valor (`.value`/`.checked`).
-- Confirmado nos ~8 pontos que usam `botaoTempoReal.disabled`: todos ficam dentro de funções
-  específicas do modo tempo real (nunca da gravação normal) — trocar de `<button>` para
-  `<input type="checkbox">` manteve o `id` e não exigiu tocar em nenhum desses pontos, já que
-  `.disabled` funciona igual nos dois tipos de elemento.
-- Terceiro item do `#popupMenuAvancado`: "Enviar arquivo" (ícone + rótulo curto), aciona
-  `.click()` num `<input type="file" id="inputUploadArquivo" hidden>` (mantendo `accept`) e fecha
-  o menu. `input.value` é limpo depois de cada envio, então escolher o mesmo arquivo de novo
-  dispara `change` normalmente.
-- Upload unificado com a gravação: `enviarGravacaoRapida` ganhou um terceiro parâmetro opcional
-  `nomeArquivo` — quando vem do upload, usa o nome real do arquivo (preserva extensão); quando vem
-  da gravação, continua com `"gravacao." + extensaoParaMime(...)"` como sempre. `#resultado`, o
-  `<form>` e o handler de submit foram removidos por completo; erro do upload usa o balão
-  (`mostrarStatusGravacao`), igual à gravação. Spinner no botão central durante a transcrição do
-  upload (mesmo estado "processando" da gravação — não há um terceiro indicador).
-- Adição além do texto literal da tarefa, justificada: clicar no item "Enviar arquivo" durante uma
-  gravação em andamento não abre o seletor (guarda silenciosa) — unificar os dois caminhos no mesmo
-  botão/estado (`botaoGravacaoRapida`, `transcriptRapido`) criava uma corrida nova que não existia
-  antes (upload disparando no meio de uma gravação/processamento); bloqueei porque o resto da tarefa
-  depende de que só um envio esteja em voo por vez.
-- `transcritor/README.md`: reescritas as seções que descreviam os três alternadores no topo, o
-  formulário de upload com botão "Transcrever" e a área `#resultado` — agora refletem Configurações
-  (modelo/streaming/tempo real/microfone) e o item "Enviar arquivo" do menu ⋮, com a mesma caixa
-  "Transcrição por voz" para os dois fluxos.
-- Verificado por `grep`: zero referências a `formulario`, `resultado`, `mostrar(`, `botaoModelo`,
-  `indiceModeloAtivo`, `streamingLigado`, `tempoRealLigado`, `atualizarBotaoModelo`,
-  `atualizarBotaoStreaming`, `atualizarBotaoTempoReal`; zero CSS/HTML órfão dos blocos removidos;
-  zero `id` duplicado no arquivo. `node -e "new Function(...)"` confirma o JS sem erro de sintaxe.
-
-### Como testei os dois caminhos de envio (upload e gravação) — e o que não testei
-Quatro scripts Playwright (Chromium headless, microfone simulado via
-`--use-file-for-fake-audio-capture` com `.wav` reais), cobrindo os dois caminhos lado a lado:
-
-1. **Estrutura** (sem custo): título da aba, `<h1>` presente e com ~0px de área visível, topo antigo
-   ausente do DOM, campos certos em Configurações (tipos, `title` preenchido, sem texto de dica na
-   tela) e os três itens do menu na ordem certa.
-2. **Bloqueios** (sem custo): interruptor de tempo real não muda de estado durante gravação normal
-   (`preventDefault`) nem durante gravação em tempo real (`disabled=true`, confirmado via
-   `botaoTempoReal.disabled`); volta a `disabled=false`/destravado depois de cancelar; item "Enviar
-   arquivo" não abre o seletor de arquivo enquanto uma gravação está em andamento.
-3. **Nome do arquivo** (sem custo — `page.route` interceptando e abortando antes de chegar à API
-   real, só para ler o multipart): upload preserva o nome real (`meu_audio_de_teste.wav`, não vira
-   `gravacao.<ext>`); escolher o mesmo arquivo duas vezes seguidas dispara dois envios (prova que o
-   `value` é limpo); gravação pelo microfone continua nomeando `gravacao.webm` como sempre — sem
-   regressão no caminho antigo.
-4. **Ponta a ponta com custo real pequeno** (2 transcrições reais, `.wav` curtos): upload com modelo
-   não padrão (`gpt-4o-mini-transcribe`, escolhido no `<select>`) e streaming ligado (interruptor) —
-   confirmei via `page.route` (deixando a requisição seguir de verdade) que o multipart enviado
-   trazia `modelo=gpt-4o-mini-transcribe` e `stream=true`, ou seja, `modeloAtivo()` e
-   `streamingAtivo()` de fato refletem os novos controles, não só a leitura isolada do DOM; o botão
-   central mostrou "processando" durante o streaming e o texto chegou na caixa; copiar e
-   lixeira/desfazer testados sobre esse texto vindo do upload. Na sequência, tempo real ligado pelas
-   Configurações, um turno curto de gravação real: `consumo.jsonl` cresceu exatamente uma linha,
-   confirmando `tempoRealAtivo()` de ponta a ponta (não só o `.checked` do interruptor).
-
-**O que não testei** — é onde isso pode falhar sem aparecer:
-- Upload de `.m4a`/`.mp3` de verdade (só usei `.wav` nos quatro blocos — o `accept` e o envio tratam
-  qualquer formato do mesmo jeito, mas não rodei um arquivo `.mp3` real pela API).
-- Navegador diferente de Chromium (Firefox/WebKit) e mobile.
-- Troca de dispositivo de microfone (item 4 das Configurações) de verdade com mais de um microfone
-  físico — só testei com o dispositivo padrão simulado.
-- Duas abas/sessões simultâneas concorrendo pelo mesmo `consumo.jsonl`/`transcricoes.jsonl`.
-- Upload de arquivo muito grande ou corrompido (comportamento de erro do backend nesse caso não é
-  novo desta tarefa, mas não confirmei que o caminho unificado ainda mostra o balão certo).
-- Verificação visual manual em navegador de verdade (só headless automatizado) — não abri a página
-  a olho nu para julgar espaçamento/alinhamento do menu ⋮ com o novo item.
+- **Timeout de 600s completo**: não esperei os 10 minutos inteiros para ver o backend estourar de
+  verdade — a evidência da constante do SDK mais o comportamento observado no teste de "sem
+  conexão" (que usa o timeout de *conexão*, não o de *leitura*) foi suficiente para responder L3
+  sem gastar 10 minutos de sessão nisso. Se o PM quiser a prova empírica do timeout de leitura
+  completo, precisa de um teste à parte.
+- Não testei duração de áudio muito longa (só tamanho de arquivo) — a API pode ter limite de
+  duração separado do limite de tamanho; não apareceu evidência disso nem a favor nem contra.
 
 ### Critério de pronto
-- [x] Topo sem título/subtítulo/alternadores/formulário/"ou"; gravação é o primeiro bloco
-- [x] `<h1>` oculto visualmente (`clip-path:inset(50%)`, não `display:none`) + `<title>` intocado —
-      técnica descrita acima
-- [x] Configurações com modelo/streaming/tempo real/microfone, sem dica na tela, explicação no
-      `title`/`aria-label`
-- [x] `modeloAtivo()`/`streamingAtivo()`/`tempoRealAtivo()` corretas — testadas com envio real de
-      cada uma (bloco 4 acima)
-- [x] Tempo real bloqueado durante a gravação, liberado depois — confirmado nos pontos que usam
-      `.disabled` (todos exclusivos do modo tempo real) e via `preventDefault` na gravação normal
-- [x] Item de upload no menu ⋮, abre o seletor e fecha o menu
-- [x] Mesmo arquivo duas vezes seguidas transcreve as duas
-- [x] Texto do upload soma na caixa com separador correto; copiar e lixeira/desfazer funcionam
-- [x] Nome/extensão reais preservados no upload; gravação sem regressão — os dois caminhos testados
-- [x] Spinner no botão central durante upload; erro no balão
-- [x] Sem regressão: gravação normal, tempo real (ligado pelas Configurações), cancelar, cronômetro,
-      faixa de barras, menu ⋮ (Configurações e Consumo) — todos exercitados nos 4 blocos de teste
-- [x] Nenhuma regra CSS órfã — grep confirmou
-- [x] Nenhum erro novo no console — os únicos erros vistos durante os testes foram
-      `net::ERR_CONNECTION_REFUSED` deliberados (bloco 3, requisição abortada de propósito para não
-      gerar custo); filtrados explicitamente, não são erro do produto
-- [x] `transcritor/README.md` atualizado
+- [x] Backend conferido antes de medir (porta 8000 sem processo antigo) — processo antigo (PID
+  34028) encontrado e derrubado antes de subir o novo.
+- [x] Caminho feliz medido nas duas formas (lote e streaming) e nos três modelos.
+- [x] `GET /consumo` medido, com as três seções descritas.
+- [x] As seis situações de erro provocadas de verdade, cada uma com e sem streaming.
+- [x] `.env` restaurado e conferido (uma transcrição normal voltando a funcionar depois) — `diff`
+  byte a byte contra a cópia de segurança, mais uma chamada de verificação bem-sucedida ao final.
+- [x] L1 a L8 cada uma confirmada, refutada ou reclassificada com evidência.
+- [x] `spec/contrato/NUCLEO.md` escrito, com exemplos reais capturados.
+- [x] Divergências entre a SPEC-001 e a máquina listadas neste `PROGRESSO.md` (e no próprio
+  contrato, seção final).
+- [x] Nenhum arquivo de produto modificado (`git status --short transcritor/` veio vazio).
+- [x] Artefatos de teste limpos (áudios, script de teste de idioma e backup do `.env` removidos do
+  scratchpad da sessão; nada foi criado dentro do repositório).
 
 ### Novas demandas / riscos
-- Guard contra upload durante gravação (ver "Feito" acima) — não pedido letra por letra na tarefa,
-  mas necessário para não introduzir uma corrida nova ao unificar os dois caminhos.
-- Lacunas de teste listadas acima (`.mp3`/`.m4a` reais, outro navegador, troca de microfone física,
-  concorrência entre abas) — nenhuma delas é evidência de bug, só não foram exercitadas.
+- **Bug de cálculo de custo para `gpt-4o-transcribe-diarize`**: `custo_usd` sempre sai `0.0` para
+  esse modelo (tabela `PRECOS_POR_TOKEN_USD` em `main.py:35-38` não tem entrada pra ele). Sub-
+  relata o gasto real do projeto sempre que o modelo é usado. Não corrigi — fora do escopo desta
+  tarefa (não é lacuna de contrato, é bug de cálculo em código de produto).
+- **`gpt-4o-transcribe-diarize` não emite eventos `delta` em streaming** — comportamento real da
+  API, não do backend, mas muda o que um cliente pode esperar desse modelo especificamente.
+- **Uso real concorrente durante a medição**: confirmado por log que alguém usou o app de verdade
+  enquanto eu media (ver "Feito", item 0). Não causou problema desta vez (usuário autorizado antes
+  de eu quebrar o `.env`), mas é um risco a considerar se testes futuros do núcleo precisarem
+  quebrar `.env`/backend por mais tempo — talvez valha um aviso mais cedo, antes mesmo de começar a
+  medir, não só antes da parte que quebra o `.env`.
+- L1 (código de erro por máquina) e L5 (sem versionamento) seguem sem solução — são decisões do PM
+  para a Etapa 3, não algo que a medição resolvesse.
 
 ### Ajuste no plano necessário?
-Não.
-
-## [2026-08-21] — Interruptor "Recortar em vez de copiar"
-Status: concluído
-
-Pedido direto do usuário no chat (fora do fluxo PROXIMA_TAREFA.md), mesmo padrão dos outros
-pedidos ad hoc desta sessão. Sem campo de nível declarado — nível `curto` por padrão.
-
-### Feito
-- `transcritor/frontend/index.html`: novo interruptor **"Recortar em vez de copiar"** nas
-  Configurações (desligado por padrão, explicação no `title`), como último item do painel. Ligado,
-  o botão "Copiar texto" da caixa "Transcrição por voz" vira "Recortar texto": troca de ícone
-  (copiar → tesoura, mesmo padrão de troca de ícone por classe CSS já usado no botão
-  lixeira/desfazer), copia o texto E apaga a caixa em seguida. A apagada reaproveita o mesmo
-  caminho com snapshot da lixeira — extraí a função `apagarTranscriptComSnapshot()` (antes só
-  inline no handler da lixeira) para os dois usarem o mesmo código; o desfazer recupera um texto
-  recortado normalmente. Caixa vazia + recortar ligado mostra "Nada para recortar…" em vez de
-  "Nada para copiar…".
-- `transcritor/README.md`: documentado o novo interruptor na seção de Configurações e na descrição
-  do botão de copiar/recortar; balão de confirmação/erro atualizados para citar "recortar".
-
-### Como testei
-Playwright (Chromium headless, sem custo de API — só interação de DOM/clipboard):
-interruptor existe e começa desligado; ligar troca `aria-label`/`title`/classe do botão e o ícone
-visível (`getComputedStyle(...).display`, confirmado `iconeCopiar`↔`iconeRecortar`); com texto na
-caixa, clicar recorta (clipboard recebeu o texto exato E a caixa esvaziou) e o botão
-lixeira/desfazer entra em `modo-desfazer`, com o desfazer recuperando o texto; caixa vazia com
-recortar ligado mostra o aviso "Nada para recortar…"; desligar o interruptor volta o botão para
-"Copiar texto". Zero erros de console. Não testei em navegador de verdade (só headless) nem em
-outro navegador além do Chromium.
-
-### Critério de pronto
-- [x] Configuração nova nas Configurações, desligada por padrão
-- [x] Ícone do botão muda junto com o rótulo
-- [x] Recortar copia e depois apaga, com desfazer funcionando sobre o texto recortado
-- [x] Caixa vazia não quebra (aviso próprio)
-- [x] `transcritor/README.md` atualizado
-- [x] Nenhum erro novo no console
-
-### Novas demandas / riscos
-- Nenhum.
-
-### Ajuste no plano necessário?
-Não — pedido fora do PLANO.md (ad hoc), não altera a frente em andamento.
+Sim — duas coisas para o PM:
+1. **Etapa 5 cai**, conforme a própria condição já escrita nela: a medição de L8 não mostrou
+   diferença de texto, custo ou tempo entre usar `language="pt"` e não usar. O contrato registra
+   que o núcleo não assume idioma, sem parâmetro novo.
+2. **Achado novo para virar decisão/tarefa**: o bug de custo zerado do `gpt-4o-transcribe-diarize`
+   (ver "Novas demandas" acima) não está em nenhuma lacuna da SPEC-001 — é candidato a entrar no
+   escopo da Etapa 3 (correção das lacunas aprovadas) ou a virar item de backlog à parte, a critério
+   do PM.

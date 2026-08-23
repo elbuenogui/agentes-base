@@ -1,130 +1,13 @@
-# Tarefa: Interface enxuta — configurações, upload no menu e topo da página
-Frente nova (interface enxuta), fora do plano de faxina — não é etapa do PLANO.md. Decisões
-registradas em `coleta/2026-08-21_interface-enxuta.md`. O commit de restauração (Etapa 3) já foi feito em
-2026-08-21, então pode mexer no `index.html` com segurança: `git diff` mostra só o seu trabalho.
+# Sem tarefa de Executor no momento
 
-## Contexto
-A tela hoje tem, no topo, três linhas de alternador (modelo, streaming, tempo real), um formulário
-de upload com rótulo de formatos e botão "Transcrever", e um separador "ou" — tudo acima da área de
-gravação, que é o que o usuário realmente usa. O pedido é enxugar: o que é configuração vai para a
-janela de Configurações, o upload vira um ícone no menu de três pontos, e a área de gravação sobe
-para o topo. Nada de comportamento novo no motor: é reorganização de interface mais a unificação
-da saída de texto.
+> Estado em 2026-08-23, fim do chat de PM. **Não há tarefa para executar.** O próximo passo é do
+> PM, num chat novo.
 
-## Arquivos envolvidos
-- `transcritor/frontend/index.html`
-- `transcritor/README.md`
+A Etapa 1 da Fase 1 foi concluída em 2026-08-23 (levantamento e contrato do núcleo — ver
+`PROGRESSO.md`). A Etapa 2 é **trabalho de PM**, não de Executor: fechar a `SPEC-001` incorporando
+o que foi medido e decidir o escopo da Etapa 3.
 
-## O que fazer
+**Se você é o Executor e chegou aqui**: não invente tarefa a partir do `PLANO.md`. Avise que não há
+tarefa e peça ao PM para gerar uma.
 
-### 1. Tirar a parte de cima da página
-Remover do `<body>`: o `<h1>`, o `<p class="subtitulo">`, os três blocos `.alternador-modelo` e o
-`<p class="separador">ou</p>`. A `<section id="gravacao-rapida">` passa a ser o primeiro bloco da
-página. O CSS que ficar órfão (`.alternador-modelo`, `.rotulo-modelo`, `.dica-modelo`,
-`.subtitulo`, `.separador`, `#botaoModelo/#botaoStreaming/#botaoTempoReal` como botões de texto)
-sai junto — não deixe regra morta no arquivo.
-
-> **A página não pode ficar anônima.** Sem `<h1>`, um leitor de tela não tem como dizer que página
-> é essa. Mantenha o `<title>` da aba como está e ponha um cabeçalho **visualmente oculto** (classe
-> utilitária com `position:absolute; width:1px; height:1px; overflow:hidden; clip-path:inset(50%)`
-> — não use `display:none`, que esconde do leitor também). Some da tela, continua existindo para
-> quem navega por áudio.
-
-### 2. Levar os três controles para as Configurações
-A janela de Configurações hoje só tem o seletor de microfone. Ela passa a ter, na ordem:
-
-1. **Modelo de transcrição** — `<select>` com as opções de `MODELOS_ATIVOS`. Não mexa no conteúdo
-   do array nem reative o `gpt-4o-transcribe-diarize` (desativado a pedido do usuário em
-   2026-08-18; o comentário no HTML explica).
-2. **Streaming do transcript** — interruptor liga/desliga.
-3. **Transcrição em tempo real** — interruptor liga/desliga.
-4. Dispositivo de entrada (microfone) — o que já existe, pode ficar por último.
-
-Regras:
-- **Sem texto de dica na tela** — o "(clique para alternar)" e as explicações entre parênteses
-  somem. A explicação curta que hoje está no parênteses vai para o `title`/`aria-label` do
-  controle, para não se perder (principalmente a do tempo real, que tem efeito no custo).
-- Interruptor de verdade (`<input type="checkbox">` estilizado, ou `role="switch"` com
-  `aria-checked`), não um botão que escreve "Ligado"/"Desligado".
-- **Preserve a lógica existente.** As funções `modeloAtivo()`, `streamingAtivo()` e
-  `tempoRealAtivo()` são lidas em vários pontos do código; mantenha-as funcionando com a mesma
-  assinatura, só trocando de onde vem o valor.
-- **Atenção ao `botaoTempoReal.disabled`**: há cerca de 8 lugares que desabilitam o controle de
-  tempo real durante a gravação e reabilitam depois. Se o elemento mudar de id ou de tipo,
-  atualize **todos** — e confirme que o controle continua bloqueado enquanto grava. Esse é o ponto
-  mais fácil de quebrar sem perceber.
-
-### 3. Upload como item do menu de três pontos
-Terceiro item do `#popupMenuAvancado`, ao lado de Configurações e Consumo, com ícone (de upload/
-seta para cima) e rótulo curto de uma palavra ou duas, no mesmo padrão visual dos outros dois.
-
-- Clicar no item abre o seletor de arquivo do sistema direto (um `<input type="file">` escondido,
-  acionado por `.click()`), e **fecha o menu**.
-- **Sem rótulo de formatos e sem botão "Transcrever"**: escolheu o arquivo, começa a transcrever.
-  Mantenha o atributo `accept` no input (ele só filtra o diálogo do sistema, não é texto na tela).
-- Escolher o mesmo arquivo duas vezes seguidas precisa funcionar — limpe o `value` do input depois
-  de cada envio, ou o `change` não dispara na segunda vez.
-
-### 4. Unificar a saída: o upload cai na mesma caixa
-Hoje há dois caminhos quase idênticos: `formulario.addEventListener("submit", ...)`, que escreve no
-bloco `#resultado`, e `enviarGravacaoRapida(blob, avisoSeguranca)`, que soma o texto em
-`#transcriptRapido`. O upload passa a usar **o caminho da gravação**.
-
-- Reaproveite `enviarGravacaoRapida` em vez de duplicar a lógica — um `File` **é** um `Blob`, então
-  ela quase serve como está.
-- **Cuidado com o nome do arquivo**: ela hoje faz
-  `dados.append("audio", blob, "gravacao." + extensaoParaMime(blob.type))`, o que renomeia tudo
-  para "gravacao.<ext>". Para upload, preserve o nome e a extensão reais do arquivo escolhido —
-  um `.mp3` enviado como `.webm` é pedido malformado para a API. Trate isso sem quebrar o caminho
-  da gravação, que depende do comportamento atual.
-- Remova o bloco `#resultado` e o `<form id="formulario">` com o handler de submit, junto do CSS
-  `#resultado.*`. Se alguma mensagem de erro só existia ali, ela passa a usar o balão
-  (`mostrarStatusGravacao`), que é o padrão da tela agora.
-- Durante a transcrição do upload, o botão central mostra o **spinner**, como já faz ao processar
-  uma gravação — é o único indicador de "processando" que sobrou na tela.
-- O texto entra somado ao que já existe na caixa, com a mesma regra de separador por quebra de
-  linha que a gravação usa, e a lixeira/desfazer e o copiar valem para ele igual.
-
-### 5. Documentação
-Atualize `transcritor/README.md` nos trechos que descrevem a tela: o formulário de upload, os três
-alternadores no topo e o bloco de resultado deixaram de existir como estão descritos.
-
-## Critério de pronto
-- [ ] Topo da página sem título, subtítulo, alternadores, formulário e "ou"; a área de gravação é
-      o primeiro bloco
-- [ ] Existe cabeçalho visualmente oculto e o `<title>` da aba continua nomeando o app —
-      **diga qual técnica usou**
-- [ ] Configurações com modelo (lista), streaming (interruptor), tempo real (interruptor) e
-      microfone, sem texto de dica na tela, com a explicação no `title`/`aria-label`
-- [ ] `modeloAtivo()`, `streamingAtivo()` e `tempoRealAtivo()` continuam devolvendo o valor certo —
-      **teste os três de fato, um envio com cada configuração relevante**
-- [ ] O controle de tempo real continua **bloqueado durante a gravação** e liberado depois —
-      confirme nos ~8 pontos que mexem nisso
-- [ ] Item de upload no menu ⋮, abrindo o seletor de arquivo e fechando o menu
-- [ ] Escolher **o mesmo arquivo duas vezes seguidas** transcreve as duas vezes
-- [ ] Texto do upload somando na caixa de transcrição, com separador correto, copiar e
-      lixeira/desfazer funcionando sobre ele
-- [ ] Nome e extensão reais preservados no upload; a gravação continua enviando como antes —
-      **teste os dois caminhos**
-- [ ] Spinner no botão central durante a transcrição do upload; erro aparece no balão
-- [ ] Sem regressão: gravação normal, modo tempo real (ligado pelas Configurações), cancelar,
-      cronômetro, faixa de barras, menu ⋮ abrindo Configurações e Consumo
-- [ ] Nenhuma regra de CSS órfã dos blocos removidos
-- [ ] Nenhum erro novo no console
-- [ ] `transcritor/README.md` atualizado
-
-## Registro no PROGRESSO
-curto
-
-> Nível `curto`, com uma exceção: diga **como testou cada um dos dois caminhos de envio** (upload e
-> gravação) e o que **não** testou. É onde essa tarefa pode falhar sem aparecer.
-
-## O que NÃO fazer
-- Não altere arquivos fora da lista acima — em especial, **não mexa no backend**
-- Não mude o array `MODELOS_ATIVOS` nem reative o modelo de diarização
-- Não mexa na lógica do modo tempo real, no corte de 150s, no gate de silêncio nem no painel de
-  consumo — só no **controle** que liga e desliga o tempo real
-- Não refaça a faixa de barras, o botão de três estados, o balão nem a lixeira/desfazer
-- Não implemente arrastar e soltar arquivo — está no Backlog, o usuário adiou de propósito
-- Não adicione dependência, nem via CDN
-- Não faça commit nem push
+**Se você é o PM**: comece por `_RETOMADA_usabilidade-gravacao.md`, na raiz do repositório.

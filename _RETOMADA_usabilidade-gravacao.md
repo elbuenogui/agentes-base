@@ -1,123 +1,63 @@
-# Retomada — Assistente de Pesquisa por Áudio (faxina e fechamento)
+# Retomada — para o PM, em chat novo
 
-> Para retomar em um chat novo: com esta pasta conectada, peça ao assistente para ler este arquivo
-> (ou cole a "mensagem pronta" ao fim). **Atualizado em 2026-08-21.**
-> A frente de usabilidade da interface de gravação **está encerrada** — o arquivo mantém o nome
-> antigo de propósito, para não quebrar referências; o plano vivo é o de faxina e fechamento.
+> O nome do arquivo ficou do plano antigo de propósito, para não quebrar referências. O conteúdo é
+> sempre o estado **atual**. Atualizado em **2026-08-23**, no encerramento do chat de PM que abriu
+> o método Spec-Driven Development.
 
-## Situar-se (ler nesta ordem — só o relevante, não tudo)
+## Leia nesta ordem
 
-1. `CLAUDE.md` — modo PM/EXEC e a regra de idioma (tudo em português do Brasil).
-2. `.claude/PM.md` (se entrar como PM) ou `.claude/EXECUTOR.md` (se entrar como EXEC) — níveis de
-   registro no PROGRESSO e arquivamento por virada de plano.
-3. `.claude/estado/PLANO.md` — plano vivo: faxina e fechamento, 4 etapas.
-4. `.claude/estado/PROXIMA_TAREFA.md` — tarefa da **interface enxuta**, pronta e não executada.
-5. `coleta/2026-08-21_interface-enxuta.md` — a frente **viva**: o que o usuário pediu para a
-   interface, com as decisões já tomadas. Lista ainda aberta.
-6. `coleta/2026-08-21_fechamento-usabilidade.md` — fechamento da usabilidade e da faxina; o **resumo
-   consolidado no fim** é a forma útil.
-7. `coleta/2026-08-16_mvp-transcricao.md` — frente do MVP, encerrada; o **resumo consolidado no
-   fim do arquivo** é a forma útil, o registro bruto acima dele só se precisar expandir algo.
+1. `spec/VISAO.md` — a visão e as nove fases, com o `estado:` de cada uma.
+2. `spec/DECISOES.md` — 16 decisões fechadas, cada uma com **Por quê** e **Reabre se**.
+3. `.claude/estado/PLANO.md` — a Fase 1, seis etapas, uma concluída e uma cancelada.
+4. `spec/contrato/NUCLEO.md` — o contrato do núcleo, medido contra a máquina.
+5. `spec/QUESTOES_ABERTAS.md` e `spec/LACUNAS.md` — o que ainda falta.
 
-Não há destino final separado para a documentação: a coleta é o registro interno do próprio
-projeto, e o comando "aplicar" não é usado aqui.
+Se quiser o quadro geral antes de tudo: peça **diagnóstico geral** — a skill
+`.claude/skills/diagnostico-geral/` monta o painel a partir desses mesmos arquivos, e republica no
+endereço fixo `https://claude.ai/code/artifact/cce317cd-d476-4dea-ae46-8d652cec6a3b`.
 
-## Objetivo da thread
+## Onde o projeto está
 
-Deixar o repositório versionado e arrumado e, em seguida, enxugar a interface — os controles de
-configuração para dentro das Configurações, o upload para dentro do menu, e a tela sem o topo.
+O `transcritor/` é a **Fase 1** de um assistente pessoal multiplataforma. A Fase 1 fecha o contrato
+do núcleo; a Fase 2 (desktop, ditado universal) é a que o usuário quer usar todo dia.
 
-## Onde estou
+**Concluído em 2026-08-23**: a Etapa 1 da Fase 1 — o contrato foi **medido**, não suposto. Caminho
+feliz nos três modelos e nos dois modos; as seis situações de erro provocadas de verdade; as oito
+lacunas fechadas com evidência.
 
-O plano de usabilidade **fechou em 2026-08-21** (5 etapas + 3 correções aprovadas), depois de o
-usuário usar a interface e aprovar. Arquivado em
-`.claude/estado/historico/PLANO_2026-08-21b_usabilidade-encerrado.md`; as 15 entradas do
-`PROGRESSO.md` (1.398 linhas) foram para
-`.claude/estado/historico/PROGRESSO_usabilidade-gravacao_2026-08-20_a_2026-08-21.md`.
+**Cancelado**: a Etapa 5 (parâmetro de idioma), pela condição escrita nela mesma — a medição não
+achou diferença de texto, tokens ou custo.
 
-O plano de faxina está praticamente fechado: **Etapas 1, 2 e 3 concluídas e conferidas** —
-virada arquivada, `historico/` reorganizado (raiz 17 + `snapshots/` 48, nada apagado) e **4
-commits** feitos em 2026-08-21, que devolveram ao projeto um ponto de restauração. Só falta o
-repasse da Etapa 4. Estado detalhado vive no `PLANO.md` — não duplicar aqui.
+## O próximo passo, e é seu
 
-O app faz hoje: upload (com e sem streaming), gravação por microfone, modo tempo real com corte de
-150s e gate de silêncio, consumo e transcrição ligados por id, painel com linha do tempo navegável
-(janela móvel de 3min em 24h, navegação por dias) e interface de gravação com botão central de três
-estados, faixa espelhada de 80 barras a 60ms com histórico real, cancelar, e copiar e
-lixeira/desfazer numa linha abaixo da caixa. Custo acumulado: cerca de US$ 0,10 em API.
+**Etapa 2 — fechar a SPEC-001.** É trabalho de PM, não de Executor: incorporar o que foi medido,
+decidir quais lacunas viram requisito e escrever o escopo da Etapa 3.
 
-**Frente viva: interface enxuta.** O usuário abriu em 2026-08-21 e o primeiro lote já virou tarefa
-escrita (guardada em `.claude/tmp/`): os três alternadores do topo viram controles dentro das
-Configurações, o upload vira item do menu ⋮ (clicou, escolheu, transcreveu), a parte de cima da
-página some com a área de gravação subindo, e o texto do upload passa a somar na mesma caixa das
-gravações. Sem plano próprio por enquanto — cabe em uma tarefa. Arrastar e soltar áudio ficou para
-depois, no Backlog.
+As candidatas da Etapa 3 já estão listadas no `PLANO.md` com evidência: códigos de erro legíveis
+por máquina (L1), o erro enganoso em arquivo grande (L2) e o versionamento do contrato (L5).
+**Fora de escopo (`D-17`)**: tudo que depende de `gpt-4o-transcribe-diarize`.
 
-## Decisões já tomadas (ponteiros)
+`PROXIMA_TAREFA.md` está declarando explicitamente que **não há tarefa de Executor**. Isso é
+proposital: em duas ocasiões anteriores o arquivo ficou desatualizado apontando para etapa já feita,
+e o Executor quase reexecutou.
 
-- Modo ao vivo fica com `gpt-live-transcribe`, recusando troca por modelo mais barato → Backlog do
-  `PLANO.md`, com a estimativa de economia registrada
-- Detecção de turno pela API encerrada sem uso (o modelo recusa `turn_detection`) → Backlog
-- Gate de silêncio é "não enviar", não "enviar e não comitar" → plano de usabilidade arquivado
-- O cancelar nunca altera a caixa de transcrição, em nenhum modo
-- Faxina sem apagar nada: snapshots vão para subpasta, não para o lixo → `PLANO.md`, Etapa 2
-- Modo ao vivo fora de foco e um plano vivo por vez → coleta de 2026-08-21, resumo consolidado
-- Limpeza de `.claude/tmp/` e `_to_delete/` e higiene do `consumo.jsonl` ficaram fora do plano,
-  no Backlog, por decisão do usuário em 2026-08-21
+## O que ficou pendente do usuário
 
-## Plano / próximos passos
+**Nada.** As oito questões estão respondidas ou dissolvidas. O alarme de custo ficou em
+**US$ 100/mês** (`D-18`), contra um gasto medido de US$ 0,53 em 343 requisições de 18 a 23 de
+agosto.
 
-1. **Chat EXEC com a tarefa que está em `.claude/estado/PROXIMA_TAREFA.md`**: a interface enxuta —
-   alternadores para dentro das Configurações (como interruptores), upload como item do menu ⋮,
-   topo da página removido, saída de texto unificada na caixa de transcrição.
-2. PM confere no artefato real e registra em `coleta/2026-08-21_interface-enxuta.md`.
-3. O usuário ainda pode ter mais mudanças de interface para pedir. Enquanto couber em uma tarefa,
-   segue sem plano; quando crescer, aí vira `PLANO.md` — e essa é a virada em que o
-   `PROGRESSO.md` deve ser arquivado de novo.
-4. Fechar a Etapa 4 do plano de faxina: repasse final desta retomada (as Etapas 1, 2 e 3 já estão
-   concluídas e conferidas). **Modo ao vivo continua fora de foco.**
+## O que não se reabre sem motivo novo
 
-## Pendências e dependências
+Está tudo em `spec/DECISOES.md` com a condição de reabertura escrita. Os que mais tentam voltar:
+modo ao vivo (congelado), servidor próprio (adiado com gatilho em estado compartilhado entre
+aparelhos), processamento no relógio (nunca), idioma fixado em código (refutado por medição) e
+qualquer trabalho em `gpt-4o-transcribe-diarize` (fora de escopo).
 
-- Interface enxuta — tarefa pronta em `PROXIMA_TAREFA.md`, depende de: abrir um chat EXEC
-- Mais mudanças de interface — depende de: o usuário passar o resto do que quer
-- Etapa 4 da faxina (repasse desta retomada) — depende de: a interface rodar primeiro
-- O registro da interface no `PROGRESSO.md` vai cair junto com o do plano de faxina, porque a
-  frente não tem plano próprio — quem arquivar na próxima virada precisa separar
-- Resíduo do fechamento do WebSocket (~100ms após commit periódico) — depende de: aprovação
-- Bordas de turno cortando palavras — sem data: o usuário tirou o modo ao vivo de foco em 2026-08-21
-- `consumo.jsonl` mistura uso real com testes do Executor — Backlog, sem separação prevista
+## Armadilhas do ambiente
 
-## Onde ficam as coisas
-
-- Produto: `transcritor/` (`backend/main.py`, `frontend/index.html`, `README.md`, `BENCHMARK.md`)
-- Dados locais (não versionados): `transcritor/consumo.jsonl`, `transcritor/transcricoes.jsonl`
-- Estado do método: `.claude/estado/` (PLANO, PROXIMA_TAREFA, PROGRESSO)
-- Histórico: `.claude/estado/historico/` — 17 marcos e citados na raiz, 48 snapshots de edição em
-  `snapshots/`
-- Documentação curada: `coleta/2026-08-21_fechamento-usabilidade.md` (viva) e
-  `coleta/2026-08-16_mvp-transcricao.md` (encerrada)
-- Rascunho descartável: `.claude/tmp/` (fora do controle de versão) — guarda também cópias já
-  usadas de duas tarefas; podem ir na limpeza
-
-## Armadilhas conhecidas (não redescobrir)
-
-- **`.git/index.lock` que o bridge não apaga** (2 ocorrências): qualquer `git status` rodado pelo
-  bridge remoto deixa o lock para trás ("Operation not permitted") e o commit seguinte falha. Só o
-  usuário resolve, apagando pelo Windows.
-- **Backend antigo na porta 8000** servindo código obsoleto — 5 ocorrências. Conferir e derrubar
-  antes de testar: `netstat -ano | findstr ":8000"`, depois
-  `.venv\Scripts\uvicorn main:app --app-dir backend --port 8000`.
-- **Cache do navegador**: recarregar com Ctrl+Shift+R depois de mexer no `index.html`.
-- Gravar dentro de `.claude/` pelo bridge remoto exige `device_bash` com heredoc — a ferramenta de
-  escrita recusa esse caminho.
-
----
-
-## Mensagem pronta para colar no próximo chat
-
-> PM. Estou retomando o Assistente de Pesquisa por Áudio. A pasta está conectada. Antes de
-> começar, leia `_RETOMADA_usabilidade-gravacao.md` e os itens de "Situar-se". Use a skill
-> `coleta-consolidacao` para ir registrando; ao fim, "consolidar". A faxina já rodou (Etapas 1, 2
-> e 3 conferidas, 4 commits feitos) e a tarefa da interface enxuta está em `PROXIMA_TAREFA.md`,
-> ainda não executada.
+- **Backend antigo na porta 8000** — 5 ocorrências. Conferir e derrubar antes de qualquer medição.
+- **`.git/index.lock`** deixado pelo bridge remoto; o Executor apaga sozinho porque roda local.
+- **Tarefa que quebra o `.env` ou o backend precisa avisar o usuário antes de começar** — ele usa o
+  app ao vivo, e isso já aconteceu no meio de uma medição.
+- **`PROXIMA_TAREFA.md` costuma envelhecer.** Conferir contra o `PROGRESSO.md` antes de confiar.
