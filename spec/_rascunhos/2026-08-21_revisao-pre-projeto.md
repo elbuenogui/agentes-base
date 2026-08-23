@@ -170,3 +170,127 @@ Recomendação: **Fase 1 curta**, escopo "fechar o contrato do núcleo", três e
 3. POC-6 — tempo real fora do navegador.
 
 Sem isso a Fase 2 começa cega, e o custo do erro se paga três vezes.
+
+---
+
+# Resoluções (conversa com o usuário, 2026-08-21)
+
+## A4 — RESOLVIDA: dá para inserir no campo em foco, e o Windows mostra como
+
+O usuário apontou que o próprio Windows faz isso como recurso de acessibilidade. Correto — a
+digitação por voz do Windows (Win+H) e o Voice Access inserem texto no campo em foco de aplicativos
+de terceiros. A objeção original não era "é impossível"; era "clicar num botão tira o foco". E a
+prova de existência **confirma a solução em vez de derrubar a objeção**:
+
+- A Microsoft aciona por **atalho de teclado**, não por clique. A instrução oficial é literalmente
+  *"put your cursor in a text box"* e então pressionar Win+H — o campo é escolhido **antes**, e o
+  acionamento nunca pede um clique.
+
+**Decisões que decorrem disso:**
+
+1. **O acionamento principal do desktop é atalho de teclado.** O botão flutuante continua existindo
+   (é o que dá presença e mostra a última transcrição), mas um app cujo único gatilho é o clique
+   sempre terá o problema de foco. Isso preenche o requisito implícito D4, que não estava no
+   pré-projeto.
+2. **POC-1 muda de pergunta.** Não é mais "dá para inserir?" — está respondido que dá. É
+   **"por qual mecanismo, e onde ele falha?"**
+
+### O que a POC-1 tem de responder agora
+
+Três mecanismos possíveis no Windows, com limites diferentes:
+
+| Mecanismo | Limite conhecido |
+|---|---|
+| **UIA `TextPattern`** | **não serve** — a documentação da Microsoft diz explicitamente que "the TextPattern classes do not provide a means to insert or modify text". É read-only, feito para leitor de tela |
+| **UIA `ValuePattern`** | funciona só em parte dos controles e normalmente **substitui o valor inteiro** — inaceitável para inserir no meio de um e-mail já escrito |
+| **Teclado sintético (SendInput)** | quase universal, mas lento para texto longo e sensível a layout de teclado e IME |
+| **Text Services Framework (TSF)** | é o que a própria Microsoft recomenda para entrada de texto, e quase certamente o que o Win+H usa. Mais trabalho, melhor resultado |
+
+A PoC não é um experimento único: é uma **matriz de compatibilidade** por aplicativo-alvo. Os
+casos que costumam quebrar mecanismos diferentes: apps Electron (Slack, VS Code, Discord),
+terminais, apps Java, jogos e sessões de área de trabalho remota.
+
+A escada de fallback (campo em foco → clipboard → popup) **continua valendo** — mas deixa de ser
+aposta sobre viabilidade e passa a ser escolha em tempo de execução, por aplicativo.
+
+### Proposta de RNF (marcada como proposta, não requisito)
+
+O Win+H existe, é gratuito e já está no sistema. Isso dá uma régua honesta para o produto:
+
+> **O ditado do desktop precisa ser pelo menos tão rápido e tão preciso quanto o Win+H.**
+> Abaixo disso, o app não tem razão de existir no desktop.
+
+Se aceito, resolve a ambiguidade B2 (latência sem número) com um alvo mensurável em vez de um
+palpite. O que justifica o produto acima dessa régua: escolha de modelo, histórico, custo visível,
+mesma capacidade nas três plataformas e o caminho para assistente — nada disso o Win+H faz.
+
+## A3 — RESOLVIDA: o núcleo é lote + streaming; o ao vivo fica congelado
+
+### Correções ao diagnóstico original (erros meus, medidos depois)
+
+1. **"A lógica do tempo real mora nas 2.748 linhas do `index.html`" está errado.** São ~400 linhas,
+   entre 2407 e 2790, em funções delimitadas (`iniciarCapturaPcmTempoReal`,
+   `iniciarGravacaoTempoReal`, `pararGravacaoTempoReal`, `limparRecursosTempoReal`…).
+2. **São três caminhos, não dois** — eu tinha empacotado streaming junto com ao vivo:
+
+   | Caminho | Como funciona | Reutilizável hoje |
+   |---|---|---|
+   | Lote | `POST /transcrever` → texto | sim |
+   | **Streaming** | mesmo endpoint com `stream=true`, NDJSON com deltas | **sim — o backend faz tudo** |
+   | Ao vivo | backend só emite token efêmero; cliente captura PCM e fala WebSocket com a OpenAI | não |
+
+   O streaming já entrega "o texto aparece enquanto falo" sem WebSocket, sem PCM e sem token
+   efêmero. Qualquer cliente ganha de graça.
+3. **A POC-6 já tinha sido respondida.** `.claude/tmp/teste_tempo_real.py` validou o protocolo do
+   ao vivo sem navegador (registrado na coleta de 2026-08-21). Não falta PoC; faltava eu ter lido.
+
+### Decisão (usuário, 2026-08-21)
+
+**Núcleo = lote + streaming. O modo ao vivo está congelado** — não se porta, não se reescreve, não
+se apaga. Reafirmação da decisão de 2026-08-21 de tirá-lo de foco. Não reabrir sem motivo novo.
+
+Decorrências: **POC-6 sai da Fase 1** (já respondida e sem consumidor). O harness vira tarefa de
+arrumação da Fase 1, decidida pelo PM, sem consulta — preserva a evidência agora que o modo fica
+parado.
+
+## Arquitetura — decisões de 2026-08-21 (conversa PM ↔ usuário)
+
+### Fechadas
+
+- **O relógio é cliente magro, sempre.** Grava áudio e mostra texto; não processa nada. Decisão de
+  produto do usuário. Motivo: processamento no pulso é bateria gasta fazendo pior o que o telefone
+  faz melhor.
+- **O telefone é o núcleo do relógio.** Confirmado que o Wear OS permite: a Wearable Data Layer
+  (`MessageClient` + `WearableListenerService`) entrega mensagens do relógio ao app do telefone e
+  **o inicia se ele não estiver rodando** — funciona com o telefone no bolso. Ressalvas anotadas
+  para a PoC da Fase 4: a própria documentação avisa do custo de bateria de um
+  `WearableListenerService`; a Data Layer não funciona se o relógio estiver pareado com iPhone
+  (irrelevante aqui); e a gestão agressiva de bateria da Samsung é risco conhecido a testar no
+  aparelho real.
+- **Decorrência**: o relógio **nunca precisa da chave da API**. Mata um galho inteiro de
+  complicação na Fase 4.
+- **A linguagem do app desktop é decidida depois da POC-1**, não agora. Se a inserção de texto
+  exigir Text Services Framework, empurra para .NET/C++; se `SendInput` bastar, quase qualquer
+  linguagem serve. Escolher antes é escolher a ferramenta antes de saber o serviço.
+- **O que se compartilha entre plataformas é o comportamento, não o código.** O núcleo são ~300
+  linhas (chamar a API, ler resposta, calcular custo, registrar); a parte cara é a integração com
+  cada sistema operacional, que não se compartilha de jeito nenhum. Por isso o entregável da Fase 1
+  é o **contrato**, e não uma biblioteca única.
+
+### Servidor próprio: adiado, com critério de disparo
+
+**O servidor é a fronteira entre "ditado" e "assistente".** As fases 1 a 5 não precisam de um:
+desktop chama a API; telefone chama a API; relógio chama o telefone. A partir da Fase 7 (contexto)
+e obrigatoriamente na Fase 9 (memória e contexto persistente entre aparelhos) ele deixa de ser
+opcional — memória compartilhada entre dispositivos não existe sem um lugar comum.
+
+**Gatilho declarado**: o servidor nasce quando o produto precisar de estado compartilhado entre
+aparelhos. Antes disso, não.
+
+Custo de adiar (aceito): registro de consumo fragmentado, um arquivo por aparelho, sem visão do
+total; e a chave da API em cada aparelho (revogar = trocar em N lugares). Uso pessoal, risco do
+próprio usuário.
+
+Custo de antecipar (evitado): autenticação para um usuário só; um salto de rede a mais no caminho
+do áudio, contra a régua do Win+H; e um serviço que, quando cai, leva junto a ferramenta que você
+usa todo dia.
