@@ -111,14 +111,12 @@ decisão volta à mesa.
 </details>
 
 ### D-09 — A verificação é manual, e isso está declarado
-`estado: fechada · 2026-08-21 · fase: método`
+`estado: fechada · migrada para o cérebro em 2026-08-23`
 
-Sem suíte automatizada enquanto o projeto for simples.
-
-**Por quê:** montar suíte custa tempo e chamada de API, e o sistema ainda é pequeno demais para
-pagar isso.
-**Reabre se:** houver mais de um cliente consumindo o núcleo — aí verificação manual deixa de
-cobrir.
+**Decisão de método.** Mudou de casa: mora em
+[`.claude/metodo/DECISOES_METODO.md`](../.claude/metodo/DECISOES_METODO.md) como **`M-01`**, com a
+razão e a condição de reabertura. O identificador antigo fica aqui como ponteiro para não quebrar as
+citações já escritas.
 
 ### D-10 — A régua do Win+H está aposentada; a régua passa a ser o app de hoje
 `estado: fechada · 2026-08-21 · fase: F2`
@@ -166,15 +164,11 @@ antes da POC-1 seria escrever sobre suposição.
 **Reabre se:** —
 
 ### D-14 — "Diagnóstico geral" é um comando com painel
-`estado: fechada · 2026-08-21 · fase: método`
+`estado: fechada · migrada para o cérebro em 2026-08-23`
 
-Quando o usuário pedir **diagnóstico geral**, a resposta é um painel visual publicado, montado a
-partir dos arquivos deste diretório — nunca um texto longo no chat.
-
-**Por quê:** o usuário lê o estado do projeto muito melhor em painel do que em prosa, e o painel é
-o formato em que ele consegue aprovar ou recusar. Vale também como semente do próprio produto: um
-assistente que mostra estado visualmente.
-**Reabre se:** —
+**Decisão de método.** Mora em [`.claude/metodo/DECISOES_METODO.md`](../.claude/metodo/DECISOES_METODO.md)
+como **`M-02`**. O endereço fixo do painel e a identidade visual continuam sendo deste projeto e
+moram na skill `diagnostico-geral`.
 
 ### D-15 — Colocar o texto não o consome; a janela é que se minimiza
 `estado: fechada · 2026-08-21 · fase: F2`
@@ -252,3 +246,98 @@ grandeza acima do observado, o que o torna um sinal de anomalia e não um freio 
 
 **Reabre se:** o padrão de uso mudar de fato — por exemplo, se o modo ao vivo voltar (custa 2,8×
 mais por minuto) ou se o assistente passar a chamar LLM a cada acionamento.
+
+### D-19 — Entre dois documentos que se contradizem, o mais recente vence
+`estado: fechada · migrada para o cérebro em 2026-08-23`
+
+**Decisão de método.** Mora em [`.claude/metodo/DECISOES_METODO.md`](../.claude/metodo/DECISOES_METODO.md)
+como **`M-03`**; a regra em si está em `.claude/metodo/CONSISTENCIA.md`.
+
+### D-20 — O núcleo declara prazo de espera de 120 segundos
+`estado: fechada · 2026-08-23 · fase: F1`
+
+O backend passa a declarar timeout próprio de **120s de leitura**, mantendo os 5s de conexão, e
+devolve `TEMPO_ESGOTADO` ao estourar. Hoje ele não declara nada e herda o default do SDK: 600s.
+
+**Por quê:** o áudio de 12,7s da medição da Etapa 1 voltou em cerca de 2s. 120s cobre com folga uma
+gravação longa e ainda assim falha rápido o bastante para o usuário não achar que o app morreu. Num
+app de ditado, esperar 10 minutos por uma resposta que não vem é falha de produto, não de contrato.
+
+**Reabre se:** aparecer uso real de áudio longo o suficiente para encostar nos 120s — aí o número
+sobe com a medição na mão, não por precaução.
+
+### D-21 — Todo fato tem um dono único, e o painel confere
+`estado: fechada · migrada para o cérebro em 2026-08-23`
+
+**Decisão de método.** Mora em [`.claude/metodo/DECISOES_METODO.md`](../.claude/metodo/DECISOES_METODO.md)
+como **`M-04`**; as regras em si estão em `.claude/metodo/CONSISTENCIA.md`.
+
+### D-22 — O histórico de transcrições é requisito, não efeito colateral
+`estado: fechada · 2026-08-21, promovida ao livro-razão em 2026-08-23 · fase: F2`
+
+Ver uso e histórico **interessa ao usuário** — não é subproduto do backend guardar arquivo. Ainda
+incipiente e não mapeado. **Não vira trabalho agora**: o contrato da Fase 1 documenta o histórico
+como ele é hoje, e a funcionalidade ganha história de usuário própria na especificação da Fase 2,
+porque é lá que alguém vai olhar para ela.
+
+**Por quê:** decisão do usuário em 2026-08-21, respondendo a Q7. Promovida ao livro-razão em
+2026-08-23 pela regra de dono único da `D-21` — a resposta morava solta em `QUESTOES_ABERTAS.md`,
+que pela regra nova só deve guardar a pergunta e o ponteiro. Chamar de requisito muda o padrão de
+qualidade exigido: dado de histórico errado deixa de ser ruído e passa a ser defeito.
+
+**Consequências abertas, que esperam a Fase 2:**
+
+- o histórico existe hoje como efeito colateral: `consumo.jsonl` e `transcricoes.jsonl`, **não
+  versionados**, sem política de retenção, presos à máquina onde o backend roda;
+- `consumo.jsonl` **mistura uso real com sessões de teste do Executor** — enquanto era ruído, tudo
+  bem; sendo requisito, é dado errado. Os números de `gpt-live-transcribe` anteriores a 2026-08-19
+  ainda estão subestimados, porque o último turno de cada gravação se perdia antes da correção;
+- a troca de arquivo local por banco de dados está no Backlog desde 2026-08-18, adiada pelo usuário.
+
+**Reabre se:** o usuário deixar de consultar uso e histórico na prática — aí volta a ser efeito
+colateral e sai do escopo da Fase 2 em vez de ganhar história própria.
+
+### D-23 — Não se troca o modelo do modo ao vivo para economizar
+`estado: fechada · 2026-08-20, promovida ao livro-razão em 2026-08-23 · fase: F1`
+
+Trocar `gpt-live-transcribe` (US$ 0,017/min) por `gpt-4o-transcribe` (US$ 0,006/min) no modo ao vivo
+foi **avaliado e recusado pelo usuário**. Não será executado. A ideia sobrevive em `B-02`, para o dia
+em que custo virar prioridade.
+
+**Por quê:** o usuário prefere preservar nuance de fala — pontuação, ênfase — a economizar, tendo
+recurso disponível. E a economia real é bem menor do que o preço de tabela sugere: o modelo mais
+barato só fecha turno sozinho usando a detecção de turno da API, o que obriga a **desligar o gate de
+silêncio** — passa-se a pagar o tempo todo, não só a fala. O preço do modelo cai 65%, mas a economia
+efetiva fica em ~50% numa sessão típica com ~30% de silêncio, e ~29% se metade da sessão é silêncio.
+Em dez minutos com 30% de silêncio: US$ 0,119 → US$ 0,060.
+
+**Contraponto medido, que quem reabrir precisa ver junto:** o `BENCHMARK.md` mostra
+`gpt-4o-transcribe` em lote produzindo pontuação e acentuação impecáveis num áudio de 72s, enquanto o
+modo ao vivo atual produz "Isso e um teste da transcricao" sem acentos e parte palavras nas emendas.
+Ou seja, há indício de que a perda de nuance venha do **tamanho do pedaço enviado** (fatias de 6s),
+não do modelo — o que enfraquece a própria razão da recusa. **Quem retomar isto deve testar essa
+hipótese antes de decidir**, e não reabrir só pelo preço.
+
+**Reabre se:** custo virar prioridade, ou a hipótese do tamanho do pedaço for testada e confirmada —
+aí a troca deixa de custar nuance e a razão da recusa cai.
+
+### D-24 — O assistente é o produto principal, e o agente espera o uso diário
+`estado: fechada · 2026-08-23 · fase: todas`
+
+O `agentes-base` é a **base para trabalhar** — o núcleo do método e suas atribuições. Dentro dele
+nasceu uma ferramenta, a transcrição, que já está em uso todo dia. A partir do botão, ela evolui para
+melhorar a eficiência do usuário e **instalar a infraestrutura** que um agente vai exigir depois.
+
+**O núcleo do agente não começa agora.** Já existem agentes disponíveis e bons o suficiente para
+construir com eles; aprofundar no agente próprio agora é resolver duas vezes o mesmo problema.
+
+**Por quê:** a régua é de uso, não de funcionalidade. Para o assistente valer mais que os agentes que
+o usuário já usa, ele precisa estar **integrado ao cotidiano** — o projeto tem que primeiro se tornar
+relevante para si mesmo. É isso, e não sequenciamento técnico, que justifica adiar o agente.
+
+**Consequência de método:** dá à Fase 2 um critério de encerramento mais duro que "está pronto" —
+**ela fecha quando o usuário usa todo dia**. Reforça a regra de que uma fase só encerra com o
+entregável em uso, e explica por que essa regra é dura aqui em vez de burocracia.
+
+**Reabre se:** o assistente se mostrar incapaz de entrar na rotina sem a camada de agente — aí a
+ordem se inverte com evidência de uso, não por previsão.

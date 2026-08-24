@@ -17,8 +17,12 @@ três riscos recorrentes:
    rolagem do chat; quando você precisa delas depois (para um relatório, para justificar uma
    escolha, para auditoria), elas se foram.
 
-Os quatro mecanismos abaixo — papéis PM/Executor, canal de progressão, coleta contínua e
-retomada — atacam cada um desses riscos separadamente. Você pode adotar só os que fizerem sentido
+4. **Deriva entre documentos**: o mesmo fato passa a morar em três arquivos, alguém atualiza um, e
+   os outros dois viram mentira sem avisar ninguém. É o risco mais silencioso dos quatro, porque
+   cada documento continua parecendo correto isoladamente.
+
+Os cinco mecanismos abaixo — papéis PM/Executor, canal de progressão, coleta contínua, retomada e
+as regras de método — atacam cada um desses riscos separadamente. Você pode adotar só os que fizerem sentido
 para o projeto novo; eles não são pacote fechado.
 
 ## 1. Papéis PM e Executor
@@ -125,6 +129,34 @@ A regra que evita divergência: a retomada (mais o `PLANO.md`/matriz do projeto,
 **fonte da verdade** sobre "onde estamos" — nunca duplicar esse resumo narrativo dentro de
 `PROXIMA_TAREFA.md` ou de outro arquivo operacional, porque são exatamente esses resumos
 duplicados que ficam desatualizados primeiro.
+
+## 5. Regras de método (`.claude/metodo/`)
+
+**Resolve**: deriva entre documentos, entulho que se acumula, e commit feito por quem não devia.
+
+Os quatro mecanismos anteriores produzem arquivos — e arquivos que descrevem uns aos outros derivam.
+As regras ficam em arquivos próprios, fora dos arquivos de papel, por dois motivos: **valem para os
+dois papéis** (deixá-las no `PM.md` faz o Executor nunca vê-las), e **precisam poder ser copiadas
+sem arrastar a história do projeto onde nasceram**.
+
+- **`CONSISTENCIA.md`** — dono único por fato; nada de contagem escrita à mão; passe de fechamento ao
+  concluir etapa; o mais recente vence; e a regra que mais custa lembrar: **aviso não é conserto**.
+  Se você se pegar escrevendo "confira este arquivo contra aquele antes de confiar", isso é um
+  documento sem dono pedindo desculpa — ataque a causa ou registre a pendência.
+- **`HIGIENE.md`** — cada regra de limpeza com **gatilho declarado**: quando salvar snapshot, quando
+  arquivar o log, quando o rascunho vence. Higiene que depende de boa vontade não acontece.
+- **`PLANOS.md`** — nem todo trabalho entrega produto. Três tipos: **fase** (entrega produto, um de
+  cada vez), **manutenção** (arruma o método ou o entulho) e **acompanhamento** (o que se observa sem
+  executar). Sem essa separação, arrumação se disfarça de plano de fase e ocupa o lugar do produto, e
+  alarme vira decisão porque não há onde pôr.
+- **`COMMIT.md`** — **só o usuário autoriza commit**, e a tarefa do Executor só termina com o
+  repositório pronto para commitar. Esta é citada nas três portas de entrada, inclusive no chat sem
+  papel declarado: é o modo mais desprotegido, porque sem papel não há regra de papel.
+
+A regra que sustenta as outras é a conferência: um passe automático, rodando junto de algo que já se
+pede regularmente, procurando contradição de estado, contagem à mão, ponteiro quebrado e — o mais
+perigoso — **arquivo de orientação que não conhece o método corrente**, porque é o que um chat novo
+lê primeiro. Disciplina falha em silêncio; conferência que roda sozinha, não.
 
 ## Quando NÃO vale a pena usar isso
 

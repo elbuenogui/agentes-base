@@ -82,18 +82,18 @@ Estrutura obrigatória de `.claude/estado/PLANO.md`:
     1. [Nome] — critério de pronto: ...
     2. [Nome] — critério de pronto: ...
 
-    ## Backlog (não aprovado)
-    - itens que surgiram e não entraram no plano
+    ## Backlog
+    (só um ponteiro para `spec/BACKLOG.md` — o acervo NÃO mora aqui)
 
 Regras de construção:
 
 - Máximo 7 etapas. Se passar, pergunte se divido em outro plano.
 - Toda etapa precisa de critério de pronto verificável. Nada vago
   tipo "melhorar performance" sem dizer o que "melhor" significa.
-- Nunca adicionar etapa por iniciativa própria. Sugestão vai para
-  Backlog, e só sobe para Etapas se eu disser "adiciona".
+- Nunca adicionar etapa por iniciativa própria. Sugestão vira item em `spec/BACKLOG.md`, e só sobe
+  para Etapas se eu disser "adiciona".
 - Se eu trouxer uma ideia nova no meio do caminho, pergunte:
-  "isso entra no plano atual ou fica no Backlog?"
+  "isso entra no plano atual ou vira item de backlog?"
 - Se algo no meu pedido for ambíguo, pergunte. Não assuma.
 - Antes de gravar o plano, mostre e pergunte: "aprova ou ajusto?"
 - Ao **reescrever** o PLANO de forma relevante, salve a versão anterior em
@@ -143,13 +143,13 @@ Executor assume `curto`.
   não foi testado.
 - **completo** — sem teto. Só para investigação, diagnóstico ou decisão de
   arquitetura, onde o relatório *é* o entregável e não sobra artefato de código
-  que registre o achado (ex.: a investigação de deltas vs. commit, 2026-08-19).
+  que registre o achado.
 
 Por quê: você confere o critério no artefato real de qualquer jeito, então
-narrar o passo a passo é trabalho duplicado — e foi o que levou o PROGRESSO a
-134 KB com entradas de ~90 linhas cada. O que só o Executor sabe, e se perde se
-não for escrito, é como ele testou, que número deu e o que apareceu que não
-virou código. Essa parte nunca encolhe.
+narrar o passo a passo é trabalho duplicado — e é o que faz um log de progresso
+inchar até ninguém mais abrir. O que só o Executor sabe, e se perde se não for
+escrito, é como ele testou, que número deu e o que apareceu que não virou
+código. Essa parte nunca encolhe.
 
 O Executor pode **subir** o nível por conta própria (justificando em uma linha)
 se achar bug fora do escopo ou risco relevante; nunca descer.
@@ -158,8 +158,8 @@ se achar bug fora do escopo ou risco relevante; nunca descer.
 
 1. Verifique se o critério de pronto foi atendido de fato — confira
    no artefato real, não confie só no relato do executor.
-2. Se surgiu erro ou nova demanda: registre no Backlog do PLANO.md.
-   Não altere as Etapas sem me perguntar.
+2. Se surgiu erro ou nova demanda: registre em `spec/BACKLOG.md` como `B-nn`, com `nasceu:` e
+   `olhar de novo em:`. Não altere as Etapas sem me perguntar.
 3. Marque a etapa como concluída no PLANO.md.
 4. Promova para a `coleta/` só o que for digno de registro (ver abaixo).
 5. Pergunte se gero a PROXIMA_TAREFA.md da etapa seguinte.
@@ -184,34 +184,44 @@ no PROGRESSO, e você promove para a coleta o que interessa registrar.
 
 ## Higiene da pasta estado/
 
-Mantenha `.claude/estado/` com **só os três arquivos vivos** (PLANO.md,
-PROXIMA_TAREFA.md, PROGRESSO.md). Tudo mais vai para fora:
+Mantenha `.claude/estado/` com **só os arquivos vivos**. Tudo mais vai para fora: snapshots de plano
+para `historico/`, rascunho descartável para `../tmp/`. Nada de `.bak` solto.
 
-- Snapshots de plano → `.claude/estado/historico/` (datados).
-- Rascunho descartável → `.claude/tmp/` (fora do controle de versão).
+Os limiares — quando salvar snapshot, quando arquivar, quando limpar o rascunho — moram em
+[`metodo/HIGIENE.md`](metodo/HIGIENE.md). Não repita número aqui.
 
-### Arquivamento do PROGRESSO.md (regra de 2026-08-19)
+### Arquivamento do PROGRESSO.md — a única alteração que o PM pode fazer nele
 
-**O gatilho é a virada de plano, não o tamanho.** Quando um plano fecha (todas
-as etapas concluídas, ou plano substituído), mova **todas as entradas daquele
-plano** do `PROGRESSO.md` vivo para
-`.claude/estado/historico/PROGRESSO_<plano>.md`, deixando o vivo começar limpo
-junto com o plano novo. É o corte natural: entrada de plano encerrado não é
-mais consultada para executar, só como história.
+Quando um plano fecha (todas as etapas concluídas, ou plano substituído), mova **todas as entradas
+daquele plano** do `PROGRESSO.md` vivo para `historico/PROGRESSO_<plano>.md`, deixando o vivo começar
+limpo junto com o plano novo. Entrada de plano encerrado não é mais consultada para executar, só como
+história.
 
-Quem faz: **o PM**, por exceção datada de 2026-08-19 — é a única alteração
-permitida no PROGRESSO.md. Escopo estrito: **mover** entradas inteiras,
-preservadas palavra por palavra, e só de planos já encerrados. Nunca editar,
-resumir ou reordenar o que foi movido; nunca tocar em entrada de plano vivo.
-Faça isso entre planos, quando não houver tarefa ativa. Deixe no topo do
-arquivo arquivado uma linha dizendo de qual plano e de que período ele é.
+Escopo estrito: **mover** entradas inteiras, preservadas palavra por palavra, e só de planos já
+encerrados. Nunca editar, resumir ou reordenar o que foi movido; nunca tocar em entrada de plano
+vivo. Faça entre planos, quando não houver tarefa ativa, e deixe no topo do arquivo arquivado uma
+linha dizendo de qual plano e de que período ele é.
 
-**60 KB é alarme, não gatilho** (era 40 KB até 2026-08-19; nunca disparou na
-prática — o arquivo chegou a 134 KB). Se o vivo passar de 60 KB com o plano
-ainda aberto, é sinal de que o plano está se arrastando ou de que a regra de
-profundidade não está sendo seguida: me avise em vez de arquivar por conta
-própria no meio de um plano.
+Se o arquivo vivo crescer muito com o plano ainda aberto, **avise em vez de arquivar** — é sinal de
+plano se arrastando ou de regra de profundidade não seguida, não de hora de arquivar.
 
-**Pendência aberta em 2026-08-19**: o `PROGRESSO.md` está com 134 KB, dos quais
-~100 KB são de três planos já encerrados que nunca foram arquivados. Esse
-arquivamento retroativo ainda precisa ser feito, na próxima virada de plano.
+## Regras de método (moram no cérebro, não aqui)
+
+Valem para os dois papéis e são escritas num lugar só. Leia antes de escrever qualquer coisa; aqui
+ficam só os ponteiros.
+
+| Arquivo | O que resolve |
+|---|---|
+| [`CEREBRO.md`](CEREBRO.md) | o mapa único de onde tudo mora |
+| [`metodo/CONSISTENCIA.md`](metodo/CONSISTENCIA.md) | dono único por fato · nada de contagem à mão · passe de fechamento · o mais recente vence · aviso não é conserto |
+| [`metodo/HIGIENE.md`](metodo/HIGIENE.md) | limiar de snapshot · arquivamento por virada · validade do rascunho · lixo de ferramenta |
+| [`metodo/PLANOS.md`](metodo/PLANOS.md) | os três tipos de plano: fase, manutenção, acompanhamento |
+| [`metodo/COMMIT.md`](metodo/COMMIT.md) | **só o usuário autoriza commit** — vale para você também |
+| [`metodo/DECISOES_METODO.md`](metodo/DECISOES_METODO.md) | o que esta instalação decidiu sobre método (`M-nn`) |
+
+Duas que valem repetir aqui porque mudam o que você escreve:
+
+- **Antes de escrever um fato, veja se ele já tem dono.** Se tem, cite o identificador em vez de
+  reargumentar — reargumentar é o que faz o mesmo fato ter três versões em três arquivos.
+- **Ao fechar ou cancelar uma etapa, faça o passe de fechamento na mesma sessão**: procure o nome e
+  o identificador dela em todos os arquivos e atualize toda citação.

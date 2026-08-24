@@ -5,73 +5,84 @@ status: vivo
 
 # Questões abertas
 
-Cada uma bloqueia uma fase específica. Nenhuma bloqueia a Fase 1 — por isso a Fase 1 pode começar.
+Decisões que **só o usuário toma**. Diferente de [LACUNAS.md](LACUNAS.md), que é trabalho que ainda
+não foi feito.
 
-## ~~Q1 — Quais idiomas o produto suporta?~~ **RESPONDIDA (2026-08-21)**
-**Só português, por enquanto.**
-Decorrência encontrada na análise do repositório: a chamada à API **não envia o idioma hoje**
-(`main.py:246`, `parametros_extra` só carrega `chunking_strategy`). Com o idioma fixado, passar
-`language="pt"` tende a melhorar precisão, reduzir latência e impedir o modelo de trocar de idioma
-sozinho. Virou candidata da Etapa 3 da Fase 1. **"Por enquanto" fica registrado**: o dia em que
-entrar um segundo idioma, esse parâmetro deixa de ser constante e vira configuração.
+> **Regra de dono único (`D-21`, 2026-08-23).** Este arquivo guarda a **pergunta** e o **ponteiro**
+> para onde a resposta mora. Quando existe um `D-nn` em [DECISOES.md](DECISOES.md), a razão da
+> resposta mora lá e **não é repetida aqui** — foi a repetição que produziu três respostas
+> diferentes para a Q1 entre 21 e 23 de agosto. Onde não existe `D-nn`, está escrito que o dono é
+> este arquivo.
 
-## ~~Q2 — Qual o teto de latência e de custo?~~ **PARCIALMENTE RESPONDIDA (2026-08-21)**
-**Latência: régua trocada.** O Win+H foi descartado como alvo — o usuário reporta que o app de hoje
-já é mais rápido, mais preciso e com mais opções. A régua passa a ser **não piorar o que ele já usa
-todo dia** (`D-10`).
-**Custo: RESPONDIDO em 2026-08-23, com número medido.** O gasto histórico do projeto inteiro, de
-18 a 23 de agosto, foi **US$ 0,53 em 343 requisições**; o dia mais caro foi 21/08, com US$ 0,21.
-São dias de desenvolvimento pesado, não de uso em regime.
-**Definido pelo usuário em 2026-08-23: alarme em US$ 100/mês**, não limite rígido (`D-18`).
-Encostar nele é sinal de mudança de padrão de uso, não de excesso. **Questão encerrada.**
+**Nenhuma questão aberta bloqueia a Fase 1.** Todas as oito estão respondidas ou dissolvidas.
 
-## ~~Q3 — O desktop é só Windows?~~ **RESPONDIDA (2026-08-21)**
+## ~~Q1 — Quais idiomas o produto suporta?~~ **RESPONDIDA** · dono: [`D-08`](DECISOES.md)
+
+**O núcleo não assume idioma e não expõe parâmetro de idioma.** A API detecta sozinha.
+
+Respondida três vezes, e por isso vale registrar o rastro — foi esta questão que revelou o problema
+de método corrigido pela `D-21`:
+
+| Quando | O que se disse | Situação |
+|---|---|---|
+| 21/08, manhã | "só português, fixado no código" | **superada no mesmo dia** |
+| 21/08, tarde | "parâmetro `idioma` opcional, padrão ausente" | **superada pela medição** |
+| 23/08 | "nenhum parâmetro; a API detecta" | **vale esta** (`D-19`: o mais recente vence) |
+
+O que decidiu foi medição, não opinião: mesmo áudio com e sem `language="pt"` deu texto idêntico
+caractere por caractere e tokens idênticos. A razão completa e a condição de reabertura estão na
+`D-08`. A lista de idiomas para a interface saiu do parqueamento por falta de justificativa.
+
+## ~~Q2 — Qual o teto de latência e de custo?~~ **RESPONDIDA** · dono: [`D-10`](DECISOES.md) e [`D-18`](DECISOES.md)
+
+- **Latência**: a régua é **não piorar o que o usuário já usa hoje** (`D-10`). O Win+H foi
+  descartado como alvo — o app atual já é mais rápido e mais preciso que ele.
+- **Custo**: **alarme em US$ 100/mês, não limite rígido** (`D-18`). Referência medida: US$ 0,53 no
+  projeto inteiro, 343 requisições, de 18 a 23 de agosto.
+
+**Questão encerrada** — o cabeçalho dizia "parcialmente respondida" até 2026-08-23, quando o corpo
+já a dava por encerrada. Corrigido pelo passe de fechamento da `D-21`.
+
+## ~~Q3 — O desktop é só Windows?~~ **RESPONDIDA** · dono: [`D-11`](DECISOES.md)
+
 **Não como ambição; sim como ponto de partida.** Windows primeiro, com a camada de inserção de
-texto isolada num módulo trocável por sistema operacional (`D-11`). A parte difícil não é a
-interface multiplataforma — é que inserir texto no campo de outro aplicativo são três
-implementações diferentes, e no Linux com Wayland há bloqueio por desenho.
+texto isolada num módulo trocável por sistema operacional.
 
-## ~~Q4 — Qual smartwatch, e já está em mãos?~~ **RESPONDIDA (2026-08-21)**
-**Galaxy Watch 5, já em mãos.** A F4 deixa de ter bloqueio de hardware. Fica valendo o risco
-conhecido da gestão agressiva de bateria da Samsung, a ser medido na POC-5.
+## ~~Q4 — Qual smartwatch, e já está em mãos?~~ **RESPONDIDA** · dono: este arquivo
 
-## ~~Q5 — "Copiar / apagar / desfazer" — o que cada um faz?~~ **RESPONDIDA (2026-08-21)**
-**O comportamento do texto não muda depois de colocado.** A transcrição continua viva e disponível
-para ser colocada de novo — colocar não consome. O que muda é a **janela**: ela se minimiza, e
-volta a aparecer no **hover** sobre o botão flutuante.
+**Galaxy Watch 5, já em mãos** (2026-08-21). A F4 deixa de ter bloqueio de hardware. Fica valendo o
+risco conhecido da gestão agressiva de bateria da Samsung, a ser medido na POC-5.
 
-Decorrência de desenho: a janela do desktop tem três estados — *gravando*, *mostrando o resultado*
-e *minimizada* — e a transição para minimizada é automática depois de colocar o texto em algum
-lugar. Ver `D-15`.
+> Sem `D-nn` próprio: é fato de contexto, não decisão com trade-off. Se virar escolha entre
+> aparelhos, aí nasce a decisão.
 
-## ~~Q6 — Qual critério decide que "a integração direta com GPT não basta"?~~ **DISSOLVIDA (2026-08-21)**
-A pergunta não se aplica mais: **a Fase 6 acontece de qualquer forma** (`D-12`). O resultado da F5
-define só a urgência — se a integração não funcionar, o agente entra imediatamente; se funcionar,
-é testada por mais tempo e o agente vem depois.
+## ~~Q5 — "Copiar / apagar / desfazer" — o que cada um faz?~~ **RESPONDIDA** · dono: [`D-15`](DECISOES.md)
 
-## ~~Q7 — O histórico de transcrições é requisito ou efeito colateral?~~ **RESPONDIDA (2026-08-21)**
-**É requisito** — ver uso e histórico interessa ao usuário. Ainda incipiente e não mapeado.
-Decorrências abertas, que agora precisam de dono:
-- o histórico existe hoje como efeito colateral: dois arquivos `.jsonl` **não versionados**, sem
-  política de retenção, presos à máquina onde o backend roda;
-- `consumo.jsonl` **mistura uso real com sessões de teste do Executor** — enquanto era ruído,
-  tudo bem; sendo requisito, é dado errado;
-- a troca de arquivo local por banco de dados está no Backlog desde 2026-08-18, adiada pelo usuário.
+**O texto não é consumido ao ser colocado** — quem se minimiza é a janela, que volta no hover sobre
+o botão flutuante. Daí saem os três estados da janela do desktop.
 
-**Encaminhamento do PM**: o contrato da Fase 1 documenta o histórico como ele é hoje; a
-funcionalidade ganha história de usuário própria quando a Fase 2 for especificada, porque é lá que
-alguém vai olhar para ela. Não vira trabalho agora.
+## ~~Q6 — Qual critério decide que "a integração direta com GPT não basta"?~~ **DISSOLVIDA** · dono: [`D-12`](DECISOES.md)
 
-## ~~Q8 — Como este projeto testa?~~ **RESPONDIDA (2026-08-21)**
-**Verificação manual, declarada como método**, enquanto o projeto for simples. Sem teste
-automatizado por ora: montar suíte custa tempo e chamada de API, e o usuário decidiu que isso
-espera um sistema mais robusto e maior. **Gatilho de revisão**: quando houver mais de um cliente
-consumindo o núcleo, verificação manual deixa de cobrir — é aí que a decisão volta.
+A pergunta não se aplica: a Fase 6 acontece de qualquer forma. O resultado da F5 define a urgência,
+não a existência.
 
-Contexto original:
-Não existe nenhum teste automatizado no repositório. Toda verificação foi manual ou Playwright ad
-hoc, descartado depois. A cadeia `TASK → TEST` do método pressupõe teste que **fica**.
-Por que é decisão sua e não minha: teste que chama a API de verdade **gasta dinheiro a cada
-execução**. As opções são teste com gravação de resposta (não gasta, mas não pega mudança da API),
-teste com chamada real limitado a um áudio de 2 segundos (gasta centavos, pega tudo), ou nenhum
-teste automatizado e verificação manual declarada como método.
+## ~~Q7 — O histórico de transcrições é requisito ou efeito colateral?~~ **RESPONDIDA** · dono: [`D-22`](DECISOES.md)
+
+**É requisito** (2026-08-21), ainda incipiente e não mapeado. **Não vira trabalho agora**: o contrato
+da Fase 1 documenta o histórico como ele é hoje, e a funcionalidade ganha história de usuário própria
+na especificação da Fase 2.
+
+As três consequências abertas — arquivos `.jsonl` não versionados e sem retenção, `consumo.jsonl`
+misturando uso real com teste, e a troca por banco de dados adiada — moram na `D-22`, não aqui.
+
+> Promovida ao livro-razão em 2026-08-23: a resposta morava solta neste arquivo, e "histórico é
+> requisito" é decisão de produto com consequência. Foi a primeira aplicação da `D-21` a um caso que
+> já existia.
+
+## ~~Q8 — Como este projeto testa?~~ **RESPONDIDA** · dono: [`D-09`](DECISOES.md)
+
+**Verificação manual, declarada como método**, enquanto o projeto for simples. Gatilho de revisão:
+quando houver mais de um cliente consumindo o núcleo.
+
+Consequência para a SPEC-001: o CA2 é atendido por medição manual registrada no `PROGRESSO.md` com
+evidência colada — é por isso que a tarefa da Etapa 1 pediu nível `completo`.

@@ -106,3 +106,47 @@ maior risco do projeto.
 
 Encerradas no fim do chat: o teto de custo (US$ 100/mês de alarme) e o bug do modelo de diarização,
 que saiu de escopo junto com o modelo.
+
+---
+
+## Adendo — fechamento da Etapa 2 (2026-08-23, chat de PM seguinte)
+
+- [ARTEFATO] `SPEC-001` **fechada**. Reescrita para parar de manter, em paralelo ao
+  `contrato/NUCLEO.md`, a mesma descrição do núcleo: a spec ficou com o *porquê* e os critérios de
+  aceitação; o comportamento observado mora só no contrato.
+- [DECISÃO] As lacunas viraram **quatro requisitos** (R1 a R4 na spec) e **quatro decisões**: L4 e L7
+  aceitas sem conserto, L6 virou `D-16` (gate de silêncio é obrigação do cliente), L8 refutada por
+  medição (`D-08`).
+- [DECISÃO] Correção de redação no CA4: dizia "L1 a L7" e a spec listava oito. São **L1 a L8**.
+- [PENDÊNCIA] O CA1 — "escrever um cliente novo lendo só o contrato" — está atendido **em forma**,
+  não em uso. Só a POC-1 da Fase 2 prova, escrevendo o cliente. É a mesma régua do critério de
+  conclusão da fase, e continua sendo o maior risco em aberto do projeto.
+- As pendências L1, L2 e L5 registradas no fim do chat anterior estão resolvidas: entraram na Etapa 3
+  junto com a L3, que não estava prevista. Ver `coleta/2026-08-23_metodo-consistencia.md`.
+
+---
+
+## Adendo — Etapa 4 concluída (2026-08-23)
+
+- [ARTEFATO] Harness promovido: `transcritor/teste_tempo_real.py`, versionado, com o cabeçalho
+  reescrito — ele dizia de si mesmo *"rascunho descartável, NÃO faz parte do produto"*, o que
+  passaria a ser falso no instante da promoção. Citado no `transcritor/README.md` com o que prova
+  (timing do corte de segurança, a corrida do fechamento, o efeito do gate de silêncio no volume de
+  bytes) e o que **não** prova (não valida o JavaScript do `index.html`, nem qualidade de fala real —
+  usa tom sintético).
+- [ARTEFATO] Entulho eliminado: `.claude/tmp/` vazio, `_to_delete/` e `historico/snapshots/`
+  apagados, raiz do `historico/` intacta. Conferido pelo PM no artefato real, não no relato.
+- [ARTEFATO] **`M-05` passou no primeiro teste real**: o Executor entregou sem `index.lock`, sem
+  `.fuse_hidden` solto, sem tocar em `backend/` ou `frontend/`, e sem commitar. A regra de deixar
+  pronto para commit funcionou na estreia.
+- [PENDÊNCIA] Divergência de uma unidade: o registro diz 49 snapshots apagados, o git conta 48. Sem
+  efeito no resultado — a pasta não existe mais —, mas anotada, porque número em registro é
+  evidência. É a mesma família de erro que o PM cometeu duas vezes hoje.
+- [ARTEFATO] `PROXIMA_TAREFA.md` da **Etapa 3** gerada: as quatro lacunas do contrato, nível
+  `completo`, com aviso obrigatório ao usuário antes de começar (a tarefa quebra o `.env` e reinicia
+  o backend, e ele usa o app ao vivo).
+- [DIRECIONAMENTO] Restrição de desenho que o PM escreveu na tarefa para não repetir um erro
+  previsível: o `codigo` novo entra **ao lado** do `detail`, que continua string em português. O
+  `index.html` lê `detail` direto — transformá-lo em objeto, que é o caminho natural com
+  `HTTPException(detail=...)`, quebraria a interface. A mudança tem de ser aditiva de verdade, não
+  só na intenção.

@@ -170,3 +170,196 @@ Sim — duas coisas para o PM:
    (ver "Novas demandas" acima) não está em nenhuma lacuna da SPEC-001 — é candidato a entrar no
    escopo da Etapa 3 (correção das lacunas aprovadas) ou a virar item de backlog à parte, a critério
    do PM.
+
+## [2026-08-23 23:50] — Etapa 4: Arrumação — promover o harness, limpar o rascunho e o entulho
+Status: concluído
+
+### Feito
+- Movido `.claude/tmp/teste_tempo_real.py` → `transcritor/teste_tempo_real.py`; reescrevi só a
+  primeira linha do docstring (não é mais "rascunho descartável") e a linha de `Uso:` (caminho
+  relativo, sem `..\.claude\tmp\`) — resto do docstring e todo o código intactos.
+- `transcritor/README.md`: acrescentei a seção "Harness de validação do protocolo (sem navegador)"
+  antes de "Benchmark entre modelos", citando o que o harness prova/não prova.
+- `.claude/tmp/`: apaguei os 6 arquivos restantes (`teste_linha_tempo.wav`, `uvicorn.log`,
+  `ROTEIRO_TESTE_ETAPA1.md`, `_teste_escrita.tmp`, `TAREFA_etapa2_faxina.md`,
+  `TAREFA_interface-enxuta.md`); pasta continua existindo, vazia.
+- Apagado `_to_delete/` inteiro (5 arquivos: 2 `.fuse_hidden*`, 2 `estado_fuse_*`, 1
+  `index.lock.2026-08-16`).
+- Apagado `.claude/estado/historico/snapshots/` inteiro (49 arquivos `PLANO_*.md`); raiz do
+  `historico/` intacta (20 arquivos, conferido por `ls`).
+- Nenhum arquivo de `transcritor/backend/` ou `transcritor/frontend/` tocado.
+
+### Como testei
+- `ls -la .claude/tmp/` → só `.`/`..`, 0 arquivos.
+- `test -d _to_delete && echo EXISTS || echo GONE` → `GONE`.
+- `test -d .claude/estado/historico/snapshots && echo EXISTS || echo GONE` → `GONE`; `ls
+  .claude/estado/historico/` → 20 arquivos, todos os que já existiam antes na raiz.
+- `test -f .git/index.lock` → `GONE`; `find . -iname "*.fuse_hidden*"` (fora de `.git/`) → vazio.
+- `git status --porcelain`: comparado contra o status no início do chat — a única diferença é
+  exatamente o que esta tarefa mexeu (49 `D` em `snapshots/`, 1 `D` em `_to_delete/`, `M
+  transcritor/README.md`, `?? transcritor/teste_tempo_real.py`); todo o resto (`M`/`D`/`??`
+  pré-existentes em `.claude/`, `spec/`, `coleta/` etc.) já estava lá antes de eu começar, não é
+  desta tarefa.
+
+### O que não testei
+- Não rodei `teste_tempo_real.py` (a tarefa não pede e ele bate na API real, custando dinheiro —
+  fora do escopo aqui).
+
+### Critério de pronto
+- [x] `transcritor/teste_tempo_real.py` existe, com o cabeçalho corrigido, e
+      `.claude/tmp/teste_tempo_real.py` não existe mais.
+- [x] `transcritor/README.md` cita o harness, dizendo o que ele prova e o que não prova.
+- [x] `.claude/tmp/` está vazio.
+- [x] `_to_delete/` não existe.
+- [x] `.claude/estado/historico/snapshots/` não existe, e a raiz do `historico/` continua com todos
+      os arquivos que tinha.
+- [x] `git status` mostra só o que esta tarefa mexeu, e não há `.git/index.lock`.
+- [x] Nenhum arquivo de `transcritor/backend/` ou `transcritor/frontend/` foi modificado.
+
+### Novas demandas / riscos
+- Nenhuma nova, fora do já registrado nas tarefas anteriores.
+
+### Ajuste no plano necessário?
+Não.
+
+## [2026-08-24 01:30] — Etapa 3: Corrigir as quatro lacunas do contrato (R1–R4)
+Status: concluído
+
+### Aviso e preparação
+Perguntei ao usuário antes do primeiro comando (a tarefa exigia — quebra o `.env` e reinicia o
+backend várias vezes); autorizado. Encontrei backend antigo na porta 8000 (PID 24112, processo
+`uvicorn` iniciado em 23/08 16:15 — a "armadilha da porta 8000", 6ª ocorrência prevista no
+`PLANO.md`): matei antes de medir qualquer coisa. Fiz backup do `.env` (`.claude/tmp/.env.backup`,
+comparado por `md5sum` = `d382e58d0ccbd7aca885706fd3603bb4` antes de cada restauração) e removi o
+backup ao final (não deixar chave de exemplo/backup solta, `metodo/COMMIT.md`).
+
+### O que mudou em `transcritor/backend/main.py`
+- **R1**: nova classe `ErroNucleo` + `@app.exception_handler`, e helper `_erro_api_para_codigo`
+  (traduz exceção da SDK → `(codigo, detail, status_http)`, reaproveitado nos dois modos). Os seis
+  `raise HTTPException`/`except ... raise HTTPException` de `/transcrever` viraram `raise ErroNucleo`;
+  os três `except` da função de streaming viraram um único `except` com o mesmo helper. `detail`
+  continua string; `codigo` é campo aditivo. `tempo_real_token` **não foi tocado** — fora do
+  contrato (`D-02`), fora do escopo de R1.
+- **R2**: `TIMEOUT_CLIENTE_API = Timeout(120.0, connect=5.0)`, passado ao `OpenAI(...)` só em
+  `/transcrever` (o cliente de `tempo_real_token` não foi tocado, mesma razão do R1).
+  `APITimeoutError` vira `TEMPO_ESGOTADO`/`504`.
+- **R3**: `TAMANHO_MAXIMO_AUDIO_BYTES = 25 * 1024 * 1024`, checado logo depois de ler o `UploadFile`
+  e antes de instanciar o cliente da API. `ARQUIVO_MUITO_GRANDE`/`413`, mensagem com tamanho e teto
+  em português (vírgula decimal).
+- **R4**: `response.headers["X-Nucleo-Contrato"] = "1"` nos dois `return` de sucesso
+  (`/transcrever` via parâmetro `response: Response` injetado, `/consumo` igual); no `StreamingResponse`
+  via `headers=`; nos erros, o `exception_handler` decide pelo `request.url.path` (só
+  `/transcrever` e `/consumo`).
+
+### Os oito códigos, provocados de verdade contra o backend, nos dois modos
+Backend restaurado/reiniciado entre grupos que precisavam de `.env` ou `OPENAI_BASE_URL`
+diferentes (nunca simultâneo com o `.env` quebrado e o app em uso).
+
+**MODELO_INVALIDO** (sem API, `modelo=modelo-que-nao-existe`):
+- Sem streaming: `422` `{"detail":"Modelo inválido: 'modelo-que-nao-existe'. Valores aceitos: gpt-4o-transcribe, gpt-4o-mini-transcribe, gpt-4o-transcribe-diarize","codigo":"MODELO_INVALIDO"}`
+- Com streaming: idêntico byte a byte.
+
+**AUDIO_VAZIO** (arquivo de 0 byte):
+- Sem streaming: `400` `{"detail":"Arquivo de áudio vazio","codigo":"AUDIO_VAZIO"}`
+- Com streaming: idêntico.
+
+**ARQUIVO_MUITO_GRANDE** (arquivo de 27.262.976 bytes = 26,0 MB):
+- Sem streaming: `413` `{"detail":"Arquivo de 26,0 MB; o limite é 25 MB","codigo":"ARQUIVO_MUITO_GRANDE"}`, `real 0m0.130s`.
+- Com streaming: idêntico, `real 0m0.142s`.
+- Abaixo do teto (arquivo de 48.044 bytes, WAV real): `200` `{"transcricao":"..."}` — passou adiante e chamou a API de verdade.
+
+**API_RECUSOU** (arquivo de texto disfarçado de `.wav`):
+- Sem streaming: `502` `{"detail":"A API da OpenAI recusou a requisição (HTTP 400) — verifique o formato do arquivo de áudio","codigo":"API_RECUSOU"}`
+- Com streaming: `200`, evento `{"tipo":"erro","detail":"A API da OpenAI recusou a requisição (HTTP 400) — verifique o formato do arquivo de áudio","codigo":"API_RECUSOU"}`
+
+**SEM_CHAVE** (`.env` com `OPENAI_API_KEY=` vazio, backend reiniciado):
+- Sem streaming: `503` `{"detail":"OPENAI_API_KEY não configurada — preencha transcritor/.env","codigo":"SEM_CHAVE"}`
+- Com streaming: idêntico.
+
+**FALHA_AUTENTICACAO** (`.env` com chave inválida `sk-chave-invalida-para-teste-...`, backend reiniciado):
+- Sem streaming: `502` `{"detail":"Falha de autenticação na API da OpenAI — verifique a chave em transcritor/.env","codigo":"FALHA_AUTENTICACAO"}`
+- Com streaming: `200`, evento equivalente com `"codigo":"FALHA_AUTENTICACAO"`.
+
+**SEM_CONEXAO** (`OPENAI_BASE_URL=http://127.0.0.1:1/v1`, porta sem nada escutando):
+- Sem streaming: `502` `{"detail":"Não foi possível conectar à API da OpenAI — verifique a rede","codigo":"SEM_CONEXAO"}`, `real 8.087s`.
+- Com streaming: `200`, evento equivalente, `real 7.570s`.
+
+**TEMPO_ESGOTADO** (`OPENAI_BASE_URL` apontando para um servidor TCP local descartável que aceita a
+conexão e nunca responde nada — `.claude/tmp/hang_server.py`, removido ao final):
+- Sem streaming: `504` `{"detail":"A API da OpenAI não respondeu a tempo — tente novamente","codigo":"TEMPO_ESGOTADO"}`, **`real 6m1.993s`** — bate com 120s de leitura × 3 tentativas (1 original + `max_retries=2` do SDK, não alterado).
+- Com streaming: **não reproduziu o mesmo código sob a mesma condição** — devolveu `200` com evento `{"tipo":"erro","detail":"Não foi possível conectar à API da OpenAI — verifique a rede","codigo":"SEM_CONEXAO"}`, `real 8m28.924s`. Achado novo, registrado em `NUCLEO.md`: o SDK da OpenAI levantou `APIConnectionError` (não `APITimeoutError`) para a chamada em `stream=True` sob essa falha de rede — o backend não força isso (é o mesmo `except`/helper para os dois modos); é comportamento do SDK, não bug do código escrito nesta tarefa. Não investiguei a causa raiz (fora do escopo).
+
+### Cabeçalho `X-Nucleo-Contrato`
+- `POST /transcrever` sucesso: presente (`x-nucleo-contrato: 1`), confirmado nos dois modos.
+- `POST /transcrever` erro: presente em todos os oito códigos acima, nos dois modos.
+- `GET /consumo`: presente (`x-nucleo-contrato: 1`).
+- `GET /tempo-real/token`: **ausente**, confirmado (`curl -D -` sem o cabeçalho).
+
+### `.env`
+Restaurado duas vezes (depois de `SEM_CHAVE` e depois de `FALHA_AUTENTICACAO`) com `cp` do backup;
+`diff .env .claude/tmp/.env.backup` vazio e `md5sum` idêntico (`d382e58d0ccbd7aca885706fd3603bb4`)
+nas duas vezes. Transcrição normal confirmada funcionando depois da restauração final: `200`
+`{"transcricao":"ئالما"}` (tom sintético, texto sem sentido esperado — não é fala real).
+
+### App web conferido no navegador
+Sem `chromium-cli` nem Playwright pré-instalados no projeto; usei `npx playwright` (Chromium já
+estava em cache local do sistema, sem download) e escrevi um driver descartável
+(`.claude/tmp/verificar_navegador*.js`, removido ao final) para abrir
+`http://127.0.0.1:8000/` de verdade e:
+1. Página carrega sem erro de console/página (screenshot tirado, conferido visualmente).
+2. Fluxo de **upload de arquivo** pelo popup ⋮ → "Enviar arquivo" (mesmo código que a UI usa depois
+   de parar uma gravação): arquivo enviado, balão verde "Transcrição adicionada ao texto abaixo.",
+   texto apareceu na caixa `#transcriptRapido`, zero erros de console.
+3. Com `.env` quebrado (`SEM_CHAVE`), o mesmo fluxo de upload mostrou o balão **vermelho** com o
+   texto exato de `detail` ("Erro ao transcrever: OPENAI_API_KEY não configurada — preencha
+   transcritor/.env") — confirma visualmente que `detail` continua string simples e a interface não
+   quebrou com o campo `codigo` novo ao lado.
+- **Não testei gravação por microfone de verdade** — o Chromium automatizado não tem microfone
+  físico nem um humano falando; o upload de arquivo exercita o mesmo caminho de código
+  (`POST /transcrever`, mesmo tratamento de `detail`/balão) que a gravação usa depois de parar, mas
+  não é o mesmo teste. Recomendo ao usuário um teste manual rápido de gravação com o app já
+  rodando.
+
+### Critério de pronto
+- [x] Backend conferido antes de medir (porta 8000 sem processo antigo) — PID 24112 antigo morto.
+- [x] Os oito códigos provocados de verdade contra o backend rodando, cada um nos dois modos, com a
+      resposta colada acima.
+- [x] `detail` continua string em português em todos eles, e o `index.html` não foi tocado
+      (`git diff --stat -- transcritor/frontend/index.html` vazio).
+- [x] Teto de tamanho medido — arquivo acima recusado localmente (26 MB, ~0,13s, sem chamar a API) e
+      um abaixo passando adiante; limite da OpenAI confirmado em
+      <https://developers.openai.com/api/docs/guides/speech-to-text> ("Files can be up to 25 MB."),
+      consultado em 2026-08-24.
+- [x] `X-Nucleo-Contrato: 1` presente em sucesso e erro, nos dois modos, nas duas rotas do contrato,
+      e ausente nas rotas de tempo real.
+- [x] Prazo de espera declarado no cliente (`Timeout(120.0, connect=5.0)`); tempo real até a falha
+      medido nos dois modos (não só declarado como "não provocado") — com a divergência de modo
+      registrada como achado, não escondida.
+- [x] `.env` restaurado e conferido: `diff` byte a byte vazio, `md5sum` idêntico, mais uma
+      transcrição normal funcionando.
+- [x] App web conferido no navegador (upload real, sucesso e erro visíveis) — gravação por
+      microfone real não testada, motivo registrado acima.
+- [x] `spec/contrato/NUCLEO.md` atualizado (tabela de erros com `codigo`, versionamento, L1/L2/L3/L5
+      de "confirmada" para "corrigida" com data, achado da divergência de streaming registrado).
+- [x] Repositório pronto para commit: sem `.git/index.lock`, sem `.fuse_hidden*` soltos,
+      `.claude/tmp/` só com `uvicorn.log` (log do processo que deixei rodando, não versionado),
+      `git status` mostrando só `transcritor/backend/main.py`, `spec/contrato/NUCLEO.md` e este
+      `PROGRESSO.md` como diferença desta tarefa (o resto já estava modificado antes de eu começar).
+      **Não commitei.**
+
+### Novas demandas / riscos
+- **Divergência de modo em `TEMPO_ESGOTADO`** (ver acima): sob a mesma falha de rede, o modo
+  streaming demora mais (~8m29s vs. ~6m02s) e termina em `SEM_CONEXAO`, não em `TEMPO_ESGOTADO`. O
+  código está correto (mesmo helper de mapeamento nos dois modos) — é o SDK da OpenAI que se
+  comporta diferente para chamadas `stream=True` sob essa condição específica. Não investiguei a
+  causa raiz; se o PM achar que vale a pena entender por que, é trabalho novo.
+- **`max_retries=2` do SDK não foi alterado** — só o `timeout` foi declarado (R2 pediu isso, não
+  mudar retries). Consequência prática, medida: o tempo real até `TEMPO_ESGOTADO`/`SEM_CONEXAO`
+  ainda pode chegar a minutos, mesmo com 120s declarados, porque o SDK tenta de novo sozinho. Deixei
+  isso registrado no `NUCLEO.md` para quem for revisar esse número no futuro.
+- Deixei o backend **rodando** na porta 8000 (com `.env` restaurado, código novo) ao final, para o
+  app continuar disponível para o usuário — não parei o processo.
+
+### Ajuste no plano necessário?
+Não — as quatro lacunas (R1-R4) foram corrigidas e medidas conforme o critério. Etapa 3 era a
+última etapa de código da Fase 1; o PM decide o que vem a seguir.

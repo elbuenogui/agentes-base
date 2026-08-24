@@ -16,19 +16,12 @@ O `transcritor/` deste repositório é a **Fase 1** já implementada, não um pr
 
 ## Onde cada informação mora
 
-| Arquivo | Guarda |
-|---|---|
-| `VISAO.md` | a visão e o mapa das fases — **este arquivo** |
-| `DECISOES.md` | o livro-razão: cada decisão com a razão e a condição de reabertura |
-| `QUESTOES_ABERTAS.md` | decisões que só o usuário toma |
-| `LACUNAS.md` | trabalho que ainda não foi feito |
-| `MAPA.md` | índice único e rastreabilidade `US → SPEC → TASK → TEST` |
-| `specs/`, `historias/`, `pocs/`, `contrato/`, `decisoes/` | os artefatos com ID |
-| `_rascunhos/` | material sem ID, incluindo `COMPORTAMENTOS_PARQUEADOS.md` |
+**O mapa único está em [`.claude/CEREBRO.md`](../.claude/CEREBRO.md).** Este arquivo não repete o
+mapa — até 2026-08-23 quatro arquivos diferentes mapeavam a estrutura, e quatro mapas parciais é o
+mesmo que nenhum.
 
-Estes cinco arquivos da raiz são o que o comando **diagnóstico geral** lê para montar o painel
-(ver `D-14` e `.claude/skills/diagnostico-geral/`). Manter o formato deles é o que mantém o painel
-barato de gerar.
+Do que este arquivo é dono: **a visão do produto e o mapa das fases**, abaixo. As decisões de produto
+moram em `DECISOES.md`; as de método, no cérebro.
 
 ## Como este plano se organiza
 
@@ -46,7 +39,9 @@ corrigido por esta decisão.
 `estado: em-andamento`
 Fechar o contrato do núcleo, para que os três clientes consumam a mesma capacidade sem
 reimplementá-la. **Pronto quando alguém escrever um cliente novo lendo só o contrato**, sem abrir o
-`index.html`. Seis etapas no `PLANO.md`; a primeira está na fila do Executor. Não depende de nada.
+`index.html`. Etapas no `PLANO.md`: a 1 (contrato medido) e a 2 (fechar a SPEC-001) concluídas em
+2026-08-23, a 5 (idioma) cancelada por medição (`D-08`), e a 3 (corrigir as quatro lacunas aprovadas)
+é a próxima do Executor. Não depende de nada.
 
 ### F2 — Desktop, ditado universal
 `estado: proxima`

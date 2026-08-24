@@ -9,11 +9,18 @@ from pathlib import Path
 from uuid import uuid4
 
 from dotenv import load_dotenv
-from fastapi import FastAPI, File, Form, HTTPException, UploadFile
+from fastapi import FastAPI, File, Form, HTTPException, Request, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import Response, StreamingResponse
+from fastapi.responses import JSONResponse, Response, StreamingResponse
 from fastapi.staticfiles import StaticFiles
-from openai import APIConnectionError, APIStatusError, AuthenticationError, OpenAI
+from openai import (
+    APIConnectionError,
+    APIStatusError,
+    APITimeoutError,
+    AuthenticationError,
+    OpenAI,
+    Timeout,
+)
 from pydantic import BaseModel, field_validator
 
 # A chave vem exclusivamente de transcritor/.env (nunca hardcoded, nunca logada).
@@ -50,6 +57,22 @@ PRECO_POR_MINUTO_USD = {
 # token efêmero — não é preciso o backend fazer relay de áudio.
 MODELO_TEMPO_REAL = "gpt-live-transcribe"
 
+# Prazo de espera do cliente da API (R2 / lacuna L3 da SPEC-001): sem isso, o SDK herda o default
+# de 5s para conectar e 600s (10min) depois de conectado, mais até 2 tentativas automáticas — um
+# app de ditado não pode ficar preso tanto tempo. 120s de leitura é folgado para um áudio de poucos
+# minutos, bem abaixo do teto antigo.
+TIMEOUT_CLIENTE_API = Timeout(120.0, connect=5.0)
+
+# Teto de tamanho de upload, verificado antes de mandar para a API (R3 / lacuna L2 da SPEC-001).
+# 25 MB é o limite documentado pela OpenAI para o campo `file` desta rota: "Files can be up to
+# 25 MB." — https://developers.openai.com/api/docs/guides/speech-to-text, consultado em 2026-08-24.
+TAMANHO_MAXIMO_AUDIO_BYTES = 25 * 1024 * 1024
+
+# Rotas cobertas pelo contrato do núcleo (R4) — só essas recebem o cabeçalho de versão. O modo ao
+# vivo (`/tempo-real/*`) está fora do contrato por decisão de 2026-08-21 (ver spec/contrato/NUCLEO.md).
+ROTAS_DO_CONTRATO = {"/transcrever", "/consumo"}
+VERSAO_CONTRATO_NUCLEO = "1"
+
 # Registro de consumo: um JSON por linha, arquivo local (não versionado — ver .gitignore).
 CONSUMO_PATH = Path(__file__).resolve().parent.parent / "consumo.jsonl"
 
@@ -70,6 +93,54 @@ app.add_middleware(
     allow_methods=["GET", "POST"],
     allow_headers=["*"],
 )
+
+
+class ErroNucleo(Exception):
+    """Erro do núcleo com código legível por máquina (R1 / lacuna L1 da SPEC-001). `detail`
+    continua sendo uma string em português no mesmo lugar de sempre — o `index.html` lê esse campo
+    direto e quebra se ele virar objeto; `codigo` é um campo aditivo ao lado dele."""
+
+    def __init__(self, status_code: int, codigo: str, detail: str):
+        self.status_code = status_code
+        self.codigo = codigo
+        self.detail = detail
+
+
+@app.exception_handler(ErroNucleo)
+async def _manipulador_erro_nucleo(request: Request, exc: ErroNucleo) -> JSONResponse:
+    headers = (
+        {"X-Nucleo-Contrato": VERSAO_CONTRATO_NUCLEO}
+        if request.url.path in ROTAS_DO_CONTRATO
+        else {}
+    )
+    return JSONResponse(
+        status_code=exc.status_code,
+        content={"detail": exc.detail, "codigo": exc.codigo},
+        headers=headers,
+    )
+
+
+def _erro_api_para_codigo(erro: Exception) -> tuple[str, str, int]:
+    """Traduz uma exceção da SDK da OpenAI em (codigo, detail, status_http) — usado tanto no modo
+    sem streaming (vira ErroNucleo) quanto no modo streaming (vira evento "erro"). A ordem dos
+    `isinstance` importa: APITimeoutError é subclasse de APIConnectionError, e AuthenticationError
+    é subclasse de APIStatusError — a checagem mais específica precisa vir primeiro."""
+    if isinstance(erro, APITimeoutError):
+        return "TEMPO_ESGOTADO", "A API da OpenAI não respondeu a tempo — tente novamente", 504
+    if isinstance(erro, AuthenticationError):
+        return (
+            "FALHA_AUTENTICACAO",
+            "Falha de autenticação na API da OpenAI — verifique a chave em transcritor/.env",
+            502,
+        )
+    if isinstance(erro, APIConnectionError):
+        return "SEM_CONEXAO", "Não foi possível conectar à API da OpenAI — verifique a rede", 502
+    return (
+        "API_RECUSOU",
+        f"A API da OpenAI recusou a requisição (HTTP {erro.status_code}) — "
+        "verifique o formato do arquivo de áudio",
+        502,
+    )
 
 
 def _gerar_favicon_ico() -> bytes:
@@ -200,49 +271,50 @@ def _gerar_eventos_transcricao_stream(cliente, modelo, nome_arquivo, conteudo, p
                         f"(modelo {modelo}) — consumo não registrado para esta requisição"
                     )
                 yield json.dumps({"tipo": "final", "texto": evento.text}, ensure_ascii=False) + "\n"
-    except AuthenticationError:
-        yield json.dumps({
-            "tipo": "erro",
-            "detail": "Falha de autenticação na API da OpenAI — verifique a chave em transcritor/.env",
-        }, ensure_ascii=False) + "\n"
-    except APIConnectionError:
-        yield json.dumps({
-            "tipo": "erro",
-            "detail": "Não foi possível conectar à API da OpenAI — verifique a rede",
-        }, ensure_ascii=False) + "\n"
-    except APIStatusError as erro:
-        yield json.dumps({
-            "tipo": "erro",
-            "detail": f"A API da OpenAI recusou a requisição (HTTP {erro.status_code}) — "
-            "verifique o formato do arquivo de áudio",
-        }, ensure_ascii=False) + "\n"
+    except (APITimeoutError, AuthenticationError, APIConnectionError, APIStatusError) as erro:
+        codigo, detail, _status_http = _erro_api_para_codigo(erro)
+        yield json.dumps(
+            {"tipo": "erro", "detail": detail, "codigo": codigo}, ensure_ascii=False
+        ) + "\n"
 
 
 @app.post("/transcrever")
 async def transcrever(
+    response: Response,
     audio: UploadFile = File(...),
     modelo: str = Form(MODELO_PADRAO),
     stream: bool = Form(False),
 ):
     if modelo not in MODELOS_PERMITIDOS:
-        raise HTTPException(
+        raise ErroNucleo(
             status_code=422,
+            codigo="MODELO_INVALIDO",
             detail=f"Modelo inválido: '{modelo}'. Valores aceitos: "
             + ", ".join(MODELOS_PERMITIDOS),
         )
 
     chave = os.getenv("OPENAI_API_KEY")
     if not chave:
-        raise HTTPException(
+        raise ErroNucleo(
             status_code=503,
+            codigo="SEM_CHAVE",
             detail="OPENAI_API_KEY não configurada — preencha transcritor/.env",
         )
 
     conteudo = await audio.read()
     if not conteudo:
-        raise HTTPException(status_code=400, detail="Arquivo de áudio vazio")
+        raise ErroNucleo(status_code=400, codigo="AUDIO_VAZIO", detail="Arquivo de áudio vazio")
 
-    cliente = OpenAI(api_key=chave)
+    if len(conteudo) > TAMANHO_MAXIMO_AUDIO_BYTES:
+        tamanho_mb = f"{len(conteudo) / (1024 * 1024):.1f}".replace(".", ",")
+        limite_mb = TAMANHO_MAXIMO_AUDIO_BYTES // (1024 * 1024)
+        raise ErroNucleo(
+            status_code=413,
+            codigo="ARQUIVO_MUITO_GRANDE",
+            detail=f"Arquivo de {tamanho_mb} MB; o limite é {limite_mb} MB",
+        )
+
+    cliente = OpenAI(api_key=chave, timeout=TIMEOUT_CLIENTE_API)
     parametros_extra = {}
     if modelo in MODELOS_QUE_EXIGEM_CHUNKING:
         parametros_extra["chunking_strategy"] = "auto"
@@ -253,6 +325,7 @@ async def transcrever(
                 cliente, modelo, audio.filename or "audio", conteudo, parametros_extra
             ),
             media_type="application/x-ndjson",
+            headers={"X-Nucleo-Contrato": VERSAO_CONTRATO_NUCLEO},
         )
 
     try:
@@ -261,27 +334,15 @@ async def transcrever(
             file=(audio.filename or "audio", conteudo),
             **parametros_extra,
         )
-    except AuthenticationError:
-        raise HTTPException(
-            status_code=502,
-            detail="Falha de autenticação na API da OpenAI — verifique a chave em transcritor/.env",
-        )
-    except APIConnectionError:
-        raise HTTPException(
-            status_code=502,
-            detail="Não foi possível conectar à API da OpenAI — verifique a rede",
-        )
-    except APIStatusError as erro:
-        raise HTTPException(
-            status_code=502,
-            detail=f"A API da OpenAI recusou a requisição (HTTP {erro.status_code}) — "
-            "verifique o formato do arquivo de áudio",
-        )
+    except (APITimeoutError, AuthenticationError, APIConnectionError, APIStatusError) as erro:
+        codigo, detail, status_http = _erro_api_para_codigo(erro)
+        raise ErroNucleo(status_code=status_http, codigo=codigo, detail=detail)
 
     id_consumo = _registrar_consumo(modelo, resultado.usage)
     if id_consumo is not None:
         _registrar_transcricao(id_consumo, modelo, resultado.text)
 
+    response.headers["X-Nucleo-Contrato"] = VERSAO_CONTRATO_NUCLEO
     return {"transcricao": resultado.text}
 
 
@@ -378,7 +439,8 @@ async def turno_concluido_tempo_real(usage: UsageTempoReal):
 
 
 @app.get("/consumo")
-async def consumo():
+async def consumo(response: Response):
+    response.headers["X-Nucleo-Contrato"] = VERSAO_CONTRATO_NUCLEO
     # Texto por id_consumo, lido de transcricoes.jsonl, para casar com cada linha de
     # consumo.jsonl abaixo. Registro antigo (sem `id`) ou sem transcrição correspondente fica
     # sem entrada aqui — o requisição correspondente entra na lista com texto None.

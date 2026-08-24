@@ -622,6 +622,20 @@ modelo.
 - `AudioContext`/`ScriptProcessorNode` (não `AudioWorklet`) — escolha deliberada para manter o
   frontend em um único arquivo, sem módulo externo; funciona nos navegadores testados.
 
+### Harness de validação do protocolo (sem navegador)
+
+`transcritor/teste_tempo_real.py` reimplementa em Python, fiel ao protocolo, a lógica de
+fechamento/corte de segurança/gate de silêncio do modo ao vivo, e roda os quatro cenários
+(`silencio`, `fala_com_pausas`, `corte_seguranca`, `corrida_dois_commits`) contra a API real da
+OpenAI. Prova: o timing do corte de segurança, a corrida do fechamento (commit periódico e commit
+final em voo ao mesmo tempo) e o efeito do gate de silêncio no volume de bytes enviado. **Não**
+prova: não valida o JavaScript do `frontend/index.html` em si (é outra linguagem, só a lógica
+espelhada em Python) nem qualidade de transcrição de fala real — usa tom sintético, não voz.
+
+```powershell
+.venv\Scripts\python.exe teste_tempo_real.py <cenario>
+```
+
 ## Benchmark entre modelos
 
 `transcritor/benchmark.py` processa o mesmo arquivo de áudio pelos três modelos suportados

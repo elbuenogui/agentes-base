@@ -6,12 +6,12 @@
 
 ## Situar-se (ler nesta ordem — só o relevante, não tudo)
 
-1. `CLAUDE.md` — modo PM/EXEC (se este projeto usa) e nota sobre coleta contínua, se houver.
-2. `.claude/PM.md` (se entrar como PM) e `.claude/estado/PLANO.md` — o que já foi decidido e em
-   que etapa estamos.
-3. Os arquivos de código/documentação relevantes desta thread.
-4. A coleta desta thread em `coleta/` (o resumo consolidado mais recente), se o projeto mantiver
-   essa camada.
+1. `CLAUDE.md` — o papel (PM/EXEC, se este projeto usa) e as regras que valem em qualquer chat.
+2. `.claude/CEREBRO.md` — o mapa de onde tudo mora, se você não souber onde procurar.
+3. `.claude/PM.md` (se entrar como PM) ou `.claude/EXECUTOR.md`, mais as regras de `.claude/metodo/`.
+4. `.claude/estado/PLANO.md` — em que etapa estamos.
+5. Os arquivos de produto/documentação relevantes desta thread.
+6. A coleta desta thread em `coleta/`, se o projeto mantiver essa camada.
 
 > <Se houver um destino final separado para a documentação do projeto (relatório, projeto de
 > escrita), diga aqui onde ele vive e lembre que "aplicar" só roda lá, nunca neste repositório.>

@@ -1,68 +1,85 @@
+# PLANO — Fase 1: Núcleo de transcrição
+
+> Plano da **fase corrente** do método Spec-Driven Development. A visão e o mapa das 9 fases estão
+> em `spec/VISAO.md`; a especificação desta fase, em `spec/specs/SPEC-001_contrato-do-nucleo.md`;
+> a rastreabilidade, em `spec/MAPA.md`. Virada de plano em 2026-08-21 (plano de faxina encerrado e
+> arquivado em `historico/PLANO_2026-08-21c_faxina-encerrado.md`).
+
 ## Objetivo
-Fechar a frente de usabilidade da interface de gravação e deixar o repositório arrumado e
-versionado antes de abrir a próxima frente de produto. Nenhuma mudança de comportamento do app
-neste plano.
+
+Fechar o **contrato do núcleo de transcrição**, para que desktop, Android e Wear consumam a mesma
+capacidade sem reimplementá-la, cada um na sua linguagem.
+
+## Critério de conclusão da fase
+
+Alguém consegue escrever um cliente novo lendo só o contrato, **sem abrir o `index.html` nem o
+`main.py`**.
 
 ## Escopo
-- Dentro: arquivamento da virada (PLANO e PROGRESSO), enxugamento de
-  `.claude/estado/historico/` e das retomadas de frentes encerradas, commit de todo o trabalho de
-  2026-08-20 e 2026-08-21, atualização da retomada viva e abertura da coleta da frente nova.
-- Fora (explícito): limpeza de `.claude/tmp/` e de `_to_delete/` (decisão do usuário em
-  2026-08-21 de deixar fora deste plano — foi para o Backlog); separação de uso real e de teste no
-  `consumo.jsonl` (Backlog); qualquer mudança em `transcritor/frontend/index.html` ou
-  `transcritor/backend/main.py`; a escolha da próxima frente de produto.
+
+- **Dentro**: levantar por medição o comportamento real das rotas do núcleo; escrever o documento
+  do contrato em `spec/contrato/NUCLEO.md`; fechar a SPEC-001; corrigir as lacunas que forem
+  confirmadas e aprovadas; preservar o harness do modo ao vivo.
+- **Fora (explícito)**: qualquer mudança em `transcritor/frontend/index.html`; escolha da linguagem
+  do app desktop (depende da POC-1, que é da Fase 2); servidor hospedado (adiado com gatilho
+  declarado — ver `spec/VISAO.md`); qualquer trabalho no modo ao vivo além de preservar o harness;
+  as PoCs 1 a 5, todas de fases posteriores.
 
 ## Etapas
-1. [Arquivamento da virada] — critério de pronto: as 15 entradas do `PROGRESSO.md` movidas palavra
-   por palavra para `historico/PROGRESSO_usabilidade-gravacao_2026-08-20_a_2026-08-21.md`, com
-   cabeçalho dizendo de qual plano e de que período é; `PROGRESSO.md` vivo só com o cabeçalho,
-   apontando para o arquivo; contagem de linhas fechando (1.398 movidas + 7 no vivo, contra as
-   1.404 originais); plano encerrado salvo em
-   `historico/PLANO_2026-08-21b_usabilidade-encerrado.md`.
-   — Status: **concluída (2026-08-21)**, feita pelo PM neste chat, pela exceção datada de
-   2026-08-19 (arquivamento do PROGRESSO na virada). Contagem conferida: arquivo arquivado com
-   1.404 linhas (6 de cabeçalho novo + 1.398 movidas), vivo com 7, 15 entradas `## [` no arquivado.
 
-2. [Enxugar o histórico do método] — critério de pronto: os snapshots de edição de plano movidos
-   para `.claude/estado/historico/snapshots/`, deixando na raiz de `historico/` só os marcos
-   citados por nome em outros arquivos (as viradas de plano e os arquivos `PROGRESSO_*.md`); os
-   dois `_RETOMADA_*.md` de frentes encerradas (`_RETOMADA_robustez-consumo.md` e
-   `_RETOMADA_transcricao-tempo-real.md`) movidos da raiz do repositório para
-   `.claude/estado/historico/`; **nenhum arquivo apagado**, só movido; e um `grep` no repositório
-   inteiro confirmando que nenhuma referência por caminho quebrou. Alvo: a raiz de `historico/`
-   sai de 60 arquivos para cerca de 7.
-   — Status: **concluída (2026-08-21)**. Conferido no artefato real pelo PM: raiz de `historico/`
-   com 17 arquivos (7 marcos + 8 snapshots que o `grep` achou citados por nome na
-   `coleta/2026-08-16_mvp-transcricao.md` + as 2 retomadas que chegaram), `snapshots/` com 48,
-   total 65 = os 63 que havia mais as 2 retomadas — **nada apagado**; raiz do repositório com só
-   `_RETOMADA_TEMPLATE.md` e `_RETOMADA_usabilidade-gravacao.md`. O alvo de "cerca de 7 na raiz"
-   era estimativa minha e estava errado: o Executor seguiu a regra do grep, que é o que valia, e
-   registrou a diferença em vez de forçar o número. 265 referências checadas, zero quebradas.
+1. **[Levantamento e documento do contrato]** — medir contra o backend rodando o comportamento de
+   cada operação e de cada erro previsto na SPEC-001, e escrever `spec/contrato/NUCLEO.md` com o
+   que foi **observado**, não com o que foi suposto. Confirmar, refutar ou reclassificar as lacunas
+   L1 a L7. Sem mudar código de produto.
+   — Critério de pronto: os CA1, CA2 e CA4 da SPEC-001 atendidos; cada linha da tabela de erros com
+   evidência de execução real; divergências entre a spec e a máquina listadas e devolvidas ao PM.
+   — Status: **concluída (2026-08-23)**. Conferida pelo PM no artefato real. O caminho feliz e as
+   seis situações de erro foram provocados de verdade, cada uma nos dois modos; `spec/contrato/
+   NUCLEO.md` escrito com exemplos capturados; L1 a L8 fechadas com evidência; nenhum arquivo de
+   produto tocado. Três achados que a SPEC-001 não previa: alucinação em silêncio (virou `D-16`),
+   custo zerado do modelo de diarização (bug, ver Etapa 3) e ausência de eventos `delta` no
+   streaming desse mesmo modelo.
 
-3. [Commit do trabalho de 2026-08-20 e 2026-08-21] — critério de pronto: `git status --short`
-   vazio fora do que o `.gitignore` cobre; o trabalho em commits separados por natureza (código do
-   produto, documentação do produto, estado do método e histórico), com mensagens em português
-   dizendo o que mudou e por quê; `git log --oneline` mostrando os novos commits; **sem push**.
-   > **Depende do usuário**: `.git/index.lock` existe e o bridge remoto não consegue apagar. Tem
-   > de ser apagado no Windows antes desta etapa, ou o commit falha.
-   — Status: **concluída (2026-08-21)**. O `.git/index.lock` acabou sendo apagado pelo próprio
-   Executor (ele roda local e consegue; a trava só existe pelo bridge remoto). Conferido no
-   artefato real pelo PM: 4 commits novos (`5e901ad` código do produto, `d0dc344` documentação do
-   produto, `7c2e5ab` estado do método e histórico com 57 arquivos, `c3c2cdb` coleta), 63 arquivos
-   ao todo; `git ls-files` filtrado por `.env`, os dois `.jsonl`, `.venv/`, `__pycache__/` e
-   `.claude/tmp/` devolve **zero** — nada sensível ou local entrou. Sem push. As mensagens estão
-   sem acentuação por escolha declarada do Executor (risco de mojibake permanente no histórico
-   neste ambiente Windows), com o conteúdo em português.
+2. **[Fechar a SPEC-001]** — tarefa do PM, não do Executor. Incorporar o levantamento, decidir quais
+   lacunas viram requisito, e responder as questões Q1 (idiomas) e Q7 (histórico é requisito?) com
+   o usuário. Depende da Etapa 1.
 
-4. [Retomada e coleta da frente nova] — critério de pronto: `_RETOMADA_usabilidade-gravacao.md`
-   refletindo o estado real (frente encerrada, o que ficou em aberto, ponteiros certos) e
-   `coleta/2026-08-21_fechamento-usabilidade.md` criado com as entregas de 2026-08-21, as decisões
-   deste chat e o resumo consolidado nas quatro categorias.
-   — Status: **parcial (2026-08-21)** — feita antecipadamente, a pedido do usuário, para o chat
-   poder fechar antes das Etapas 2 e 3. A retomada e a coleta já refletem o estado real e o rumo
-   (modo ao vivo fora de foco; frente nova de funcionalidade, a ser escolhida pelo usuário no
-   próximo chat). **Falta o repasse final** depois que as Etapas 2 e 3 rodarem: confirmar na
-   retomada que os snapshots e as retomadas encerradas mudaram de lugar e que o commit saiu.
+3. **[Corrigir as lacunas aprovadas]** — escopo definido só depois da Etapa 2. Candidatas, agora
+   com evidência:
+   - **L1 — códigos de erro legíveis por máquina.** É o que permite três clientes reagirem
+     diferente a "sem chave" e a "sem rede" sem comparar strings em português.
+   - **L2 — erro enganoso em arquivo grande.** Um WAV de 64MB devolve "verifique o formato do
+     arquivo de áudio", que aponta para a causa errada.
+   - **L5 — versionamento do contrato.** Sem versão, um cliente antigo quebra em silêncio.
+
+   Fora desta etapa por decisão de 2026-08-23 (`D-17`): tudo que depende de
+   `gpt-4o-transcribe-diarize` — o custo zerado e a ausência de `delta` em streaming. O modelo está
+   desativado da interface desde 2026-08-18; o bug é inalcançável no uso normal.
+
+4. **[Preservar o harness do modo ao vivo]** — promover `.claude/tmp/teste_tempo_real.py` a arquivo
+   versionado em `transcritor/`, com um parágrafo dizendo o que ele prova. Decidida pelo PM sem
+   consulta ao usuário: é arrumação, e a pasta de origem existe para ser apagada. Pode rodar em
+   qualquer ponto da fase.
+
+5. **[Idioma: parâmetro no contrato, não constante no código]** — decisão do usuário em
+   2026-08-21, corrigindo o encaminhamento anterior: **não fixar português no código**. O contrato
+   ganha um parâmetro `idioma` **opcional**; ausente significa detecção automática pela API. O
+   controle de interface (interruptor "fixar idioma" + lista com português, inglês, espanhol,
+   italiano e chinês, começando ligado em português) é **Fase 2**, e está parqueado em
+   `spec/_rascunhos/COMPORTAMENTOS_PARQUEADOS.md`.
+   — **Condicionada**: só executa se a medição da Etapa 1 mostrar que fixar o idioma é melhor do
+   que deixar a API detectar. Se a medição não mostrar diferença, esta etapa cai e o contrato
+   apenas registra que o núcleo não assume idioma.
+   — Critério de pronto: o contrato descreve o parâmetro `idioma` com seu comportamento quando
+   ausente, e a medição do antes e depois está no `PROGRESSO.md`.
+
+   </details>
+
+6. **[Atualizar o `CLAUDE.md`]** — hoje ele descreve o repositório como "MVP de um motor mínimo de
+   transcrição" e não menciona `spec/`, o método Spec-Driven Development nem a Fase 1. É o primeiro
+   arquivo que todo chat novo lê: desatualizado, desalinha o Executor antes de qualquer tarefa.
+   — Critério de pronto: quem abre um chat novo entende, só pelo `CLAUDE.md`, que o transcritor é a
+   Fase 1 de um produto maior, onde mora a especificação e qual é a fase corrente.
 
 ## Backlog (não aprovado)
 - **Arrastar e soltar áudio na área central** para enviar sem passar pelo menu — pedido do
@@ -119,14 +136,20 @@ neste plano.
   fora do plano por decisão do usuário. `.claude/tmp/` guarda 584 KB de rascunho
   (`teste_linha_tempo.wav` com 562 KB, `uvicorn.log`, `ROTEIRO_TESTE_ETAPA1.md`,
   `_teste_escrita.tmp`); `_to_delete/` guarda só o fóssil `index.lock.2026-08-16`, de 0 byte. Nada
-  disso é versionado — é ruído visual, não risco. **Atenção**: desde 2026-08-21 a pasta guarda
-  também `TAREFA_etapa2_faxina.md` e `TAREFA_interface-enxuta.md`, tarefas escritas esperando a
-  vez — não limpar antes de promovê-las para `PROXIMA_TAREFA.md`;
+  disso é versionado — é ruído visual, não risco. Desde 2026-08-21 a pasta guarda também cópias das
+  tarefas `TAREFA_etapa2_faxina.md` e `TAREFA_interface-enxuta.md`, ambas já executadas ou
+  promovidas — podem ir junto na limpeza;
 - **Promover `.claude/tmp/teste_tempo_real.py` a ferramenta versionada em `transcritor/`** — é o
   harness em Python que validou o protocolo da API ao vivo sem navegador (2026-08-20), o único
   arquivo com valor dentro de uma pasta descartável: some junto com o resto na primeira limpeza;
 
 ## Nota de processo (lembrete para o PM)
+- **Tarefa que quebra o backend ou o `.env` precisa avisar o usuário ANTES de começar**, não só
+  antes da parte destrutiva — em 2026-08-23 o Executor descobriu, por log, que o usuário estava
+  usando o app ao vivo no meio da medição. Não deu problema (ele autorizou), mas o aviso chegou
+  tarde. Recomendação do próprio Executor, acatada.
+- **Armadilha da porta 8000: 5ª ocorrência** (backend antigo servindo código obsoleto, PID 34028 de
+  22/08). Continua valendo o lembrete em toda tarefa que meça o backend.
 - Ao gerar `PROXIMA_TAREFA.md` com passo de documentação, incluir `transcritor/README.md`
   explicitamente em "Arquivos envolvidos".
 - Ao gerar tarefa que mexa em visualização/gráfico (Etapa 3), lembrar o Executor de consultar a
@@ -150,3 +173,10 @@ neste plano.
   confirmado em 2026-08-21); só peça ao usuário se o Executor não conseguir.
 - Arquivar o `PROGRESSO.md` **na hora** em que o plano fecha, não no chat seguinte: na virada de
   2026-08-21 o arquivo já estava em 101 KB e 1.404 linhas, acima do alarme de 60 KB.
+
+- **Consolidar as histórias US-D02 + US-A02 + US-D03** numa capacidade só (*entrega do texto no
+  destino*, com escada campo em foco → clipboard → popup) — proposta da revisão do pré-projeto,
+  entra quando a Fase 2 for especificada, não agora.
+- **Régua do Win+H** — a proposta do PM de que o ditado precisa ser pelo menos tão rápido e preciso
+  quanto a digitação por voz nativa do Windows está aceita tacitamente, **falta aceite explícito**
+  do usuário para virar critério de aceitação (Q2).

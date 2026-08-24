@@ -3,7 +3,8 @@
 > Plano da **fase corrente** do método Spec-Driven Development. A visão e o mapa das 9 fases estão
 > em `spec/VISAO.md`; a especificação desta fase, em `spec/specs/SPEC-001_contrato-do-nucleo.md`;
 > a rastreabilidade, em `spec/MAPA.md`. Virada de plano em 2026-08-21 (plano de faxina encerrado e
-> arquivado em `historico/PLANO_2026-08-21c_faxina-encerrado.md`).
+> arquivado em `historico/PLANO_2026-08-21c_faxina-encerrado.md`). Etapas 1 e 2 concluídas em
+> 2026-08-23; versão anterior deste arquivo em `historico/PLANO_2026-08-23_pre-etapa2.md`.
 
 ## Objetivo
 
@@ -25,125 +26,118 @@ Alguém consegue escrever um cliente novo lendo só o contrato, **sem abrir o `i
   declarado — ver `spec/VISAO.md`); qualquer trabalho no modo ao vivo além de preservar o harness;
   as PoCs 1 a 5, todas de fases posteriores.
 
+## Exceção registrada (2026-08-23)
+
+Por decisão explícita e datada do usuário nesta data, o PM ficou autorizado, **uma vez**, a editar
+`.claude/PM.md` e `.claude/skills/diagnostico-geral/SKILL.md` para aplicar as correções de método da
+`D-21`. Fora dessa aplicação, a regra de sempre vale: o PM não edita arquivo de método por conta
+própria. Registrado também na `coleta/2026-08-23_metodo-consistencia.md`.
+
 ## Etapas
 
 1. **[Levantamento e documento do contrato]** — medir contra o backend rodando o comportamento de
    cada operação e de cada erro previsto na SPEC-001, e escrever `spec/contrato/NUCLEO.md` com o
-   que foi **observado**, não com o que foi suposto. Confirmar, refutar ou reclassificar as lacunas
-   L1 a L7. Sem mudar código de produto.
-   — Critério de pronto: os CA1, CA2 e CA4 da SPEC-001 atendidos; cada linha da tabela de erros com
-   evidência de execução real; divergências entre a spec e a máquina listadas e devolvidas ao PM.
+   que foi **observado**, não com o que foi suposto.
    — Status: **concluída (2026-08-23)**. Conferida pelo PM no artefato real. O caminho feliz e as
    seis situações de erro foram provocados de verdade, cada uma nos dois modos; `spec/contrato/
    NUCLEO.md` escrito com exemplos capturados; L1 a L8 fechadas com evidência; nenhum arquivo de
    produto tocado. Três achados que a SPEC-001 não previa: alucinação em silêncio (virou `D-16`),
-   custo zerado do modelo de diarização (bug, ver Etapa 3) e ausência de eventos `delta` no
-   streaming desse mesmo modelo.
+   custo zerado do modelo de diarização (`D-17`) e ausência de eventos `delta` no streaming desse
+   mesmo modelo (`D-17`).
 
-2. **[Fechar a SPEC-001]** — tarefa do PM, não do Executor. Incorporar o levantamento, decidir quais
-   lacunas viram requisito, e responder as questões Q1 (idiomas) e Q7 (histórico é requisito?) com
-   o usuário. Depende da Etapa 1.
+2. **[Fechar a SPEC-001]** — trabalho de PM, não de Executor.
+   — Status: **concluída (2026-08-23)**, em chat de PM. A SPEC-001 passou a `status: fechada`, com
+   o medido incorporado e as lacunas convertidas em requisito ou em comportamento declarado. As
+   questões Q1 e Q7 já estavam respondidas desde 21/08 — a Etapa 2 só precisou reconciliá-las. O
+   escopo da Etapa 3 foi definido com o usuário (quatro lacunas, abaixo). Fora do previsto: a
+   revisão encontrou **seis inconsistências entre documentos**, todas mapeadas, corrigidas e com a
+   causa raiz atacada em `D-19` e `D-21`.
 
-3. **[Corrigir as lacunas aprovadas]** — escopo definido só depois da Etapa 2. Candidatas, agora
-   com evidência:
-   - **L1 — códigos de erro legíveis por máquina.** É o que permite três clientes reagirem
-     diferente a "sem chave" e a "sem rede" sem comparar strings em português.
-   - **L2 — erro enganoso em arquivo grande.** Um WAV de 64MB devolve "verifique o formato do
-     arquivo de áudio", que aponta para a causa errada.
-   - **L5 — versionamento do contrato.** Sem versão, um cliente antigo quebra em silêncio.
+3. **[Corrigir as quatro lacunas aprovadas]** — escopo aprovado pelo usuário em 2026-08-23.
+   Mudanças **aditivas** em `transcritor/backend/main.py`; `transcritor/frontend/index.html` não é
+   tocado e precisa continuar funcionando igual.
 
-   Fora desta etapa por decisão de 2026-08-23 (`D-17`): tudo que depende de
-   `gpt-4o-transcribe-diarize` — o custo zerado e a ausência de `delta` em streaming. O modelo está
-   desativado da interface desde 2026-08-18; o bug é inalcançável no uso normal.
+   - **L1 — código de erro legível por máquina.** Toda resposta de erro ganha `codigo` estável, com
+     `detail` em português seguindo como texto humano. Oito códigos: `MODELO_INVALIDO`, `SEM_CHAVE`,
+     `AUDIO_VAZIO`, `FALHA_AUTENTICACAO`, `SEM_CONEXAO`, `API_RECUSOU`, `TEMPO_ESGOTADO`,
+     `ARQUIVO_MUITO_GRANDE`. Vale nos dois modos — no streaming, dentro do evento `{"tipo":"erro"}`.
+   - **L3 — prazo de espera declarado.** Hoje o backend herda o default do SDK (5s de conexão,
+     600s de leitura). Passa a declarar **120s de leitura**, mantendo os 5s de conexão, e devolve
+     `TEMPO_ESGOTADO` ao estourar. Número decidido pelo usuário em 2026-08-23 — ver `D-20`.
+   - **L2 — recusa de arquivo grande antes do upload.** O backend passa a recusar acima do limite
+     da API da OpenAI, **antes** de subir o arquivo, com `ARQUIVO_MUITO_GRANDE` e mensagem que diz
+     o tamanho enviado e o teto. O limite exato é **a medir pelo Executor**, não a supor — ver
+     "Nota de processo" sobre critério numérico derivado de inferência.
+   - **L5 — versão do contrato.** Cabeçalho `X-Nucleo-Contrato: 1` em toda resposta do núcleo, e a
+     versão declarada no `spec/contrato/NUCLEO.md`. Cabeçalho e não campo no corpo, porque serve
+     igual para o JSON e para o NDJSON do streaming.
 
-4. **[Preservar o harness do modo ao vivo]** — promover `.claude/tmp/teste_tempo_real.py` a arquivo
-   versionado em `transcritor/`, com um parágrafo dizendo o que ele prova. Decidida pelo PM sem
-   consulta ao usuário: é arrumação, e a pasta de origem existe para ser apagada. Pode rodar em
-   qualquer ponto da fase.
+   — Critério de pronto: os oito códigos provocados de verdade contra o backend rodando, com a
+   resposta colada no `PROGRESSO.md`; o limite de tamanho **medido** (um arquivo abaixo e um acima
+   do teto), não estimado; `X-Nucleo-Contrato` presente nas respostas de sucesso e de erro, nos
+   dois modos; `spec/contrato/NUCLEO.md` atualizado com códigos, teto, prazo e versão; o app web
+   conferido funcionando depois da mudança.
+   — Fora desta etapa (`D-17`): tudo que depende de `gpt-4o-transcribe-diarize` — o custo zerado e
+   a ausência de `delta` em streaming.
+   — Fora desta etapa (`D-16`): o gate de silêncio, que é obrigação declarada do cliente, não do
+   núcleo.
 
-5. **[Idioma: parâmetro no contrato, não constante no código]** — decisão do usuário em
-   2026-08-21, corrigindo o encaminhamento anterior: **não fixar português no código**. O contrato
-   ganha um parâmetro `idioma` **opcional**; ausente significa detecção automática pela API. O
-   controle de interface (interruptor "fixar idioma" + lista com português, inglês, espanhol,
-   italiano e chinês, começando ligado em português) é **Fase 2**, e está parqueado em
-   `spec/_rascunhos/COMPORTAMENTOS_PARQUEADOS.md`.
-   — **Condicionada**: só executa se a medição da Etapa 1 mostrar que fixar o idioma é melhor do
-   que deixar a API detectar. Se a medição não mostrar diferença, esta etapa cai e o contrato
-   apenas registra que o núcleo não assume idioma.
-   — Critério de pronto: o contrato descreve o parâmetro `idioma` com seu comportamento quando
-   ausente, e a medição do antes e depois está no `PROGRESSO.md`.
+4. **[Arrumação: harness, rascunho e entulho]** — **concluída (2026-08-23)**. Conferida pelo PM no
+   artefato real: harness em `transcritor/teste_tempo_real.py` com o cabeçalho reescrito (não se
+   declara mais descartável) e citado no `README.md` com o que prova e o que não prova; `.claude/tmp/`
+   vazio; `_to_delete/` e `historico/snapshots/` apagados, com a raiz do `historico/` intacta em 20
+   arquivos; sem `index.lock`, sem `.fuse_hidden`, nada de `backend/` ou `frontend/` tocado. Ordem
+   respeitada: promoção antes de qualquer remoção.
+   — Nota: o registro diz 49 snapshots apagados; o git conta 48. Divergência de uma unidade, sem
+   efeito no resultado — a pasta não existe mais. Fica anotada porque número em registro é evidência.
+   — *(Escopo original abaixo, ampliado pelo usuário em 2026-08-23 na revisão estrutural.)*
+   - **Promover o harness**: `.claude/tmp/teste_tempo_real.py` vira arquivo versionado em
+     `transcritor/`, com um parágrafo dizendo o que ele prova. **Isto vem primeiro** — é o único
+     arquivo com valor dentro de uma pasta que existe para ser apagada.
+   - **Limpar o `.claude/tmp/`** depois da promoção: o WAV de teste, o `uvicorn.log`, o
+     `_teste_escrita.tmp` e as cópias de tarefas já executadas.
+   - **Apagar o `_to_delete/`** inteiro. Ele guarda o lixo do bridge (`.fuse_hidden*`) e um fóssil de
+     0 byte. A sessão remota não consegue apagar pela pasta montada — recusa com "Operation not
+     permitted"; o Executor roda local e consegue.
+   - **Aplicar o limiar de snapshot** (`B-19`): hoje são 48 snapshots automáticos em
+     `historico/snapshots/`, com mediana de 18 linhas de diferença entre consecutivos. Manter os que
+     são virada de plano, descartar os demais — a regra está em `.claude/metodo/HIGIENE.md`.
+   — Critério de pronto: `.claude/tmp/` e `_to_delete/` vazios ou inexistentes; o harness versionado
+   e citado no `transcritor/README.md`; `historico/snapshots/` só com viradas de plano; e o
+   repositório **pronto para commit** conforme `.claude/metodo/COMMIT.md` — que é o primeiro teste
+   real dessa regra.
 
-   </details>
+5. **[~~Idioma: parâmetro no contrato~~]** — **CANCELADA em 2026-08-23**, pela condição que a
+   própria etapa trazia. A medição da Etapa 1 comparou o mesmo áudio com e sem `language="pt"`:
+   texto idêntico caractere por caractere e tokens idênticos, logo custo idêntico. O contrato
+   registra que o núcleo não assume idioma e não ganha parâmetro novo. Ver `D-08` (revisada).
 
-6. **[Atualizar o `CLAUDE.md`]** — hoje ele descreve o repositório como "MVP de um motor mínimo de
-   transcrição" e não menciona `spec/`, o método Spec-Driven Development nem a Fase 1. É o primeiro
-   arquivo que todo chat novo lê: desatualizado, desalinha o Executor antes de qualquer tarefa.
-   — Critério de pronto: quem abre um chat novo entende, só pelo `CLAUDE.md`, que o transcritor é a
-   Fase 1 de um produto maior, onde mora a especificação e qual é a fase corrente.
+6. **[Atualizar o `CLAUDE.md`]** — **concluída (2026-08-23)**, dentro da revisão estrutural, não
+   como tarefa de Executor. A revisão mostrou que o problema era maior do que a etapa previa: cinco
+   documentos de orientação não conheciam o método, não um. Todos reconciliados na mesma sessão, e o
+   `CLAUDE.md` encolheu de 3,2 KB para 2,2 KB — ele voltou a ser porta de entrada e deixou de
+   disputar o papel de mapa, que agora é do `.claude/CEREBRO.md`.
 
-## Backlog (não aprovado)
-- **Arrastar e soltar áudio na área central** para enviar sem passar pelo menu — pedido do
-  usuário em 2026-08-21, adiado por ele mesmo para depois da frente de interface enxuta
-  ("posteriormente vamos voltar com o drag de áudio");
-- **Baratear o modo ao vivo trocando o modelo** (`gpt-live-transcribe` US$ 0,017/min →
-  `gpt-4o-transcribe` US$ 0,006/min) — **avaliado e recusado pelo usuário em 2026-08-20**, não será
-  executado. Fica registrado com a estimativa para o dia em que custo virar prioridade.
-  **Quanto economizaria**: o preço do modelo cai 65%, mas usar a detecção de turno da API (única
-  forma de o modelo mais barato fechar turnos sozinho) obriga a desligar o gate de silêncio da
-  Etapa 1 — passa-se a pagar o tempo todo, não só a fala. Economia real conforme a proporção de
-  silêncio da sessão: ~65% se você fala sem parar, **~50% numa sessão típica com ~30% de silêncio**,
-  ~29% se metade da sessão é silêncio. Numa sessão de 10 minutos com 30% de silêncio: US$ 0,119 →
-  US$ 0,060. **Motivo da recusa**: o usuário prefere preservar nuance de fala (pontuação, ênfase) a
-  economizar, tendo recurso disponível. **Contraponto medido, registrado para revisão futura**: o
-  `BENCHMARK.md` mostra `gpt-4o-transcribe` em lote produzindo pontuação e acentuação impecáveis no
-  áudio de 72s, enquanto o modo ao vivo atual (com `gpt-live-transcribe`) produz "Isso e um teste da
-  transcricao" sem acentos e parte palavras nas emendas — indício de que a perda de nuance vem do
-  **tamanho do pedaço enviado** (fatias de 6s), não do modelo. Quem quiser retomar isto deve testar
-  a hipótese antes de decidir;
-- **Alternador de controle de turno e detecção pela API** — construído e depois **encerrado sem
-  uso** em 2026-08-20, porque `gpt-live-transcribe` recusa `turn_detection` diferente de `null` e a
-  alternativa exigia trocar de modelo (item acima, recusado). O código sai da interface na Etapa 3;
-  o registro do que foi aprendido fica no `PROGRESSO.md` e na `coleta/`;
-- **Commit guiado por silêncio (plano B das emendas)** — 6s viram piso em vez de corte; o turno
-  fecha na primeira pausa depois disso, com um teto para não segurar o texto indefinidamente. Ideia
-  do usuário em 2026-08-20. Não muda custo (quem define o custo é o gate de envio da Etapa 1, não o
-  commit), mantém `gpt-live-transcribe` e resolve o corte de palavra na emenda sem depender da API;
-- CORS do backend está aberto (`allow_origins=["*"]`), aceitável para uso 100% local — revisar
-  se um dia o projeto for servido fora da máquina do usuário;
-- trocar os arquivos locais de consumo e transcrição (`consumo.jsonl`, `transcricoes.jsonl`) por
-  um banco de dados de verdade — decisão explícita do usuário em 2026-08-18 de adiar essa troca;
-- rotação/limpeza automática de transcrições antigas em `transcricoes.jsonl` — sem política de
-  retenção definida ainda;
-- `consumo.jsonl` mistura consumo de uso real com o de sessões de teste do Executor — sem separação
-  prevista; os números de `gpt-live-transcribe` anteriores a 2026-08-19 estão subestimados, porque
-  o último turno de cada gravação era perdido antes da correção;
-- histórico, armazenamento por projeto/entrevista, exportação, metadados;
-- pipeline de limpeza → segmentação → classificação → resumo com modelos especializados;
-- banco de dados, busca semântica, embeddings, RAG, corpus de entrevistas;
-- camada de agente que decide qual modelo/informação usar;
-- suporte a celular e smartwatch;
-- transcrição em blocos com sobreposição (redundância) para precisão nas bordas — mais barata
-  por minuto que a API ao vivo (mesmo com sobreposição generosa, nas contas feitas em 2026-08-19),
-  mas exige lógica própria de continuidade nas bordas; decisão do usuário em 2026-08-19 de testar
-  a API ao vivo primeiro, por ser mais simples de integrar;
-- efeito de streaming imperceptível em áudios curtos — decisão pendente do usuário sobre se vale a
-  pena um adiantamento artificial de exibição;
-- explorar plataforma de chat self-hosted tipo Claude com agentes/skills (Open WebUI, LibreChat,
-  AnythingLLM, Dify, LobeHub) como possível motor para uma fase futura — discutido em 2026-08-18,
-  decisão de continuar em outro chat, nenhuma ação tomada neste projeto ainda.
+## Backlog
 
-- **Limpeza de `.claude/tmp/` e de `_to_delete/`** — levantado na faxina de 2026-08-21 e deixado
-  fora do plano por decisão do usuário. `.claude/tmp/` guarda 584 KB de rascunho
-  (`teste_linha_tempo.wav` com 562 KB, `uvicorn.log`, `ROTEIRO_TESTE_ETAPA1.md`,
-  `_teste_escrita.tmp`); `_to_delete/` guarda só o fóssil `index.lock.2026-08-16`, de 0 byte. Nada
-  disso é versionado — é ruído visual, não risco. Desde 2026-08-21 a pasta guarda também cópias das
-  tarefas `TAREFA_etapa2_faxina.md` e `TAREFA_interface-enxuta.md`, ambas já executadas ou
-  promovidas — podem ir junto na limpeza;
-- **Promover `.claude/tmp/teste_tempo_real.py` a ferramenta versionada em `transcritor/`** — é o
-  harness em Python que validou o protocolo da API ao vivo sem navegador (2026-08-20), o único
-  arquivo com valor dentro de uma pasta descartável: some junto com o resto na primeira limpeza;
+**Mudou de casa em 2026-08-23**: o acervo de ideias mora agora em
+[`spec/BACKLOG.md`](../../spec/BACKLOG.md), com ID `B-nn`, estado, origem e a fase em que cada uma
+volta à mesa.
+
+**Por quê**: o backlog **atravessa fases** e este arquivo morre a cada fase — há item nascido em 16 e
+18/08 ainda vivo num plano de uma fase aberta em 21/08. E os 60 planos arquivados em `historico/`
+congelaram cada um a sua cópia do acervo, então procurar a razão de uma recusa devolve dezenas de
+respostas de datas diferentes, e a mais recente não é a que aparece primeiro. Conteúdo que atravessa
+fases não mora em arquivo que morre com a fase (`D-21`).
+
+**Ao fechar uma etapa ou uma fase**: ler os itens do `BACKLOG.md` marcados com
+`olhar de novo em:` para a fase seguinte e perguntar ao usuário quais sobem para Etapas. Item de
+backlog nunca vira etapa por iniciativa do PM.
 
 ## Nota de processo (lembrete para o PM)
+- **As regras de método não são repetidas aqui.** Passe de fechamento, número derivado à mão, o
+  mais recente vence, higiene e commit moram em `.claude/metodo/` — leia de lá. Esta nota guarda só
+  o que é **deste projeto**.
 - **Tarefa que quebra o backend ou o `.env` precisa avisar o usuário ANTES de começar**, não só
   antes da parte destrutiva — em 2026-08-23 o Executor descobriu, por log, que o usuário estava
   usando o app ao vivo no meio da medição. Não deu problema (ele autorizou), mas o aviso chegou
@@ -173,10 +167,3 @@ Alguém consegue escrever um cliente novo lendo só o contrato, **sem abrir o `i
   confirmado em 2026-08-21); só peça ao usuário se o Executor não conseguir.
 - Arquivar o `PROGRESSO.md` **na hora** em que o plano fecha, não no chat seguinte: na virada de
   2026-08-21 o arquivo já estava em 101 KB e 1.404 linhas, acima do alarme de 60 KB.
-
-- **Consolidar as histórias US-D02 + US-A02 + US-D03** numa capacidade só (*entrega do texto no
-  destino*, com escada campo em foco → clipboard → popup) — proposta da revisão do pré-projeto,
-  entra quando a Fase 2 for especificada, não agora.
-- **Régua do Win+H** — a proposta do PM de que o ditado precisa ser pelo menos tão rápido e preciso
-  quanto a digitação por voz nativa do Windows está aceita tacitamente, **falta aceite explícito**
-  do usuário para virar critério de aceitação (Q2).

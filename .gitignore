@@ -17,3 +17,9 @@ transcritor/transcricoes.jsonl
 # Ambiente virtual e caches do Python — locais, não versionar
 transcritor/.venv/
 transcritor/backend/__pycache__/
+
+# Lixo do bridge remoto: arquivos apagados enquanto estavam abertos pela pasta montada.
+# A pasta montada não permite apagá-los ("Operation not permitted"), então eles são movidos
+# para _to_delete/ e removidos por quem roda local. Ignorados para não serem commitados sem querer.
+.fuse_hidden*
+_to_delete/

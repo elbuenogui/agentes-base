@@ -2,6 +2,7 @@
 artefato: Contrato do núcleo de transcrição
 origem: SPEC-001_contrato-do-nucleo.md
 medido_em: 2026-08-23
+atualizado_em: 2026-08-24 (Etapa 3 — R1 a R4, ver PROGRESSO.md)
 status: observado (não é aspiração — é o que a máquina faz hoje)
 ---
 
@@ -24,9 +25,11 @@ interface web, também fora do contrato.
 
 ## Versionamento
 
-O contrato **não tem número de versão** hoje (nem no formato das respostas, nem em nenhum
-cabeçalho HTTP). Se o formato mudar no futuro, um cliente antigo quebra sem aviso — isso é uma
-lacuna real (L5 da SPEC-001), não uma escolha de desenho. Registrado aqui, sem solução ainda.
+**Corrigida em 2026-08-24 (R4).** Toda resposta de `POST /transcrever` e `GET /consumo` — sucesso
+**e** erro, nos dois modos — carrega o cabeçalho `X-Nucleo-Contrato: 1`. Confirmado por medição
+real: presente nas duas rotas em todos os casos testados, **ausente** em `GET /tempo-real/token`
+(fora do contrato, ver acima). Se o formato mudar no futuro, o número muda junto — um cliente pode
+checar o cabeçalho antes de assumir o formato.
 
 ---
 
@@ -119,54 +122,70 @@ API detecta sozinha, e não há evidência de que fixar `pt` ajude ou atrapalhe.
 
 ## Erros de `POST /transcrever`
 
-Todas as seis situações abaixo foram provocadas de verdade contra o backend, cada uma nos dois
-modos. Nenhum erro traz um código legível por máquina — só `detail` em texto (L1, confirmada:
-ainda é assim; um cliente novo vai precisar comparar strings ou status HTTP até isso mudar).
+**Corrigida em 2026-08-24 (R1).** Todo erro carrega um campo `codigo` estável, ao lado de `detail`
+(que continua sendo string em português, no mesmo lugar de sempre). As oito situações abaixo foram
+provocadas de verdade contra o backend, cada uma nos dois modos — as seis originais mais as duas
+novas que R2 e R3 introduziram (`TEMPO_ESGOTADO`, `ARQUIVO_MUITO_GRANDE`).
 
-| Situação | Sem streaming | Com streaming |
-|---|---|---|
-| Modelo fora da lista aceita | `422` `{"detail":"Modelo inválido: '<valor>'. Valores aceitos: gpt-4o-transcribe, gpt-4o-mini-transcribe, gpt-4o-transcribe-diarize"}` | idêntico — validado antes de abrir o stream |
-| `OPENAI_API_KEY` não configurada no backend | `503` `{"detail":"OPENAI_API_KEY não configurada — preencha transcritor/.env"}` | idêntico — validado antes de abrir o stream |
-| Arquivo de áudio vazio (0 byte) | `400` `{"detail":"Arquivo de áudio vazio"}` | idêntico |
-| Falha de autenticação na API da OpenAI (chave inválida) | `502` `{"detail":"Falha de autenticação na API da OpenAI — verifique a chave em transcritor/.env"}` | evento `{"tipo":"erro","detail":"Falha de autenticação na API da OpenAI — verifique a chave em transcritor/.env"}`, dentro de um `200` |
-| Sem conexão com a OpenAI (rede/host inalcançável) | `502` `{"detail":"Não foi possível conectar à API da OpenAI — verifique a rede"}` | evento `{"tipo":"erro","detail":"Não foi possível conectar à API da OpenAI — verifique a rede"}`, dentro de um `200` |
-| A OpenAI recusa a requisição (ex.: arquivo que não é áudio de verdade) | `502` `{"detail":"A API da OpenAI recusou a requisição (HTTP 400) — verifique o formato do arquivo de áudio"}` | evento `{"tipo":"erro","detail":"A API da OpenAI recusou a requisição (HTTP 400) — verifique o formato do arquivo de áudio"}`, dentro de um `200` |
+| Situação | `codigo` | Sem streaming | Com streaming |
+|---|---|---|---|
+| Modelo fora da lista aceita | `MODELO_INVALIDO` | `422` `{"detail":"Modelo inválido: '<valor>'. Valores aceitos: gpt-4o-transcribe, gpt-4o-mini-transcribe, gpt-4o-transcribe-diarize","codigo":"MODELO_INVALIDO"}` | idêntico — validado antes de abrir o stream |
+| `OPENAI_API_KEY` não configurada no backend | `SEM_CHAVE` | `503` `{"detail":"OPENAI_API_KEY não configurada — preencha transcritor/.env","codigo":"SEM_CHAVE"}` | idêntico — validado antes de abrir o stream |
+| Arquivo de áudio vazio (0 byte) | `AUDIO_VAZIO` | `400` `{"detail":"Arquivo de áudio vazio","codigo":"AUDIO_VAZIO"}` | idêntico |
+| Arquivo acima do teto de tamanho (ver R3 abaixo) | `ARQUIVO_MUITO_GRANDE` | `413` `{"detail":"Arquivo de 26,0 MB; o limite é 25 MB","codigo":"ARQUIVO_MUITO_GRANDE"}` (medido com um arquivo de 26 MB) | idêntico — recusado antes de abrir o stream, em ~0,13s nos dois modos |
+| Falha de autenticação na API da OpenAI (chave inválida) | `FALHA_AUTENTICACAO` | `502` `{"detail":"Falha de autenticação na API da OpenAI — verifique a chave em transcritor/.env","codigo":"FALHA_AUTENTICACAO"}` | evento `{"tipo":"erro","detail":"Falha de autenticação na API da OpenAI — verifique a chave em transcritor/.env","codigo":"FALHA_AUTENTICACAO"}`, dentro de um `200` |
+| Sem conexão com a OpenAI (rede/host inalcançável) | `SEM_CONEXAO` | `502` `{"detail":"Não foi possível conectar à API da OpenAI — verifique a rede","codigo":"SEM_CONEXAO"}` (medido: ~8,1s) | evento equivalente, dentro de um `200` (medido: ~7,6s) |
+| A OpenAI recusa a requisição (ex.: arquivo que não é áudio de verdade) | `API_RECUSOU` | `502` `{"detail":"A API da OpenAI recusou a requisição (HTTP 400) — verifique o formato do arquivo de áudio","codigo":"API_RECUSOU"}` | evento equivalente, dentro de um `200` |
+| A API não responde dentro do prazo declarado (ver R2 abaixo) | `TEMPO_ESGOTADO` | `504` `{"detail":"A API da OpenAI não respondeu a tempo — tente novamente","codigo":"TEMPO_ESGOTADO"}` (medido: **6min01,99s**, host que aceita a conexão e nunca responde) | **divergência medida** — ver nota abaixo da tabela |
 
-**O padrão geral, confirmado nos seis casos**: erros que acontecem **antes** de abrir o stream
-(modelo inválido, sem chave, áudio vazio) sempre viram status HTTP de erro, em ambos os modos. Erros
-que só acontecem **durante** a chamada à API da OpenAI (autenticação, rede, recusa) sempre viram
-`200` com evento `erro`, mesmo no modo sem streaming — o corpo é um JSON de erro (não um objeto
-`{"tipo": ...}`), mas o status HTTP é sempre `502`. Um cliente precisa checar o status HTTP **e**,
-no modo streaming, também checar `tipo` de cada linha — nunca assumir que `200` = sucesso no
-streaming.
+**O padrão geral, confirmado nos oito casos**: erros que acontecem **antes** de abrir o stream
+(modelo inválido, sem chave, áudio vazio, arquivo grande) sempre viram status HTTP de erro, em
+ambos os modos. Erros que só acontecem **durante** a chamada à API da OpenAI (autenticação, rede,
+recusa, tempo esgotado) sempre viram `200` com evento `erro` no modo streaming — o corpo é um JSON
+de erro (não um objeto `{"tipo": ...}`) no modo sem streaming, mas o status HTTP reflete a falha
+real (`502` ou `504`, nunca `200`). Um cliente precisa checar o status HTTP **e**, no modo
+streaming, também checar `tipo` de cada linha — nunca assumir que `200` = sucesso no streaming.
 
-### L2 — Arquivo grande, sem limite declarado (confirmada)
+**Achado novo da medição — o modo streaming não reproduziu `TEMPO_ESGOTADO` na mesma condição.**
+Apontando o cliente para um host que aceita a conexão TCP e nunca responde nada (mesmo cenário dos
+dois testes), o modo sem streaming devolveu `TEMPO_ESGOTADO`/`504` em 6min01,99s, consistente com
+120s de leitura × 3 tentativas (1 original + 2 retries automáticos do SDK). O modo streaming, sob a
+**mesma condição**, devolveu `SEM_CONEXAO`/evento `erro` em **8min28,92s** — mais tempo, e um código
+diferente. O backend não força esse resultado (o mapeamento de exceção → código é o mesmo código
+para os dois modos, em `_erro_api_para_codigo`); é o SDK da OpenAI que levantou uma exceção
+diferente (`APIConnectionError`, não `APITimeoutError`) para a chamada em modo `stream=True` sob
+essa mesma falha de rede. Não investigado a fundo (fora do escopo desta tarefa); registrado aqui
+como comportamento observado, não como bug do backend — o código `TEMPO_ESGOTADO` existe e está
+coberto no modo streaming pelo mesmo `except`, só não foi essa exceção específica que o SDK
+levantou neste teste.
 
-Enviado um arquivo de ~64 MB (silêncio puro, WAV). Levou ~14s só para o upload chegar ao backend.
-Resultado: **o mesmo erro genérico de "OpenAI recusou a requisição"** —
-`502` `{"detail":"A API da OpenAI recusou a requisição (HTTP 400) — verifique o formato do arquivo de áudio"}`.
-A suspeita da SPEC-001 se confirma: a mensagem fala de "formato do arquivo", mas a causa real é
-tamanho. Um cliente que confiar no texto do erro vai investigar a coisa errada. **Não há limite
-declarado no contrato hoje** — só o limite implícito da API da OpenAI, que devolve esse erro
-disfarçado.
+### L2 — Arquivo grande, sem limite declarado (corrigida em 2026-08-24, R3)
 
-### L3 — Timeout (confirmada, sem estimativa)
+O backend agora recusa arquivo acima de **25 MB** (`TAMANHO_MAXIMO_AUDIO_BYTES` em `main.py`) antes
+de mandar para a API — ver tabela acima (`ARQUIVO_MUITO_GRANDE`, `413`). O limite foi confirmado na
+documentação oficial: *"Files can be up to 25 MB."* —
+<https://developers.openai.com/api/docs/guides/speech-to-text>, consultada em 2026-08-24. Medido: um
+arquivo de 26 MB é recusado em **~0,13s** (contra os ~14s de antes, subindo o arquivo inteiro para
+só então ser recusado pela API com uma mensagem que apontava para a causa errada). Um arquivo abaixo
+do teto passa adiante normalmente (medido com o mesmo arquivo de teste usado nos outros casos,
+`200`, transcrição real devolvida).
 
-Não há timeout configurado no código do backend — o cliente `OpenAI(api_key=chave)` é criado sem
-parâmetro `timeout`. Isso não foi estimado: é o valor default lido diretamente do SDK instalado
-(`openai==3.1.0`, `openai._constants.DEFAULT_TIMEOUT`):
+### L3 — Timeout (corrigida em 2026-08-24, R2)
 
-```
-Timeout(connect=5.0, read=600, write=600, pool=600)
-```
+O cliente `OpenAI(...)` usado em `POST /transcrever` agora declara `timeout=Timeout(120.0,
+connect=5.0)` — 120s de leitura, 5s de conexão — em vez de herdar o default do SDK
+(`Timeout(connect=5.0, read=600, write=600, pool=600)`, com `max_retries=2` também herdado, não
+alterado por esta correção). Ao estourar, o erro vira `TEMPO_ESGOTADO`/`504` (ver tabela acima).
 
-Ou seja: até **5 segundos** para conectar, e até **600 segundos (10 minutos)** de espera depois de
-conectado, antes de desistir — mais até 2 tentativas automáticas (`max_retries=2` do SDK, também
-não sobrescrito pelo backend) em caso de erro de conexão. O teste de "sem conexão" (host
-inalcançável) bate com isso na prática: a chamada devolveu erro em **~8 segundos**, consistente com
-uma tentativa de conexão de 5s mais uma repetição rápida antes de desistir — não os 5s crus.
-**Um app de ditado que espera resposta em segundos pode ficar preso até 10 minutos** num backend
-que não declara timeout próprio. Isso é lacuna real, não capacidade.
+**Medido de verdade, não estimado**: apontando o cliente (via `OPENAI_BASE_URL`) para um servidor
+TCP local que aceita a conexão e nunca responde nada, o modo sem streaming levou **6min01,99s** até
+falhar — consistente com 120s de leitura vezes 3 tentativas (a original mais as 2 automáticas do
+SDK, `max_retries=2` não alterado). O modo streaming, sob a mesma condição, levou **8min28,92s** e
+terminou em `SEM_CONEXAO`, não em `TEMPO_ESGOTADO` — ver o achado logo acima da tabela de erros.
+**Uma consequência prática desta medição**: mesmo com o timeout declarado, o tempo real até a falha
+ainda é multiplicado pelas tentativas automáticas do SDK — 120s declarados não significam "falha em
+até 120s" quando a causa é uma conexão que trava (o `max_retries=2` do SDK não foi alterado por não
+estar no escopo de R2). Registrado aqui para quem for revisar esse número no futuro.
 
 ### L4 — Evento final do streaming não traz custo nem modelo (confirmada)
 
@@ -241,11 +260,11 @@ como achado, não corrigido (fora do escopo desta tarefa).
 
 | Lacuna | Status após medição |
 |---|---|
-| L1 — sem código de erro legível por máquina | **Confirmada** — todos os seis erros provocados só trazem `detail` em texto |
-| L2 — sem limite de tamanho declarado | **Confirmada** — arquivo de 64MB devolve o mesmo erro genérico e enganoso |
-| L3 — sem timeout declarado | **Confirmada** — herda o default do SDK (5s conexão / 600s leitura), não configurado pelo backend |
+| L1 — sem código de erro legível por máquina | **Corrigida em 2026-08-24** — todo erro traz `codigo` estável ao lado de `detail`, oito situações provocadas de verdade nos dois modos |
+| L2 — sem limite de tamanho declarado | **Corrigida em 2026-08-24** — teto de 25 MB (documentado pela OpenAI), recusa em ~0,13s com `ARQUIVO_MUITO_GRANDE`/`413` |
+| L3 — sem timeout declarado | **Corrigida em 2026-08-24** — cliente declara 120s de leitura / 5s de conexão, `TEMPO_ESGOTADO`/`504` ao estourar; tempo real até a falha medido (6min01,99s sem streaming — ver divergência no modo streaming na seção de erros) |
 | L4 — evento final do streaming sem custo/modelo | **Confirmada** — só tem `texto` |
-| L5 — contrato sem versão | **Confirmada** (não estava na tabela original de erros, mas é lacuna real, citada no corpo da SPEC-001) |
+| L5 — contrato sem versão | **Corrigida em 2026-08-24** — `X-Nucleo-Contrato: 1` em sucesso e erro, nas duas rotas do contrato, ausente no modo ao vivo |
 | L6 — áudio sem fala sem comportamento definido | **Confirmada, e reclassificada**: não é "indefinido" — é definido e ruim (`200` com alucinação em idioma aleatório, nos dois modos) |
 | L7 — CORS aberto | **Confirmada, aceitável por ora** — sem mudança nesta fase |
 | L8 — sem parâmetro de idioma | **Refutada como problema** — medição mostrou que forçar `pt` não muda texto, custo nem tempo de forma mensurável; o contrato não ganha o parâmetro `idioma` (Etapa 5 do `PLANO.md` cai) |
@@ -253,3 +272,6 @@ como achado, não corrigido (fora do escopo desta tarefa).
 Achados novos, fora das lacunas originais da SPEC-001:
 - `gpt-4o-transcribe-diarize` com streaming não emite eventos `delta`, só o `final`.
 - `gpt-4o-transcribe-diarize` sempre grava `custo_usd: 0.0` em `consumo.jsonl` (bug de tabela de preços).
+- Sob a mesma condição de rede que produz `TEMPO_ESGOTADO` no modo sem streaming, o modo streaming
+  produziu `SEM_CONEXAO` (mais tempo até falhar, código diferente) — ver seção "Erros de `POST
+  /transcrever`" acima.

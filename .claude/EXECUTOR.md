@@ -13,6 +13,22 @@ qualquer arquivo que a tarefa mandar tocar. Ver a seção "Idioma" do `CLAUDE.md
 
 Leia `.claude/estado/PROXIMA_TAREFA.md`. Execute apenas o que está ali.
 
+Se a tarefa citar uma spec ou um documento de contrato em `spec/`, leia **o que ela citar** — não a
+pasta inteira, e nunca o `PLANO.md`.
+
+## Regras de método que valem para você
+
+Moram em `.claude/metodo/`, escritas num lugar só. As que mais mudam o seu trabalho:
+
+- [`metodo/COMMIT.md`](metodo/COMMIT.md) — **só o usuário autoriza commit**, e a sua tarefa só
+  termina com o repositório **pronto para commitar**: sem `.git/index.lock`, sem `.fuse_hidden*`,
+  sem temporário solto, e com `git status` mostrando só o que pertence à tarefa. Se o usuário
+  precisar apagar arquivo na mão para commitar, a tarefa não terminou.
+- [`metodo/CONSISTENCIA.md`](metodo/CONSISTENCIA.md) — se você mexer em documento, o fato tem um
+  dono só; aponte em vez de repetir.
+- [`metodo/HIGIENE.md`](metodo/HIGIENE.md) — onde vai rascunho, e o que nunca fica nele.
+- [`CEREBRO.md`](CEREBRO.md) — o mapa, se você não achar um arquivo.
+
 ## Regras
 
 - Não leia o PLANO.md para "adiantar" etapas futuras.

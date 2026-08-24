@@ -22,6 +22,8 @@ uma informação não está num arquivo, ela não entra no painel — ela primei
 | `spec/DECISOES.md` | o livro-razão — cada decisão com a razão |
 | `spec/QUESTOES_ABERTAS.md` | respondidas e abertas, com o que cada uma trava |
 | `spec/LACUNAS.md` | o que falta produzir |
+| `spec/BACKLOG.md` | o que está amadurecendo, e para que fase |
+| `.claude/metodo/DECISOES_METODO.md` | as decisões de método (`M-nn`) — separadas das de produto |
 | `.claude/estado/PLANO.md` | as etapas da fase corrente e o que está em execução |
 | `.claude/estado/PROGRESSO.md` | o que o Executor entregou desde a última virada |
 | `spec/MAPA.md` | PoCs e rastreabilidade |
@@ -30,6 +32,35 @@ uma informação não está num arquivo, ela não entra no painel — ela primei
 Os `estado:` de fase em `VISAO.md` são legíveis por linha: `em-andamento`, `bloqueada:<POC>`,
 `condicional`, `nao-iniciada`, `encerrada`, `futuro`. Manter esse formato é o que mantém o painel
 barato de gerar.
+
+## Passe de conferência (regra de 2026-08-23, `D-21`)
+
+Você já está lendo os oito arquivos. **No mesmo passe, confira se eles concordam entre si** — e o
+que não bater vira uma seção do painel, não um comentário no chat.
+
+O que procurar, em ordem de gravidade:
+
+1. **Contradição de estado.** A mesma etapa, fase, questão ou lacuna com situação diferente em dois
+   arquivos (concluída num, na fila noutro). Foi assim que a `VISAO.md` passou dois dias anunciando
+   uma etapa "na fila do Executor" que já estava concluída.
+2. **Número derivado escrito à mão.** Qualquer contagem em prosa — "14 decisões", "cinco lacunas
+   abertas", "seis etapas". Números são do painel; no texto, envelhecem sem avisar. Ao achar um,
+   aponte o arquivo e a linha.
+3. **Ponteiro quebrado.** Citação a um `D-nn`, `Q-n`, `L-x`, `SPEC-nnn` ou `POC-n` que não existe, ou
+   link relativo para arquivo que sumiu.
+4. **Data fora de ordem.** Um arquivo que responde uma questão em data anterior à da decisão que a
+   substituiu, sem dizer que foi superado. Pela `D-19`, o mais recente vence — então o achado é o
+   arquivo mais velho que ainda se apresenta como atual.
+5. **Fato sem dono.** A mesma decisão argumentada por extenso em mais de um arquivo. Um argumenta, os
+   outros apontam.
+
+**Como reportar**: uma seção do painel chamada **Consistência**, logo antes de "O que eu preciso de
+você". Vazia é bom sinal e deve aparecer mesmo assim, dizendo que nada divergiu — silêncio não
+distingue "conferi e está certo" de "não conferi".
+
+**O que não fazer**: não corrija nada por conta própria ao gerar o painel. O painel é uma vista, e
+essa regra não muda por causa desta seção. Achado vira conversa com o usuário; a correção é do PM,
+depois.
 
 ## Seções do painel, nesta ordem
 
@@ -42,10 +73,14 @@ barato de gerar.
 4. **Decisões fechadas**, numeradas, **cada uma com a razão junto** — a razão é o conteúdo, não o
    enfeite.
 5. **Questões**, em duas colunas: respondidas e abertas, cada aberta dizendo o que trava.
-6. **Lacunas**, o que falta produzir.
-7. **Próximos passos possíveis**, dois ou três, com o recomendado marcado e o custo de cada um em
+6. **Lacunas e backlog** — o que falta produzir, e o que está amadurecendo para a fase seguinte
+   (itens do `BACKLOG.md` com `olhar de novo em:` apontando para ela). Item recusado ou morto não
+   entra no painel; ele existe para quem for reabrir, não para ocupar a vista.
+7. **Consistência** — o resultado do passe de conferência (ver acima). Vazia, diz que nada
+   divergiu; nunca some.
+8. **Próximos passos possíveis**, dois ou três, com o recomendado marcado e o custo de cada um em
    sessões e no que exige do usuário.
-8. **O que eu preciso de você** — a lista curta de decisões pendentes, numerada.
+9. **O que eu preciso de você** — a lista curta de decisões pendentes, numerada.
 
 ## Identidade visual — manter estável entre gerações
 
