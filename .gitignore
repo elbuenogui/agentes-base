@@ -26,3 +26,9 @@ _to_delete/
 
 # Logs do servidor local, deixados por sessões de teste — nunca versionar
 uvicorn*.log
+
+# App de desktop: __pycache__/ já cai na regra global acima. Log solto de teste (redirecionamento
+# de saída de processo), nunca versionar — mas app.log é o registro de diagnóstico do app (SPEC-002),
+# esse continua existindo e não entra nesta regra.
+desktop/*.log
+!desktop/app.log

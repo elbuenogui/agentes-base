@@ -31,9 +31,17 @@ status: vivo
 
 | Entrega | Artefato | Status |
 |---|---|---|
-| E2.1 POC-1 — mecanismo de inserção no Windows | — | **etapa 1 do `PLANO.md`** — bloqueante da fase, decide a linguagem do app (`D-06`) e exerce o contrato da F1 |
-| E2.2 Histórias, entregáveis e MVP | — | **etapa 2** — fecha `L-A`, `L-B` e `L-C` (`D-13`) |
-| E2.3 O resto do plano | — | **etapa 3** — só se escreve depois da POC-1 e do MVP |
+| E2.1 App de desktop — paridade com a interface web | [SPEC-002](specs/SPEC-002_paridade-desktop.md) | **etapa 1 do `PLANO.md`, reaberta em 2026-08-27** — a primeira volta foi reprovada no uso; o escopo agora é a lista A–I da spec, entregue inteira (`D-29`) |
+| E2.2 POC-1 — mecanismo de inserção no Windows | [pocs/POC-1/](pocs/POC-1/) | **etapa 2** — interrompida por achado, que virou a `D-26`; o resto da investigação foi para `B-22` |
+| E2.3 Histórias, entregáveis e MVP | — | **etapa 3** — fecha `L-A`, `L-B` e `L-C` (`D-13`) |
+| E2.4 O resto do plano | — | **etapa 4** — só se escreve com o app em uso |
+
+**Estado da SPEC-002**: viva. É o critério de pronto da Etapa 1 e a régua do que "no mínimo o mesmo
+que o HTML" quer dizer, item a item. O dono do comportamento continua sendo
+`transcritor/frontend/index.html` — quem mexer nele passa por lá.
+
+**A `D-06` (linguagem do app desktop) está fechada** desde 2026-08-27 pela `D-27`: Python, com a
+janela sempre no topo. Não é mais a POC-1 que decide isso.
 
 **Estado da SPEC-001**: fechada em 2026-08-23. O que ela deixou como requisito está na Etapa 3 do
 `PLANO.md`; o que ela deixou como comportamento declarado (não como conserto) está na `D-16`

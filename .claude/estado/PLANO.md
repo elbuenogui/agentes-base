@@ -34,32 +34,48 @@ em uso, não um exercício. Se o contrato não bastar, a Fase 1 volta com evidê
 
 ## Etapas
 
-> **Só três, e é de propósito.** A regra do método é teorizar uma fase e fazer: a lista completa de
-> entregáveis desta fase é a **Etapa 2**, e as etapas seguintes se escrevem depois dela. E desde
+> **Poucas, e é de propósito.** A regra do método é teorizar uma fase e fazer: a lista completa de
+> entregáveis desta fase é a **Etapa 3**, e as etapas seguintes se escrevem depois dela. E desde
 > 2026-08-25 a **Etapa 1 deixou de ser investigação e virou construção** (`D-25`) — o que o app
 > precisa aprender, ele aprende sendo usado.
+>
+> **Regra que nasceu da reprovação de 2026-08-27:** qualquer tarefa desta fase que **desenhe
+> interface** passa antes por `spec/_rascunhos/COMPORTAMENTOS_PARQUEADOS.md` e por
+> `spec/specs/SPEC-002_paridade-desktop.md`. Não é só da Etapa 3.
 
-1. **[App de desktop mínimo — atalho global, gravar, transcrever, clipboard]** —
-   **concluída com ressalvas (2026-08-26)**. Conferida pelo PM no artefato real.
+1. **[App de desktop — paridade com a interface web]** — **reaberta em 2026-08-27.**
 
-   **O que está pronto e conferido**: `desktop/app.py` com atalho configurável em `config.json`, gate
-   de silêncio por RMS (testado com números — silêncio `0.0`, tom `~0.17`, limiar `0.01`), erros
-   tratados pelo campo `codigo` e não pelo texto, texto no clipboard confirmado lendo de volta, e um
-   `README.md` que diz o que o app **não** faz. Nada de `transcritor/` tocado.
+   Foi dada por concluída com ressalvas em 26/08 e **reprovada no uso** em 27/08. O usuário rodou o
+   app: *"ficou horrível. Eu consegui usar, mas ele não grava direito. Esse F17 ou F9 é uma péssima
+   tecla para apertar. Você não implementou as coisas que tem no HTML aqui, que era o básico"*. A
+   régua da fase é **não piorar o que ele já usa** (`D-10`) — e o que ele já usa é a interface web.
+   Entregar abaixo dela não é etapa concluída com ressalva; é etapa que não cumpriu o critério.
 
-   **O critério da Fase 1 foi respondido**: o contrato **bastou**, com uma lacuna só — ele não
-   declarava onde o núcleo escuta. Dois clientes independentes tropeçaram na mesma coisa. Lacuna
-   fechada em `spec/contrato/NUCLEO.md` em 2026-08-26.
+   **Erro é meu, e é de escopo, não de execução.** Escrevi a tarefa como "atalho, gravar,
+   transcrever, clipboard" **sem passar por `spec/_rascunhos/COMPORTAMENTOS_PARQUEADOS.md`**, que
+   desde 21/08 dizia que a interface web é o desenho de referência do desktop e listava o que
+   transcrever. O plano manda passar por esse arquivo — mas mandava só na Etapa 3, ao escrever as
+   histórias. Passou a valer para **qualquer** tarefa que desenhe interface desta fase.
 
-   — **Ressalva 1, depende do usuário**: dois critérios não foram testados porque o ambiente do
-   Executor não tem microfone nem teclado físico — **o atalho com outra janela em foco** e **a
-   captura por microfone real**. A lógica foi revisada por leitura, não exercida. Rodar
-   `python desktop/app.py` uma vez resolve.
+   **Escopo novo**: [`spec/specs/SPEC-002_paridade-desktop.md`](../../spec/specs/SPEC-002_paridade-desktop.md)
+   — a frase "no mínimo o mesmo que o HTML" virada em lista conferível (A a I, aparência
+   inclusa), com o que **não** transporta e o que fica para depois. É o critério de pronto desta
+   etapa, e **não se entrega em partes** (`D-29`).
 
-   — **Ressalva 2, desvio encontrado pelo PM**: a instrução pedia que o clipboard fosse chamado por
-   **uma função própria e isolada** (`D-11`), para a inserção automática entrar depois trocando só
-   aquele pedaço. O `pyperclip.copy(texto)` ficou **inline** no meio de `_processar_gravacao`. É
-   pequeno de consertar agora e caro de consertar depois — vai como primeiro item da próxima tarefa.
+   **O que a primeira volta deixou de pé e não se joga fora**: `desktop/app.py` provou o caminho
+   ponta a ponta contra o núcleo real, o tratamento de erro pelo campo `codigo` (não pelo texto), e
+   a resposta ao critério da Fase 1 — **o contrato bastou**, com uma lacuna só (não declarava onde o
+   núcleo escuta), fechada em `spec/contrato/NUCLEO.md` em 26/08. Duas transcrições reais saíram do
+   app em 27/08 às 04:25. O caminho funciona; a interface é que ficou abaixo da régua.
+
+   **Estado em 2026-08-27, fim do dia**: a paridade da `SPEC-002` foi entregue e o app está **em uso**.
+   A etapa passou de construção para **acabamento**: os pedidos agora nascem do uso, não da lista. As
+   duas primeiras divergências deliberadas em relação à interface web estão declaradas na `D-30` —
+   corte de segurança de 5 min e recortar como padrão.
+
+   **Dívida a pagar junto** (`D-11`): `pyperclip.copy(texto)` está inline dentro de
+   `_processar_gravacao`. Tem de virar função isolada — é exatamente o pedaço que a inserção
+   automática (`B-22`) vai trocar.
 
 2. **[POC-1 — investigação de inserção]** — **interrompida por achado, e o achado vale mais que a
    matriz.** Executada parcialmente em 2026-08-25, antes do corte de escopo. Quatro tentativas de
@@ -88,8 +104,9 @@ em uso, não um exercício. Se o contrato não bastar, a Fase 1 volta com evidê
 
 O acervo de ideias mora em [`spec/BACKLOG.md`](../../spec/BACKLOG.md). **Ao fechar cada etapa desta
 fase**, ler os itens marcados com `olhar de novo em: F2` e perguntar ao usuário quais sobem. Hoje
-são: `B-01` (arrastar e soltar áudio), `B-05` (adiantamento de exibição no streaming), `B-06`
-(consolidar as três histórias de entrega do texto) e `B-11` (histórico por projeto).
+são: `B-05` (adiantamento de exibição no streaming), `B-06` (consolidar as três histórias de entrega
+do texto) e `B-11` (histórico por projeto). `B-01` (arrastar e soltar) **subiu em 2026-08-27**, a
+pedido do usuário, e virou o item `E2` da `SPEC-002`.
 
 ## Nota de processo (deste projeto)
 
@@ -97,8 +114,9 @@ são: `B-01` (arrastar e soltar áudio), `B-05` (adiantamento de exibição no s
   medição. A última foi em 2026-08-24, o Executor pegou.
 - **Tarefa que quebre o `.env` ou o backend avisa o usuário ANTES de começar** — ele usa o app ao
   vivo. Funcionou na Etapa 3 da Fase 1.
-- **Falta um teste manual de gravação por microfone** depois das mudanças da Etapa 3 da Fase 1. O
-  Executor exercitou o mesmo caminho de código por upload no navegador, mas não é o mesmo teste.
+- **Microfone real já foi exercitado** em 2026-08-27: duas transcrições de fala saíram do app de
+  desktop às 04:25 (US$ 0,0003 no total). A cadeia inteira — microfone, envio, transcrição, texto de
+  volta — funciona. O que reprovou foi a interface, não o caminho.
 - Preços de referência consultados em 2026-08-19 (conferir antes de decisão de custo):
   `gpt-transcribe` US$ 0,0045/min; `gpt-live-transcribe` US$ 0,017/min. O limite de 25 MB de áudio
   foi conferido na documentação da OpenAI em 2026-08-24.

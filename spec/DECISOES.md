@@ -395,3 +395,107 @@ razão, acertou esta por acidente.
 **Reabre se:** aparecer no Windows um caminho de inserção que não dependa desse crédito — a API de
 acessibilidade (`UI Automation`) é candidata, porque escreve no controle em vez de sintetizar
 entrada, e não chegou a ser confirmada de ponta a ponta.
+
+### D-27 — A interface do desktop é reescrita em Python, e a janela fica sempre no topo
+`estado: fechada · 2026-08-27 · fase: F2`
+
+O app de desktop **reescreve** a interface — não embute a interface web numa janela nativa. E a
+janela do app **fica sobreposta a qualquer outra janela**, sempre.
+
+**Por quê:** decisão do usuário em 2026-08-27, quando pus a bifurcação para ele. Mantém de pé o que
+ele já tinha dito em 21/08 (`COMPORTAMENTOS_PARQUEADOS`): *"o código não se aproveita; o desenho
+sim"*. Embutir o `index.html` daria paridade no primeiro dia, mas acoplaria o desktop à interface
+web — e toda divergência futura (janela flutuante, inserção no campo em foco, três estados da
+janela) passaria a ser um `if` dentro de um arquivo que tem outro dono.
+
+**Sempre no topo tem uma consequência técnica que não é opcional:** a janela precisa aparecer por
+cima **sem roubar o foco**. É a mesma observação da `D-01` e da `D-15` vista de novo — quem rouba o
+foco destrói o campo de destino. No Qt isso é `WindowStaysOnTopHint` + `Tool` +
+`WA_ShowWithoutActivating`; em qualquer outro toolkit, é um requisito a provar antes de seguir.
+
+**Fecha a `D-06`** ("a linguagem do app se decide depois da POC-1"): decidido **Python**, porque a
+`D-26` exige que a inserção dispare de dentro do handler do atalho global, e é isso que o app atual
+já faz com a biblioteca `keyboard`. A escolha de toolkit vai na tarefa; a linguagem está fechada.
+
+**Reabre se:** o toolkit escolhido não conseguir ficar no topo sem ativar a janela, ou se a
+reescrita da paridade (`SPEC-002`) mostrar que o custo de manter duas interfaces com o mesmo
+comportamento é maior que o do acoplamento que se evitou aqui.
+
+### D-28 — O acionamento alterna, e o atalho se configura pela interface
+`estado: fechada · 2026-08-27 · fase: F2`
+
+Gravar é **alternar**: um toque começa, outro toque para e envia. **Não é segurar** a tecla. E o
+atalho global se troca **dentro do app**, nas Configurações — não editando `config.json`.
+
+**Por quê:** relatado no uso real em 2026-08-27 — *"esse F17 ou F9 é uma péssima tecla para
+apertar"* e *"ele não grava direito"*. Segurar uma tecla por trinta segundos enquanto se fala é
+desconfortável, e transforma qualquer escorregada de dedo em gravação cortada — que é o modo de
+falha mais provável por trás do "não grava direito". A interface web sempre alternou (`SPEC-002`,
+`A1`); segurar foi invenção da primeira volta da Etapa 1, não estava em lugar nenhum.
+
+E escolher a tecla certa **por mim** era o erro se repetindo em outra tecla: quem sabe qual botão do
+mouse ele mapeou é ele. Configurável pela interface fecha a `D-01` do jeito que ela pedia desde
+21/08 — *"precisa ser configurável — o usuário vai mapeá-lo num botão extra do mouse"*.
+
+**Reabre se:** o uso mostrar que alternar deixa gravação aberta esquecida com frequência — o corte
+de segurança de 2min30s (`SPEC-002`, `A5`) é a rede que existe justamente para esse risco.
+
+### D-29 — Paridade não se entrega em partes
+`estado: fechada · 2026-08-27 · fase: F2`
+
+Quando o critério é **paridade com algo que já existe**, a entrega é a lista inteira. Não se fatia
+em partes, não se marca etapa como concluída com um pedaço da lista, e não se manda o usuário
+"conviver com o que já dá" enquanto o resto vem depois.
+
+**Por quê:** duas voltas seguidas reprovadas em 2026-08-26 e 2026-08-27, pelo mesmo motivo, e as
+duas por decisão minha de escopo. A segunda entregou o fluxo de ditado inteiro e correto — e mesmo
+assim ouviu *"ainda estamos longe do mínimo"*, porque faltavam o Consumo, os itens do menu e a
+aparência. **Paridade é piso, e piso pela metade continua abaixo do piso.** Meio piso não é meio
+valor: é zero, porque o usuário continua tendo de voltar para a ferramenta antiga.
+
+A régua da fase (`D-10`) diz "não piorar o que ele já usa". Enquanto faltar um item da lista, o app
+é pior do que o que ele já usa, mesmo que cada item entregue esteja perfeito.
+
+**O que isto muda no meu jeito de escopar:** fatiar continua certo para funcionalidade **nova**, que
+nasce de nada e cresce por partes — foi o que o usuário pediu quando disse *"qualquer coisa mais
+além disso, a gente implementa aos poucos"*. Ele estava separando as duas coisas na mesma frase, e
+eu li só a segunda metade.
+
+**Reabre se:** aparecer um item de paridade tão caro que segurar tudo o mais por causa dele saia
+pior para o usuário — e nesse caso quem decide segurar ou soltar é ele, com o custo na mesa, não eu
+sozinho ao escrever a tarefa.
+
+### D-30 — O desktop pode divergir da web, e toda divergência é declarada na spec
+`estado: fechada · 2026-08-27 · fase: F2 e seguintes`
+
+A paridade (`SPEC-002`) é **piso, não teto**. O desktop pode se afastar da interface web quando o uso
+real pedir — mas **cada afastamento vira uma linha na própria spec**, dizendo o que a web faz, o que
+o desktop faz e por quê. Divergência não declarada é defeito.
+
+Primeiras três, pedidas pelo usuário em 2026-08-27 depois de usar o app:
+
+| ponto | web | desktop | motivo |
+|---|---|---|---|
+| corte de segurança (`A5`) | 2 min 30 s | **5 min** | é no desktop que se dita de verdade; 2min30 cortava fala no meio |
+| padrão de copiar/recortar (`D1`, `F4`) | copiar | **recortar** | o texto vai embora para outro aplicativo e não volta; deixar o anterior na caixa faz a gravação seguinte empilhar em cima de lixo |
+
+Mais três, do mesmo dia, depois de mais uma sessão de uso:
+
+| ponto | web | desktop | motivo |
+|---|---|---|---|
+| onde o balão aparece (`B4`) | rodapé da tela, 2 s | **acima do botão de gravar**, discreto, 3 s | numa janela pequena e sempre no topo, o rodapé fica longe de onde o olho está |
+| painel de consumo (`G`) | modal por cima da página | **janela própria**, redimensionável | a janela do ditado é pequena de propósito; a linha do tempo vazava dela |
+| fundo dos botões-ícone (`I`) | `#e4e7eb` | **`#eef1f5`**, mais leve | pedido direto do usuário — "mais claro", "bola nos outros em uma cor mais leve" |
+
+**Nenhuma delas muda a interface web**, que segue como está.
+
+**Por quê a regra, e não só as três mudanças:** sem ela, a próxima conferência de paridade acharia
+essas diferenças e as trataria como falha de transcrição do desenho — e alguém "consertaria" de
+volta. A spec é que tem de saber a diferença entre um desvio e uma decisão.
+
+**Consequência para quem confere:** ao comparar as telas, divergência encontrada e **não** listada na
+spec é achado; listada, é decisão, e não se toca.
+
+**Reabre se:** as divergências crescerem a ponto de a `SPEC-002` virar mais tabela de exceção que
+lista de paridade — sinal de que o desktop passou a ter desenho próprio, e aí ele merece uma spec
+própria em vez de uma lista de diferenças.

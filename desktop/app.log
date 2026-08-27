@@ -1,0 +1,43 @@
+2026-08-27 02:25:13,868 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=ctrl+alt+space
+2026-08-27 02:37:08,116 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=ctrl+shift+f24
+2026-08-27 02:37:43,926 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=ctrl+shift+f23
+2026-08-27 02:38:54,766 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=ctrl+shift+f22
+2026-08-27 02:39:21,037 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=ctrl+shift+f21
+2026-08-27 02:39:21,037 descarte_por_silencio pico=0.0000 limiar=0.0200
+2026-08-27 03:12:12,172 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=ctrl+shift+f19
+2026-08-27 03:13:57,483 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=ctrl+shift+f19
+2026-08-27 03:15:01,087 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=ctrl+shift+f19
+2026-08-27 03:15:44,329 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=ctrl+shift+f19
+2026-08-27 03:16:37,976 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=ctrl+shift+f19
+2026-08-27 03:17:55,943 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=ctrl+shift+f19
+2026-08-27 03:18:54,911 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=ctrl+shift+f19
+2026-08-27 03:21:15,177 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=ctrl+shift+f19
+2026-08-27 03:21:48,242 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=ctrl+shift+f19
+2026-08-27 03:22:28,513 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=ctrl+shift+f18
+2026-08-27 03:22:34,529 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=ctrl+shift+f18
+2026-08-27 03:22:36,593 erro_consumo mensagem=Não foi possível consultar o consumo: HTTPConnectionPool(host='127.0.0.1', port=81): Max retries exceeded with url: /consumo (Caused by NewConnectionError("HTTPConnection(host='127.0.0.1', port=81): Failed to establish a new connection: [WinError 10061] Nenhuma conexão pôde ser feita porque a máquina de destino as recusou ativamente"))
+2026-08-27 03:23:34,747 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=ctrl+shift+f16
+2026-08-27 03:23:34,747 descarte_por_silencio pico=0.0000 limiar=0.0200
+2026-08-27 03:25:39,333 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=ctrl+alt+space
+2026-08-27 03:38:35,536 descarte_por_silencio pico=0.0027 limiar=0.0200
+2026-08-27 03:38:48,762 descarte_por_silencio pico=0.0015 limiar=0.0200
+2026-08-27 03:38:51,101 descarte_por_silencio pico=0.0005 limiar=0.0200
+2026-08-27 03:39:03,160 descarte_por_silencio pico=0.0011 limiar=0.0200
+2026-08-27 03:40:16,672 descarte_por_silencio pico=0.0032 limiar=0.0200
+2026-08-27 03:40:34,894 descarte_por_silencio pico=0.0020 limiar=0.0200
+2026-08-27 03:41:15,266 descarte_por_silencio pico=0.0093 limiar=0.0200
+2026-08-27 03:41:50,714 descarte_por_silencio pico=0.0000 limiar=0.0200
+2026-08-27 03:41:53,946 descarte_por_silencio pico=0.0028 limiar=0.0200
+2026-08-27 03:43:18,461 descarte_por_silencio pico=0.0039 limiar=0.0200
+2026-08-27 04:19:03,364 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=ctrl+shift+f14
+2026-08-27 04:19:07,584 descarte_por_silencio pico=0.0000 limiar=0.0200
+2026-08-27 04:19:31,466 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=ctrl+shift+f13
+2026-08-27 04:20:16,226 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=ctrl+shift+f12
+2026-08-27 04:20:16,238 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=ctrl+shift+f12
+2026-08-27 04:20:40,237 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=ctrl+shift+f12
+2026-08-27 04:20:40,248 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=ctrl+shift+f12
+2026-08-27 04:20:42,461 erro_consumo mensagem=Não foi possível conectar ao núcleo em http://127.0.0.1:8199/consumo.
+2026-08-27 04:23:25,884 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-08-27 11:16:14,149 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-08-27 11:17:33,495 erro_consumo mensagem=Não foi possível conectar ao núcleo em http://127.0.0.1:8000/consumo.
+2026-08-27 11:17:41,430 erro_consumo mensagem=Não foi possível conectar ao núcleo em http://127.0.0.1:8000/consumo.

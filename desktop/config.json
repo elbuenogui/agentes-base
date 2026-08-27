@@ -1,6 +1,8 @@
 {
-  "atalho": "f9",
+  "atalho": "shift+esc+Ç",
   "url_nucleo": "http://127.0.0.1:8000",
   "modelo": "gpt-4o-transcribe",
-  "limiar_silencio_rms": 0.01
+  "streaming": false,
+  "dispositivo_entrada": "",
+  "recortar_em_vez_de_copiar": true
 }

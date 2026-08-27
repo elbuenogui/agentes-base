@@ -54,12 +54,12 @@ revisitada. Não é cópia — é divisão de papel.
 
 ## Amadurecendo
 
-### B-01 — Arrastar e soltar áudio na área central
-`estado: amadurecendo · nasceu: 2026-08-21, frente de interface · olhar de novo em: F2`
-Soltar o arquivo na área central para enviar, sem passar pelo menu.
-**Por quê ainda não:** adiado pelo próprio usuário para depois da frente de interface enxuta
-("posteriormente vamos voltar com o drag de áudio"). É interação de cliente, e o cliente que importa
-agora é o desktop da F2.
+### B-01 — Arrastar e soltar áudio
+`estado: promovida · nasceu: 2026-08-21, frente de interface · virou: SPEC-002 E2, em 2026-08-27`
+Soltar o arquivo de áudio para transcrever, sem passar pelo menu.
+**Promovida a pedido do usuário**, depois de usar o app de desktop: *"eu gostaria que se arrastasse
+um arquivo de áudio até o botão ele transcrevesse"*. O alvo do solte é o **botão de gravar**, e o
+caminho é o mesmo do "Enviar arquivo" (`E1`). Detalhe em `spec/specs/SPEC-002_paridade-desktop.md`.
 
 ### B-03 — Commit guiado por silêncio (plano B das emendas)
 `estado: amadurecendo · nasceu: 2026-08-20, modo ao vivo · olhar de novo em: quando o ao vivo descongelar (D-02)`

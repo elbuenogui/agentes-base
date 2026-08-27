@@ -55,11 +55,17 @@ consegue apagar de lá** — o sistema recusa com *"Operation not permitted"*:
 - `.git/index.lock` — deixado para trás por qualquer comando de git interrompido, e que faz o
   **commit seguinte falhar**.
 
+- **`HEAD.lock` e `tmp_obj_*` em `.git/objects/`** — deixados quando um `git commit` roda pela pasta
+  montada. O commit **funciona**, mas o git avisa `Operation not permitted` ao tentar limpar os
+  próprios temporários. Medido em 2026-08-27: um commit de 30 arquivos deixou **58** resíduos.
+  Enquanto o `HEAD.lock` estiver lá, operações futuras de git podem falhar.
+
 Duas providências, e as duas são baratas:
 
 1. **No `.gitignore`**, para que nunca sejam commitados por engano: `.fuse_hidden*` e `_to_delete/`.
 2. **Quem roda local apaga.** Quem só alcança a pasta montada **move** para `_to_delete/` e avisa o
-   que moveu. O `.git/index.lock` é caso especial: ele bloqueia o commit, então apagá-lo é parte de
+   que moveu. Resíduo dentro de `.git/` é caso à parte: não se move, porque mexer na pasta do git à
+   mão é pior que o problema — **avise, e quem roda local apaga**. O `.git/index.lock` é caso especial: ele bloqueia o commit, então apagá-lo é parte de
    deixar o repositório pronto (ver `COMMIT.md`).
 
 ## Hierarquia de pastas: só quando há razão
