@@ -36,25 +36,27 @@ Numeração: a do corpo do pré-projeto (9 fases + futura). O roadmap da §3, qu
 corrigido por esta decisão.
 
 ### F1 — Núcleo de transcrição
-`estado: em-andamento`
-Fechar o contrato do núcleo, para que os três clientes consumam a mesma capacidade sem
-reimplementá-la. **Pronto quando alguém escrever um cliente novo lendo só o contrato**, sem abrir o
-`index.html`. Etapas no `PLANO.md`: a 1 (contrato medido) e a 2 (fechar a SPEC-001) concluídas em
-2026-08-23, a 5 (idioma) cancelada por medição (`D-08`), e a 3 (corrigir as quatro lacunas aprovadas)
-é a próxima do Executor. Não depende de nada.
+`estado: encerrada`
+Fechou o contrato do núcleo, medido contra a máquina e não suposto. Encerrada em **2026-08-24** com
+todas as etapas concluídas: contrato levantado por medição, SPEC-001 fechada, as quatro lacunas
+aprovadas corrigidas (códigos de erro, prazo de espera, teto de tamanho e versão do contrato) e a
+arrumação feita. A Etapa 5 (parâmetro de idioma) caiu por medição (`D-08`).
+
+**Critério de conclusão, exercido e respondido em 2026-08-26**: dois clientes novos foram escritos
+lendo só o contrato, sem abrir o código. **Ele bastou**, com uma lacuna única — não declarava onde o
+núcleo escuta. Os dois tropeçaram na mesma coisa, de forma independente, o que é a melhor evidência
+possível de que era lacuna real e não distração de um deles. Fechada no contrato na mesma data. **A
+Fase 1 fecha de verdade.**
 
 ### F2 — Desktop, ditado universal
-`estado: proxima`
-> A `D-13` muda o sequenciamento: como histórias, entregáveis e MVP são a **primeira entrega da
-> própria fase**, a F2 deixa de estar bloqueada para *começar*. A POC-1 roda em paralelo e alimenta
-> especificamente a especificação do comportamento de inserção — que é o único pedaço que depende
-> dela.
+`estado: em-andamento`
+Atalho, fala, texto no campo em foco. **É a fase que o usuário quer usar todo dia**, e é o que
+justifica adiar o agente (`D-24`). Régua: **não piorar o que ele já usa** (`D-10`). Windows primeiro,
+com a camada de inserção isolada (`D-11`).
 
-Atalho, fala, texto no campo. **Primeira entrega da fase**: histórias de usuário, lista de
-entregáveis e definição de MVP (`D-13`). Alvos de ditado conhecidos: terminal do Claude Code,
-extensão do Claude Code no VS Code, aba do WhatsApp no navegador — e a lista cresce conforme o uso.
-Régua: **não piorar o que o usuário já usa hoje** (`D-10`). Windows primeiro, camada de inserção
-isolada (`D-11`).
+Três etapas no `PLANO.md`, e só três de propósito: a **POC-1** (a única coisa capaz de invalidar o
+desenho do produto, e que decide a linguagem do app), as **histórias, entregáveis e MVP** (`D-13`), e
+só então o resto do plano. **Encerra com uso em regime, não com o app pronto.**
 
 ### F3 — Android, ditado universal
 `estado: bloqueada:POC-3`

@@ -1,10 +1,12 @@
 # agentes-base
 
+<!-- kit:projeto:inicio -->
 > **Duas coisas moram aqui, e é de propósito.** Este repositório é o **kit** descrito abaixo — e é
 > também o **projeto do assistente pessoal multiplataforma**, que é o produto principal. O método
 > (como se trabalha) mora em `.claude/`, mapeado em [`.claude/CEREBRO.md`](.claude/CEREBRO.md); o
 > produto mora em `spec/` e no `transcritor/`. Este README fala **do kit**: como levá-lo para outro
 > projeto. Quem quer entender o produto começa pelo `CLAUDE.md` e pela retomada mais recente.
+<!-- kit:projeto:fim -->
 
 Kit portátil de arquivos para instalar em qualquer projeto novo onde você (Marcel) quer:
 
@@ -17,7 +19,10 @@ Este kit foi extraído e generalizado do fluxo que já roda no repositório de c
 "pelado", sem nenhuma referência a esse domínio, pronto para ser copiado para qualquer repositório
 novo.
 
-**Antes de instalar num projeto, leia `GUIA_AGENTES_BASE.md`.** Ele explica o que cada peça faz,
+**Antes de instalar num projeto, leia `GUIA_AGENTES_BASE.md`.** Ele é a explicação do sistema: o que
+é agente, o que é papel e o que é skill (não são a mesma coisa, e quase toda confusão vem daí), o que
+cada mecanismo resolve, como os papéis conversam, quando **não** vale a pena usar isto, e como
+atualizar uma instalação que já existe. Ele explica o que cada peça faz,
 por que existe e quando vale a pena usar (ou não). Não instale isso em piloto automático — é um
 processo com custo (disciplina de manter arquivos atualizados); só compensa se o projeto vai ter
 mais de um chat de trabalho ao longo do tempo, ou execução em paralelo ao planejamento.
@@ -55,6 +60,19 @@ Repare que **não há** `PLANO.md`, `PROXIMA_TAREFA.md`, `PROGRESSO.md` nem arqu
 `coleta/` neste kit. Isso é proposital: esses arquivos nascem no primeiro uso real do projeto —
 criar stubs vazios só gera confusão sobre se algo já foi decidido ou não. O formato exato de cada
 um está descrito em `.claude/PM.md` e `.claude/EXECUTOR.md`.
+
+## Como exportar o kit
+
+```bash
+python3 .claude/kit/exportar.py
+```
+
+Gera `kit-agentes-base_<data>.zip` (e a mesma coisa descompactada) em `.claude/tmp/`, **a partir dos
+arquivos vivos deste repositório**. Os trechos específicos deste projeto saem, e um bloco-modelo com
+`< >` entra no lugar. Não existe pasta com cópias do kit, e não deve passar a existir: cópia
+envelhece em paralelo com o original.
+
+O script diz, ao rodar, o que deixou de fora e por quê.
 
 ## Como instanciar num projeto novo (a partir de uma branch)
 

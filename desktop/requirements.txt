@@ -1,0 +1,5 @@
+keyboard
+sounddevice
+numpy
+pyperclip
+requests

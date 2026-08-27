@@ -341,3 +341,57 @@ entregável em uso, e explica por que essa regra é dura aqui em vez de burocrac
 
 **Reabre se:** o assistente se mostrar incapaz de entrar na rotina sem a camada de agente — aí a
 ordem se inverte com evidência de uso, não por previsão.
+
+### D-25 — Começar pelo clipboard com atalho global, e refinar com o uso
+`estado: fechada · 2026-08-25 · fase: F2`
+
+A Fase 2 começa construindo o **menor app que já entrega valor** — atalho global, gravar,
+transcrever, clipboard — em vez de investigar por qual mecanismo inserir texto no campo em foco. A
+POC-1 original (quatro alvos × três mecanismos) **sai do caminho crítico** e vira `B-22`.
+
+**Decorrência: a linguagem do app é Python.** A `D-06` dizia que ela sairia da POC-1; sem a PoC, o
+critério passa a ser iterar rápido no que o projeto já usa. Atalho global e clipboard são triviais em
+Python, e a camada de inserção nasce isolada (`D-11`) para que trocar de linguagem depois custe só
+aquele pedaço.
+
+**Por quê:** decisão do usuário — *"ao invés de ficar explorando e explorando alternativas para poder
+começar, vamos já começar"*. E é coerente com a `D-24`: a régua da fase é uso diário, não
+funcionalidade. Um app que não existe não entra em rotina nenhuma, por melhor que seja a investigação
+que o precede.
+
+**A trava que o PM acrescentou, e que o escopo original não tinha:** clipboard sozinho não entrega
+nada que o app web já não faça. **O atalho global é o que torna a primeira versão diferente do que
+existe** — ditar sem trocar de janela. Sem ele, a etapa entrega o produto atual sem o navegador.
+
+**Reabre se:** o uso mostrar que copiar e colar à mão é atrito suficiente para atrapalhar — aí a
+inserção automática volta do backlog com evidência de uso real, que é melhor base do que a
+investigação teria dado.
+
+### D-26 — A inserção de texto tem de disparar de dentro do atalho global
+`estado: fechada · 2026-08-26 · fase: F2 e seguintes`
+
+Quando a inserção automática no campo em foco entrar (`B-22`), ela **precisa ser disparada de dentro
+do handler do atalho de teclado global** — ou de um evento de entrada real equivalente. **Nunca** de
+um serviço, fila, timer ou processo desacoplado da entrada do usuário.
+
+**Por quê:** achado por medição na tentativa parcial da POC-1, em 2026-08-25. Quatro tentativas de
+injeção (teclado sintético e clipboard, em dois alvos) **falharam silenciosamente** — campo vazio,
+sem erro, com a janela-alvo confirmada em foco por leitura de `GetForegroundWindow()`. A causa foi
+isolada: `SetForegroundWindow` devolveu `False`, porque o processo que disparava não carregava o
+crédito de *entrada de usuário recente* que o Windows exige para entregar entrada sintética de forma
+confiável.
+
+**A consequência é de arquitetura, não de escolha de mecanismo.** Não importa qual dos três
+mecanismos se use: se o disparo vier de um processo desacoplado, todos falham do mesmo jeito — e
+falham **em silêncio**, que é o pior modo possível, porque parece bug de mecanismo.
+
+**Revisa a `D-06`:** a escolha de linguagem e framework do app passa a ter uma restrição concreta —
+tem de conseguir executar a inserção **dentro** do handler do atalho, de forma síncrona.
+
+**Efeito colateral feliz:** o app da Etapa 1 já nasceu com atalho global (`D-25`), então ele já está
+na única arquitetura em que a inserção vai funcionar. O corte de escopo do usuário, feito por outra
+razão, acertou esta por acidente.
+
+**Reabre se:** aparecer no Windows um caminho de inserção que não dependa desse crédito — a API de
+acessibilidade (`UI Automation`) é candidata, porque escreve no controle em vez de sintetizar
+entrada, e não chegou a ser confirmada de ponta a ponta.

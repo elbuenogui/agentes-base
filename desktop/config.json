@@ -1,0 +1,6 @@
+{
+  "atalho": "f9",
+  "url_nucleo": "http://127.0.0.1:8000",
+  "modelo": "gpt-4o-transcribe",
+  "limiar_silencio_rms": 0.01
+}

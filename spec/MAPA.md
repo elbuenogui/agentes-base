@@ -14,7 +14,8 @@ status: vivo
 > hora de gerar. Até 23/08 esta página anunciava "14 decisões" e "cinco lacunas abertas"; eram 18 e
 > quatro. Contagem escrita à mão envelhece a cada linha nova, sem avisar ninguém.
 
-## Fase corrente: F1 — Núcleo de transcrição
+## Fase encerrada: F1 — Núcleo de transcrição
+`encerrada em 2026-08-24`
 
 | Entrega | Artefato | Status |
 |---|---|---|
@@ -25,6 +26,14 @@ status: vivo
 | E1.5 Promover o harness do ao vivo | tarefa de arrumação | Etapa 4 do `PLANO.md` — decidida pelo PM, não requer usuário |
 | ~~E1.6 Parâmetro `idioma`~~ | lacuna L8 | **cancelada 2026-08-23**: a medição refutou o problema (`D-08` revisada) |
 | E1.7 Atualizar o `CLAUDE.md` | — | Etapa 6 do `PLANO.md` — descreve o repo como "MVP de transcrição" e não cita `spec/` |
+
+## Fase corrente: F2 — Desktop, ditado universal
+
+| Entrega | Artefato | Status |
+|---|---|---|
+| E2.1 POC-1 — mecanismo de inserção no Windows | — | **etapa 1 do `PLANO.md`** — bloqueante da fase, decide a linguagem do app (`D-06`) e exerce o contrato da F1 |
+| E2.2 Histórias, entregáveis e MVP | — | **etapa 2** — fecha `L-A`, `L-B` e `L-C` (`D-13`) |
+| E2.3 O resto do plano | — | **etapa 3** — só se escreve depois da POC-1 e do MVP |
 
 **Estado da SPEC-001**: fechada em 2026-08-23. O que ela deixou como requisito está na Etapa 3 do
 `PLANO.md`; o que ela deixou como comportamento declarado (não como conserto) está na `D-16`
@@ -51,7 +60,7 @@ for especificada (`D-13`).
 
 | ID | Fase | Pergunta | Status |
 |---|---|---|---|
-| POC-1 | F2 | por qual mecanismo inserir texto no campo em foco no Windows, e onde ele falha | não iniciada — **bloqueante da F2**, decide a linguagem do app (`D-06`). Alvos: terminal do Claude Code, VS Code (Electron), aba do WhatsApp |
+| POC-1 | F2 | por qual mecanismo inserir texto no campo em foco no Windows, e onde ele falha | **etapa 1 da fase corrente** — bloqueante da F2, decide a linguagem do app (`D-06`), e é o primeiro cliente a consumir o contrato fora do `index.html`. Alvos: terminal do Claude Code, VS Code (Electron), aba do WhatsApp |
 | POC-2 | F2 | janela flutuante sempre no topo e não-ativável no Windows | não iniciada — condição de reabertura da `D-15` |
 | POC-3 | F3 | overlay + acessibilidade inserindo texto em app de terceiro no S22 | não iniciada — bloqueante da F3 |
 | POC-4 | F3/F5 | o que o app do ChatGPT no Android aceita | não iniciada |

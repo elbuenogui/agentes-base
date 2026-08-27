@@ -1,0 +1,2 @@
+Este é um teste de inserção automática de texto, com acentuação, à, ê e um emoji 😀 para validar o mecanismo de digitação sintética no Windows.
+Segunda linha do mesmo texto, para confirmar que a quebra de linha não é perdida nem confundida com o Enter que envia mensagens no WhatsApp.

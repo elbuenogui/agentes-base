@@ -16,6 +16,20 @@ provocada de verdade. Onde a medição divergiu da SPEC-001 original (que tinha 
 por leitura de código), o que está escrito aqui é **o observado** — a divergência em si está
 listada no `PROGRESSO.md` da tarefa, para o PM decidir o que fazer com ela.
 
+## Onde o núcleo escuta
+
+`http://127.0.0.1:8000` por padrão — o núcleo é um servidor local, subido com `uvicorn` a partir de
+`transcritor/` (ver `transcritor/README.md` para o passo a passo).
+
+**Acrescentado em 2026-08-26**, e vale registrar como foi descoberto: era a **única lacuna** que dois
+clientes independentes encontraram ao serem escritos lendo só este documento. Nenhum dos dois
+conseguiu adivinhar o endereço, e os dois tiveram de abrir outro arquivo para achá-lo. Não é
+comportamento de API — é informação operacional —, mas sem ela o contrato não basta, que era
+justamente o critério de conclusão da Fase 1.
+
+**Um cliente não deve fixar este endereço no código**: deixe configurável, com este valor como
+padrão.
+
 ## Fora do contrato: o modo ao vivo
 
 `GET /tempo-real/token` e `POST /tempo-real/turno-concluido` existem no backend e continuam

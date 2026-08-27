@@ -150,3 +150,32 @@ que saiu de escopo junto com o modelo.
   `index.html` lê `detail` direto — transformá-lo em objeto, que é o caminho natural com
   `HTTPException(detail=...)`, quebraria a interface. A mudança tem de ser aditiva de verdade, não
   só na intenção.
+
+---
+
+## Adendo — Etapa 3 concluída e Fase 1 encerrada (2026-08-24)
+
+- [ARTEFATO] **As quatro lacunas corrigidas e medidas**: oito códigos de erro provocados de verdade
+  nos dois modos; prazo de espera de 120s declarado; teto de 25 MB (conferido na documentação da
+  OpenAI em 24/08) recusando em ~0,13s antes do upload; `X-Nucleo-Contrato: 1` nas duas rotas do
+  contrato e ausente no tempo real.
+- [ARTEFATO] O Executor provocou o timeout **de verdade**, subindo um servidor local que aceita
+  conexão e nunca responde, e esperou os **6min01,99s** até a falha. Não estimou.
+- [DECISÃO→`B-21`] **Achado que a tarefa não previa**: sob a mesma falha de rede, o modo streaming
+  termina em `SEM_CONEXAO` e não em `TEMPO_ESGOTADO`, e demora ~8min29s contra ~6min02s. É
+  comportamento do SDK da OpenAI para `stream=True` — o mapeamento no backend é o mesmo helper nos
+  dois modos. O Executor registrou a divergência em vez de forçar o resultado esperado.
+- [ARTEFATO] Prova visual de que a mudança foi aditiva: com o `.env` quebrado, o app no navegador
+  exibiu o balão vermelho com o texto de `detail`. Era o risco número um da tarefa — o campo
+  `codigo` novo transformar o `detail` em objeto e quebrar a interface.
+- [PENDÊNCIA] **Gravação por microfone real não foi testada.** O upload de arquivo exercita o mesmo
+  caminho de código, mas não é o mesmo teste. Fica como lembrete de trinta segundos para o usuário.
+- [DECISÃO] **Fase 1 encerrada em 2026-08-24**, com todas as etapas concluídas. Trade-off aceito
+  pelo usuário: o critério de conclusão da fase — escrever um cliente novo lendo só o contrato —
+  **não foi exercido**, e quem o exerce é a POC-1, primeira etapa da Fase 2. Se o contrato não
+  bastar, a Fase 1 reabre com evidência de uso real em vez de previsão. Fechar agora evita segurar a
+  fase que o usuário quer usar todo dia por causa de um teste que só a fase seguinte pode fazer.
+- [ARTEFATO] Virada de plano executada na hora, como manda a regra: plano encerrado em
+  `historico/PLANO_2026-08-24_fase1-encerrada.md`, 358 linhas de progresso movidas para
+  `historico/PROGRESSO_fase1-nucleo_2026-08-23_a_2026-08-24.md` sem edição, e `PLANO.md` novo com a
+  Fase 2 — **três etapas, de propósito**: POC-1, histórias/entregáveis/MVP, e só então o resto.

@@ -208,3 +208,58 @@ a mesma pergunta** — são áreas diferentes fazendo as perguntas delas e busca
 Cinco agentes com a mesma pergunta custam cinco vezes mais e acham o mesmo.
 **O que faria virar etapa:** uma revisão acionada em que um achado importante só aparecesse se
 alguém soubesse perguntar como um especialista da área — aí a lente por texto provou o limite dela.
+
+### B-21 — Timeout no streaming cai em `SEM_CONEXAO`, não em `TEMPO_ESGOTADO`
+`estado: amadurecendo · nasceu: 2026-08-24, medição da Etapa 3 · olhar de novo em: quando houver um segundo cliente consumindo o núcleo`
+Sob a mesma falha de rede (servidor que aceita a conexão e nunca responde), o modo sem streaming
+devolve `TEMPO_ESGOTADO`/`504` em **6min01,99s**; o modo streaming devolve `SEM_CONEXAO` dentro de um
+`200` em **8min28,92s**. O SDK da OpenAI levanta `APIConnectionError` em vez de `APITimeoutError`
+para chamadas `stream=True` nessa condição — o backend usa o mesmo helper de mapeamento nos dois
+modos, então não é bug do código do projeto.
+**Por quê ainda não:** com um cliente só, e esse cliente sendo o app web que o usuário opera olhando
+a tela, um erro de rede genérico resolve. O código errado passa a doer quando um cliente automático
+precisar distinguir "a rede caiu" de "demorou demais" para decidir se tenta de novo.
+**O que faria virar etapa:** um segundo cliente consumindo o núcleo — que é também o gatilho de
+revisão da `M-01` (verificação manual). Aí vale investigar a causa raiz no SDK ou normalizar o
+mapeamento no backend.
+**Junto com ele**: o `max_retries=2` do SDK não foi alterado, então o tempo real até a falha é
+múltiplo dos 120s declarados. Registrado no `NUCLEO.md` para quem for revisar esse número.
+
+### B-22 — Inserção automática no campo em foco (a POC-1 original)
+`estado: adiada · nasceu: 2026-08-24, escopo da Fase 2 · gatilho: o uso mostrar que copiar e colar à mão atrapalha`
+Investigar por qual mecanismo inserir texto no campo em foco no Windows, e onde ele falha: quatro
+alvos (terminal do VS Code, editor do VS Code, WhatsApp no Opera, Bloco de Notas como controle
+nativo) × três mecanismos (teclado sintético, API de acessibilidade, área de transferência com
+restauração), com escalada para o Text Services Framework se os três falharem.
+**Por quê ainda não:** decisão do usuário em 2026-08-25 (`D-25`) — começar a usar antes de
+investigar. A régua da fase é uso diário, e app que não existe não entra em rotina.
+**O que faria virar etapa:** você usar o app por alguns dias e o copiar-colar manual virar atrito
+real. Aí a investigação volta com **evidência de uso**, que é base melhor do que a PoC teria dado —
+inclusive porque você vai saber em quais aplicativos isso dói, e a lista de alvos deixa de ser
+suposição.
+**Já decidido, e continua valendo**: o alvo de controle nativo (`Bloco de Notas`) importa porque os
+três alvos reais são todos Chromium/Electron; e a área de transferência se **mede** (janela de
+exposição, confiabilidade da restauração), não se escolhe por preferência.
+
+**Evidência parcial já levantada (2026-08-25), antes do adiamento** — em `spec/pocs/POC-1/`:
+
+- **`D-26`, o achado que muda tudo**: a injeção tem de disparar de dentro do handler do atalho
+  global. Quatro tentativas falharam **em silêncio** por serem disparadas de um processo desacoplado.
+  Quando esta investigação voltar, é **daí** que ela parte — a matriz 4×3 em branco não significa
+  "não testamos", significa "testamos do jeito errado e sabemos por quê".
+- **UI Automation no WhatsApp Web (Opera)**: enxerga só um contêiner genérico como elemento focado,
+  sem `ValuePattern` nem `TextPattern` — característica conhecida de Chromium. No Bloco de Notas, o
+  controle certo **tem** `ValuePattern`, mas o `SetValue` não chegou a ser confirmado.
+- **Clipboard, medido**: texto exposto por **~1,05s**; Histórico de Área de Transferência do Windows
+  (Win+V) **desligado** nesta máquina; nenhum gerenciador de terceiros rodando. A restauração
+  executou sem erro, mas não foi confirmada visualmente ponta a ponta.
+
+### B-23 — Escolher se a transcrição vai para o clipboard automaticamente
+`estado: amadurecendo · nasceu: 2026-08-25, durante a POC-1 · olhar de novo em: depois de alguns dias de uso do app`
+Uma opção configurável para o app copiar a transcrição para a área de transferência automaticamente
+ou não. Pedido do usuário durante a sessão.
+**Por quê ainda não:** o app acabou de nascer copiando sempre, e é justamente o uso que vai dizer se
+copiar sempre atrapalha — se você perde o que tinha copiado, com que frequência, e em que situação.
+Decidir agora seria decidir sem o dado que chega de graça na primeira semana.
+**O que faria virar etapa:** você reclamar de ter perdido algo do clipboard. Aí a opção entra, e já
+com a resposta de qual deve ser o padrão.

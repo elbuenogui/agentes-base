@@ -78,3 +78,89 @@ A camada de método — papéis, regras, skills, estado — mora em `.claude/`, 
 **Por quê:** decisão do usuário. É onde as ferramentas já procuram e onde metade da camada já morava;
 pasta nova seria mais legível para humano e pior para máquina.
 **Reabre se:** —
+
+### M-07 — O kit se exporta por script, nunca por cópia
+`estado: fechada · 2026-08-25`
+
+Existe um único jeito de levar este método para outro projeto: rodar
+`python3 .claude/kit/exportar.py`, que **gera** o kit a partir dos arquivos vivos. **Não existe pasta
+`kit/` com cópias dos arquivos**, e não deve passar a existir.
+
+Blocos marcados com `<!-- kit:projeto:inicio -->` … `<!-- kit:projeto:fim -->` saem da cópia
+exportada; blocos `<!-- kit:modelo … kit:modelo -->` entram no lugar, com `< >` para quem instalar
+preencher. O que fica de fora, e por quê, está declarado no próprio script.
+
+**Por quê:** cópia envelhece em paralelo com o original — é a mesma deriva que a `M-04` existe para
+impedir, e seria irônico reproduzi-la justamente no artefato que carrega a regra. Gerado, o kit não
+diverge, e exportar de novo daqui a um mês traz junto tudo que tiver melhorado no meio-tempo.
+
+**Detalhe de implementação que é regra, não acidente:** o script **não apaga nada** — o zip é montado
+direto da memória e escrito em modo de truncamento. A pasta montada de uma sessão remota recusa
+remoção ("Operation not permitted"), e o script precisa rodar tanto local quanto remoto.
+
+**Reabre se:** o kit crescer a ponto de precisar de arquivos que não existem no projeto de origem —
+aí ele deixa de ser uma vista do repositório vivo e passa a ter conteúdo próprio.
+
+### M-08 — O painel é roadmap, e a skill é genérica com configuração local
+`estado: fechada · 2026-08-25`
+
+O painel de estado passa a ter o **roadmap como espinha**: as fases percorridas com o que cada uma
+entregou, onde estamos, o que vem — tudo colapsável, e cada fase apontando o **chat** em que foi
+discutida. A skill `diagnostico-geral` descreve **como** montar; `.claude/painel.md` diz **quais**
+arquivos ler, com que vocabulário, onde publicar e com que cara.
+
+**Por quê:** o usuário não consegue guardar na cabeça um plano de várias fases com as especificações
+e os marcos de cada uma — e quem consegue é quem lê os arquivos. O painel anterior era um retrato do
+agora; este responde *onde estamos na sequência*, que é a pergunta que ele realmente faz.
+
+**Por que configuração em arquivo, e não descoberta a cada geração:** painel que muda de forma entre
+execuções deixa de ser comparável com o anterior, e comparar é metade do valor. A descoberta acontece
+**uma vez**, na instalação, com o usuário junto — e vira arquivo.
+
+**Regras de recorte que nasceram junto** (o livro-razão só cresce; a vista é que recorta): decisão
+antiga vira índice de uma linha; item de backlog recusado ou morto não entra; **estimativa de esforço
+não entra** — "custa duas sessões" é chute com cara de dado, e vira fato na terceira leitura.
+
+**Reabre se:** o painel deixar de caber numa tela de rolagem confortável mesmo com tudo colapsado —
+aí ele vira mais de uma página, e a espinha decide qual.
+
+### M-09 — Skill de conta é outro destino de exportação, não uma segunda fonte
+`estado: fechada · 2026-08-25`
+
+Uma skill deste método pode ser salva na conta do usuário, ficando disponível em qualquer chat sem
+depender de o repositório estar conectado. **Quando isso acontecer, a cópia de conta é gerada a
+partir do arquivo vivo do repositório** — nunca editada à mão lá.
+
+**Por quê:** é a mesma razão da `M-07`. Duas cópias editáveis da mesma regra divergem, e a de conta
+é pior de perceber, porque ela some do repositório e ninguém vê que envelheceu. Tratada como destino
+de exportação, ela é regenerável e a fonte continua sendo uma só.
+
+**Consequência de desenho:** uma skill candidata a virar skill de conta **tem de aguentar rodar num
+projeto que não usa este método**. Por isso a `diagnostico-geral` ganhou um passo 0 que verifica se
+existe estado em arquivo e **para, dizendo isso**, em vez de inventar fase e etapa. Painel montado
+sobre suposição é pior que painel nenhum: parece autoridade e é chute.
+
+**Reabre se:** aparecer um jeito de a skill de conta apontar para o arquivo do repositório em vez de
+copiá-lo — aí não há cópia, e a regra perde o motivo.
+
+### M-10 — Exceção datada: o PM pode commitar quando o usuário autoriza na conversa
+`estado: fechada · 2026-08-27`
+
+O `PM.md` proíbe o PM de rodar comando que altere o projeto, e `git commit` está na lista. A `M-05`,
+mais nova, diz que **só o usuário autoriza** o commit — *"ou ele autoriza explicitamente, ou ele
+mesmo faz"*. As duas juntas deixavam ambíguo o caso em que o usuário autoriza e pede que o PM faça.
+
+**Resolvido**: com autorização explícita do usuário na conversa, **para aquele commit**, o PM
+executa. Sem autorização, continua valendo a proibição — e autorização é **por commit**, nunca por
+sessão.
+
+**Por quê:** decisão do usuário em 2026-08-27 ("pode commitar"). A regra que importa é *quem decide o
+que entra no histórico*, e essa continua sendo dele; quem digita o comando é detalhe. Manter a
+proibição literal obrigaria a devolver para ele um trabalho que ele acabou de mandar fazer.
+
+**A parte que não muda**: o PM confere antes o que vai entrar. Nesta primeira aplicação a conferência
+já pegou dois resíduos que não deviam ser versionados — `__pycache__` do app novo e dois logs do
+`uvicorn` deixados por sessão de teste.
+
+**Reabre se:** um commit sair errado por o PM ter interpretado autorização onde não havia — aí volta
+a ser sempre do usuário.

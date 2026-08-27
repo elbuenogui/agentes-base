@@ -20,6 +20,7 @@
 
     .claude/
     ├── CEREBRO.md          este arquivo — o mapa
+    ├── painel.md           configuração do painel de roadmap — deste projeto, não vai no kit
     ├── PM.md               conduta do papel PM
     ├── EXECUTOR.md         conduta do papel Executor
     ├── metodo/             as regras, que valem para os dois papéis
@@ -28,7 +29,8 @@
     │   ├── PLANOS.md       os três tipos de plano e quando usar cada um
     │   ├── COMMIT.md       quem autoriza, e o que se deixa pronto
     │   └── DECISOES_METODO.md  o que ESTA instalação decidiu (M-nn) — não vai no kit
-    ├── skills/             os comandos: coleta · revisão acionada · encerrar chat · diagnóstico
+    ├── kit/                exportar.py — gera o kit portátil a partir destes arquivos (M-07)
+    ├── skills/             os comandos (ver tabela abaixo)
     ├── estado/             o canal PM ↔ Executor, vivo
     │   └── historico/      o que já fechou
     └── tmp/                descartável, com validade — nada de valor mora aqui
@@ -47,6 +49,20 @@
 | etapas, critérios de pronto, escopo da fase | `.claude/estado/PLANO.md` |
 | o que o Executor fez e como testou | `.claude/estado/PROGRESSO.md` |
 | **onde tudo mora** | **este arquivo** |
+| como o painel de roadmap é montado neste projeto | `.claude/painel.md` |
+
+## Os comandos
+
+| Comando | Faz | Pasta |
+|---|---|---|
+| **diagnóstico geral** · panorama · roadmap | o painel de roadmap, publicado e colapsável | `skills/diagnostico-geral/` |
+| **revisão** · revisa a estrutura | varre e julga achados; **não corrige** | `skills/revisao-acionada/` |
+| **coleta:** · consolidar | registra no diário do projeto e consolida | `skills/coleta-consolidacao/` |
+| **pode encerrar** · fechar o chat | deixa o projeto retomável em outro chat | `skills/encerrar-chat/` |
+
+Cada uma é um arquivo `SKILL.md`. **Alguns clientes registram skills de projeto automaticamente e
+outros não** — quando não registrarem, abra o arquivo pelo caminho acima. É por isso que a tabela
+existe: o comando não pode depender de o cliente descobrir sozinho.
 
 ## Quem lê o quê
 
@@ -69,5 +85,7 @@ Ele muda quando o trabalho mostra que ele está errado, não por iniciativa de q
 3. **O que se prova aqui volta para o kit.** Mecanismo que já provou valor nesta instalação é
    candidato a subir para o `GUIA_AGENTES_BASE.md`. Sem esse passo, a camada genérica e a camada do
    produto param de conversar, e cada uma reinventa o que a outra já sabia.
+   **Levar o kit para outro projeto**: `python3 .claude/kit/exportar.py` gera o pacote a partir
+   destes arquivos. Nunca copie a mão — ver `metodo/DECISOES_METODO.md`, `M-07`.
 4. **Exceção é datada e registrada.** Exceção pontual às regras vale uma vez, com data e razão no
    `M-nn` correspondente. Exceção não vira regra por repetição silenciosa.

@@ -25,6 +25,40 @@ Os cinco mecanismos abaixo — papéis PM/Executor, canal de progressão, coleta
 as regras de método — atacam cada um desses riscos separadamente. Você pode adotar só os que fizerem sentido
 para o projeto novo; eles não são pacote fechado.
 
+## 0. Antes de tudo: agente, papel e skill não são a mesma coisa
+
+A palavra "agente" faz três trabalhos diferentes, e quase toda confusão com este kit vem daí.
+
+| Peça | O que é | Onde mora |
+|---|---|---|
+| **agente** | o programa que lê, decide e age com ferramentas | fora do repositório — é o assistente |
+| **papel** | as regras escritas que **limitam** o agente naquele chat | `.claude/PM.md`, `.claude/EXECUTOR.md` |
+| **skill** | um procedimento para um assunto específico | `.claude/skills/` |
+| **estado** | o que os papéis trocam entre si | `.claude/estado/` |
+
+**Papel não é outro agente.** É o *mesmo* agente, com um conjunto de regras que dizem o que ele não
+pode fazer ali. "PM" e "EXEC" são dois papéis, um programa só.
+
+**O valor está no limite, não na capacidade.** O PM **consegue** editar código — ele só **não pode**,
+e está escrito que não pode. Essa fricção deliberada é o mecanismo inteiro: é ela que impede uma
+decisão de virar mudança no projeto antes de ser aprovada.
+
+**Skill é a terceira peça, e responde outra pergunta.** Papel diz *o que você pode*; skill diz *como
+se faz uma coisa específica* — registrar uma decisão, montar o painel de estado, encerrar o chat
+deixando o projeto retomável. Um papel carrega várias skills conforme o assunto aparece.
+
+**E nada fica rodando.** Fechou o chat, o papel deixa de existir. Não há processo, serviço nem
+memória viva. O que persiste são **os arquivos**: plano, tarefa, progresso, coleta, retomada. É por
+isso que este método é feito de arquivos em vez de configuração — arquivo sobrevive ao chat, e é a
+única coisa que sobrevive.
+
+Duas consequências práticas que valem guardar:
+
+- **Dois projetos com este kit não compartilham nada.** Cada um tem a própria cópia dos arquivos de
+  papel. Não existe "usar o agente do outro projeto" — não há nada ligado para usar.
+- **Se não está em arquivo, não existe.** Uma decisão combinada no chat e não escrita desaparece com
+  o chat. É o motivo de a coleta e o livro-razão existirem.
+
 ## 1. Papéis PM e Executor
 
 **Resolve**: mistura de planejamento e execução.
@@ -165,6 +199,36 @@ lê primeiro. Disciplina falha em silêncio; conferência que roda sozinha, não
   de manter PLANO/PROGRESSO/coleta sincronizados supera o benefício.
 - Não há necessidade de reconstruir "por que decidimos assim" depois (nesse caso, pule a coleta e
   fique só com PM/EXEC + retomada, ou nem isso).
+
+## Atualizar uma instalação que já existe
+
+Cada projeto recebe uma **cópia** do método no dia da instalação. Copias divergem — então de tempos
+em tempos vale atualizar uma instalação a partir da fonte.
+
+**Antes de sobrescrever qualquer coisa, faça o caminho de volta.** Se você mudou alguma regra neste
+projeto e a mudança é boa, ela sobe para o repositório-fonte **primeiro**. Atualizar sem isso apaga
+a melhoria — e é assim que uma boa ideia morre sem ninguém notar.
+
+**Sobrescreva** (é método, e a fonte manda):
+
+- `.claude/PM.md`, `.claude/EXECUTOR.md`
+- `.claude/metodo/` — **menos** o `DECISOES_METODO.md`
+- `.claude/skills/` — as que vieram do kit
+- `.claude/CEREBRO.md`, `.claude/estado/README.md`
+- `GUIA_AGENTES_BASE.md`
+
+**Nunca sobrescreva** (é deste projeto, e some para sempre):
+
+- `.claude/estado/` — `PLANO.md`, `PROXIMA_TAREFA.md`, `PROGRESSO.md` e o `historico/`
+- `.claude/painel.md` — a configuração do painel daquele projeto
+- `.claude/metodo/DECISOES_METODO.md` — o que **esta** instalação decidiu
+- a coleta, a especificação, o produto, as retomadas
+
+**Cuidado especial com o `CLAUDE.md`.** Ele veio com `< >` e você preencheu. Não sobrescreva:
+**compare** com o novo e traga só o que mudou de regra, preservando o que descreve o seu projeto.
+
+Depois de atualizar, vale rodar uma revisão (`.claude/skills/revisao-acionada/`) — ela pega
+ponteiro quebrado e contradição entre o que veio novo e o que já estava lá.
 
 ## Adaptando para um projeto novo
 
