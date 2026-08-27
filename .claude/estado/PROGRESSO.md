@@ -508,3 +508,144 @@ spec) e a seção **J** (a janela não se mexe sozinha).
 ### Ajuste no plano necessário?
 Não — os cinco itens (botões, janela estável, balão, Consumo em janela própria, arrastar-soltar) e
 o bloco 6 foram cobertos, com o que não deu para testar listado, não escondido.
+
+## [2026-08-27] — Fase 2, Etapa 1 (quinta volta): painel de consumo refeito do original + quatro correções visuais
+Status: concluído
+
+### Feito
+- `desktop/app.py`: painel de consumo (`G1`-`G6`) reescrito do zero a partir da leitura de
+  `transcritor/frontend/index.html` (comentário "Linha do tempo das requisições" até
+  `carregarConsumo()`) e da `SPEC-002` G1-G6. `LinhaDoTempoConsumo` virou um widget pintado à mão
+  dentro de um `QScrollArea`, com as duas escalas ("hora" = um dia civil, sem rolar; "minuto" =
+  janela móvel de 3 min dentro das últimas 24h, largura fixa ~2790px, rola) e navegação própria de
+  cada uma (dia anterior/seguinte com limites; deslizador + Início/Mais recente), escada de passos
+  do eixo em fronteira de relógio (`_escolher_passo_eixo`/`_primeira_marca_alinhada`, com o carry
+  entre unidades verificado em teste unitário), estado "ativada" por clique (roda desliza/navega
+  dias quando ativada, troca de escala quando não — replicado do `wheel` listener do JS, não do
+  resumo da `SPEC-002`, ver "Novas demandas"), alvo de clique raio 14 sobre ponto raio 4, preço
+  acima do ponto só na escala minuto, e a flag de "rolar para o fim" só nos momentos corretos
+  (abrir, trocar escala, botão "Mais recente" — nunca ao deslizar). `GraficoBarrasDiario` (G2)
+  virou colunas reais (não mais um canvas), com mínimo de 4px, rótulo `mm-dd` e dica de foco.
+  `PainelConsumo._construir_lista_diaria` (G2) monta a lista com filete entre dias. Sessão (G1)
+  virou três linhas (Requisições/Tokens/Custo estimado). Custo em todo o painel padronizado para
+  quatro casas (`formatar_usd`/`formatar_usd_compacto`), como o `toFixed(4)` do JS.
+- `BarraAmplitude` (B.1): `paintEvent` não desenha nada quando `self._gravando` é falso; o espaço
+  (`setFixedHeight`) continua reservado. `reiniciar()` passou a exigir o argumento `gravando`;
+  ajustados os dois pontos que chamavam (`iniciar_gravacao`/`_parar_temporizadores_e_stream`).
+- `CamadaPulso` nova (B.2): widget 110px, filho do cartão (não do botão), `WA_TransparentForMouseEvents`,
+  reposicionado sobre o centro do `BotaoGravar` (`resizeEvent` + `QTimer.singleShot(0, ...)` para a
+  primeira abertura) e `lower()` no empilhamento. `BotaoGravar` só desenha mais o círculo e o
+  ícone/spinner; pulso e realce de arrastar saíram do seu `paintEvent`.
+- `Toast` (B.4): `setWordWrap(False)`, altura fixa, largura calculada com `QFontMetrics` (texto que
+  não cabe é cortado com `elidedText`, texto inteiro no `setToolTip`), reposicionado a partir do
+  centro do botão. **Achado e corrigido durante a própria conferência visual**: o cálculo de
+  largura máxima usava `self._ancora.window().width()`, mas `self.move()` usa coordenadas do parent
+  em comum com a âncora (o cartão, não a janela) — como o cartão tem exatamente a mesma largura que
+  a "janela menos margem", o balão longo ficava encostado nos cantos arredondados do cartão em vez
+  de ter margem. Troquei para `self.parentWidget().width()`; confirmado por captura antes/depois
+  (ver "como testei").
+- QSS: `QComboBox QAbstractItemView`/`::drop-down` (B.3 — fundo branco, texto `#1f2933`, selecionado
+  `#2563eb`/branco), `QScrollBar` (vertical e horizontal), `QScrollArea`/`QScrollArea > QWidget >
+  QWidget` (fundo) e `QMenu`/`QMenu::item:selected`, aplicados de uma vez (pedido explícito da
+  tarefa: "varra os outros de uma vez").
+
+### Como testei
+Com o **núcleo real já rodando** (porta 8000, `consumo.jsonl` com 780 requisições reais entre
+18/08 e 27/08) e `QT_QPA_PLATFORM=offscreen` + `QT_QPA_FONTDIR=C:\Windows\Fonts` (sem a segunda
+variável o Qt offscreen não acha fonte nenhuma e todo texto sai como □□□ — não é bug do app, é do
+ambiente de teste). Também abri `transcritor/frontend/index.html` com Playwright/Chromium contra o
+mesmo núcleo, para comparar as duas capturas lado a lado de verdade (o critério de pronto pede
+isso). Sessão (Requisições: 10, Tokens: 2615, Custo: US$ 0.0096), histórico diário e gráfico batem
+número a número entre as duas capturas. Escala "minuto": mesma janela (`11:49:34 – 11:52:34`, texto
+completo da janela de 24h) e o mesmo ponto com `$0.0007` nas duas capturas. Popup da requisição:
+mesmo formato `modelo — US$ 0.0007 — data`. Troquei de escala "hora" → "minuto" e confirmei que a
+âncora seguiu o dia que estava selecionado (não voltou para "agora"). Testei também o painel com o
+núcleo apontando para uma porta errada (G5): mensagem de erro aparece, nada de painel vazio sobra.
+Testei unitariamente `_primeira_marca_alinhada` com os quatro carries (segundo→minuto,
+minuto→hora, hora→dia, dia exato) — todos corretos. Não testei: clique/Enter/Espaço em cada ponto
+por teclado (só clique do mouse — ver riscos), a animação do pulso/spinner em movimento (só frames
+estáticos via captura), e o gesto de roda de verdade (testei as funções que o `wheelEvent` chama,
+não o evento do sistema operacional).
+
+### Critério de pronto
+- [x] `G1` a `G6` conferidos item a item contra o original aberto ao lado (Playwright + captura
+      offscreen, ver "como testei").
+- [x] As duas escalas funcionando, com navegação própria e concordando sobre o período ao trocar.
+- [x] Marcas do eixo em fronteira de relógio, com `dd/mm` na primeira e em cada virada de dia.
+- [x] Roda: desliza a janela/navega dias com a linha do tempo ativada, troca de escala sem ativar
+      (ver "Novas demandas" — diverge do texto da `SPEC-002`, segue o JS).
+- [x] Deslizar não pula para o fim; abrir, trocar de escala e os botões de ponta pulam.
+- [x] Clique num ponto abre a transcrição com horário, modelo e custo.
+- [x] Painel legível, nada preto, nada vazando, tudo com rolagem — com dado real e com o núcleo
+      desligado.
+- [x] Parte B, os quatro itens — conferidos por captura (ver acima).
+- [x] Conferência por captura feita, incluindo o consumo nas duas escalas, lado a lado com a web
+      via Chromium; achados listados acima e corrigidos (Toast); imagens apagadas ao final.
+- [x] Nada em `transcritor/` alterado.
+- [x] Repositório pronto para commit — `git status` só mostra `desktop/app.py` (`app.log` ganhou e
+      perdeu as mesmas linhas de teste; conferido com `git diff` que voltou a ficar idêntico ao
+      commit). **Não commitei.**
+
+### Novas demandas / riscos
+- **Lacuna da SPEC-002, achada na leitura do original**: G3 diz "sem ativar, a roda rola a janela
+  como qualquer conteúdo" — mas o `wheel` listener real do `index.html` (linha ~1613) faz
+  `evento.preventDefault()` e **troca de escala** quando não ativada; só chama scroll nativo com
+  Shift pressionado. Implementei o que o JS faz (dono único), não o que a frase resume. Sugiro
+  corrigir essa frase na spec.
+- **Bug pré-existente, fora do escopo desta tarefa, achado na conferência visual**: o véu escuro do
+  `OverlayModal` (usado por `PainelConfiguracoes` e `PopupRequisicao`) não pinta — é um `QWidget`
+  puro estilizado por QSS sem `WA_TransparentForMouseEvents`... corrigindo: sem
+  `WA_StyledBackground`, então o `background-color` do QSS nunca é aplicado (o comentário do próprio
+  código já explica a regra para o `painel` branco, mas não foi aplicada ao véu). Confirmei com
+  captura + amostra de pixel (fundo permanece `(255,255,255)` atrás do popup). Não é um dos quatro
+  itens da Parte B, então **não mexi** — só registro.
+- Não testei ativação por teclado (Enter/Espaço) de um ponto específico da linha do tempo — o
+  original faz isso via `tabindex`/foco em cada ponto SVG; o widget pintado à mão só responde a
+  clique do mouse. O critério de pronto desta tarefa só pede clique; registrando para o PM avaliar
+  se entra como pendência.
+- Duas instâncias antigas do app mencionadas na volta anterior — não investiguei de novo, fora do
+  escopo desta tarefa.
+
+### Ajuste no plano necessário?
+Não — Parte A (consumo) e Parte B (quatro correções) cobertas, com o que não testei e os achados
+fora de escopo listados acima, não escondidos.
+
+## [2026-08-27] — Fase 2, Etapa 1 (sexta volta): dois achados do usuário rodando no Windows real
+Status: concluído
+
+### Feito
+- `desktop/app.py`: `CamadaPulso` ganhou `setStyleSheet("background: transparent;")`. Achado do
+  usuário: no Windows real ela aparecia como uma caixa quadrada opaca cobrindo o botão `⋮` vizinho.
+  O `grab()` offscreen (ferramenta de conferência desta tarefa) não reproduziu — a plataforma
+  offscreen não aplica o mesmo comportamento nativo do Qt de pintar fundo opaco em `QWidget` puro
+  assim que qualquer QSS está na cadeia de pais (é a mesma causa do "retângulo cinza atrás do
+  círculo" que o `BotaoGravar` já evitava com este mesmo truque, só que eu não tinha copiado o
+  truque para a camada nova).
+- Menu `⋮`: troquei os três `QMenu.addAction(icone, texto)` por `QWidgetAction` com um `ItemMenuAvancado`
+  próprio (ícone + texto num `QHBoxLayout` com `spacing=10`). **Minha primeira tentativa (rodada
+  anterior) foi inflar o pixmap com margem transparente à direita — o usuário reportou que só
+  encolheu o ícone e a margem continuou ausente.** Causa: a coluna do ícone num `QAction` nativo
+  tem largura fixa dada pelo estilo/plataforma, não pelo tamanho do pixmap — o ícone mais largo só
+  é reamostrado para caber na mesma coluna, perdendo tamanho sem abrir espaço nenhum. Widget próprio
+  contorna o problema por completo (o `QHBoxLayout` é meu, não do estilo).
+
+### Como testei
+`QT_QPA_PLATFORM=offscreen` + `QT_QPA_FONTDIR` (mesmo método das voltas anteriores): capturei
+`menu_avancado.popup(...)` isolado — os três itens saem com ícone em tamanho cheio (18px) e um vão
+visível antes do texto. **Não pude confirmar a `CamadaPulso` pela mesma via**, porque a plataforma
+offscreen não reproduz o bug relatado (ver "Feito") — o usuário quem confirma isso rodando de novo.
+
+### Critério de pronto
+- [x] Margem entre ícone e texto no menu `⋮` — capturada, com vão visível.
+- [ ] Camada do pulso deixou de aparecer como caixa quadrada sobre o botão `⋮` — corrigido pelo
+      mesmo padrão já usado no `BotaoGravar`, mas **não confirmável neste ambiente** (ver acima);
+      pendente de confirmação do usuário no próximo uso real.
+
+### Novas demandas / riscos
+- A ferramenta de conferência visual desta tarefa (`grab()` offscreen) não reproduz bugs de fundo
+  opaco que só aparecem com o estilo nativo do Windows — um limite do método, não só desta tarefa.
+  Vale lembrar disso da próxima vez que um "widget deveria ser transparente" for alterado.
+
+### Ajuste no plano necessário?
+Não — os dois achados do usuário foram corrigidos; o segundo depende de confirmação dele no app
+rodando de verdade.
