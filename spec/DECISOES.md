@@ -962,3 +962,10 @@ usuário**. O login entra agora, e não com o Android, por escolha do usuário: 
 
 **Reabre se:** o núcleo remoto falhar no uso diário a ponto de o usuário voltar para o local, ou o
 plano gratuito (pausa por inatividade, limites) virar obstáculo real.
+
+**Nota de 2026-09-30, depois do reconhecimento (Etapa 1):** o RAG-COMPARTILHADO não é dividido com o
+projeto do assistente de vendas (que tem projeto próprio), e sim com o RAG da Mari e o RAG do
+assistente de vendas, que o usuário unificou lá (rótulo `assistente-nova-forma`). Ficar nele é
+escolha de **convergência de infraestrutura**, não só falta de vaga no plano gratuito; no futuro o
+assistente pode ler parte desse banco. O limite de conexões que estourou em 29/09 veio de muitas
+requisições simultâneas, padrão que o núcleo não tem.

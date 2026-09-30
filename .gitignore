@@ -32,3 +32,12 @@ uvicorn*.log
 # esse continua existindo e não entra nesta regra.
 desktop/*.log
 !desktop/app.log
+
+# Logs do núcleo remoto (importador e testes, saída de cada execução) — locais, nunca versionar
+nucleo-remoto/banco/*.log
+nucleo-remoto/testes/*.log
+
+# Sessão do Supabase do app de desktop — mora em %APPDATA%\agentes-base\ (fora do repositório);
+# esta linha é só a rede de proteção para uma cópia nunca entrar no git por engano
+sessao.json
+sessao.json.tmp

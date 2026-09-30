@@ -41,6 +41,7 @@ from PySide6.QtWidgets import (
     QHBoxLayout,
     QFormLayout,
     QLayout,
+    QLineEdit,
     QPlainTextEdit,
     QComboBox,
     QMenu,
@@ -59,6 +60,21 @@ CAMINHO_LOG = os.path.join(PASTA_APP, "app.log")
 # página do Sistema de Organização (ARQUIVO-PESSOAL/02_PROJETOS/SISTEMA-DE-ORGANIZACAO). O endereço
 # é fixo: a página é sempre republicada no mesmo link.
 URL_PLANEJAMENTO = "https://claude.ai/artifact/Do6KoH3PAY3BEPkd946Cow"
+
+# Núcleo no Supabase, Etapa 5 — ditado e consumo vão para o núcleo remoto (Edge Functions
+# `transcrever` e `consumo`, que só atendem quem fez login no Supabase Auth); a geração de imagem
+# continua no núcleo local, que recebe o mesmo token e registra o consumo no banco (Etapa 4).
+# Os quatro valores são públicos por desenho (URL do projeto e chave publicável) — nenhuma chave
+# secreta mora no app. A sessão (token de renovação) fica fora do repositório, em
+# %APPDATA%\agentes-base\sessao.json; a senha nunca é gravada.
+SUPABASE_URL_PADRAO = "https://wqoeoofhuhsdzpkdblbg.supabase.co"
+SUPABASE_CHAVE_PUBLICAVEL_PADRAO = "sb_publishable_2bvFHk0139ioveDrSmNpEw_JRhmaD9w"
+URL_NUCLEO_REMOTO_PADRAO = SUPABASE_URL_PADRAO + "/functions/v1"
+URL_NUCLEO_LOCAL_PADRAO = "http://127.0.0.1:8000"  # também a saída de emergência para `url_nucleo`
+RENOVAR_SESSAO_ANTES_S = 120  # renova o token de acesso quando faltar menos que isto para expirar
+TIMEOUT_AUTH_S = 15
+TIMEOUT_CONSUMO_S = 30  # era 10 no núcleo local; o remoto lê ~2 mil linhas do banco a cada abertura
+MENSAGEM_SESSAO_EXPIRADA = "Sessão expirada — entre de novo."
 
 TAXA_AMOSTRAGEM = 16000
 CANAIS = 1
@@ -189,7 +205,12 @@ ESCADA_PASSOS_EIXO_TEMPO = [
 
 CONFIG_PADRAO = {
     "atalho": "ctrl+alt+space",
-    "url_nucleo": "http://127.0.0.1:8000",
+    # Etapa 5: ditado e consumo no núcleo remoto; imagem no local. Voltar `url_nucleo` para
+    # http://127.0.0.1:8000 é a saída de emergência — o núcleo local ignora o cabeçalho de login.
+    "url_nucleo": URL_NUCLEO_REMOTO_PADRAO,
+    "url_nucleo_imagem": URL_NUCLEO_LOCAL_PADRAO,
+    "supabase_url": SUPABASE_URL_PADRAO,
+    "supabase_chave_publicavel": SUPABASE_CHAVE_PUBLICAVEL_PADRAO,
     "modelo": "gpt-4o-transcribe",
     "streaming": False,
     "dispositivo_entrada": "",
@@ -210,6 +231,8 @@ MENSAGENS_ERRO = {
     "SEM_CONEXAO": "Não foi possível conectar à API da OpenAI.",
     "API_RECUSOU": "A API da OpenAI recusou o áudio enviado.",
     "TEMPO_ESGOTADO": "A API da OpenAI não respondeu a tempo.",
+    "NAO_AUTENTICADO": MENSAGEM_SESSAO_EXPIRADA,
+    "REQUISICAO_INVALIDA": "O núcleo recusou a requisição (formato inesperado).",
 }
 
 # D-31 — Gerar imagem. Espelha (do lado do cliente) a tabela de preços e a lista de modelos do
@@ -289,7 +312,7 @@ QFrame#cartaoGravacao {{
   border: 1px solid {PALETA['borda_cartao']};
   border-radius: 8px;
 }}
-QFrame#painelConfig, QFrame#painelPopupRequisicao {{
+QFrame#painelConfig, QFrame#painelPopupRequisicao, QFrame#painelLogin {{
   background-color: {PALETA['fundo_cartao']};
   border-radius: 8px;
 }}
@@ -360,17 +383,37 @@ def estilizar_botao_circular(botao, diametro, cor_fundo=None, cor_fundo_hover=No
     )
 
 
+def migrar_config(dados):
+    """Etapa 5: um config de antes do núcleo remoto (sem `url_nucleo_imagem`) vira o novo. O
+    `url_nucleo` antigo — o núcleo local — passa a ser o da imagem, e o de ditado/consumo vira o
+    remoto. Tudo o mais que o usuário configurou (atalho, dispositivo, modelo, pasta de imagens…)
+    fica como está. Devolve (dados, migrou)."""
+    if not isinstance(dados, dict) or "url_nucleo_imagem" in dados:
+        return dados, False
+    novos = dict(dados)
+    novos["url_nucleo_imagem"] = dados.get("url_nucleo") or URL_NUCLEO_LOCAL_PADRAO
+    novos["url_nucleo"] = URL_NUCLEO_REMOTO_PADRAO
+    return novos, True
+
+
 def carregar_config():
     if not os.path.exists(CAMINHO_CONFIG):
         return dict(CONFIG_PADRAO)
     try:
         with open(CAMINHO_CONFIG, "r", encoding="utf-8") as f:
             dados = json.load(f)
+        dados, migrou = migrar_config(dados)
         config = dict(CONFIG_PADRAO)
         config.update({chave: dados[chave] for chave in CONFIG_PADRAO if chave in dados})
-        return config
-    except (json.JSONDecodeError, OSError):
+    except (json.JSONDecodeError, OSError, AttributeError, TypeError):
         return dict(CONFIG_PADRAO)
+    if migrou:
+        try:
+            salvar_config(config)
+            log.info("config: migrado para o núcleo remoto (url_nucleo_imagem = o url_nucleo antigo)")
+        except OSError:
+            log.info("config: migrado só em memória — não foi possível gravar config.json")
+    return config
 
 
 def salvar_config(config):
@@ -381,6 +424,257 @@ def salvar_config(config):
     with open(CAMINHO_CONFIG, "w", encoding="utf-8", newline="\n") as f:
         json.dump(config, f, ensure_ascii=False, indent=2)
         f.write("\n")
+
+
+class ErroSessao(Exception):
+    """Não há sessão válida: é preciso entrar de novo (sem login, ou renovação recusada pelo Auth)."""
+
+
+class ErroRedeSessao(Exception):
+    """O Auth do Supabase não respondeu — a sessão guardada continua valendo."""
+
+
+def caminho_sessao():
+    """Fora do repositório, de propósito: %APPDATA%\\agentes-base\\sessao.json no Windows."""
+    base = os.environ.get("APPDATA") or os.path.join(os.path.expanduser("~"), ".config")
+    return os.path.join(base, "agentes-base", "sessao.json")
+
+
+def url_exige_login(config, url):
+    """Só o núcleo remoto (as funções do Supabase) exige login; o local aceita sem cabeçalho."""
+    base = (config.get("supabase_url") or SUPABASE_URL_PADRAO).rstrip("/")
+    return bool(url) and url.startswith(base)
+
+
+def _cabecalho_autorizacao(token):
+    return {"Authorization": f"Bearer {token}"} if token else {}
+
+
+class Sessao:
+    """Login no Supabase Auth, guardado entre aberturas do app e renovado sozinho.
+
+    Guarda em disco só o que a API devolve (token de acesso, token de renovação, validade) e o
+    e-mail para mostrar em Configurações — a senha nunca. Usada pelas threads de rede: um lock
+    serializa renovações (o Supabase troca o token de renovação a cada uso, e duas renovações
+    simultâneas com o mesmo token derrubariam a sessão). Nada daqui vai para o log além do
+    evento e do código HTTP."""
+
+    def __init__(self, config, caminho=None):
+        self._config = config
+        self.caminho = caminho or caminho_sessao()
+        self._lock = threading.RLock()
+        self._access = ""
+        self._refresh = ""
+        self._expira_em = 0.0
+        self.email = ""
+        self._carregar()
+
+    # --- disco ---
+    def _carregar(self):
+        try:
+            with open(self.caminho, "r", encoding="utf-8") as f:
+                dados = json.load(f)
+        except FileNotFoundError:
+            return
+        except (OSError, ValueError):
+            log.info("sessao: arquivo de sessão ilegível — ignorado, será pedido login")
+            return
+        if not isinstance(dados, dict):
+            return
+        self._access = dados.get("access_token") or ""
+        self._refresh = dados.get("refresh_token") or ""
+        try:
+            self._expira_em = float(dados.get("expira_em") or 0)
+        except (TypeError, ValueError):
+            self._expira_em = 0.0
+        self.email = dados.get("email") or ""
+
+    def _salvar(self):
+        pasta = os.path.dirname(self.caminho)
+        os.makedirs(pasta, exist_ok=True)
+        temporario = self.caminho + ".tmp"
+        with open(temporario, "w", encoding="utf-8", newline="\n") as f:
+            json.dump(
+                {
+                    "access_token": self._access, "refresh_token": self._refresh,
+                    "expira_em": self._expira_em, "email": self.email,
+                },
+                f, ensure_ascii=False, indent=2,
+            )
+            f.write("\n")
+        try:
+            os.chmod(temporario, 0o600)  # no Windows é quase inócuo; a pasta já é do usuário
+        except OSError:
+            pass
+        os.replace(temporario, self.caminho)
+
+    def _limpar(self, manter_email=False):
+        self._access = ""
+        self._refresh = ""
+        self._expira_em = 0.0
+        if not manter_email:
+            self.email = ""
+        try:
+            os.remove(self.caminho)
+        except FileNotFoundError:
+            pass
+        except OSError:
+            log.info("sessao: não foi possível apagar o arquivo de sessão")
+
+    # --- estado ---
+    @property
+    def ativa(self):
+        with self._lock:
+            return bool(self._refresh)
+
+    # --- Auth ---
+    def _post_token(self, tipo, corpo):
+        base = (self._config.get("supabase_url") or SUPABASE_URL_PADRAO).rstrip("/")
+        chave = self._config.get("supabase_chave_publicavel") or SUPABASE_CHAVE_PUBLICAVEL_PADRAO
+        try:
+            return requests.post(
+                f"{base}/auth/v1/token?grant_type={tipo}",
+                json=corpo,
+                headers={"apikey": chave, "Content-Type": "application/json"},
+                timeout=TIMEOUT_AUTH_S,
+            )
+        except requests.exceptions.RequestException:
+            raise ErroRedeSessao() from None
+
+    def _aplicar(self, resposta, email_digitado=""):
+        try:
+            dados = resposta.json()
+        except ValueError:
+            raise ErroSessao("Resposta inesperada do Supabase ao entrar.") from None
+        access = dados.get("access_token") if isinstance(dados, dict) else None
+        refresh = dados.get("refresh_token") if isinstance(dados, dict) else None
+        if not access or not refresh:
+            raise ErroSessao("Resposta inesperada do Supabase ao entrar.")
+        try:
+            expira_em = float(dados.get("expires_at") or 0) or time.time() + float(dados.get("expires_in") or 3600)
+        except (TypeError, ValueError):
+            expira_em = time.time() + 3600
+        usuario = dados.get("user") if isinstance(dados.get("user"), dict) else {}
+        self._access, self._refresh, self._expira_em = access, refresh, expira_em
+        self.email = usuario.get("email") or email_digitado or self.email
+        try:
+            self._salvar()
+        except OSError:
+            log.info("sessao: não foi possível gravar o arquivo de sessão — vale só até fechar o app")
+
+    def entrar(self, email, senha):
+        resposta = self._post_token("password", {"email": email, "password": senha})
+        if resposta.status_code == 200:
+            with self._lock:
+                self._aplicar(resposta, email)
+            log.info("sessao: login ok")
+            return
+        try:
+            corpo = resposta.json()
+            codigo = (corpo.get("error_code") or corpo.get("code") or "") if isinstance(corpo, dict) else ""
+        except ValueError:
+            codigo = ""
+        log.info("sessao: login recusado http=%s codigo=%s", resposta.status_code, codigo)
+        if codigo == "email_not_confirmed":
+            raise ErroSessao("Este e-mail ainda não foi confirmado no Supabase.")
+        if resposta.status_code == 429:
+            raise ErroSessao("Muitas tentativas — espere um pouco e tente de novo.")
+        if resposta.status_code in (400, 401, 422):
+            raise ErroSessao("E-mail ou senha incorretos.")
+        raise ErroSessao(f"O Supabase recusou o login (HTTP {resposta.status_code}).")
+
+    def token(self):
+        """Token de acesso válido; renova antes, se faltar menos de RENOVAR_SESSAO_ANTES_S."""
+        with self._lock:
+            if not self._refresh:
+                raise ErroSessao("sem sessão")
+            if self._access and self._expira_em - time.time() > RENOVAR_SESSAO_ANTES_S:
+                return self._access
+            return self._renovar()
+
+    def renovar(self, token_rejeitado=None):
+        """Renova já (depois de um 401). Se outra thread renovou enquanto esta esperava o lock, o
+        token novo dela serve — não gasta mais uma renovação."""
+        with self._lock:
+            if not self._refresh:
+                raise ErroSessao("sem sessão")
+            if (
+                token_rejeitado is not None and self._access and self._access != token_rejeitado
+                and self._expira_em - time.time() > RENOVAR_SESSAO_ANTES_S
+            ):
+                return self._access
+            return self._renovar()
+
+    def _renovar(self):
+        resposta = self._post_token("refresh_token", {"refresh_token": self._refresh})
+        if resposta.status_code == 200:
+            self._aplicar(resposta)
+            log.info("sessao: renovada")
+            return self._access
+        if resposta.status_code in (400, 401, 403):
+            log.info("sessao: renovação recusada http=%s — pedir login", resposta.status_code)
+            self._limpar(manter_email=True)
+            raise ErroSessao(MENSAGEM_SESSAO_EXPIRADA)
+        log.info("sessao: renovação falhou http=%s — sessão mantida", resposta.status_code)
+        raise ErroRedeSessao()
+
+    def sair(self):
+        with self._lock:
+            self._limpar()
+        log.info("sessao: saiu da conta")
+
+
+def chamar_com_sessao(sessao, exigir, enviar):
+    """Faz a chamada com `Authorization: Bearer <token>` quando há sessão. Se ela voltar 401,
+    renova uma vez e repete (`enviar` é chamado de novo — ele reabre os arquivos que envia).
+
+    `exigir` = a URL só atende com login (núcleo remoto): sem sessão, ou com renovação recusada,
+    levanta ErroSessao; com o Auth fora do ar, ErroRedeSessao. Sem `exigir` (núcleo local), a
+    chamada segue sem cabeçalho nesses casos — exatamente como era antes da Etapa 5."""
+    token = None
+    if sessao is not None:
+        try:
+            token = sessao.token()
+        except (ErroSessao, ErroRedeSessao):
+            if exigir:
+                raise
+    resposta = enviar(_cabecalho_autorizacao(token))
+    if resposta.status_code == 401 and token and sessao is not None:
+        try:
+            novo = sessao.renovar(token_rejeitado=token)
+        except (ErroSessao, ErroRedeSessao):
+            if exigir:
+                raise
+            return resposta
+        resposta.close()
+        resposta = enviar(_cabecalho_autorizacao(novo))
+    return resposta
+
+
+class TrabalhoLogin(QThread):
+    """Login fora da thread do Qt. A senha vive só aqui, e só até a chamada terminar."""
+
+    ok = Signal()
+    falhou = Signal(str)
+
+    def __init__(self, sessao, email, senha):
+        super().__init__()
+        self.sessao = sessao
+        self.email = email
+        self._senha = senha
+
+    def run(self):
+        try:
+            self.sessao.entrar(self.email, self._senha)
+        except ErroSessao as erro:
+            self.falhou.emit(str(erro))
+            return
+        except ErroRedeSessao:
+            self.falhou.emit("Não foi possível conectar ao Supabase — verifique a rede.")
+            return
+        finally:
+            self._senha = None
+        self.ok.emit()
 
 
 def copiar_para_area_de_transferencia(texto):
@@ -514,6 +808,10 @@ ICONES_SVG = {
         '6.92 6.92 0 0 1 2.59-5.41L6.17 5.17A8.93 8.93 0 0 0 3 12a9 9 0 0 0 18 0 8.93 8.93 0 0 '
         '0-3.17-6.83Z"/>'
     ),
+    # Etapa 5 — "Sair da conta" no menu ⋮: ícone próprio (mesmo caso de "sair" e "imagem"), pessoa.
+    "conta": (
+        '<path d="M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8Zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4Z"/>'
+    ),
     # Abrir planejamento (2026-09-25, pedido direto): barras escalonadas, como uma linha do tempo.
     "planejamento": '<path d="M3 5h10v3H3V5Zm4 5.5h12v3H7v-3ZM11 16h10v3H11v-3Z"/>',
     # D-31 — Gerar imagem: fora da paridade (D-27), ícone próprio (mesmo caso já aberto por "enviar").
@@ -558,8 +856,12 @@ class TrabalhoTranscricao(QThread):
     progresso = Signal(str)
     concluido = Signal(str)
     falhou = Signal(str, str)  # mensagem legível, codigo (pode vir vazio)
+    # Etapa 5: sem sessão válida para o núcleo remoto. O áudio NÃO é apagado — a janela guarda o
+    # pedido e o reenvia depois do login.
+    sessao_expirada = Signal()
 
-    def __init__(self, url_nucleo, caminho_arquivo, nome_arquivo, modelo, streaming, texto_base, apagar_arquivo_depois):
+    def __init__(self, url_nucleo, caminho_arquivo, nome_arquivo, modelo, streaming, texto_base, apagar_arquivo_depois,
+                 sessao=None, exigir_login=False):
         super().__init__()
         self.url = url_nucleo.rstrip("/") + "/transcrever"
         self.caminho_arquivo = caminho_arquivo
@@ -568,12 +870,15 @@ class TrabalhoTranscricao(QThread):
         self.streaming = streaming
         self.texto_base = texto_base
         self.apagar_arquivo_depois = apagar_arquivo_depois
+        self.sessao = sessao
+        self.exigir_login = exigir_login
+        self._manter_arquivo = False
 
     def run(self):
         try:
             self._executar()
         finally:
-            if self.apagar_arquivo_depois:
+            if self.apagar_arquivo_depois and not self._manter_arquivo:
                 try:
                     os.remove(self.caminho_arquivo)
                 except OSError:
@@ -582,20 +887,34 @@ class TrabalhoTranscricao(QThread):
     def _separador(self):
         return "\n" if self.texto_base and not self.texto_base.endswith("\n") else ""
 
+    def _enviar(self, cabecalhos):
+        with open(self.caminho_arquivo, "rb") as f:
+            return requests.post(
+                self.url,
+                files={"audio": (self.nome_arquivo, f, "application/octet-stream")},
+                data={"modelo": self.modelo, "stream": "true" if self.streaming else "false"},
+                headers=cabecalhos,
+                timeout=130,
+                stream=self.streaming,
+            )
+
+    def _sessao_expirou(self):
+        self._manter_arquivo = True
+        self.sessao_expirada.emit()
+
     def _executar(self):
         try:
-            with open(self.caminho_arquivo, "rb") as f:
-                resposta = requests.post(
-                    self.url,
-                    files={"audio": (self.nome_arquivo, f, "application/octet-stream")},
-                    data={"modelo": self.modelo, "stream": "true" if self.streaming else "false"},
-                    timeout=130,
-                    stream=self.streaming,
-                )
-        except requests.exceptions.RequestException:
+            resposta = chamar_com_sessao(self.sessao, self.exigir_login, self._enviar)
+        except ErroSessao:
+            self._sessao_expirou()
+            return
+        except (requests.exceptions.RequestException, ErroRedeSessao):
             self.falhou.emit(f"Não foi possível conectar ao núcleo em {self.url}.", "")
             return
 
+        if resposta.status_code == 401 and self.exigir_login:
+            self._sessao_expirou()  # 401 do gateway ou NAO_AUTENTICADO, mesmo depois de renovar
+            return
         if resposta.status_code != 200:
             self._emitir_erro_http(resposta)
             return
@@ -657,16 +976,28 @@ class TrabalhoConsumo(QThread):
 
     sucesso = Signal(dict)
     falhou = Signal(str)
+    sessao_expirada = Signal()  # Etapa 5 — ver TrabalhoTranscricao
 
-    def __init__(self, url_nucleo):
+    def __init__(self, url_nucleo, sessao=None, exigir_login=False):
         super().__init__()
         self.url = url_nucleo.rstrip("/") + "/consumo"
+        self.sessao = sessao
+        self.exigir_login = exigir_login
 
     def run(self):
         try:
-            resposta = requests.get(self.url, timeout=10)
-        except requests.exceptions.RequestException:
+            resposta = chamar_com_sessao(
+                self.sessao, self.exigir_login,
+                lambda cabecalhos: requests.get(self.url, headers=cabecalhos, timeout=TIMEOUT_CONSUMO_S),
+            )
+        except ErroSessao:
+            self.sessao_expirada.emit()
+            return
+        except (requests.exceptions.RequestException, ErroRedeSessao):
             self.falhou.emit(f"Não foi possível conectar ao núcleo em {self.url}.")
+            return
+        if resposta.status_code == 401 and self.exigir_login:
+            self.sessao_expirada.emit()
             return
         if resposta.status_code != 200:
             self.falhou.emit(f"O núcleo respondeu com erro (HTTP {resposta.status_code}) ao consultar o consumo.")
@@ -699,10 +1030,16 @@ class TrabalhoGeracaoImagem(QThread):
 
     sucesso = Signal(str, str, float)  # caminho_salvo ("" se não deu para salvar), formato, custo_usd
     falhou = Signal(str, str)  # mensagem legível, codigo (pode vir vazio)
+    sessao_expirada = Signal()  # Etapa 5 — só se `url_nucleo_imagem` apontar para o remoto
 
-    def __init__(self, url_nucleo, caminhos_imagens, prompt, modelo, tamanho, qualidade, pasta_saida):
+    def __init__(self, url_nucleo, caminhos_imagens, prompt, modelo, tamanho, qualidade, pasta_saida,
+                 sessao=None, exigir_login=False):
         super().__init__()
         self.url = url_nucleo.rstrip("/") + "/gerar-imagem"
+        # Etapa 5: com sessão, a chamada leva o token — e o núcleo local registra o consumo da
+        # imagem no banco, como o usuário, em vez dos .jsonl. Sem sessão, segue como antes.
+        self.sessao = sessao
+        self.exigir_login = exigir_login
         self.caminhos_imagens = list(caminhos_imagens)
         self.prompt = prompt
         self.modelo = modelo
@@ -714,7 +1051,7 @@ class TrabalhoGeracaoImagem(QThread):
         # "Salvar como…" ainda funcionar; no caminho comum (salvou), a GUI relê do próprio arquivo.
         self.imagem_bytes = None
 
-    def run(self):
+    def _enviar(self, cabecalhos):
         arquivos_abertos = []
         try:
             arquivos_multipart = []
@@ -724,22 +1061,34 @@ class TrabalhoGeracaoImagem(QThread):
                 arquivos_multipart.append(
                     ("imagens", (os.path.basename(caminho), f, _mime_da_imagem(caminho)))
                 )
-            try:
-                resposta = requests.post(
-                    self.url,
-                    files=arquivos_multipart,
-                    data={
-                        "prompt": self.prompt, "modelo": self.modelo,
-                        "tamanho": self.tamanho, "qualidade": self.qualidade,
-                    },
-                    timeout=TIMEOUT_GERAR_IMAGEM_S,
-                )
-            except requests.exceptions.RequestException:
-                self.falhou.emit(f"Não foi possível conectar ao núcleo em {self.url}.", "")
-                return
+            return requests.post(
+                self.url,
+                files=arquivos_multipart,
+                data={
+                    "prompt": self.prompt, "modelo": self.modelo,
+                    "tamanho": self.tamanho, "qualidade": self.qualidade,
+                },
+                headers=cabecalhos,
+                timeout=TIMEOUT_GERAR_IMAGEM_S,
+            )
         finally:
             for f in arquivos_abertos:
                 f.close()
+
+    def run(self):
+        try:
+            resposta = chamar_com_sessao(self.sessao, self.exigir_login, self._enviar)
+        except ErroSessao:
+            self.sessao_expirada.emit()
+            self.falhou.emit(MENSAGEM_SESSAO_EXPIRADA, "NAO_AUTENTICADO")
+            return
+        except (requests.exceptions.RequestException, ErroRedeSessao):
+            self.falhou.emit(f"Não foi possível conectar ao núcleo em {self.url}.", "")
+            return
+        if resposta.status_code == 401 and self.exigir_login:
+            self.sessao_expirada.emit()
+            self.falhou.emit(MENSAGEM_SESSAO_EXPIRADA, "NAO_AUTENTICADO")
+            return
 
         if resposta.status_code != 200:
             self._emitir_erro_http(resposta)
@@ -1347,6 +1696,13 @@ class PainelConfiguracoes(OverlayModal):
         self.botao_atalho.clicked.connect(self._iniciar_captura_atalho)
         layout_form.addRow("Atalho global (alterna)", self.botao_atalho)
 
+        # Etapa 5 — com que conta o núcleo remoto está sendo usado ("Sair da conta" fica no menu ⋮).
+        self.rotulo_conta = QLabel()
+        self.rotulo_conta.setProperty("class", "dica")
+        self.rotulo_conta.setTextInteractionFlags(Qt.TextSelectableByMouse)
+        layout_form.addRow("Conta", self.rotulo_conta)
+        self.atualizar_conta()
+
         layout_painel = QVBoxLayout(self.painel)
         layout_painel.setContentsMargins(20, 20, 20, 20)
         layout_painel.setSpacing(10)
@@ -1400,9 +1756,124 @@ class PainelConfiguracoes(OverlayModal):
         self.combo_dispositivo.setCurrentIndex(indice_selecionar)
         self.combo_dispositivo.blockSignals(False)
 
+    def atualizar_conta(self):
+        sessao = self.janela.sessao
+        self.rotulo_conta.setText(sessao.email if sessao.ativa and sessao.email else "não conectado")
+
     def mostrar(self):
         self._popular_dispositivos()
+        self.atualizar_conta()
         super().mostrar()
+
+
+class PainelLogin(OverlayModal):
+    """Etapa 5 — entrar no Supabase Auth, uma vez. Mesmo estilo dos sobrepostos que já existem
+    (véu + painel branco centralizado, cabeçalho com ✕, clicar fora e Esc fecham): é um
+    OverlayModal como Configurações. A senha é mascarada, sai do campo assim que o login é
+    disparado e nunca é gravada."""
+
+    entrou = Signal()
+
+    def __init__(self, janela):
+        super().__init__(janela)
+        self.janela = janela
+        self.painel.setObjectName("painelLogin")
+        self.definir_largura_alvo(int(24 * 16))  # 24rem, igual a Configurações
+
+        estilo_campo = (
+            f"QLineEdit {{ border: 1px solid {PALETA['borda_campo']}; border-radius: 6px; padding: 6px 8px; "
+            f"background-color: {PALETA['fundo_cartao']}; color: {PALETA['texto']}; "
+            f"selection-background-color: {PALETA['azul']}; selection-color: white; }}"
+            f"QLineEdit:disabled {{ color: {PALETA['texto_dica']}; }}"
+        )
+        self.rotulo_dica = QLabel(
+            "O ditado e o consumo agora usam o núcleo remoto. Entre com a sua conta do Supabase — "
+            "a senha não é guardada."
+        )
+        self.rotulo_dica.setProperty("class", "dica")
+        self.rotulo_dica.setWordWrap(True)
+
+        self.campo_email = QLineEdit()
+        self.campo_email.setPlaceholderText("seu e-mail")
+        self.campo_email.setStyleSheet(estilo_campo)
+        self.campo_senha = QLineEdit()
+        self.campo_senha.setPlaceholderText("senha")
+        self.campo_senha.setEchoMode(QLineEdit.Password)
+        self.campo_senha.setStyleSheet(estilo_campo)
+        self.campo_email.returnPressed.connect(self.campo_senha.setFocus)
+        self.campo_senha.returnPressed.connect(self._entrar)
+
+        layout_form = QFormLayout()
+        layout_form.addRow("E-mail", self.campo_email)
+        layout_form.addRow("Senha", self.campo_senha)
+
+        self.botao_entrar = QPushButton("Entrar")
+        self.botao_entrar.clicked.connect(self._entrar)
+        linha_botao = QHBoxLayout()
+        linha_botao.addStretch()
+        linha_botao.addWidget(self.botao_entrar)
+
+        # Espaço da mensagem já reservado (J2): um erro não faz o painel pular de tamanho.
+        self.rotulo_erro = QLabel("")
+        self.rotulo_erro.setWordWrap(True)
+        self.rotulo_erro.setMinimumHeight(34)
+        self.rotulo_erro.setAlignment(Qt.AlignLeft | Qt.AlignTop)
+        self.rotulo_erro.setStyleSheet(f"color: {PALETA['erro']};")
+
+        layout_painel = QVBoxLayout(self.painel)
+        layout_painel.setContentsMargins(20, 20, 20, 20)
+        layout_painel.setSpacing(10)
+        layout_painel.addLayout(_cabecalho_painel("Entrar", self.esconder))
+        layout_painel.addWidget(self.rotulo_dica)
+        layout_painel.addLayout(layout_form)
+        layout_painel.addLayout(linha_botao)
+        layout_painel.addWidget(self.rotulo_erro)
+
+        self._trabalho = None
+
+    def mostrar(self, motivo=""):
+        if not self.campo_email.text().strip():
+            self.campo_email.setText(self.janela.sessao.email or "")
+        self.campo_senha.clear()
+        self.rotulo_erro.setText(motivo or "")
+        self._liberar_botao()
+        super().mostrar()
+        self.janela.activateWindow()
+        (self.campo_senha if self.campo_email.text().strip() else self.campo_email).setFocus()
+
+    def _liberar_botao(self):
+        if self._trabalho is None or not self._trabalho.isRunning():
+            self.botao_entrar.setEnabled(True)
+            self.botao_entrar.setText("Entrar")
+
+    def _entrar(self):
+        if self._trabalho is not None and self._trabalho.isRunning():
+            return
+        email = self.campo_email.text().strip()
+        senha = self.campo_senha.text()
+        if not email or not senha:
+            self.rotulo_erro.setText("Preencha e-mail e senha.")
+            return
+        self.campo_senha.clear()  # a senha não fica nem no widget
+        self.rotulo_erro.setText("")
+        self.botao_entrar.setEnabled(False)
+        self.botao_entrar.setText("Entrando…")
+        self._trabalho = TrabalhoLogin(self.janela.sessao, email, senha)
+        self._trabalho.ok.connect(self._ao_entrar)
+        self._trabalho.falhou.connect(self._ao_falhar)
+        self._trabalho.start()
+
+    def _ao_entrar(self):
+        self._trabalho = None
+        self._liberar_botao()
+        self.esconder()
+        self.entrou.emit()
+
+    def _ao_falhar(self, mensagem):
+        self._trabalho = None
+        self._liberar_botao()
+        self.rotulo_erro.setText(mensagem)
+        self.campo_senha.setFocus()
 
 
 class GraficoBarrasDiario(QWidget):
@@ -2087,10 +2558,19 @@ class PainelConsumo(QDialog):
         self.rotulo_erro.hide()
         self._mostrar_conteudo(False)
         self.linha_tempo.reiniciar_abertura()
-        self._trabalho = TrabalhoConsumo(self.janela.config["url_nucleo"])
+        url = self.janela.config["url_nucleo"]
+        self._trabalho = TrabalhoConsumo(
+            url, sessao=self.janela.sessao, exigir_login=url_exige_login(self.janela.config, url)
+        )
         self._trabalho.sucesso.connect(self._ao_obter_sucesso)
         self._trabalho.falhou.connect(self._ao_falhar)
+        self._trabalho.sessao_expirada.connect(self._ao_expirar_sessao)
         self._trabalho.start()
+
+    def _ao_expirar_sessao(self):
+        # A mensagem fica aqui; o login abre na janela de ditado e, ao entrar, este painel recarrega.
+        self._ao_falhar(MENSAGEM_SESSAO_EXPIRADA + " O login abriu na janela de ditado.")
+        self.janela.pedir_login(MENSAGEM_SESSAO_EXPIRADA)
 
     def _ao_falhar(self, mensagem):
         self.rotulo_carregando.hide()
@@ -2530,17 +3010,23 @@ class JanelaGeracaoImagem(QDialog):
         self.botao_abrir_pasta.hide()
 
         pasta_saida = self.janela.config.get("pasta_saida_imagens") or CONFIG_PADRAO["pasta_saida_imagens"]
+        # Etapa 5: a imagem continua no núcleo LOCAL (`url_nucleo_imagem`) — `url_nucleo` agora é o
+        # remoto, que não gera imagem. O token vai junto: é ele que faz o consumo cair no banco.
+        url = self.janela.config.get("url_nucleo_imagem") or URL_NUCLEO_LOCAL_PADRAO
         self._trabalho = TrabalhoGeracaoImagem(
-            self.janela.config["url_nucleo"],
+            url,
             list(self.caminhos_referencia),
             prompt,
             self.combo_modelo.currentText(),
             self.combo_tamanho.currentText(),
             self.combo_qualidade.currentText(),
             pasta_saida,
+            sessao=self.janela.sessao,
+            exigir_login=url_exige_login(self.janela.config, url),
         )
         self._trabalho.sucesso.connect(self._ao_gerar_sucesso)
         self._trabalho.falhou.connect(self._ao_gerar_falhar)
+        self._trabalho.sessao_expirada.connect(lambda: self.janela.pedir_login(MENSAGEM_SESSAO_EXPIRADA))
         self._trabalho.start()
 
     def _ao_gerar_sucesso(self, caminho_salvo, formato, custo_usd):
@@ -2642,6 +3128,11 @@ class JanelaDitado(QWidget):
     def __init__(self, config):
         super().__init__()
         self.config = config
+        # Etapa 5 — login no Supabase para o núcleo remoto. Criada antes da interface (o painel de
+        # login e o de Configurações leem dela). `_pendentes_login` guarda os áudios que voltaram
+        # sem sessão: nada se perde, e eles são reenviados em ordem depois do login.
+        self.sessao = Sessao(self.config)
+        self._pendentes_login = []
         self.gravando = False
         self.processando = False
         self.stream_audio = None
@@ -2847,6 +3338,8 @@ class JanelaDitado(QWidget):
         self.toast = Toast(self.botao_gravar)
 
         self.painel_configuracoes = PainelConfiguracoes(self)
+        self.painel_login = PainelLogin(self)  # Etapa 5 — sobreposto, como Configurações
+        self.painel_login.entrou.connect(self._ao_entrar_na_conta)
         self.painel_consumo = PainelConsumo(self)
         self.janela_gerar_imagem = JanelaGeracaoImagem(self)  # D-31, fora do plano da Fase 2
 
@@ -2859,6 +3352,7 @@ class JanelaDitado(QWidget):
             ("consumo", "Consumo", self.painel_consumo.mostrar),
             ("enviar", "Enviar arquivo", self._clicar_enviar_arquivo),
             ("imagem", "Gerar imagem", self.janela_gerar_imagem.mostrar),
+            ("conta", "Sair da conta", self._sair_da_conta),  # Etapa 5
             ("sair", "Sair", self._sair),
         ):
             item = ItemMenuAvancado(nome_icone, texto, self.menu_avancado)
@@ -3512,6 +4006,8 @@ class JanelaDitado(QWidget):
             return False  # D-32 item 4: resultado na tela e ainda não colocado — não encolhe
         if self.menu_avancado.isVisible() or self.painel_configuracoes.isVisible():
             return False
+        if self.painel_login.isVisible():
+            return False  # Etapa 5: o login é um sobreposto desta janela, como Configurações
         if self.painel_consumo.isVisible() or self.janela_gerar_imagem.isVisible():
             return False
         return True
@@ -3597,6 +4093,8 @@ class JanelaDitado(QWidget):
         # Consumo agora é janela própria (QDialog) — só Configurações é overlay desta janela.
         if self.painel_configuracoes.isVisible():
             self.painel_configuracoes.setGeometry(self.rect())
+        if self.painel_login.isVisible():
+            self.painel_login.setGeometry(self.rect())
         if self.toast.isVisible():
             self.toast._reposicionar()
         self.camada_pulso.reposicionar()
@@ -3606,6 +4104,9 @@ class JanelaDitado(QWidget):
         # (ver PainelConsumo.keyPressEvent) — aqui só sobra Configurações.
         if evento.key() == Qt.Key_Escape and self.painel_configuracoes.isVisible():
             self.painel_configuracoes.esconder()
+            return
+        if evento.key() == Qt.Key_Escape and self.painel_login.isVisible():
+            self.painel_login.esconder()
             return
         super().keyPressEvent(evento)
 
@@ -3644,6 +4145,55 @@ class JanelaDitado(QWidget):
         largura_menu = self.menu_avancado.sizeHint().width()
         x = self.botao_menu.width() - largura_menu
         self.menu_avancado.popup(self.botao_menu.mapToGlobal(QPoint(x, self.botao_menu.height() + 4)))
+
+    # --- sessão do núcleo remoto (Etapa 5) ------------------------------------------
+    def pedir_login_se_preciso(self):
+        """Na abertura: o núcleo configurado exige login e não há sessão guardada → pede agora,
+        uma vez, em vez de deixar para o primeiro ditado."""
+        if url_exige_login(self.config, self.config["url_nucleo"]) and not self.sessao.ativa:
+            self.pedir_login()
+
+    def pedir_login(self, motivo=""):
+        if self.painel_configuracoes.isVisible():
+            self.painel_configuracoes.esconder()
+        if not self._expandido:
+            self._aplicar_modo(True)
+        self.painel_login.mostrar(motivo)
+
+    def _ao_entrar_na_conta(self):
+        self.toast.mostrar("confirmacao", "Conta conectada.", DURACAO_TOAST_CONFIRMACAO_MS)
+        self.painel_configuracoes.atualizar_conta()
+        if self.painel_consumo.isVisible():
+            self.painel_consumo.mostrar()  # recarrega o que tinha voltado com sessão expirada
+        self._retomar_pendentes_login()
+
+    def _sair_da_conta(self):
+        self.sessao.sair()
+        self.painel_configuracoes.atualizar_conta()
+        self.toast.mostrar(
+            "confirmacao", "Você saiu da conta — o próximo ditado pede login.", DURACAO_TOAST_CONFIRMACAO_MS
+        )
+
+    def _ao_expirar_sessao_na_transcricao(self, caminho_arquivo, nome_arquivo, apagar_arquivo_depois):
+        """O áudio (ou o arquivo enviado) fica guardado e é reenviado depois do login — o texto da
+        caixa não é tocado."""
+        self._pendentes_login.append((caminho_arquivo, nome_arquivo, apagar_arquivo_depois))
+        log.info("sessao_expirada pendentes=%d", len(self._pendentes_login))
+        self.pedir_login(MENSAGEM_SESSAO_EXPIRADA)
+        self.processando = False
+        self._definir_estado_botao("parado")
+
+    def _retomar_pendentes_login(self):
+        if self.gravando or self.processando or not self.sessao.ativa:
+            return
+        while self._pendentes_login:
+            caminho, nome, apagar = self._pendentes_login.pop(0)
+            if not os.path.exists(caminho):
+                continue
+            self.processando = True
+            self._definir_estado_botao("processando")
+            self._disparar_transcricao(caminho, nome, apagar)
+            return
 
     def _abrir_planejamento(self):
         """Abre a página de Planejamento e Execução no navegador padrão (pedido direto, 2026-09-25)."""
@@ -3854,18 +4404,26 @@ class JanelaDitado(QWidget):
     def _disparar_transcricao(self, caminho_arquivo, nome_arquivo, apagar_arquivo_depois):
         self.toast.esconder()  # "andamento" não mostra texto — o spinner já conta a história (B1)
         texto_base = self.caixa_texto.toPlainText()
+        url = self.config["url_nucleo"]
         self._trabalho = TrabalhoTranscricao(
-            url_nucleo=self.config["url_nucleo"],
+            url_nucleo=url,
             caminho_arquivo=caminho_arquivo,
             nome_arquivo=nome_arquivo,
             modelo=self.config["modelo"],
             streaming=self.config["streaming"],
             texto_base=texto_base,
             apagar_arquivo_depois=apagar_arquivo_depois,
+            sessao=self.sessao,
+            exigir_login=url_exige_login(self.config, url),
         )
         self._trabalho.progresso.connect(self._ao_progresso_transcricao)
         self._trabalho.concluido.connect(self._ao_concluir_transcricao)
         self._trabalho.falhou.connect(self._ao_falhar_transcricao)
+        sinal_sessao = getattr(self._trabalho, "sessao_expirada", None)
+        if sinal_sessao is not None:
+            sinal_sessao.connect(
+                lambda: self._ao_expirar_sessao_na_transcricao(caminho_arquivo, nome_arquivo, apagar_arquivo_depois)
+            )
         self._trabalho.start()
 
     def _ao_progresso_transcricao(self, texto_acumulado):
@@ -3876,6 +4434,8 @@ class JanelaDitado(QWidget):
         self.processando = False
         self._definir_estado_botao("parado")
         self.toast.mostrar("confirmacao", "Transcrição adicionada ao texto abaixo.", DURACAO_TOAST_CONFIRMACAO_MS)
+        if self._pendentes_login:
+            QTimer.singleShot(0, self._retomar_pendentes_login)
 
     def _ao_falhar_transcricao(self, mensagem, codigo):
         self.processando = False
@@ -3883,6 +4443,8 @@ class JanelaDitado(QWidget):
         if codigo:
             log.info("erro_nucleo codigo=%s", codigo)
         self.toast.mostrar("erro", mensagem, DURACAO_TOAST_ERRO_MS)
+        if self._pendentes_login:
+            QTimer.singleShot(0, self._retomar_pendentes_login)
 
     # --- caixa de transcrição: acumula, editável, desfazer (C) ---------------------
     def _escrever_texto(self, valor):
@@ -3960,6 +4522,10 @@ def main():
     app = QApplication(sys.argv)
     janela = JanelaDitado(config)
     janela.show()
+    # Etapa 5 — sem sessão e com o núcleo remoto configurado, o login aparece já na abertura.
+    # Fica em main(), e não em JanelaDitado.__init__, para quem monta a janela (os testes
+    # headless) não herdar um sobreposto que não pediu.
+    QTimer.singleShot(400, janela.pedir_login_se_preciso)
     sys.exit(app.exec())
 
 

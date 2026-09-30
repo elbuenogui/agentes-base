@@ -99,15 +99,24 @@ certo.
 
 ## Adiadas com gatilho
 
-### B-08 — Fechar o CORS do backend
-`estado: subiu em 2026-09-30 — gatilho disparado (D-36), entra no plano Núcleo centralizado · nasceu: 2026-08-18`
+### ~~B-08 — Fechar o CORS do backend~~
+`estado: resolvido em 2026-09-30, no plano Núcleo centralizado (D-36) · nasceu: 2026-08-18`
 `allow_origins=["*"]` hoje. Confirmado por medição em 2026-08-23 (lacuna L7 do contrato).
+**Resolvido:** o núcleo que saiu da máquina — as Edge Functions `transcrever` e `consumo` — **não tem
+CORS nenhum** (nenhum `Access-Control-Allow-Origin`; o cliente é o app de desktop). O núcleo local
+continua com `*`, porque não saiu da máquina, e a lacuna L7 passou a valer só para ele. Ver
+`spec/contrato/NUCLEO.md`, "Autenticação → Sem CORS" e L7.
 **Por quê ainda não:** aceitável enquanto tudo roda local. Vira restrição declarada no dia em que
 sair da máquina — o mesmo gatilho da `D-05` (servidor próprio).
 
-### B-09 — Trocar os `.jsonl` por banco de dados
-`estado: subiu em 2026-09-30 — entra no plano Núcleo centralizado (D-36) · nasceu: 2026-08-18`
+### ~~B-09 — Trocar os `.jsonl` por banco de dados~~
+`estado: resolvido em 2026-09-30, no plano Núcleo centralizado (D-36) · nasceu: 2026-08-18`
 `consumo.jsonl` e `transcricoes.jsonl` viram banco de verdade.
+**Resolvido:** o histórico mora em `assistente.consumo` e `assistente.transcricoes` no Supabase (RLS por
+usuário, só `select`/`insert`), com o histórico dos `.jsonl` importado e o campo `origem` dizendo quem
+gravou cada linha. Os `.jsonl` seguem como registro do núcleo local sem token. Ver
+`spec/contrato/NUCLEO.md`, "Registro de consumo". As consequências abertas da `D-22` (retenção,
+mistura de uso real com testes) continuam lá.
 **Por quê ainda não:** decisão explícita do usuário em 2026-08-18 de adiar. **O motivo e as
 consequências abertas moram na `D-22`** (histórico é requisito) — inclusive a retenção de
 transcrições antigas e o fato de `consumo.jsonl` misturar uso real com sessões de teste do Executor.
@@ -285,3 +294,27 @@ na hora (testado duas vezes). Suspeita, não confirmada: troca entre monitores c
 critério da Fase 2 (`D-24`, `D-34`). Decisão de subir ou não fica para o retorno ao planejamento.
 Ponto de partida sugerido pelo Executor: cronometrar se a rede converge; se não, recalcular a
 máscara a partir do tamanho **real** em vez de reafirmar o alvo lógico.
+
+### B-26 — Geração de imagem pelo app falha com `API_RECUSOU` antes de funcionar
+`estado: amadurecendo · nasceu: 2026-09-30, Parte B da Etapa 5 do plano Núcleo centralizado · olhar de novo em: quando o usuário pedir ("corrigir depois", 2026-09-30)`
+No teste real da Etapa 5, a primeira geração de imagem pelo app deu `API_RECUSOU` (HTTP 400 da
+OpenAI; `app.log` 2026-09-30 14:32) e a seguinte entrou no banco (`nucleo-local-imagem`, 14:33). O
+mesmo código aparece sete vezes em 2026-09-23, antes de qualquer mudança deste plano — não é
+regressão do núcleo remoto. Suspeita do usuário: "tem a ver com as chamadas dos modelos". Pista já
+registrada na Etapa 4: a OpenAI recusou `gpt-image-1-mini` nesta rota (provavelmente pelo
+`input_fidelity="high"`), e o `config.json` do desktop usa `gpt-image-2`.
+**Por quê ainda não:** o usuário mandou deixar para depois.
+**O que faria virar etapa:** pedido do usuário. Ponto de partida: logar o `message` da recusa da
+OpenAI (hoje só o código chega ao `app.log`) e conferir quais parâmetros cada modelo aceita.
+
+### B-27 — Transcrição como serviço para a Mari (recurso de acessibilidade)
+`estado: amadurecendo · nasceu: 2026-09-30, ideia do usuário · olhar de novo em: ao fechar o plano Núcleo centralizado (depois da Etapa 6)`
+O RAG-COMPARTILHADO vira um projeto de **serviços** (RAG + transcrição). A Mari grava o áudio no
+navegador de quem usa o site, manda para a transcrição e devolve o texto para a pessoa enviar —
+recurso de acessibilidade. Diferença para o desktop: quem usa a Mari é público, sem login no Auth.
+Caminho avaliado pelo PM: a chamada sai do **servidor** da Mari com uma chave de serviço (mesmo
+padrão do cabeçalho `x-rag-chave` das funções `buscar`/`ingerir`), nunca do navegador; consumo
+registrado por projeto (`mari`), não por usuário; limites de tamanho, frequência e gasto; e decidir
+se o texto de terceiros é guardado (pesquisa com pessoas, comitê de ética).
+**Por quê ainda não:** o plano corrente não fechou; a Etapa 6 (contrato novo) é o documento que essa
+integração vai ler.

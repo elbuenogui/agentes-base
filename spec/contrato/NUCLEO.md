@@ -2,11 +2,30 @@
 artefato: Contrato do núcleo de transcrição
 origem: SPEC-001_contrato-do-nucleo.md
 medido_em: 2026-08-23
-atualizado_em: 2026-08-27 (Operação 3 — geração de imagem, D-31, ver PROGRESSO.md)
-status: observado (não é aspiração — é o que a máquina faz hoje)
+atualizado_em: 2026-09-30 (contrato 2 — núcleo remoto no Supabase, com login, D-36; antes: 2026-08-27, Operação 3, D-31)
+status: observado (não é aspiração) — cada afirmação sobre o núcleo remoto diz se foi medida ou lida no código
 ---
 
 # Contrato do núcleo de transcrição
+
+> **Contrato 2 — 2026-09-30 (`D-36`).** O núcleo passou a morar em **dois lugares**: o **remoto**
+> (Edge Functions no Supabase, com login obrigatório — Operações 1 e 2) e o **local** (a máquina do
+> usuário — Operação 3, e as Operações 1 e 2 como saída de emergência). Um cliente novo começa por
+> [Onde o núcleo escuta](#onde-o-núcleo-escuta) e [Autenticação](#autenticação-só-no-núcleo-remoto).
+> O que valia só para o núcleo local continua neste documento, marcado como tal; o que mudou ganhou
+> a data e o ponteiro para `D-36`. O histórico de consumo saiu dos `.jsonl` para o banco
+> ([Registro de consumo](#registro-de-consumo-2026-09-30-d-36)).
+>
+> **Como ler as marcas das seções do remoto** — não há mais um "tudo medido" geral:
+> - **[medido]** — observado contra o serviço real, com a fonte citada. As fontes são os testes de
+>   `nucleo-remoto/testes/` rodados no Windows do usuário em 2026-09-30 — `testar_transcrever.log`
+>   (04:10) e `testar_consumo_e_imagem.log` (13:02); os `.log` são locais e não versionados, e o
+>   resumo de cada um está no `PROGRESSO.md` das Etapas 3 e 4 — e o uso real do app de desktop na
+>   Etapa 5 (`desktop/app.log` e a conferência do PM no banco).
+> - **[código]** — lido no código (`nucleo-remoto/funcoes/*/index.ts`, `transcritor/backend/main.py`,
+>   `desktop/app.py`, `nucleo-remoto/banco/assistente_base.sql`). Onde diz **[código + teste local]**,
+>   também foi exercitado contra servidores falsos locais, não contra o serviço real.
+> - **[documentação]** — comportamento do próprio Supabase, não medido aqui.
 
 **Acrescentado em 2026-08-27**: o núcleo ganhou uma operação que **não é de transcrição** —
 `POST /gerar-imagem` (Operação 3, abaixo). É uma entrada fora do plano da Fase 2 (`D-31`), pedida
@@ -19,9 +38,44 @@ Todo comportamento aqui foi **medido contra o backend rodando** em 2026-08-23 (n
 código): cada exemplo de resposta é uma captura real, e cada linha da tabela de erros foi
 provocada de verdade. Onde a medição divergiu da SPEC-001 original (que tinha sido levantada só
 por leitura de código), o que está escrito aqui é **o observado** — a divergência em si está
-listada no `PROGRESSO.md` da tarefa, para o PM decidir o que fazer com ela.
+listada no `PROGRESSO.md` da tarefa, para o PM decidir o que fazer com ela. *(2026-09-30: este
+parágrafo vale para o que descreve o núcleo local. O núcleo remoto usa as marcas **[medido]** /
+**[código]** do quadro acima.)*
 
 ## Onde o núcleo escuta
+
+**Desde 2026-09-30 (`D-36`), em dois lugares — escolha pela operação:**
+
+| | **Núcleo remoto** | **Núcleo local** |
+|---|---|---|
+| endereço base | `https://wqoeoofhuhsdzpkdblbg.supabase.co/functions/v1` | `http://127.0.0.1:8000` |
+| Operação 1 — `POST /transcrever` | **sim — use este** | sim, **só como saída de emergência** |
+| Operação 2 — `GET /consumo` | **sim — use este** | sim, **só como saída de emergência** (e lê os `.jsonl`, não o banco) |
+| Operação 3 — `POST /gerar-imagem` | **não existe** | **sim — o único lugar** |
+| login | **obrigatório** (ver [Autenticação](#autenticação-só-no-núcleo-remoto)) | não exige; aceita o token e, na Operação 3, usa-o |
+| versão (`X-Nucleo-Contrato`) | `2` | `1` |
+| onde o consumo fica | banco (`assistente.*`) | banco, se veio com token (só Operação 3); `.jsonl`, sem token |
+
+- **As rotas têm o mesmo nome nos dois**: a função remota `transcrever` responde em
+  `…/functions/v1/transcrever`, e a `consumo` em `…/functions/v1/consumo`. Um cliente monta
+  `endereço base + "/transcrever"` e troca só a base **[medido: os dois `.log`; o desktop faz isso,
+  `desktop/app.py`]**.
+- **Saída de emergência**: apontar as Operações 1 e 2 de volta para `http://127.0.0.1:8000` funciona
+  como antes da Etapa 5 — o núcleo local não exige login e ignora o cabeçalho `Authorization` em
+  `/transcrever` e `/consumo` **[código + teste local: `main.py` não lê cabeçalho nessas rotas, e o
+  `/transcrever` do `main.py` real com e sem `Bearer` gravou igual no teste A/B da Etapa 4; o desktop
+  apontado para um núcleo local falso funciona sem login — `desktop/testes_sessao.py`, S5]**. O preço: o que for ditado ali vai para os `.jsonl`, não para o
+  banco (e depois pode ser levado ao banco por `nucleo-remoto/banco/importar_historico.cmd`, que
+  não duplica).
+- **Limites do remoto que o local não tem**: cada requisição a uma Edge Function tem teto de 150 s
+  no plano gratuito (`D-36`) — é por isso que `gpt-4o-transcribe-diarize` saiu do remoto e que a
+  chamada à OpenAI tem prazo de 120 s **[código]**. O projeto é o **rag-compartilhado**, dividido com
+  o RAG unificado da Mari e do assistente de vendas (`D-36`, nota da Etapa 1).
+- **Um cliente não deve fixar nenhum dos dois endereços no código** — mesma regra de antes (abaixo):
+  deixe os dois configuráveis, com estes valores como padrão. O desktop guarda os dois em
+  `desktop/config.json` (`url_nucleo` e `url_nucleo_imagem`).
+
+**Histórico — como era até 2026-09-29 (contrato 1, só o núcleo local):**
 
 `http://127.0.0.1:8000` por padrão — o núcleo é um servidor local, subido com `uvicorn` a partir de
 `transcritor/` (ver `transcritor/README.md` para o passo a passo).
@@ -35,12 +89,96 @@ justamente o critério de conclusão da Fase 1.
 **Um cliente não deve fixar este endereço no código**: deixe configurável, com este valor como
 padrão.
 
+## Autenticação (só no núcleo remoto)
+
+**Nova em 2026-09-30 (`D-36`).** O núcleo remoto só atende um **usuário do Supabase Auth** do
+projeto. Não há cadastro aberto: o usuário é criado no painel do Supabase (Authentication → Users),
+e o cadastro público foi desligado na Etapa 2 (passo feito pelo usuário no painel; este documento não
+o conferiu) **[documentação do plano, `PROGRESSO.md` da Etapa 2]**. O núcleo local não tem login.
+
+Valores públicos por desenho (podem ir em qualquer cliente): a URL do projeto
+`https://wqoeoofhuhsdzpkdblbg.supabase.co` e a chave publicável
+`sb_publishable_2bvFHk0139ioveDrSmNpEw_JRhmaD9w`. **Nenhuma chave secreta (`service_role`) é usada
+por cliente algum**, nem pelas funções: elas gravam e leem o banco com o token do próprio usuário
+**[código]**.
+
+### Entrar (uma vez)
+
+```
+POST https://wqoeoofhuhsdzpkdblbg.supabase.co/auth/v1/token?grant_type=password
+apikey: sb_publishable_2bvFHk0139ioveDrSmNpEw_JRhmaD9w
+Content-Type: application/json
+
+{"email": "<e-mail>", "password": "<senha>"}
+```
+
+- `200` devolve, entre outros, `access_token` (o token que vai nas chamadas), `refresh_token`,
+  `expires_in` (segundos), `expires_at` (epoch) e `user` **[medido: "Login ok" nos dois `.log` e no
+  uso real; campos: código — `desktop/app.py`, `Sessao._aplicar` — e documentação]**.
+- Credencial errada: `400` com `error_code: "invalid_credentials"` **[documentação; código + teste
+  local — `desktop/testes_sessao.py`, S2]**. O cliente não deve gravar a senha: guarde só o que a API
+  devolve.
+- O `apikey` é exigido **pelo Auth** **[documentação]** — todo cliente deste projeto o manda nessa
+  chamada.
+
+### Renovar
+
+```
+POST https://wqoeoofhuhsdzpkdblbg.supabase.co/auth/v1/token?grant_type=refresh_token
+apikey: sb_publishable_2bvFHk0139ioveDrSmNpEw_JRhmaD9w
+Content-Type: application/json
+
+{"refresh_token": "<o último refresh_token recebido>"}
+```
+
+- **O token de renovação muda a cada uso**: a resposta traz um `refresh_token` novo, e é ele que vale
+  na próxima renovação. Guarde sempre o último **[documentação; o desktop grava o novo a cada
+  renovação — código + teste local, S3]**. Duas renovações simultâneas com o mesmo token podem
+  derrubar a sessão; o desktop serializa as renovações com um lock **[código]**.
+- O token de acesso vale ~1 h (padrão do projeto) **[documentação]**. Medido no uso real:
+  `sessao: login ok` às 14:30 e `sessao: renovada` às 15:39 de 2026-09-30, no `desktop/app.log`
+  **[medido]**.
+- Como o desktop faz (sugestão para qualquer cliente) **[código + teste local, S3/S4]**: renova
+  **antes** de chamar, quando faltam menos de 2 min para `expires_at`; se uma chamada voltar `401`,
+  renova **uma vez** e repete; se a renovação for recusada (`400`/`401`/`403`), descarta a sessão e
+  pede login de novo — sem perder o que estava sendo enviado.
+
+### Cabeçalhos que as funções exigem
+
+| cabeçalho | exigido? | evidência |
+|---|---|---|
+| `Authorization: Bearer <access_token>` | **sim**, nas duas funções | **[medido]**: sem ele, `401` do gateway (caso 1 de `testar_transcrever.log`, passo 1 de `testar_consumo_e_imagem.log`) |
+| `apikey` | **não** — nas funções | **[medido no uso real + código]**: o desktop manda só `Authorization` às funções (`desktop/app.py`, `_cabecalho_autorizacao`) e os ditados reais da Etapa 5 caíram no banco (conferido pelo PM). Os testes mandam os dois, o que também funciona **[medido]** |
+| `Content-Type: multipart/form-data` | na Operação 1 | como no contrato 1 |
+
+O token precisa ser de **usuário**: o gateway (`verify_jwt`) aceita qualquer JWT válido do projeto,
+inclusive a chave anônima legada **[documentação]**, e é a função que confere, com o Auth, se há um
+usuário por trás antes de gastar uma chamada paga **[código + teste local]**.
+
+### As duas formas de `401`
+
+| quem responde | quando | corpo | `X-Nucleo-Contrato` | evidência |
+|---|---|---|---|---|
+| **o gateway do Supabase** (a função nem roda) | sem `Authorization`, ou JWT inválido/expirado | JSON do gateway, **sem `codigo`**: sem cabeçalho veio `{"code": "UNAUTHORIZED_NO_AUTH_HEADER", "message": "Missing authorization header"}` | **ausente** | corpo e status **[medido]**, nas duas funções; JWT expirado não foi provocado; a ausência do cabeçalho é **[código]** (o gateway responde antes da função) |
+| **a função** | JWT válido que não é de usuário (ex.: a chave anônima) ou que o Auth recusa | `{"detail": "Sessão inválida ou expirada — faça login de novo", "codigo": "NAO_AUTENTICADO"}` (ou "Sessão ausente…") | `2` | **[código + teste local]** |
+
+**Regra para o cliente**: trate **qualquer** `401` do núcleo remoto como "sessão expirada" — renove
+uma vez e repita; se não der, peça login. Não dependa de `codigo` no `401`, porque o do gateway não
+tem. O desktop mostra "Sessão expirada — entre de novo." nos dois casos **[código + teste local]**.
+
+### Sem CORS
+
+As funções remotas **não** mandam `Access-Control-Allow-Origin` — o cliente é o app de desktop, não
+uma página web (`B-08`, resolvido) **[código + teste local; não medido contra o serviço real]**. Uma
+página web que queira chamar o núcleo remoto direto do navegador **não vai conseguir** hoje.
+
 ## Fora do contrato: o modo ao vivo
 
 `GET /tempo-real/token` e `POST /tempo-real/turno-concluido` existem no backend e continuam
 servindo a interface web atual, mas **não fazem parte deste contrato** — estão congelados por
 decisão de 2026-08-21. **Nenhum cliente novo deve consumi-los.** `GET /favicon.ico` é detalhe da
-interface web, também fora do contrato.
+interface web, também fora do contrato. (2026-09-30: existem só no núcleo local; o remoto não os tem,
+e o modo ao vivo está morto — `D-33`.)
 
 ## Versionamento
 
@@ -53,11 +191,27 @@ checar o cabeçalho antes de assumir o formato.
 **`POST /gerar-imagem` (Operação 3, 2026-08-27) entrou na mesma lista** — carrega o mesmo cabeçalho,
 confirmado por medição (ver abaixo).
 
+**2026-09-30 (`D-36`) — o núcleo remoto fala o contrato `2`; o local continua no `1`.** Autenticação
+obrigatória é mudança de contrato (a mesma requisição que funcionava passa a voltar `401`), então o
+número sobe no remoto. O **formato** das respostas de sucesso das Operações 1 e 2 é o mesmo do `1`;
+o que muda está listado em cada operação, em "No núcleo remoto". Toda resposta **das funções** —
+sucesso e erro — leva `X-Nucleo-Contrato: 2` **[código: `VERSAO_CONTRATO_NUCLEO = "2"` nas duas
+funções, conferido no código implantado com `get_edge_function` em 2026-09-30 (versão 4 das duas)]**;
+o `401` do gateway não leva cabeçalho nenhum do núcleo (ver [Autenticação](#as-duas-formas-de-401)).
+Os testes reais da Etapa 3/4 foram rodados **antes** da troca e mediram `1` — o valor `2` em si ainda
+não foi medido numa resposta real. Antes de subir, conferiu-se que nenhum cliente compara o valor do
+cabeçalho (`desktop/app.py` e `transcritor/frontend/index.html` não leem cabeçalho de resposta
+nenhum) **[código]**.
+
 ---
 
 ## Operação 1 — Transcrever áudio
 
 `POST /transcrever`, `multipart/form-data`.
+
+> **2026-09-30:** o texto abaixo descreve a operação como o núcleo **local** a faz (contrato 1). No
+> remoto ela é igual, com as divergências listadas em
+> [Operação 1 no núcleo remoto](#operação-1-no-núcleo-remoto-contrato-2-2026-09-30-d-36).
 
 | Campo | Tipo | Obrigatório | Padrão | Observação |
 |---|---|---|---|---|
@@ -236,9 +390,60 @@ não vai avisar.
 que qualquer origem é aceita — aceitável enquanto o núcleo só roda localmente, vira restrição
 quando (e se) ele for servido fora da máquina do usuário. Sem mudança nesta fase.
 
+**2026-09-30 (`D-36`)**: o núcleo saiu da máquina — e o remoto **não** tem CORS nenhum (`B-08`,
+resolvido). Esta lacuna continua valendo só para o núcleo **local**.
+
+## Operação 1 no núcleo remoto (contrato 2, 2026-09-30, `D-36`)
+
+`POST https://wqoeoofhuhsdzpkdblbg.supabase.co/functions/v1/transcrever`, com
+`Authorization: Bearer <access_token>`.
+
+**Igual ao local:** os campos do formulário (`audio`, `modelo`, `stream`), a resposta sem streaming
+(`{"transcricao": ...}`), o streaming NDJSON com `delta` e `final` (e `erro` dentro do `200`), os
+`codigo` e status da tabela de erros acima, o teto de 25 MB, a ordem das validações (modelo, chave,
+vazio, tamanho — todas antes de abrir o stream) e o cálculo de custo registrado **[código]**.
+Medido contra o serviço real **[medido: `testar_transcrever.log`, 2026-09-30 04:10]**:
+- sem streaming: `200`, `transcricao` de 287 caracteres para `audio-teste/fala-real.wav` (~32 s),
+  em 4,0 s;
+- com `stream=true`: `200`, `Content-Type: application/x-ndjson`, 81 eventos `delta` e 1 `final`,
+  em 2,7 s;
+- `modelo=gpt-4o-transcribe-diarize` → `422 MODELO_INVALIDO`, detalhe
+  `Modelo inválido: 'gpt-4o-transcribe-diarize'. Valores aceitos: gpt-4o-transcribe, gpt-4o-mini-transcribe`;
+- áudio de 0 byte → `400 AUDIO_VAZIO` (`Arquivo de áudio vazio`);
+- as duas chamadas de sucesso deixaram +2 linhas em `assistente.consumo` com
+  `origem = 'nucleo-remoto'` e +2 em `assistente.transcricoes` ligadas a elas;
+- no uso real do desktop (Etapa 5), 2 ditados caíram no banco com `origem = 'nucleo-remoto'`
+  (conferido pelo PM) **[medido]**.
+
+**Divergências em relação ao local:**
+
+| o quê | remoto | local | marca |
+|---|---|---|---|
+| `gpt-4o-transcribe-diarize` | recusado com `422 MODELO_INVALIDO` (só `gpt-4o-transcribe` e `gpt-4o-mini-transcribe`) | aceito | **[medido]** |
+| prazo da chamada à OpenAI | 120 s para a chamada inteira, **uma** tentativa, sem prazo separado de conexão → `504 TEMPO_ESGOTADO` (ou evento `erro`) | 120 s de leitura por tentativa, 3 tentativas do SDK (até ~6 min) | **[código + teste local]** |
+| login | obrigatório; `401` do gateway ou `401 NAO_AUTENTICADO` | não há | **[medido]** (gateway) / **[código + teste local]** (função) |
+| `detail` de `SEM_CHAVE` | `OPENAI_API_KEY não configurada — crie o segredo nas Edge Functions do Supabase` | cita `transcritor/.env` | **[código + teste local]** |
+| `detail` de `FALHA_AUTENTICACAO` | `… verifique o segredo OPENAI_API_KEY nas Edge Functions do Supabase` | cita `transcritor/.env` | **[código + teste local]** |
+| corpo não multipart, ou sem `audio` | `422 REQUISICAO_INVALIDA`, com `codigo` | `422` do FastAPI, sem `codigo` | **[código + teste local]** |
+| método que não é `POST` | `405 METODO_NAO_PERMITIDO`, com `codigo` | `405` do FastAPI | **[código + teste local]** |
+| erro inesperado da função | `500 ERRO_INTERNO`, com `codigo` | — | **[código]** |
+| `stream` com valor que não é `true`/`false` | `true`, `1`, `yes`, `on` valem verdadeiro; qualquer outro vale falso | `422` do FastAPI | **[código]** |
+| CORS | nenhum `Access-Control-Allow-Origin` | `*` (L7) | **[código + teste local]** |
+| onde registra | banco, com o token do usuário; falha ao registrar não quebra a resposta (só vai para o log da função, sem texto) | `.jsonl` | **[medido]** (registro) / **[código + teste local]** (falha) |
+| `X-Nucleo-Contrato` | `2` | `1` | **[código]** — ver Versionamento |
+
+Não provocados contra o serviço real (cobertos só por código e teste local): `TEMPO_ESGOTADO`,
+`SEM_CONEXAO`, `API_RECUSOU`, `FALHA_AUTENTICACAO`, `SEM_CHAVE`, `ARQUIVO_MUITO_GRANDE`,
+`REQUISICAO_INVALIDA`, `METODO_NAO_PERMITIDO`, `NAO_AUTENTICADO`. As lacunas L4 (evento `final` só com
+`texto`) e L6 (áudio sem fala alucina) valem igual no remoto — a função repassa o que a API devolve
+**[código]**.
+
 ---
 
 ## Operação 2 — Consultar consumo
+
+> **2026-09-30:** o texto abaixo descreve o núcleo **local** (contrato 1), que lê os `.jsonl`. O
+> remoto lê o banco e tem as divergências listadas em "No núcleo remoto", no fim desta operação.
 
 `GET /consumo` → `200`, sem parâmetros. Resposta real capturada (truncada para exemplo):
 
@@ -276,12 +481,48 @@ histórico de gasto** — sub-relatando o custo real do projeto sempre que esse 
 uma lacuna do contrato (a *forma* da resposta está certa), é um bug de cálculo — reportado aqui
 como achado, não corrigido (fora do escopo desta tarefa).
 
+### No núcleo remoto (contrato 2, 2026-09-30, `D-36`)
+
+`GET https://wqoeoofhuhsdzpkdblbg.supabase.co/functions/v1/consumo`, com
+`Authorization: Bearer <access_token>`. Lê `assistente.consumo` e `assistente.transcricoes` **como o
+usuário** — o RLS só devolve as linhas dele **[código]**.
+
+**Igual ao local:** a forma inteira — `sessao` (`requisicoes`, `tokens`, `custo_usd`), `por_dia`
+(`data`, `requisicoes`, `tokens`, `custo_usd`), `requisicoes` (`id`, `timestamp`, `modelo`,
+`custo_usd`, `texto`, com `texto` casado pelo `id_consumo` e `null` quando não há). Medido contra o
+serviço real **[medido: `testar_consumo_e_imagem.log`, 2026-09-30 13:02]**: `200`, forma do contrato,
+1866 requisições — o mesmo total que a API de dados conta em `assistente.consumo` para o usuário —,
+35 dias em `por_dia`, soma de `custo_usd` da função igual à da API (6,8910358333), 1806 requisições
+com texto, em 2,9 s. O painel de Consumo do desktop abriu contra ele no uso real da Etapa 5
+**[medido, uso real — relato do usuário, "deu tudo certo"]**.
+
+**Divergências em relação ao local:**
+
+| o quê | remoto | local | marca |
+|---|---|---|---|
+| `sessao` | acumulado **do dia corrente em São Paulo** (`America/Sao_Paulo`) — não há processo remoto para "desde que subiu" | acumulado desde que o processo subiu | **[código + teste local]**; o valor em si apareceu no teste real (48 requisições, US$ 0,117623), a regra do fuso não foi medida |
+| `por_dia` | agrupado pela **data em São Paulo** | pelos 10 primeiros caracteres do `timestamp`, ou seja, **UTC** | **[código + teste local]** — uma requisição de 02:30 UTC cai no dia anterior |
+| `id` | uuid **com hífens** | `uuid.hex`, sem hífens; `null` nas 49 linhas antigas sem `id` (que no banco ganharam uuid5 na importação) | **[código]** |
+| `timestamp` | formato do Postgres (`…+00:00`), com milissegundos nas linhas gravadas pela função | o texto gravado no `.jsonl` (microssegundos) | **[código]** |
+| quais linhas | **só as do usuário logado** (RLS) | tudo o que está no arquivo | **[código]**; o total bateu com a contagem da API, que também passa pelo RLS **[medido]** |
+| erros | `401` (gateway ou `NAO_AUTENTICADO`), `405 METODO_NAO_PERMITIDO`, `502 FALHA_BANCO` (leitura do banco falhou), `500 ERRO_INTERNO` — todos com `codigo`, menos o do gateway | nunca erra; arquivo ausente dá listas vazias | `401` do gateway **[medido]**; o resto **[código + teste local]** |
+| limite de linhas | lê o banco em páginas de 1000 (o teto da API de dados) até o fim | lê o arquivo inteiro | **[código + teste local, 2500 linhas]**; 1866 no real **[medido]** |
+| CORS | nenhum | `*` | **[código + teste local]** |
+| `X-Nucleo-Contrato` | `2` | `1` | **[código]** |
+
+O achado antigo desta operação (`gpt-4o-transcribe-diarize` com `custo_usd` zero) não se aplica ao
+remoto, que não aceita esse modelo; as linhas antigas importadas dos `.jsonl` continuam com o custo
+que tinham.
+
 ---
 
 ## Operação 3 — Gerar imagem
 
 **Acrescentada em 2026-08-27, fora do plano da Fase 2 (`D-31`)** — pedido direto do usuário, não é
-transcrição. `POST /gerar-imagem`, `multipart/form-data`. Quem fala com a API da OpenAI é sempre o
+transcrição. > **2026-09-30:** só existe no núcleo **local**. Com `Authorization: Bearer <token>`, o consumo vai
+> para o banco em vez dos `.jsonl` — ver "Com o token do usuário", mais abaixo.
+
+`POST /gerar-imagem`, `multipart/form-data`. Quem fala com a API da OpenAI é sempre o
 núcleo; nenhum cliente tem (nem precisa) da chave.
 
 | Campo | Tipo | Obrigatório | Padrão | Observação |
@@ -373,6 +614,30 @@ misturada com as transcrições, sem nenhuma mudança no cliente que já lê ess
 {"id": "ba16ae0c...", "timestamp": "2026-08-27T21:47:54...", "modelo": "gpt-image-1.5", "custo_usd": 0.08183800000000001, "texto": "Combine as duas cores de referência num degradê diagonal simples, sem texto"}
 ```
 
+### Com o token do usuário (2026-09-30, `D-36`)
+
+A Operação 3 **só existe no núcleo local** (`http://127.0.0.1:8000/gerar-imagem`). O cabeçalho
+`Authorization: Bearer <access_token>` é **opcional**, e muda **só onde o consumo é registrado** — a
+requisição, a resposta e os erros são os mesmos **[código + teste local — A/B contra o `main.py`
+anterior]**:
+
+| | sem `Authorization` (ou em outro formato que não `Bearer <token>`) | com `Authorization: Bearer <token>` |
+|---|---|---|
+| onde registra | `consumo.jsonl` e `transcricoes.jsonl`, como antes | banco, **como o usuário do token**: uma linha em `assistente.consumo` com `origem = 'nucleo-local-imagem'` (mesmos campos e custo), depois uma em `assistente.transcricoes` com o **prompt** no `texto` — e **nada** nos `.jsonl` |
+| evidência | **[código + teste local]** | **[medido: `testar_consumo_e_imagem.log`, passos 3–4]**: `200`, `custo_usd` 0,047231, `X-Nucleo-Contrato: 1`, +1 `nucleo-local-imagem` e +1 transcrição no banco, 0 linhas novas de imagem nos `.jsonl`; e 1 imagem gerada pelo app no uso real da Etapa 5 **[medido, conferido pelo PM]** |
+
+- **Falha ao registrar nunca quebra a resposta**: se o banco recusar ou estiver fora, a imagem volta
+  normalmente e o núcleo só escreve uma linha no seu log (código e mensagem do banco, sem prompt nem
+  token); o registro dessa imagem se perde — não há recaída para os `.jsonl` **[código + teste local]**.
+  Com o banco fora do ar, a resposta atrasa até 10 s (prazo do registro) **[código + teste local]**.
+- **O núcleo local precisa de `SUPABASE_URL` e `SUPABASE_CHAVE_PUBLICAVEL` no `transcritor/.env`**
+  (valores públicos, estão no `.env.example`). Sem eles, com token, a imagem **não é registrada em
+  lugar nenhum** — só um aviso no log **[código + teste local]**.
+- O núcleo local continua no contrato `1` e sem CORS fechado (L7) — ele não saiu da máquina.
+- **Achado de 2026-09-30**: `gpt-image-1-mini` foi recusado pela OpenAI (`502 API_RECUSOU`, "HTTP
+  400") no teste real; `gpt-image-1.5` passou **[medido: `testar_consumo_e_imagem.log`, passo 3]**. A
+  causa não foi investigada (o núcleo pede `input_fidelity="high"`; é hipótese, não fato).
+
 ### Erros de `POST /gerar-imagem`
 
 Cinco situações provocadas de verdade contra o backend (2026-08-27), todas com `codigo` estável ao
@@ -398,6 +663,37 @@ acontecem **antes** de qualquer chamada à API — não geram custo, mesmo padr�
 
 ---
 
+## Registro de consumo (2026-09-30, `D-36`)
+
+O histórico de consumo mora no banco do projeto Supabase, schema **`assistente`** **[código:
+`nucleo-remoto/banco/assistente_base.sql`]**:
+
+- **`assistente.consumo`** — uma linha por chamada paga: `id` (uuid), `user_id` (o usuário do Auth),
+  `timestamp`, `modelo`, `custo_usd`, `tipo_usage`, `input_tokens`, `output_tokens`, `total_tokens`,
+  `segundos`, **`origem`**.
+- **`assistente.transcricoes`** — o texto de cada chamada (a transcrição, ou o **prompt** na
+  geração de imagem): `id`, `id_consumo` (chave estrangeira para `consumo.id` — a linha de consumo é
+  sempre gravada antes), `user_id`, `timestamp`, `modelo`, `texto`.
+- **RLS por usuário**: o papel `authenticated` só faz `select` e `insert` das **próprias** linhas; não
+  há `update` nem `delete` pela API, e o papel anônimo não enxerga o schema.
+- **`origem`** tem três valores:
+
+  | `origem` | quem grava |
+  |---|---|
+  | `importado-jsonl` | o importador (`nucleo-remoto/banco/importar_historico.py`), a partir dos `.jsonl` do núcleo local — idempotente, pode rodar de novo |
+  | `nucleo-remoto` | a função `transcrever` (Operação 1 no remoto) |
+  | `nucleo-local-imagem` | o núcleo local, na Operação 3 **com** token |
+
+- **Os `.jsonl` (`transcritor/consumo.jsonl` e `transcricoes.jsonl`) continuam existindo**, e são o
+  registro do **núcleo local sem token**: a saída de emergência das Operações 1 e 2, a interface web
+  (`index.html`) e a Operação 3 sem token. O `GET /consumo` do núcleo local lê só eles; o do remoto
+  lê só o banco. O desktop, desde a Etapa 5, não escreve mais nos `.jsonl` (conferido pelo PM: pararam
+  de crescer depois do reinício) **[medido]**.
+- Um cliente pode ler o próprio histórico direto pela API de dados
+  (`https://wqoeoofhuhsdzpkdblbg.supabase.co/rest/v1/consumo`, com `apikey`, `Authorization` e
+  `Accept-Profile: assistente`) — é o que os testes fazem para contar linhas **[medido]** —, mas o
+  caminho do contrato é o `GET /consumo`.
+
 ## Resumo das lacunas L1–L8 da SPEC-001
 
 | Lacuna | Status após medição |
@@ -406,9 +702,9 @@ acontecem **antes** de qualquer chamada à API — não geram custo, mesmo padr�
 | L2 — sem limite de tamanho declarado | **Corrigida em 2026-08-24** — teto de 25 MB (documentado pela OpenAI), recusa em ~0,13s com `ARQUIVO_MUITO_GRANDE`/`413` |
 | L3 — sem timeout declarado | **Corrigida em 2026-08-24** — cliente declara 120s de leitura / 5s de conexão, `TEMPO_ESGOTADO`/`504` ao estourar; tempo real até a falha medido (6min01,99s sem streaming — ver divergência no modo streaming na seção de erros) |
 | L4 — evento final do streaming sem custo/modelo | **Confirmada** — só tem `texto` |
-| L5 — contrato sem versão | **Corrigida em 2026-08-24** — `X-Nucleo-Contrato: 1` em sucesso e erro, nas duas rotas do contrato, ausente no modo ao vivo |
+| L5 — contrato sem versão | **Corrigida em 2026-08-24** — `X-Nucleo-Contrato: 1` em sucesso e erro, nas duas rotas do contrato, ausente no modo ao vivo · **2026-09-30**: o núcleo remoto fala o `2` (autenticação obrigatória); o local segue no `1` — ver Versionamento |
 | L6 — áudio sem fala sem comportamento definido | **Confirmada, e reclassificada**: não é "indefinido" — é definido e ruim (`200` com alucinação em idioma aleatório, nos dois modos) |
-| L7 — CORS aberto | **Confirmada, aceitável por ora** — sem mudança nesta fase |
+| L7 — CORS aberto | **Confirmada, aceitável por ora** — sem mudança nesta fase · **2026-09-30**: o núcleo remoto não tem CORS (`B-08`, resolvido); o local continua com `*`, porque não saiu da máquina |
 | L8 — sem parâmetro de idioma | **Refutada como problema** — medição mostrou que forçar `pt` não muda texto, custo nem tempo de forma mensurável; o contrato não ganha o parâmetro `idioma` (Etapa 5 do `PLANO.md` cai) |
 
 Achados novos, fora das lacunas originais da SPEC-001:

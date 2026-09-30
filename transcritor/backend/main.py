@@ -100,6 +100,13 @@ TAMANHO_MAXIMO_AUDIO_BYTES = 25 * 1024 * 1024
 ROTAS_DO_CONTRATO = {"/transcrever", "/consumo", "/gerar-imagem"}
 VERSAO_CONTRATO_NUCLEO = "1"
 
+# Núcleo no Supabase (Etapa 4): quando o cliente repassa `Authorization: Bearer <token do usuário>`,
+# o consumo de /gerar-imagem vai para o banco (schema `assistente`), gravado como esse usuário pela API
+# de dados — e não para os .jsonl. Sem o cabeçalho, nada muda. URL e chave publicável vêm de
+# SUPABASE_URL e SUPABASE_CHAVE_PUBLICAVEL em transcritor/.env (públicas por desenho).
+ORIGEM_IMAGEM_REMOTA = "nucleo-local-imagem"
+TIMEOUT_REGISTRO_REMOTO_S = 10.0
+
 # Registro de consumo: um JSON por linha, arquivo local (não versionado — ver .gitignore).
 CONSUMO_PATH = Path(__file__).resolve().parent.parent / "consumo.jsonl"
 
@@ -294,6 +301,95 @@ def _registrar_transcricao(id_consumo: str, modelo: str, texto: str) -> None:
         print(f"[transcricao] falha ao registrar transcrição (resposta ao usuário segue normalmente): {erro}")
 
 
+def _token_bearer(request: Request) -> str | None:
+    """Token do cabeçalho `Authorization: Bearer <token>`, ou None sem cabeçalho (ou em outro formato)."""
+    valor = request.headers.get("authorization") or ""
+    if not valor[:7].lower() == "bearer ":
+        return None
+    return valor[7:].strip() or None
+
+
+def _resumo_erro_remoto(resposta) -> str:
+    # Só código e mensagem curta da API de dados — nunca o `details`, que pode repetir a linha (o prompt).
+    try:
+        corpo = resposta.json()
+    except Exception:
+        return ""
+    if not isinstance(corpo, dict):
+        return ""
+    return f"{corpo.get('code') or ''} {str(corpo.get('message') or '')[:200]}".strip()
+
+
+def _registrar_imagem_no_banco(token: str, modelo: str, usage, prompt: str) -> None:
+    """Grava o consumo de /gerar-imagem no banco, como o usuário do token: primeiro a linha de
+    `assistente.consumo` (mesmos campos e custo de _registrar_consumo, origem nucleo-local-imagem),
+    depois a de `assistente.transcricoes` com o prompt no texto (como transcricoes.jsonl faz).
+
+    Mesma política dos registros locais: falha aqui nunca derruba a resposta — só vai para o log,
+    sem prompt nem token. O cliente HTTP é o que o SDK da OpenAI já traz (httpx2 no SDK 3.x, httpx nos
+    anteriores), importado aqui dentro para que nenhum problema com ele afete a subida do núcleo."""
+    try:
+        try:
+            import httpx2 as cliente_http
+        except ImportError:
+            import httpx as cliente_http
+
+        url = (os.getenv("SUPABASE_URL") or "").strip().rstrip("/")
+        chave_publicavel = (os.getenv("SUPABASE_CHAVE_PUBLICAVEL") or "").strip()
+        if not url or not chave_publicavel:
+            print(
+                "[consumo-remoto] SUPABASE_URL ou SUPABASE_CHAVE_PUBLICAVEL ausente em transcritor/.env "
+                "— consumo da imagem não registrado"
+            )
+            return
+        cabecalhos = {
+            "apikey": chave_publicavel,
+            "Authorization": f"Bearer {token}",
+            "Content-Type": "application/json",
+            "Content-Profile": "assistente",
+            "Prefer": "return=minimal",
+        }
+
+        custo_usd, campos = _calcular_custo_usd(modelo, usage)
+        id_consumo = str(uuid4())
+        consumo = {
+            "id": id_consumo,
+            "timestamp": datetime.now(timezone.utc).isoformat(),
+            "modelo": modelo,
+            "custo_usd": custo_usd,
+            **campos,
+            "origem": ORIGEM_IMAGEM_REMOTA,
+        }
+        resposta = cliente_http.post(
+            f"{url}/rest/v1/consumo", json=consumo, headers=cabecalhos, timeout=TIMEOUT_REGISTRO_REMOTO_S
+        )
+        if resposta.status_code >= 300:
+            print(
+                f"[consumo-remoto] falha ao registrar o consumo da imagem (resposta segue normalmente): "
+                f"HTTP {resposta.status_code} {_resumo_erro_remoto(resposta)}"
+            )
+            return
+
+        if not prompt or not prompt.strip():
+            return
+        transcricao = {
+            "id_consumo": id_consumo,
+            "timestamp": datetime.now(timezone.utc).isoformat(),
+            "modelo": modelo,
+            "texto": prompt,
+        }
+        resposta = cliente_http.post(
+            f"{url}/rest/v1/transcricoes", json=transcricao, headers=cabecalhos, timeout=TIMEOUT_REGISTRO_REMOTO_S
+        )
+        if resposta.status_code >= 300:
+            print(
+                f"[consumo-remoto] falha ao registrar o prompt da imagem (resposta segue normalmente): "
+                f"HTTP {resposta.status_code} {_resumo_erro_remoto(resposta)}"
+            )
+    except Exception as erro:
+        print(f"[consumo-remoto] falha ao registrar a imagem no banco (resposta segue normalmente): {type(erro).__name__}")
+
+
 def _gerar_eventos_transcricao_stream(cliente, modelo, nome_arquivo, conteudo, parametros_extra):
     # Formato da resposta em stream: NDJSON (um objeto JSON por linha), cada linha com "tipo":
     # "delta" (pedaço de texto, campo "texto"), "final" (texto completo, campo "texto") ou "erro"
@@ -403,6 +499,7 @@ async def transcrever(
 
 @app.post("/gerar-imagem")
 async def gerar_imagem(
+    request: Request,
     response: Response,
     imagens: list[UploadFile] = File(...),
     prompt: str = Form(...),
@@ -495,9 +592,14 @@ async def gerar_imagem(
     # Custo calculado uma vez, sempre — a resposta ao usuário reporta o que foi cobrado de
     # verdade, mesmo que o registro em consumo.jsonl falhe (acessório, ver _registrar_consumo).
     custo_usd, _campos = _calcular_custo_usd(modelo, resultado.usage)
-    id_consumo = _registrar_consumo(modelo, resultado.usage)
-    if id_consumo is not None:
-        _registrar_transcricao(id_consumo, modelo, prompt)  # transcricoes.jsonl guarda o prompt no lugar do texto
+    token = _token_bearer(request)
+    if token:
+        # Com o token do usuário: registra no banco (Etapa 4 do núcleo no Supabase), não nos .jsonl.
+        _registrar_imagem_no_banco(token, modelo, resultado.usage, prompt)
+    else:
+        id_consumo = _registrar_consumo(modelo, resultado.usage)
+        if id_consumo is not None:
+            _registrar_transcricao(id_consumo, modelo, prompt)  # transcricoes.jsonl guarda o prompt no lugar do texto
 
     response.headers["X-Nucleo-Contrato"] = VERSAO_CONTRATO_NUCLEO
     return {

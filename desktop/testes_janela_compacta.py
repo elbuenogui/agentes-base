@@ -1395,8 +1395,11 @@ def testar_sair(r):
     itens = [acao.defaultWidget() for acao in j.menu_avancado.actions()]
     rotulos = [item.findChildren(QLabel)[-1].text() for item in itens]
     r.conferir(
-        rotulos == ["Abrir planejamento", "Configurações", "Consumo", "Enviar arquivo", "Gerar imagem", "Sair"],
-        f"o menu tem os seis itens na ordem certa (veio {rotulos})",
+        rotulos == [
+            "Abrir planejamento", "Configurações", "Consumo", "Enviar arquivo", "Gerar imagem",
+            "Sair da conta", "Sair",
+        ],
+        f"o menu tem os sete itens na ordem certa — 'Sair da conta' entrou na Etapa 5 (veio {rotulos})",
     )
     # "Abrir planejamento" (pedido direto, 2026-09-25): abre o link da página, sem abrir navegador aqui.
     abertas = []

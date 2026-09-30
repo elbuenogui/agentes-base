@@ -10,8 +10,10 @@ renderizados com `QtSvg`; o código JS não se aproveita, só o desenho). Lista 
 
 ## Como rodar
 
-1. Suba o núcleo (`transcritor/`, ver `transcritor/README.md`) — precisa estar em
-   `http://127.0.0.1:8000` (ou ajuste `url_nucleo` em `config.json`).
+1. Suba o núcleo local (`transcritor/`, ver `transcritor/README.md`) em `http://127.0.0.1:8000` —
+   desde a Etapa 5 ele atende só a geração de imagem (`url_nucleo_imagem`); ditado e consumo vão
+   para o núcleo remoto, com login (ver "Núcleo remoto e login" abaixo). O atalho do Menu Iniciar
+   (`abrir_transcritor.vbs`) já sobe os dois.
 2. Nesta pasta:
 
    ```powershell
@@ -144,11 +146,54 @@ continuavam corrigidos, e que os pontos de geometria pedidos — trio encostado,
 imóvel, interruptor animado, balão flutuante, Consumo sem fundo preto e sem vazar — bateram com o
 pedido, com dado real).
 
+## Núcleo remoto e login (Etapa 5 do plano "Núcleo centralizado no Supabase")
+
+- **Para onde vai cada chamada** (`config.json`): `url_nucleo` =
+  `https://wqoeoofhuhsdzpkdblbg.supabase.co/functions/v1` (as funções `transcrever` e `consumo` têm o
+  nome das rotas, então nada mudou nas rotas); `url_nucleo_imagem` = `http://127.0.0.1:8000` (só
+  `/gerar-imagem`); `supabase_url` e `supabase_chave_publicavel` — públicos por desenho.
+- **Migração automática**: um `config.json` antigo (sem `url_nucleo_imagem`) é convertido na
+  abertura — o `url_nucleo` antigo vira o da imagem, e tudo o que você configurou (atalho,
+  dispositivo, modelo, pasta de imagens…) fica igual. Gravado com `\n` e quebra final.
+- **Login uma vez**: sem sessão, o app pede e-mail e senha num painel sobreposto, igual ao de
+  Configurações (senha mascarada). Na abertura, se o núcleo configurado for o remoto; e a qualquer
+  momento em que a sessão expirar. O que foi ditado sem sessão **não se perde**: o áudio fica
+  guardado e é reenviado sozinho depois do login, e a caixa de texto não é tocada.
+- **A sessão** (token de acesso, token de renovação, validade e o e-mail) mora em
+  `%APPDATA%\agentes-base\sessao.json` — fora do repositório. **A senha nunca é gravada.** O app
+  renova o token quando faltam menos de 2 min para expirar e, se uma chamada voltar `401`, renova
+  uma vez e repete; se a renovação for recusada, pede login de novo.
+- **Cabeçalho**: toda chamada leva `Authorization: Bearer <token>` quando há sessão — inclusive o
+  `/gerar-imagem` do núcleo local, que é o que faz o consumo da imagem cair no banco (Etapa 4).
+- **"Sair da conta"** no menu ⋮ apaga a sessão; o e-mail logado aparece em Configurações → Conta.
+- **Saída de emergência**: voltar `url_nucleo` para `http://127.0.0.1:8000` no `config.json`
+  funciona como antes — o núcleo local não exige login e ignora o cabeçalho.
+- **`reiniciar_transcritor.cmd`**: encerra só o processo que escuta na porta 8000 e o app de desktop
+  (python rodando `app.py`), espera a porta liberar e reabre tudo pelo `abrir_transcritor.vbs`. O
+  PowerShell dele vai em base64 dentro do `.cmd`; o texto legível é este:
+
+  ```powershell
+  $ErrorActionPreference = 'SilentlyContinue'
+  $porta = 8000
+  $ids = @(Get-NetTCPConnection -LocalPort $porta -State Listen | Select-Object -ExpandProperty OwningProcess -Unique)
+  foreach ($id in $ids) { if ($id -gt 0) { Write-Host "Encerrando o nucleo local (porta $porta, PID $id)"; Stop-Process -Id $id -Force } }
+  $apps = @(Get-CimInstance Win32_Process -Filter "Name LIKE 'python%'" | Where-Object { $_.CommandLine -match '(^|[\s"])((\S*[\\/])?desktop[\\/])?app\.py("|\s|$)' })
+  foreach ($p in $apps) { Write-Host "Encerrando o app de desktop (PID $($p.ProcessId))"; Stop-Process -Id $p.ProcessId -Force }
+  for ($i = 0; $i -lt 30; $i++) { if (-not (Get-NetTCPConnection -LocalPort $porta -State Listen)) { break }; Start-Sleep -Milliseconds 500 }
+  if (Get-NetTCPConnection -LocalPort $porta -State Listen) { Write-Host "A porta $porta nao liberou em 15 s."; exit 1 }
+  exit 0
+  ```
+- **Testes**: `QT_QPA_PLATFORM=offscreen python desktop/testes_sessao.py` — login, renovação,
+  401, reenvio, cabeçalho nas três rotas, saída de emergência e log limpo, contra servidores falsos
+  locais (nada toca o `config.json`, o `app.log` nem a sessão reais).
+
 ## Registro para diagnóstico (`desktop/app.log`)
 
-Só três linhas: na abertura (dispositivo, taxa de amostragem, atalho); ao descartar por silêncio
-(pico e limiar); em erro do núcleo — transcrição **ou** consumo (o `codigo`, ou a mensagem de
-conexão). Gravação bem-sucedida não gera linha nenhuma. `desktop/*.log` está no `.gitignore`, com
+Na abertura (dispositivo, taxa de amostragem, atalho); ao descartar por silêncio (pico e limiar);
+em erro do núcleo — transcrição **ou** consumo (o `codigo`, ou a mensagem de conexão); e, desde a
+Etapa 5, os eventos da sessão (`sessao: login ok`, `renovada`, `renovação recusada http=…`,
+`saiu da conta`, `sessao_expirada pendentes=N`) e a migração do config — **nunca** token, senha ou
+e-mail. Gravação bem-sucedida não gera linha nenhuma. `desktop/*.log` está no `.gitignore`, com
 exceção de `app.log` (esse é o registro de diagnóstico, continua existindo).
 
 ## O que foi testado, com o dado real
@@ -194,7 +239,8 @@ exceção de `app.log` (esse é o registro de diagnóstico, continua existindo).
 Sempre pelo campo `codigo`, nunca pelo texto de `detail`. Mapeados: `MODELO_INVALIDO`, `SEM_CHAVE`,
 `AUDIO_VAZIO`, `ARQUIVO_MUITO_GRANDE`, `FALHA_AUTENTICACAO`, `SEM_CONEXAO`, `API_RECUSOU`,
 `TEMPO_ESGOTADO` — mais falha de conexão de rede (sem `codigo`), tanto na transcrição quanto no
-consumo. O app abre normalmente com o núcleo desligado.
+consumo. Desde a Etapa 5: `NAO_AUTENTICADO` e o `401` do gateway do Supabase viram "Sessão expirada
+— entre de novo." (e abrem o login), não erro genérico; `REQUISICAO_INVALIDA` tem mensagem própria. O app abre normalmente com o núcleo desligado.
 
 ## Declaração sobre o contrato
 
