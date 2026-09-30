@@ -59,10 +59,11 @@ desenho do produto, e que decide a linguagem do app), as **histórias, entregáv
 só então o resto do plano. **Encerra com uso em regime, não com o app pronto.**
 
 ### Núcleo centralizado (entre F2 e F3)
-`estado: em-andamento · desde 2026-09-30`
+`estado: encerrada · 2026-09-30`
 O núcleo sai da máquina e vai para o Supabase, com banco e login (`D-36`). Não entrega recurso
 novo de ditado: entrega o chão que deixa a F3 e a F4 serem clientes magros, sem replicar backend e
-sem chave no aparelho. Plano em `.claude/estado/PLANO.md`.
+sem chave no aparelho. Plano em `.claude/estado/historico/PLANO_2026-09-30_nucleo-remoto-encerrado.md`;
+o uso no dia a dia segue observado em `.claude/estado/ACOMPANHAMENTO.md` (`A-01`).
 
 ### F3 — Android, ditado universal
 `estado: bloqueada:POC-3`

@@ -41,3 +41,1319 @@
 2026-08-27 11:16:14,149 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
 2026-08-27 11:17:33,495 erro_consumo mensagem=Não foi possível conectar ao núcleo em http://127.0.0.1:8000/consumo.
 2026-08-27 11:17:41,430 erro_consumo mensagem=Não foi possível conectar ao núcleo em http://127.0.0.1:8000/consumo.
+2026-08-27 22:17:17,963 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-08-28 01:47:15,430 descarte_por_silencio pico=0.0010 limiar=0.0200
+2026-09-01 12:41:49,785 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-01 17:28:42,994 descarte_por_silencio pico=0.0010 limiar=0.0200
+2026-09-01 18:19:48,679 erro_nucleo codigo=SEM_CONEXAO
+2026-09-03 12:06:02,189 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-04 20:51:05,592 descarte_por_silencio pico=0.0000 limiar=0.0200
+2026-09-04 21:07:24,162 descarte_por_silencio pico=0.0190 limiar=0.0200
+2026-09-04 22:58:43,481 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-04 23:12:41,132 descarte_por_silencio pico=0.0018 limiar=0.0200
+2026-09-05 02:57:42,761 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 06:05:54,429 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 06:07:40,807 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 06:11:07,625 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 06:13:15,209 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 06:24:44,607 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 06:24:45,900 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 06:24:47,234 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 06:24:48,511 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 06:24:49,836 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 06:24:51,093 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 06:24:52,407 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 06:24:53,687 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 06:24:55,002 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 06:24:56,280 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 06:24:57,550 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 06:24:58,842 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 06:25:00,129 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 06:25:01,439 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 06:25:02,732 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 06:25:04,047 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 06:25:05,311 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 06:25:06,668 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 06:25:08,030 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 06:25:09,333 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 06:25:10,689 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 06:25:12,049 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 06:25:13,413 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 06:25:14,733 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 06:25:16,070 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 06:25:17,318 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 06:25:18,626 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 06:25:19,897 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 06:25:21,233 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 06:25:22,498 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 06:25:23,805 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 06:25:25,063 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 06:25:26,307 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 06:25:27,627 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 06:25:28,901 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 06:25:30,232 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 06:25:31,508 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 06:25:32,818 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 06:25:34,059 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 06:25:35,323 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 06:25:36,634 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 06:25:37,929 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 06:25:39,267 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 06:25:40,631 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 06:25:41,953 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 06:25:43,278 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 06:25:44,631 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 06:25:45,930 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 06:33:51,993 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 06:35:33,422 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 06:35:37,523 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 06:35:41,732 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 06:35:41,864 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 06:35:42,999 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 06:35:45,126 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 06:35:47,427 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 06:37:06,810 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 06:37:10,898 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 06:37:15,130 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 06:37:15,271 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 06:37:16,374 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 06:37:18,481 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 06:37:20,790 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 06:37:46,424 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 06:37:50,527 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 06:37:54,736 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 06:37:54,869 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 06:37:55,996 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 06:37:58,102 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 06:38:00,407 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 06:38:12,380 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 06:39:44,438 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 06:39:48,552 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 06:39:52,734 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 06:39:52,873 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 06:39:53,996 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 06:39:56,131 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 06:39:58,407 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 06:40:38,011 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 06:40:38,957 erro_consumo mensagem=O núcleo respondeu com erro (HTTP 501) ao consultar o consumo.
+2026-09-05 06:41:09,183 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 06:41:13,301 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 06:41:17,527 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 06:41:17,666 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 06:41:18,772 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 06:41:20,875 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 06:41:23,174 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 06:41:39,906 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 06:41:44,027 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 06:41:48,227 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 06:41:48,359 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 06:41:49,470 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 06:41:51,578 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 06:41:53,908 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 06:43:37,838 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 06:43:41,977 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 06:43:46,201 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 06:43:46,333 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 06:43:47,448 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 06:43:49,554 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 06:43:51,837 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 11:29:05,032 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 14:38:16,268 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 14:42:09,749 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 14:49:17,170 compacto alvo=88x88 real=88x88 moldura=88x88 dpr=1.0
+2026-09-05 14:49:17,172 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 14:49:21,297 compacto alvo=88x88 real=88x88 moldura=88x88 dpr=1.0
+2026-09-05 14:49:21,298 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 14:49:25,521 compacto alvo=88x88 real=88x88 moldura=88x88 dpr=1.0
+2026-09-05 14:49:25,522 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 14:49:25,660 compacto alvo=88x88 real=88x88 moldura=88x88 dpr=1.0
+2026-09-05 14:49:25,662 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 14:49:26,780 compacto alvo=88x88 real=88x88 moldura=88x88 dpr=1.0
+2026-09-05 14:49:26,781 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 14:49:28,875 compacto alvo=88x88 real=88x88 moldura=88x88 dpr=1.0
+2026-09-05 14:49:28,876 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 14:49:31,165 compacto alvo=88x88 real=88x88 moldura=88x88 dpr=1.0
+2026-09-05 14:49:31,167 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 14:50:20,837 compacto alvo=88x88 real=88x88 moldura=88x88 dpr=1.0
+2026-09-05 14:50:20,838 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 14:51:55,900 compacto alvo=88x88 real=88x88 moldura=88x88 dpr=1.0
+2026-09-05 14:51:55,902 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 14:53:23,482 compacto alvo=88x88 real=88x88 moldura=88x88 dpr=1.0
+2026-09-05 14:53:23,483 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 14:54:19,509 compacto alvo=88x88 real=88x88 moldura=88x88 dpr=1.0
+2026-09-05 14:54:19,510 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 14:54:23,621 compacto alvo=88x88 real=88x88 moldura=88x88 dpr=1.0
+2026-09-05 14:54:23,622 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 14:54:27,832 compacto alvo=88x88 real=88x88 moldura=88x88 dpr=1.0
+2026-09-05 14:54:27,834 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 14:54:27,963 compacto alvo=88x88 real=88x88 moldura=88x88 dpr=1.0
+2026-09-05 14:54:27,965 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 14:54:29,067 compacto alvo=88x88 real=88x88 moldura=88x88 dpr=1.0
+2026-09-05 14:54:29,069 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 14:54:31,170 compacto alvo=88x88 real=88x88 moldura=88x88 dpr=1.0
+2026-09-05 14:54:31,171 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 14:54:33,453 compacto alvo=88x88 real=88x88 moldura=88x88 dpr=1.0
+2026-09-05 14:54:33,455 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 14:55:05,227 compacto alvo=88x88 real=88x88 moldura=88x88 dpr=1.0
+2026-09-05 14:55:05,229 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 14:56:18,938 compacto alvo=88x88 real=88x88 moldura=88x88 dpr=1.0
+2026-09-05 14:56:18,940 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 14:56:23,044 compacto alvo=88x88 real=88x88 moldura=88x88 dpr=1.0
+2026-09-05 14:56:23,045 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 14:56:27,252 compacto alvo=88x88 real=88x88 moldura=88x88 dpr=1.0
+2026-09-05 14:56:27,254 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 14:56:27,391 compacto alvo=88x88 real=88x88 moldura=88x88 dpr=1.0
+2026-09-05 14:56:27,393 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 14:56:28,499 compacto alvo=88x88 real=88x88 moldura=88x88 dpr=1.0
+2026-09-05 14:56:28,501 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 14:56:30,605 compacto alvo=88x88 real=88x88 moldura=88x88 dpr=1.0
+2026-09-05 14:56:30,607 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 14:56:32,898 compacto alvo=88x88 real=88x88 moldura=88x88 dpr=1.0
+2026-09-05 14:56:32,899 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 14:56:39,707 compacto alvo=88x88 real=88x88 moldura=88x88 dpr=1.0
+2026-09-05 14:56:39,709 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 14:56:58,327 compacto alvo=88x88 real=88x88 moldura=88x88 dpr=1.0
+2026-09-05 14:56:58,328 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 14:57:30,516 compacto alvo=88x88 real=88x88 moldura=88x88 dpr=1.0
+2026-09-05 14:57:30,518 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 14:58:44,964 compacto alvo=88x88 real=88x88 moldura=88x88 dpr=1.0
+2026-09-05 14:58:44,966 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 14:58:49,047 compacto alvo=88x88 real=88x88 moldura=88x88 dpr=1.0
+2026-09-05 14:58:49,048 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 14:58:53,245 compacto alvo=88x88 real=88x88 moldura=88x88 dpr=1.0
+2026-09-05 14:58:53,246 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 14:58:53,681 compacto alvo=88x88 real=88x88 moldura=88x88 dpr=1.0
+2026-09-05 14:58:53,683 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 14:58:54,794 compacto alvo=88x88 real=88x88 moldura=88x88 dpr=1.0
+2026-09-05 14:58:54,796 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 14:58:56,900 compacto alvo=88x88 real=88x88 moldura=88x88 dpr=1.0
+2026-09-05 14:58:56,901 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 14:58:59,174 compacto alvo=88x88 real=88x88 moldura=88x88 dpr=1.0
+2026-09-05 14:58:59,175 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 14:59:00,408 compacto alvo=88x88 real=88x88 moldura=88x88 dpr=1.0
+2026-09-05 14:59:00,409 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 14:59:02,746 compacto alvo=88x88 real=88x88 moldura=88x88 dpr=1.0
+2026-09-05 14:59:02,748 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 14:59:55,698 compacto alvo=88x88 real=88x88 moldura=88x88 dpr=1.0
+2026-09-05 14:59:55,700 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 15:00:11,865 compacto alvo=88x88 real=88x88 moldura=88x88 dpr=1.0
+2026-09-05 15:00:11,875 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 15:00:42,504 compacto alvo=88x88 real=88x88 moldura=88x88 dpr=1.0
+2026-09-05 15:00:42,510 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 15:01:24,946 compacto alvo=88x88 real=88x88 moldura=88x88 dpr=1.0
+2026-09-05 15:01:24,948 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 15:01:29,054 compacto alvo=88x88 real=88x88 moldura=88x88 dpr=1.0
+2026-09-05 15:01:29,056 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 15:01:33,253 compacto alvo=88x88 real=88x88 moldura=88x88 dpr=1.0
+2026-09-05 15:01:33,256 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 15:01:33,710 compacto alvo=88x88 real=88x88 moldura=88x88 dpr=1.0
+2026-09-05 15:01:33,711 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 15:01:34,821 compacto alvo=88x88 real=88x88 moldura=88x88 dpr=1.0
+2026-09-05 15:01:34,823 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 15:01:36,925 compacto alvo=88x88 real=88x88 moldura=88x88 dpr=1.0
+2026-09-05 15:01:36,926 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 15:01:39,198 compacto alvo=88x88 real=88x88 moldura=88x88 dpr=1.0
+2026-09-05 15:01:39,200 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 15:01:40,417 compacto alvo=88x88 real=88x88 moldura=88x88 dpr=1.0
+2026-09-05 15:01:40,418 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 15:01:40,596 compacto alvo=88x88 real=88x88 moldura=88x88 dpr=1.0
+2026-09-05 15:01:40,598 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 15:01:42,990 compacto alvo=88x88 real=88x88 moldura=88x88 dpr=1.0
+2026-09-05 15:01:42,992 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 15:02:02,570 compacto alvo=88x88 real=88x88 moldura=88x88 dpr=1.0
+2026-09-05 15:02:02,571 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 15:02:03,068 erro_consumo mensagem=Não foi possível conectar ao núcleo em http://127.0.0.1:8000/consumo.
+2026-09-05 15:03:22,124 compacto alvo=88x88 real=88x88 moldura=88x88 dpr=1.0
+2026-09-05 15:03:22,125 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 15:03:26,248 compacto alvo=88x88 real=88x88 moldura=88x88 dpr=1.0
+2026-09-05 15:03:26,250 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 15:03:30,450 compacto alvo=88x88 real=88x88 moldura=88x88 dpr=1.0
+2026-09-05 15:03:30,452 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 15:03:30,916 compacto alvo=88x88 real=88x88 moldura=88x88 dpr=1.0
+2026-09-05 15:03:30,918 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 15:03:32,021 compacto alvo=88x88 real=88x88 moldura=88x88 dpr=1.0
+2026-09-05 15:03:32,023 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 15:03:34,128 compacto alvo=88x88 real=88x88 moldura=88x88 dpr=1.0
+2026-09-05 15:03:34,130 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 15:03:36,400 compacto alvo=88x88 real=88x88 moldura=88x88 dpr=1.0
+2026-09-05 15:03:36,401 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 15:03:37,618 compacto alvo=88x88 real=88x88 moldura=88x88 dpr=1.0
+2026-09-05 15:03:37,620 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 15:03:37,793 compacto alvo=88x88 real=88x88 moldura=88x88 dpr=1.0
+2026-09-05 15:03:37,794 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 15:03:40,187 compacto alvo=88x88 real=88x88 moldura=88x88 dpr=1.0
+2026-09-05 15:03:40,189 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 15:03:40,869 compacto alvo=88x88 real=88x88 moldura=88x88 dpr=1.0
+2026-09-05 15:03:40,871 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 15:03:44,971 compacto alvo=88x88 real=88x88 moldura=88x88 dpr=1.0
+2026-09-05 15:03:44,973 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 15:03:49,160 compacto alvo=88x88 real=88x88 moldura=88x88 dpr=1.0
+2026-09-05 15:03:49,162 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 15:03:49,608 compacto alvo=88x88 real=88x88 moldura=88x88 dpr=1.0
+2026-09-05 15:03:49,610 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 15:03:50,728 compacto alvo=88x88 real=88x88 moldura=88x88 dpr=1.0
+2026-09-05 15:03:50,730 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 15:03:52,821 compacto alvo=88x88 real=88x88 moldura=88x88 dpr=1.0
+2026-09-05 15:03:52,823 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 15:03:55,097 compacto alvo=88x88 real=88x88 moldura=88x88 dpr=1.0
+2026-09-05 15:03:55,099 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 15:03:56,338 compacto alvo=88x88 real=88x88 moldura=88x88 dpr=1.0
+2026-09-05 15:03:56,341 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 15:03:56,552 compacto alvo=88x88 real=88x88 moldura=88x88 dpr=1.0
+2026-09-05 15:03:56,555 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 15:03:58,940 compacto alvo=88x88 real=88x88 moldura=88x88 dpr=1.0
+2026-09-05 15:03:58,941 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 12:12:16,474 compacto alvo=88x88 real=88x88 moldura=88x88 dpr=1.25
+2026-09-05 12:12:16,549 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 15:38:46,570 compacto alvo=88x88 real=88x88 moldura=88x88 dpr=1.0
+2026-09-05 15:38:46,571 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 15:38:50,693 compacto alvo=88x88 real=88x88 moldura=88x88 dpr=1.0
+2026-09-05 15:38:50,694 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 15:38:54,929 compacto alvo=88x88 real=88x88 moldura=88x88 dpr=1.0
+2026-09-05 15:38:54,931 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 15:38:55,389 compacto alvo=88x88 real=88x88 moldura=88x88 dpr=1.0
+2026-09-05 15:38:55,390 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 15:38:56,503 compacto alvo=88x88 real=88x88 moldura=88x88 dpr=1.0
+2026-09-05 15:38:56,504 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 15:38:58,640 compacto alvo=88x88 real=88x88 moldura=88x88 dpr=1.0
+2026-09-05 15:38:58,641 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 15:39:00,977 compacto alvo=88x88 real=88x88 moldura=88x88 dpr=1.0
+2026-09-05 15:39:00,979 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 15:39:02,222 compacto alvo=88x88 real=88x88 moldura=88x88 dpr=1.0
+2026-09-05 15:39:02,223 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 15:39:02,401 compacto alvo=88x88 real=88x88 moldura=88x88 dpr=1.0
+2026-09-05 15:39:02,403 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 15:39:04,784 compacto alvo=88x88 real=88x88 moldura=88x88 dpr=1.0
+2026-09-05 15:39:04,786 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 15:39:44,767 compacto alvo=88x88 real=88x88 moldura=88x88 dpr=1.0
+2026-09-05 15:39:44,768 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 15:39:48,900 compacto alvo=88x88 real=88x88 moldura=88x88 dpr=1.0
+2026-09-05 15:39:48,901 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 15:39:53,121 compacto alvo=88x88 real=88x88 moldura=88x88 dpr=1.0
+2026-09-05 15:39:53,123 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 15:39:53,584 compacto alvo=88x88 real=88x88 moldura=88x88 dpr=1.0
+2026-09-05 15:39:53,586 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 15:39:54,699 compacto alvo=88x88 real=88x88 moldura=88x88 dpr=1.0
+2026-09-05 15:39:54,703 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 15:39:56,808 compacto alvo=88x88 real=88x88 moldura=88x88 dpr=1.0
+2026-09-05 15:39:56,809 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 15:39:59,138 compacto alvo=88x88 real=88x88 moldura=88x88 dpr=1.0
+2026-09-05 15:39:59,139 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 15:40:00,389 compacto alvo=88x88 real=88x88 moldura=88x88 dpr=1.0
+2026-09-05 15:40:00,390 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 15:40:00,569 compacto alvo=88x88 real=88x88 moldura=88x88 dpr=1.0
+2026-09-05 15:40:00,571 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 15:40:02,935 compacto alvo=88x88 real=88x88 moldura=88x88 dpr=1.0
+2026-09-05 15:40:02,936 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 15:40:04,278 compacto alvo=88x88 real=88x88 moldura=88x88 dpr=1.0
+2026-09-05 15:40:04,279 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 15:40:31,604 compacto alvo=88x88 real=88x88 moldura=88x88 dpr=1.0
+2026-09-05 15:40:31,606 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 15:40:43,897 compacto alvo=88x88 real=88x88 moldura=88x88 dpr=1.0
+2026-09-05 15:40:43,898 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 15:41:01,695 compacto alvo=88x88 real=88x88 moldura=88x88 dpr=1.0
+2026-09-05 15:41:01,697 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 15:42:12,220 compacto alvo=88x88 real=88x88 moldura=88x88 dpr=1.0
+2026-09-05 15:42:12,222 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 15:42:16,294 compacto alvo=88x88 real=88x88 moldura=88x88 dpr=1.0
+2026-09-05 15:42:16,295 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 15:42:20,527 compacto alvo=88x88 real=88x88 moldura=88x88 dpr=1.0
+2026-09-05 15:42:20,528 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 15:42:20,991 compacto alvo=88x88 real=88x88 moldura=88x88 dpr=1.0
+2026-09-05 15:42:20,992 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 15:42:22,098 compacto alvo=88x88 real=88x88 moldura=88x88 dpr=1.0
+2026-09-05 15:42:22,099 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 15:42:24,205 compacto alvo=88x88 real=88x88 moldura=88x88 dpr=1.0
+2026-09-05 15:42:24,206 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 15:42:26,517 compacto alvo=88x88 real=88x88 moldura=88x88 dpr=1.0
+2026-09-05 15:42:26,518 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 15:42:27,769 compacto alvo=88x88 real=88x88 moldura=88x88 dpr=1.0
+2026-09-05 15:42:27,771 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 15:42:27,950 compacto alvo=88x88 real=88x88 moldura=88x88 dpr=1.0
+2026-09-05 15:42:27,952 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 15:42:30,302 compacto alvo=88x88 real=88x88 moldura=88x88 dpr=1.0
+2026-09-05 15:42:30,304 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 15:42:31,584 compacto alvo=88x88 real=88x88 moldura=88x88 dpr=1.0
+2026-09-05 15:42:31,586 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 13:05:43,365 compacto alvo=88x88 real=88x88 moldura=88x88 dpr=1.25
+2026-09-05 13:05:43,429 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 13:09:00,843 descarte_por_silencio pico=0.0000 limiar=0.0200
+2026-09-05 13:09:02,632 tamanho_fora_do_modo expandido=True alvo=672x480 real=141x110
+2026-09-05 13:09:26,604 compacto alvo=88x88 real=88x88 moldura=88x88 dpr=1.0
+2026-09-05 16:23:29,696 compacto alvo=88x88 real=88x88 moldura=88x88 dpr=1.0
+2026-09-05 16:23:29,698 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 16:31:06,025 compacto alvo=88x88 real=88x88 moldura=88x88 dpr=1.0
+2026-09-05 16:31:06,026 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 16:31:12,189 compacto alvo=88x88 real=88x88 moldura=88x88 dpr=1.0
+2026-09-05 16:31:12,190 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 16:31:16,296 compacto alvo=88x88 real=88x88 moldura=88x88 dpr=1.0
+2026-09-05 16:31:16,297 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 16:31:20,553 compacto alvo=88x88 real=88x88 moldura=88x88 dpr=1.0
+2026-09-05 16:31:20,555 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 16:31:21,009 compacto alvo=88x88 real=88x88 moldura=88x88 dpr=1.0
+2026-09-05 16:31:21,010 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 16:31:22,119 compacto alvo=88x88 real=88x88 moldura=88x88 dpr=1.0
+2026-09-05 16:31:22,120 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 16:31:24,238 compacto alvo=88x88 real=88x88 moldura=88x88 dpr=1.0
+2026-09-05 16:31:24,239 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 16:31:26,546 compacto alvo=88x88 real=88x88 moldura=88x88 dpr=1.0
+2026-09-05 16:31:26,547 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 16:31:27,797 compacto alvo=88x88 real=88x88 moldura=88x88 dpr=1.0
+2026-09-05 16:31:27,799 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 16:31:27,975 compacto alvo=88x88 real=88x88 moldura=88x88 dpr=1.0
+2026-09-05 16:31:27,977 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 16:31:30,337 compacto alvo=88x88 real=88x88 moldura=88x88 dpr=1.0
+2026-09-05 16:31:30,338 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 16:31:31,650 compacto alvo=88x88 real=88x88 moldura=88x88 dpr=1.0
+2026-09-05 16:31:31,652 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 16:31:46,906 compacto alvo=88x88 real=88x88 moldura=88x88 dpr=1.0
+2026-09-05 16:31:46,908 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 16:33:38,571 compacto alvo=88x88 real=88x88 moldura=88x88 dpr=1.0
+2026-09-05 16:33:38,572 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 16:33:42,701 compacto alvo=88x88 real=88x88 moldura=88x88 dpr=1.0
+2026-09-05 16:33:42,702 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 16:33:46,934 compacto alvo=88x88 real=88x88 moldura=88x88 dpr=1.0
+2026-09-05 16:33:46,935 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 16:33:47,385 compacto alvo=88x88 real=88x88 moldura=88x88 dpr=1.0
+2026-09-05 16:33:47,388 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 16:33:48,490 compacto alvo=88x88 real=88x88 moldura=88x88 dpr=1.0
+2026-09-05 16:33:48,491 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 16:33:50,603 compacto alvo=88x88 real=88x88 moldura=88x88 dpr=1.0
+2026-09-05 16:33:50,605 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 16:33:52,902 compacto alvo=88x88 real=88x88 moldura=88x88 dpr=1.0
+2026-09-05 16:33:52,903 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 16:33:54,134 compacto alvo=88x88 real=88x88 moldura=88x88 dpr=1.0
+2026-09-05 16:33:54,135 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 16:33:54,319 compacto alvo=88x88 real=88x88 moldura=88x88 dpr=1.0
+2026-09-05 16:33:54,321 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 16:33:56,651 compacto alvo=88x88 real=88x88 moldura=88x88 dpr=1.0
+2026-09-05 16:33:56,659 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 16:33:57,983 compacto alvo=88x88 real=88x88 moldura=88x88 dpr=1.0
+2026-09-05 16:33:57,984 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 16:35:07,887 compacto alvo=88x88 real=88x88 moldura=88x88 dpr=1.0
+2026-09-05 16:35:07,889 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 16:36:25,281 compacto alvo=88x88 real=88x88 moldura=88x88 dpr=1.0
+2026-09-05 16:36:25,282 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 16:36:29,423 compacto alvo=88x88 real=88x88 moldura=88x88 dpr=1.0
+2026-09-05 16:36:29,424 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 16:36:33,618 compacto alvo=88x88 real=88x88 moldura=88x88 dpr=1.0
+2026-09-05 16:36:33,619 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 16:36:34,063 compacto alvo=88x88 real=88x88 moldura=88x88 dpr=1.0
+2026-09-05 16:36:34,065 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 16:36:35,165 compacto alvo=88x88 real=88x88 moldura=88x88 dpr=1.0
+2026-09-05 16:36:35,166 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 16:36:37,274 compacto alvo=88x88 real=88x88 moldura=88x88 dpr=1.0
+2026-09-05 16:36:37,276 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 16:36:39,552 compacto alvo=88x88 real=88x88 moldura=88x88 dpr=1.0
+2026-09-05 16:36:39,554 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 16:36:40,782 compacto alvo=88x88 real=88x88 moldura=88x88 dpr=1.0
+2026-09-05 16:36:40,783 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 16:36:40,957 compacto alvo=88x88 real=88x88 moldura=88x88 dpr=1.0
+2026-09-05 16:36:40,959 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 16:36:43,306 compacto alvo=88x88 real=88x88 moldura=88x88 dpr=1.0
+2026-09-05 16:36:43,308 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 16:36:44,588 compacto alvo=88x88 real=88x88 moldura=88x88 dpr=1.0
+2026-09-05 16:36:44,590 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 16:36:46,840 compacto alvo=88x88 real=88x88 moldura=88x88 dpr=1.0
+2026-09-05 16:36:46,842 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 16:37:06,358 compacto alvo=88x88 real=88x88 moldura=88x88 dpr=1.0
+2026-09-05 16:37:06,359 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 16:37:22,936 compacto alvo=88x88 real=88x88 moldura=88x88 dpr=1.0
+2026-09-05 16:37:22,937 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 14:15:20,608 compacto alvo=88x88 real=88x88 moldura=88x88 dpr=1.25
+2026-09-05 17:23:42,012 compacto alvo=88x88 real=88x88 moldura=88x88 dpr=1.0
+2026-09-05 17:23:42,014 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 17:25:30,169 compacto alvo=88x88 real=88x88 moldura=88x88 dpr=1.0
+2026-09-05 17:25:30,171 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 17:25:51,580 compacto alvo=88x88 real=88x88 moldura=88x88 dpr=1.0
+2026-09-05 17:25:51,582 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 17:26:32,647 compacto alvo=88x88 real=88x88 moldura=88x88 dpr=1.0
+2026-09-05 17:26:32,648 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 17:26:33,217 compacto alvo=88x88 real=88x88 moldura=88x88 dpr=1.0
+2026-09-05 17:26:33,219 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 17:26:41,705 compacto alvo=88x88 real=88x88 moldura=88x88 dpr=1.0
+2026-09-05 17:26:41,710 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 17:26:45,855 compacto alvo=88x88 real=88x88 moldura=88x88 dpr=1.0
+2026-09-05 17:26:45,857 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 17:26:50,100 compacto alvo=88x88 real=88x88 moldura=88x88 dpr=1.0
+2026-09-05 17:26:50,103 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 17:26:50,595 compacto alvo=88x88 real=88x88 moldura=88x88 dpr=1.0
+2026-09-05 17:26:50,597 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 17:26:55,117 compacto alvo=88x88 real=88x88 moldura=88x88 dpr=1.0
+2026-09-05 17:26:55,119 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 17:26:56,242 compacto alvo=88x88 real=88x88 moldura=88x88 dpr=1.0
+2026-09-05 17:26:56,243 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 17:26:58,383 compacto alvo=88x88 real=88x88 moldura=88x88 dpr=1.0
+2026-09-05 17:26:58,385 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 17:27:00,728 compacto alvo=88x88 real=88x88 moldura=88x88 dpr=1.0
+2026-09-05 17:27:00,731 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 17:27:07,095 compacto alvo=88x88 real=88x88 moldura=88x88 dpr=1.0
+2026-09-05 17:27:07,097 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 17:27:09,505 compacto alvo=88x88 real=88x88 moldura=88x88 dpr=1.0
+2026-09-05 17:27:09,507 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 17:27:17,427 compacto alvo=88x88 real=88x88 moldura=88x88 dpr=1.0
+2026-09-05 17:27:17,430 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 17:27:19,610 compacto alvo=88x88 real=88x88 moldura=88x88 dpr=1.0
+2026-09-05 17:27:19,612 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 17:27:37,186 compacto alvo=88x88 real=88x88 moldura=88x88 dpr=1.0
+2026-09-05 17:27:37,188 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 17:27:37,753 erro_consumo mensagem=Não foi possível conectar ao núcleo em http://127.0.0.1:8000/consumo.
+2026-09-05 17:28:28,329 compacto alvo=88x88 real=88x88 moldura=88x88 dpr=1.0
+2026-09-05 17:28:28,331 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 17:28:28,773 compacto alvo=88x88 real=88x88 moldura=88x88 dpr=1.0
+2026-09-05 17:28:28,775 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 17:28:29,326 compacto alvo=88x88 real=88x88 moldura=88x88 dpr=1.0
+2026-09-05 17:28:29,328 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 14:39:23,446 tamanho_fora_do_modo expandido=True alvo=672x480 real=538x384
+2026-09-05 14:41:15,297 compacto alvo=88x88 real=88x88 moldura=88x88 dpr=1.25
+2026-09-05 14:41:15,362 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 14:41:40,122 compacto alvo=88x88 real=88x88 moldura=88x88 dpr=1.25
+2026-09-05 14:41:40,182 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 18:05:08,913 compacto alvo=88x88 real=88x88 moldura=88x88 dpr=1.0
+2026-09-05 18:05:08,914 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 18:07:55,613 compacto alvo=80x80 real=80x80 moldura=80x80 dpr=1.0
+2026-09-05 18:07:55,614 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 18:08:38,974 compacto alvo=80x80 real=80x80 moldura=80x80 dpr=1.0
+2026-09-05 18:08:38,976 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 18:12:32,125 compacto alvo=80x80 real=80x80 moldura=80x80 dpr=1.0
+2026-09-05 18:12:32,126 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 18:12:32,644 compacto alvo=80x80 real=80x80 moldura=80x80 dpr=1.0
+2026-09-05 18:12:32,646 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 18:12:33,258 compacto alvo=80x80 real=80x80 moldura=80x80 dpr=1.0
+2026-09-05 18:12:33,259 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 18:12:34,286 compacto alvo=80x80 real=80x80 moldura=80x80 dpr=1.0
+2026-09-05 18:12:34,287 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 18:12:44,425 compacto alvo=80x80 real=80x80 moldura=80x80 dpr=1.0
+2026-09-05 18:12:44,427 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 18:12:48,772 compacto alvo=80x80 real=80x80 moldura=80x80 dpr=1.0
+2026-09-05 18:12:48,775 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 18:12:53,198 compacto alvo=80x80 real=80x80 moldura=80x80 dpr=1.0
+2026-09-05 18:12:53,199 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 18:12:53,737 compacto alvo=80x80 real=80x80 moldura=80x80 dpr=1.0
+2026-09-05 18:12:53,740 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 18:12:55,010 compacto alvo=80x80 real=80x80 moldura=80x80 dpr=1.0
+2026-09-05 18:12:55,012 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 18:12:57,452 compacto alvo=80x80 real=80x80 moldura=80x80 dpr=1.0
+2026-09-05 18:12:57,453 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 18:13:00,001 compacto alvo=80x80 real=80x80 moldura=80x80 dpr=1.0
+2026-09-05 18:13:00,003 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 18:13:01,269 compacto alvo=80x80 real=80x80 moldura=80x80 dpr=1.0
+2026-09-05 18:13:01,271 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 18:13:01,440 compacto alvo=80x80 real=80x80 moldura=80x80 dpr=1.0
+2026-09-05 18:13:01,442 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 18:13:02,113 compacto alvo=80x80 real=80x80 moldura=80x80 dpr=1.0
+2026-09-05 18:13:02,114 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 18:13:03,216 compacto alvo=80x80 real=80x80 moldura=80x80 dpr=1.0
+2026-09-05 18:13:03,217 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 18:13:05,596 compacto alvo=80x80 real=80x80 moldura=80x80 dpr=1.0
+2026-09-05 18:13:05,597 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 18:13:08,278 compacto alvo=80x80 real=80x80 moldura=80x80 dpr=1.0
+2026-09-05 18:13:08,279 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 18:13:09,762 compacto alvo=80x80 real=80x80 moldura=80x80 dpr=1.0
+2026-09-05 18:13:09,764 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 18:13:12,365 compacto alvo=80x80 real=80x80 moldura=80x80 dpr=1.0
+2026-09-05 18:13:12,367 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 18:15:35,642 compacto alvo=80x80 real=80x80 moldura=80x80 dpr=1.0
+2026-09-05 18:15:35,644 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 18:15:39,973 compacto alvo=80x80 real=80x80 moldura=80x80 dpr=1.0
+2026-09-05 18:15:39,974 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 18:15:44,420 compacto alvo=80x80 real=80x80 moldura=80x80 dpr=1.0
+2026-09-05 18:15:44,422 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 18:15:44,963 compacto alvo=80x80 real=80x80 moldura=80x80 dpr=1.0
+2026-09-05 18:15:44,964 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 18:15:46,245 compacto alvo=80x80 real=80x80 moldura=80x80 dpr=1.0
+2026-09-05 18:15:46,246 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 18:15:48,677 compacto alvo=80x80 real=80x80 moldura=80x80 dpr=1.0
+2026-09-05 18:15:48,679 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 18:15:51,229 compacto alvo=80x80 real=80x80 moldura=80x80 dpr=1.0
+2026-09-05 18:15:51,231 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 18:15:52,572 compacto alvo=80x80 real=80x80 moldura=80x80 dpr=1.0
+2026-09-05 18:15:52,573 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 18:15:52,778 compacto alvo=80x80 real=80x80 moldura=80x80 dpr=1.0
+2026-09-05 18:15:52,781 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 18:15:53,439 compacto alvo=80x80 real=80x80 moldura=80x80 dpr=1.0
+2026-09-05 18:15:53,441 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 18:15:54,550 compacto alvo=80x80 real=80x80 moldura=80x80 dpr=1.0
+2026-09-05 18:15:54,552 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 18:15:56,922 compacto alvo=80x80 real=80x80 moldura=80x80 dpr=1.0
+2026-09-05 18:15:56,924 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 18:15:59,605 compacto alvo=80x80 real=80x80 moldura=80x80 dpr=1.0
+2026-09-05 18:15:59,607 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 18:16:01,109 compacto alvo=80x80 real=80x80 moldura=80x80 dpr=1.0
+2026-09-05 18:16:01,111 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 18:16:03,718 compacto alvo=80x80 real=80x80 moldura=80x80 dpr=1.0
+2026-09-05 18:16:03,719 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 18:18:24,131 compacto alvo=80x80 real=80x80 moldura=80x80 dpr=1.0
+2026-09-05 18:18:24,132 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 18:18:29,500 compacto alvo=80x80 real=80x80 moldura=80x80 dpr=1.0
+2026-09-05 18:18:29,502 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 18:18:30,189 erro_consumo mensagem=Não foi possível conectar ao núcleo em http://127.0.0.1:8000/consumo.
+2026-09-05 18:19:02,418 compacto alvo=80x80 real=80x80 moldura=80x80 dpr=1.0
+2026-09-05 18:19:02,420 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 18:23:32,696 compacto alvo=80x80 real=80x80 moldura=80x80 dpr=1.0
+2026-09-05 18:23:32,698 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 18:26:13,776 compacto alvo=80x80 real=80x80 moldura=80x80 dpr=1.0
+2026-09-05 18:26:13,777 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 18:26:18,136 compacto alvo=80x80 real=80x80 moldura=80x80 dpr=1.0
+2026-09-05 18:26:18,138 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 18:26:22,579 compacto alvo=80x80 real=80x80 moldura=80x80 dpr=1.0
+2026-09-05 18:26:22,580 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 18:26:23,122 compacto alvo=80x80 real=80x80 moldura=80x80 dpr=1.0
+2026-09-05 18:26:23,124 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 18:26:24,427 compacto alvo=80x80 real=80x80 moldura=80x80 dpr=1.0
+2026-09-05 18:26:24,429 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 18:26:26,873 compacto alvo=80x80 real=80x80 moldura=80x80 dpr=1.0
+2026-09-05 18:26:26,875 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 18:26:29,437 compacto alvo=80x80 real=80x80 moldura=80x80 dpr=1.0
+2026-09-05 18:26:29,439 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 18:26:30,764 compacto alvo=80x80 real=80x80 moldura=80x80 dpr=1.0
+2026-09-05 18:26:30,765 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 18:26:30,957 compacto alvo=80x80 real=80x80 moldura=80x80 dpr=1.0
+2026-09-05 18:26:30,959 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 18:26:31,631 compacto alvo=80x80 real=80x80 moldura=80x80 dpr=1.0
+2026-09-05 18:26:31,632 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 18:26:32,724 compacto alvo=80x80 real=80x80 moldura=80x80 dpr=1.0
+2026-09-05 18:26:32,726 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 18:26:35,106 compacto alvo=80x80 real=80x80 moldura=80x80 dpr=1.0
+2026-09-05 18:26:35,107 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 18:26:37,786 compacto alvo=80x80 real=80x80 moldura=80x80 dpr=1.0
+2026-09-05 18:26:37,788 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 18:26:39,308 compacto alvo=80x80 real=80x80 moldura=80x80 dpr=1.0
+2026-09-05 18:26:39,310 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 18:26:41,926 compacto alvo=80x80 real=80x80 moldura=80x80 dpr=1.0
+2026-09-05 18:26:41,927 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 15:33:13,753 compacto alvo=80x80 real=80x80 moldura=80x80 dpr=1.25
+2026-09-05 15:33:13,837 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 18:38:59,136 compacto alvo=80x80 real=80x80 moldura=80x80 dpr=1.0
+2026-09-05 18:38:59,138 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 18:39:30,595 compacto alvo=80x80 real=80x80 moldura=80x80 dpr=1.0
+2026-09-05 18:39:30,597 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 18:48:17,786 compacto alvo=80x80 real=80x80 moldura=80x80 dpr=1.0
+2026-09-05 18:48:17,787 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 18:48:22,119 compacto alvo=80x80 real=80x80 moldura=80x80 dpr=1.0
+2026-09-05 18:48:22,120 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 18:48:26,547 compacto alvo=80x80 real=80x80 moldura=80x80 dpr=1.0
+2026-09-05 18:48:26,548 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 18:48:27,088 compacto alvo=80x80 real=80x80 moldura=80x80 dpr=1.0
+2026-09-05 18:48:27,089 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 18:48:28,399 compacto alvo=80x80 real=80x80 moldura=80x80 dpr=1.0
+2026-09-05 18:48:28,401 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 18:48:30,865 compacto alvo=80x80 real=80x80 moldura=80x80 dpr=1.0
+2026-09-05 18:48:30,866 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 18:48:33,445 compacto alvo=80x80 real=80x80 moldura=80x80 dpr=1.0
+2026-09-05 18:48:33,447 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 18:48:34,784 compacto alvo=80x80 real=80x80 moldura=80x80 dpr=1.0
+2026-09-05 18:48:34,785 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 18:48:34,953 compacto alvo=80x80 real=80x80 moldura=80x80 dpr=1.0
+2026-09-05 18:48:34,954 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 18:48:35,610 compacto alvo=80x80 real=80x80 moldura=80x80 dpr=1.0
+2026-09-05 18:48:35,612 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 18:48:36,711 compacto alvo=80x80 real=80x80 moldura=80x80 dpr=1.0
+2026-09-05 18:48:36,712 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 18:48:39,102 compacto alvo=80x80 real=80x80 moldura=80x80 dpr=1.0
+2026-09-05 18:48:39,103 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 18:48:41,774 compacto alvo=80x80 real=80x80 moldura=80x80 dpr=1.0
+2026-09-05 18:48:41,775 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 18:48:43,256 compacto alvo=80x80 real=80x80 moldura=80x80 dpr=1.0
+2026-09-05 18:48:43,258 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 18:48:45,861 compacto alvo=80x80 real=80x80 moldura=80x80 dpr=1.0
+2026-09-05 18:48:45,862 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 18:49:34,757 compacto alvo=80x80 real=80x80 moldura=80x80 dpr=1.0
+2026-09-05 18:49:34,758 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 18:50:39,292 compacto alvo=80x80 real=80x80 moldura=80x80 dpr=1.0
+2026-09-05 18:50:39,293 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 18:51:21,508 compacto alvo=80x80 real=80x80 moldura=80x80 dpr=1.0
+2026-09-05 18:51:21,510 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 18:51:25,852 compacto alvo=80x80 real=80x80 moldura=80x80 dpr=1.0
+2026-09-05 18:51:25,853 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 18:51:30,280 compacto alvo=80x80 real=80x80 moldura=80x80 dpr=1.0
+2026-09-05 18:51:30,282 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 18:51:30,808 compacto alvo=80x80 real=80x80 moldura=80x80 dpr=1.0
+2026-09-05 18:51:30,810 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 18:51:32,122 compacto alvo=80x80 real=80x80 moldura=80x80 dpr=1.0
+2026-09-05 18:51:32,124 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 18:51:34,556 compacto alvo=80x80 real=80x80 moldura=80x80 dpr=1.0
+2026-09-05 18:51:34,557 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 18:51:37,109 compacto alvo=80x80 real=80x80 moldura=80x80 dpr=1.0
+2026-09-05 18:51:37,111 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 18:51:38,415 compacto alvo=80x80 real=80x80 moldura=80x80 dpr=1.0
+2026-09-05 18:51:38,417 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 18:51:38,594 compacto alvo=80x80 real=80x80 moldura=80x80 dpr=1.0
+2026-09-05 18:51:38,595 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 18:51:39,266 compacto alvo=80x80 real=80x80 moldura=80x80 dpr=1.0
+2026-09-05 18:51:39,268 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 18:51:40,363 compacto alvo=80x80 real=80x80 moldura=80x80 dpr=1.0
+2026-09-05 18:51:40,364 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 18:51:42,722 compacto alvo=80x80 real=80x80 moldura=80x80 dpr=1.0
+2026-09-05 18:51:42,724 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 18:51:45,404 compacto alvo=80x80 real=80x80 moldura=80x80 dpr=1.0
+2026-09-05 18:51:45,405 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 18:51:46,909 compacto alvo=80x80 real=80x80 moldura=80x80 dpr=1.0
+2026-09-05 18:51:46,910 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 18:51:49,516 compacto alvo=80x80 real=80x80 moldura=80x80 dpr=1.0
+2026-09-05 18:51:49,517 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 18:51:56,501 compacto alvo=80x80 real=80x80 moldura=80x80 dpr=1.0
+2026-09-05 18:51:56,503 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 18:52:04,399 compacto alvo=80x80 real=80x80 moldura=80x80 dpr=1.0
+2026-09-05 18:52:04,400 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 18:52:05,006 compacto alvo=80x80 real=80x80 moldura=80x80 dpr=1.0
+2026-09-05 18:52:05,007 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 18:53:49,376 compacto alvo=80x80 real=80x80 moldura=80x80 dpr=1.0
+2026-09-05 18:53:49,378 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 18:53:49,977 compacto alvo=80x80 real=80x80 moldura=80x80 dpr=1.0
+2026-09-05 18:53:49,978 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 18:53:54,876 compacto alvo=80x80 real=80x80 moldura=80x80 dpr=1.0
+2026-09-05 18:53:54,877 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 18:53:59,223 compacto alvo=80x80 real=80x80 moldura=80x80 dpr=1.0
+2026-09-05 18:53:59,224 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 18:54:03,682 compacto alvo=80x80 real=80x80 moldura=80x80 dpr=1.0
+2026-09-05 18:54:03,683 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 18:54:04,207 compacto alvo=80x80 real=80x80 moldura=80x80 dpr=1.0
+2026-09-05 18:54:04,209 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 18:54:05,492 compacto alvo=80x80 real=80x80 moldura=80x80 dpr=1.0
+2026-09-05 18:54:05,493 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 18:54:07,928 compacto alvo=80x80 real=80x80 moldura=80x80 dpr=1.0
+2026-09-05 18:54:07,929 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 18:54:10,502 compacto alvo=80x80 real=80x80 moldura=80x80 dpr=1.0
+2026-09-05 18:54:10,503 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 18:54:11,813 compacto alvo=80x80 real=80x80 moldura=80x80 dpr=1.0
+2026-09-05 18:54:11,814 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 18:54:11,992 compacto alvo=80x80 real=80x80 moldura=80x80 dpr=1.0
+2026-09-05 18:54:11,993 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 18:54:12,676 compacto alvo=80x80 real=80x80 moldura=80x80 dpr=1.0
+2026-09-05 18:54:12,677 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 18:54:13,449 compacto alvo=80x80 real=80x80 moldura=80x80 dpr=1.0
+2026-09-05 18:54:13,451 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 18:54:14,569 compacto alvo=80x80 real=80x80 moldura=80x80 dpr=1.0
+2026-09-05 18:54:14,570 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 18:54:16,943 compacto alvo=80x80 real=80x80 moldura=80x80 dpr=1.0
+2026-09-05 18:54:16,944 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 18:54:19,636 compacto alvo=80x80 real=80x80 moldura=80x80 dpr=1.0
+2026-09-05 18:54:19,637 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 18:54:21,138 compacto alvo=80x80 real=80x80 moldura=80x80 dpr=1.0
+2026-09-05 18:54:21,139 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 18:54:23,747 compacto alvo=80x80 real=80x80 moldura=80x80 dpr=1.0
+2026-09-05 18:54:23,748 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 18:54:52,748 compacto alvo=80x80 real=80x80 moldura=80x80 dpr=1.0
+2026-09-05 18:54:52,749 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 18:54:53,349 compacto alvo=80x80 real=80x80 moldura=80x80 dpr=1.0
+2026-09-05 18:54:53,350 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 18:54:54,057 compacto alvo=80x80 real=80x80 moldura=80x80 dpr=1.0
+2026-09-05 18:54:54,059 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 18:55:30,835 compacto alvo=80x80 real=80x80 moldura=80x80 dpr=1.0
+2026-09-05 18:55:30,836 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 18:55:35,167 compacto alvo=80x80 real=80x80 moldura=80x80 dpr=1.0
+2026-09-05 18:55:35,168 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 18:55:39,629 compacto alvo=80x80 real=80x80 moldura=80x80 dpr=1.0
+2026-09-05 18:55:39,631 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 18:55:40,160 compacto alvo=80x80 real=80x80 moldura=80x80 dpr=1.0
+2026-09-05 18:55:40,161 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 18:55:41,446 compacto alvo=80x80 real=80x80 moldura=80x80 dpr=1.0
+2026-09-05 18:55:41,447 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 18:55:43,880 compacto alvo=80x80 real=80x80 moldura=80x80 dpr=1.0
+2026-09-05 18:55:43,881 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 18:55:46,438 compacto alvo=80x80 real=80x80 moldura=80x80 dpr=1.0
+2026-09-05 18:55:46,439 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 18:55:47,763 compacto alvo=80x80 real=80x80 moldura=80x80 dpr=1.0
+2026-09-05 18:55:47,765 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 18:55:47,937 compacto alvo=80x80 real=80x80 moldura=80x80 dpr=1.0
+2026-09-05 18:55:47,939 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 18:55:48,619 compacto alvo=80x80 real=80x80 moldura=80x80 dpr=1.0
+2026-09-05 18:55:48,621 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 18:55:49,410 compacto alvo=80x80 real=80x80 moldura=80x80 dpr=1.0
+2026-09-05 18:55:49,412 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 18:55:50,517 compacto alvo=80x80 real=80x80 moldura=80x80 dpr=1.0
+2026-09-05 18:55:50,518 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 18:55:52,903 compacto alvo=80x80 real=80x80 moldura=80x80 dpr=1.0
+2026-09-05 18:55:52,904 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 18:55:55,580 compacto alvo=80x80 real=80x80 moldura=80x80 dpr=1.0
+2026-09-05 18:55:55,581 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 18:55:57,087 compacto alvo=80x80 real=80x80 moldura=80x80 dpr=1.0
+2026-09-05 18:55:57,088 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 18:55:59,712 compacto alvo=80x80 real=80x80 moldura=80x80 dpr=1.0
+2026-09-05 18:55:59,714 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 18:56:28,943 compacto alvo=80x80 real=80x80 moldura=80x80 dpr=1.0
+2026-09-05 18:56:28,944 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 18:56:47,935 compacto alvo=80x80 real=80x80 moldura=80x80 dpr=1.0
+2026-09-05 18:56:47,936 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 18:56:48,769 erro_consumo mensagem=Não foi possível conectar ao núcleo em http://127.0.0.1:8000/consumo.
+2026-09-05 18:57:28,563 compacto alvo=80x80 real=80x80 moldura=80x80 dpr=1.0
+2026-09-05 18:57:28,564 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 18:57:35,102 compacto alvo=80x80 real=80x80 moldura=80x80 dpr=1.0
+2026-09-05 18:57:35,104 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 18:57:39,419 compacto alvo=80x80 real=80x80 moldura=80x80 dpr=1.0
+2026-09-05 18:57:39,420 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 18:57:43,880 compacto alvo=80x80 real=80x80 moldura=80x80 dpr=1.0
+2026-09-05 18:57:43,881 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 18:57:44,409 compacto alvo=80x80 real=80x80 moldura=80x80 dpr=1.0
+2026-09-05 18:57:44,412 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 18:57:45,696 compacto alvo=80x80 real=80x80 moldura=80x80 dpr=1.0
+2026-09-05 18:57:45,697 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 18:57:48,122 compacto alvo=80x80 real=80x80 moldura=80x80 dpr=1.0
+2026-09-05 18:57:48,124 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 18:57:50,679 compacto alvo=80x80 real=80x80 moldura=80x80 dpr=1.0
+2026-09-05 18:57:50,682 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 18:57:52,009 compacto alvo=80x80 real=80x80 moldura=80x80 dpr=1.0
+2026-09-05 18:57:52,012 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 18:57:52,181 compacto alvo=80x80 real=80x80 moldura=80x80 dpr=1.0
+2026-09-05 18:57:52,183 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 18:57:52,837 compacto alvo=80x80 real=80x80 moldura=80x80 dpr=1.0
+2026-09-05 18:57:52,839 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 18:57:53,611 compacto alvo=80x80 real=80x80 moldura=80x80 dpr=1.0
+2026-09-05 18:57:53,612 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 18:57:54,917 compacto alvo=80x80 real=80x80 moldura=80x80 dpr=1.0
+2026-09-05 18:57:54,918 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 18:57:56,020 compacto alvo=80x80 real=80x80 moldura=80x80 dpr=1.0
+2026-09-05 18:57:56,021 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 18:57:58,406 compacto alvo=80x80 real=80x80 moldura=80x80 dpr=1.0
+2026-09-05 18:57:58,412 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 18:58:01,110 compacto alvo=80x80 real=80x80 moldura=80x80 dpr=1.0
+2026-09-05 18:58:01,111 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 18:58:02,617 compacto alvo=80x80 real=80x80 moldura=80x80 dpr=1.0
+2026-09-05 18:58:02,618 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 18:58:05,225 compacto alvo=80x80 real=80x80 moldura=80x80 dpr=1.0
+2026-09-05 18:58:05,226 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 18:58:29,485 compacto alvo=80x80 real=80x80 moldura=80x80 dpr=1.0
+2026-09-05 18:58:29,486 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 18:58:33,824 compacto alvo=80x80 real=80x80 moldura=80x80 dpr=1.0
+2026-09-05 18:58:33,826 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 18:58:38,273 compacto alvo=80x80 real=80x80 moldura=80x80 dpr=1.0
+2026-09-05 18:58:38,274 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 18:58:38,810 compacto alvo=80x80 real=80x80 moldura=80x80 dpr=1.0
+2026-09-05 18:58:38,813 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 18:58:40,119 compacto alvo=80x80 real=80x80 moldura=80x80 dpr=1.0
+2026-09-05 18:58:40,121 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 18:58:42,548 compacto alvo=80x80 real=80x80 moldura=80x80 dpr=1.0
+2026-09-05 18:58:42,549 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 18:58:45,105 compacto alvo=80x80 real=80x80 moldura=80x80 dpr=1.0
+2026-09-05 18:58:45,108 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 18:58:46,416 compacto alvo=80x80 real=80x80 moldura=80x80 dpr=1.0
+2026-09-05 18:58:46,418 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 18:58:46,588 compacto alvo=80x80 real=80x80 moldura=80x80 dpr=1.0
+2026-09-05 18:58:46,590 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 18:58:47,262 compacto alvo=80x80 real=80x80 moldura=80x80 dpr=1.0
+2026-09-05 18:58:47,263 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 18:58:48,049 compacto alvo=80x80 real=80x80 moldura=80x80 dpr=1.0
+2026-09-05 18:58:48,050 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 18:58:49,341 compacto alvo=80x80 real=80x80 moldura=80x80 dpr=1.0
+2026-09-05 18:58:49,342 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 18:58:50,450 compacto alvo=80x80 real=80x80 moldura=80x80 dpr=1.0
+2026-09-05 18:58:50,451 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 18:58:52,831 compacto alvo=80x80 real=80x80 moldura=80x80 dpr=1.0
+2026-09-05 18:58:52,832 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 18:58:55,506 compacto alvo=80x80 real=80x80 moldura=80x80 dpr=1.0
+2026-09-05 18:58:55,507 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 18:58:57,042 compacto alvo=80x80 real=80x80 moldura=80x80 dpr=1.0
+2026-09-05 18:58:57,044 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 18:58:59,674 compacto alvo=80x80 real=80x80 moldura=80x80 dpr=1.0
+2026-09-05 18:58:59,675 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 18:59:12,710 compacto alvo=80x80 real=80x80 moldura=80x80 dpr=1.0
+2026-09-05 18:59:12,711 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 19:00:56,647 compacto alvo=80x80 real=80x80 moldura=80x80 dpr=1.0
+2026-09-05 19:00:56,648 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 19:01:00,976 compacto alvo=80x80 real=80x80 moldura=80x80 dpr=1.0
+2026-09-05 19:01:00,977 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 19:01:05,396 compacto alvo=80x80 real=80x80 moldura=80x80 dpr=1.0
+2026-09-05 19:01:05,398 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 19:01:05,934 compacto alvo=80x80 real=80x80 moldura=80x80 dpr=1.0
+2026-09-05 19:01:05,936 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 19:01:07,219 compacto alvo=80x80 real=80x80 moldura=80x80 dpr=1.0
+2026-09-05 19:01:07,221 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 19:01:09,656 compacto alvo=80x80 real=80x80 moldura=80x80 dpr=1.0
+2026-09-05 19:01:09,658 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 19:01:12,211 compacto alvo=80x80 real=80x80 moldura=80x80 dpr=1.0
+2026-09-05 19:01:12,213 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 19:01:13,539 compacto alvo=80x80 real=80x80 moldura=80x80 dpr=1.0
+2026-09-05 19:01:13,540 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 19:01:13,714 compacto alvo=80x80 real=80x80 moldura=80x80 dpr=1.0
+2026-09-05 19:01:13,716 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 19:01:14,387 compacto alvo=80x80 real=80x80 moldura=80x80 dpr=1.0
+2026-09-05 19:01:14,389 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 19:01:15,175 compacto alvo=80x80 real=80x80 moldura=80x80 dpr=1.0
+2026-09-05 19:01:15,176 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 19:01:16,471 compacto alvo=80x80 real=80x80 moldura=80x80 dpr=1.0
+2026-09-05 19:01:16,472 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 19:01:17,570 compacto alvo=80x80 real=80x80 moldura=80x80 dpr=1.0
+2026-09-05 19:01:17,572 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 19:01:19,963 compacto alvo=80x80 real=80x80 moldura=80x80 dpr=1.0
+2026-09-05 19:01:19,964 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 19:01:22,664 compacto alvo=80x80 real=80x80 moldura=80x80 dpr=1.0
+2026-09-05 19:01:22,665 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 19:01:24,168 compacto alvo=80x80 real=80x80 moldura=80x80 dpr=1.0
+2026-09-05 19:01:24,169 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 19:01:26,782 compacto alvo=80x80 real=80x80 moldura=80x80 dpr=1.0
+2026-09-05 19:01:26,783 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 19:01:38,803 compacto alvo=80x80 real=80x80 moldura=80x80 dpr=1.0
+2026-09-05 19:01:38,804 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 16:50:23,659 compacto alvo=80x80 real=80x80 moldura=80x80 dpr=1.25
+2026-09-05 16:50:23,782 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-05 17:51:32,343 compacto alvo=80x80 real=80x80 moldura=80x80 dpr=1.0
+2026-09-06 02:49:37,321 offset_compacto_preso pedido=-4,-4 virou=0,0 janela=448x366
+2026-09-06 02:49:37,324 compacto alvo=80x80 mascara=82x82+0+0 janela=448x366 dpr=1.0
+2026-09-06 02:49:37,326 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-06 02:49:37,425 mascara_fora_do_modo expandido=False regiao=PySide6.QtCore.QRect(0, 0, 96, 96)
+2026-09-06 02:50:53,360 compacto alvo=80x80 mascara=84x84+182+19 janela=448x366 dpr=1.0
+2026-09-06 02:50:53,361 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-06 02:51:16,660 compacto alvo=80x80 mascara=84x84+182+19 janela=448x366 dpr=1.0
+2026-09-06 02:51:16,661 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-06 02:51:44,007 compacto alvo=80x80 mascara=84x84+182+19 janela=448x366 dpr=1.0
+2026-09-06 02:51:44,008 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-06 02:52:07,286 compacto alvo=80x80 mascara=84x84+182+19 janela=448x366 dpr=1.0
+2026-09-06 02:52:07,289 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-06 02:52:32,733 compacto alvo=80x80 mascara=84x84+182+19 janela=448x366 dpr=1.0
+2026-09-06 02:52:32,734 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-06 02:53:00,883 compacto alvo=80x80 mascara=84x84+182+19 janela=448x366 dpr=1.0
+2026-09-06 02:53:00,885 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-06 02:53:01,813 compacto alvo=80x80 mascara=84x84+182+19 janela=448x366 dpr=1.0
+2026-09-06 02:53:01,815 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-06 02:53:09,731 compacto alvo=80x80 mascara=84x84+182+19 janela=448x366 dpr=1.0
+2026-09-06 02:53:09,732 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-06 02:53:14,070 compacto alvo=80x80 mascara=84x84+182+19 janela=448x366 dpr=1.0
+2026-09-06 02:53:14,071 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-06 02:53:18,475 compacto alvo=80x80 mascara=84x84+182+19 janela=448x366 dpr=1.0
+2026-09-06 02:53:18,477 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-06 02:53:19,007 compacto alvo=80x80 mascara=84x84+182+19 janela=448x366 dpr=1.0
+2026-09-06 02:53:19,008 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-06 02:53:20,293 compacto alvo=80x80 mascara=84x84+182+19 janela=448x366 dpr=1.0
+2026-09-06 02:53:20,294 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-06 02:53:22,727 compacto alvo=80x80 mascara=84x84+182+19 janela=448x366 dpr=1.0
+2026-09-06 02:53:22,729 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-06 02:53:25,132 mascara_fora_do_modo expandido=True regiao=PySide6.QtCore.QRect(0, 0, 448, 366)
+2026-09-06 02:53:25,280 compacto alvo=80x80 mascara=84x84+182+19 janela=448x366 dpr=1.0
+2026-09-06 02:53:25,282 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-06 02:53:26,618 compacto alvo=80x80 mascara=84x84+182+19 janela=448x366 dpr=1.0
+2026-09-06 02:53:26,620 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-06 02:53:26,803 compacto alvo=80x80 mascara=84x84+182+19 janela=448x366 dpr=1.0
+2026-09-06 02:53:26,804 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-06 02:53:27,469 compacto alvo=80x80 mascara=84x84+182+19 janela=448x366 dpr=1.0
+2026-09-06 02:53:27,470 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-06 02:53:28,251 compacto alvo=80x80 mascara=84x84+182+19 janela=448x366 dpr=1.0
+2026-09-06 02:53:28,253 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-06 02:56:22,897 compacto alvo=80x80 mascara=84x84+182+19 janela=448x366 dpr=1.0
+2026-09-06 02:56:22,898 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-06 02:56:24,419 compacto alvo=80x80 mascara=84x84+182+19 janela=448x366 dpr=1.0
+2026-09-06 02:56:24,420 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-06 02:56:25,831 compacto alvo=80x80 mascara=84x84+182+19 janela=448x366 dpr=1.0
+2026-09-06 02:56:25,832 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-06 02:56:31,113 compacto alvo=80x80 mascara=84x84+182+19 janela=448x366 dpr=1.0
+2026-09-06 02:56:31,114 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-06 02:56:35,444 compacto alvo=80x80 mascara=84x84+182+19 janela=448x366 dpr=1.0
+2026-09-06 02:56:35,445 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-06 02:56:39,877 compacto alvo=80x80 mascara=84x84+182+19 janela=448x366 dpr=1.0
+2026-09-06 02:56:39,878 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-06 02:56:40,410 compacto alvo=80x80 mascara=84x84+182+19 janela=448x366 dpr=1.0
+2026-09-06 02:56:40,411 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-06 02:56:41,720 compacto alvo=80x80 mascara=84x84+182+19 janela=448x366 dpr=1.0
+2026-09-06 02:56:41,721 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-06 02:56:44,155 compacto alvo=80x80 mascara=84x84+182+19 janela=448x366 dpr=1.0
+2026-09-06 02:56:44,156 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-06 02:56:46,733 compacto alvo=80x80 mascara=84x84+182+19 janela=448x366 dpr=1.0
+2026-09-06 02:56:46,734 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-06 02:56:48,032 tamanho_fora_do_modo expandido=False alvo=448x366 real=300x300
+2026-09-06 02:56:48,424 compacto alvo=80x80 mascara=84x84+182+19 janela=448x366 dpr=1.0
+2026-09-06 02:56:48,426 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-06 02:56:48,610 compacto alvo=80x80 mascara=84x84+182+19 janela=448x366 dpr=1.0
+2026-09-06 02:56:48,611 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-06 02:56:49,286 compacto alvo=80x80 mascara=84x84+182+19 janela=448x366 dpr=1.0
+2026-09-06 02:56:49,287 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-06 02:56:50,081 compacto alvo=80x80 mascara=84x84+182+19 janela=448x366 dpr=1.0
+2026-09-06 02:56:50,082 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-06 02:56:51,697 compacto alvo=80x80 mascara=84x84+182+19 janela=448x366 dpr=1.0
+2026-09-06 02:56:51,699 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-06 02:56:53,184 compacto alvo=80x80 mascara=84x84+182+19 janela=448x366 dpr=1.0
+2026-09-06 02:56:53,186 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-06 02:56:54,135 compacto alvo=80x80 mascara=84x84+182+19 janela=448x366 dpr=1.0
+2026-09-06 02:56:54,137 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-06 02:56:55,272 compacto alvo=80x80 mascara=84x84+182+19 janela=448x366 dpr=1.0
+2026-09-06 02:56:55,274 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-06 02:56:57,675 compacto alvo=80x80 mascara=84x84+182+19 janela=448x366 dpr=1.0
+2026-09-06 02:56:57,676 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-06 02:57:00,433 compacto alvo=80x80 mascara=84x84+182+19 janela=448x366 dpr=1.0
+2026-09-06 02:57:00,434 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-06 02:57:01,967 compacto alvo=80x80 mascara=84x84+182+19 janela=448x366 dpr=1.0
+2026-09-06 02:57:01,969 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-06 02:57:04,624 compacto alvo=80x80 mascara=84x84+182+19 janela=448x366 dpr=1.0
+2026-09-06 02:57:04,625 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-06 02:57:27,652 compacto alvo=80x80 mascara=84x84+182+19 janela=448x366 dpr=1.0
+2026-09-06 02:57:27,653 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-06 02:58:00,881 compacto alvo=80x80 mascara=84x84+182+19 janela=448x366 dpr=1.0
+2026-09-06 02:58:00,882 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-06 02:58:18,243 compacto alvo=80x80 mascara=84x84+182+19 janela=448x366 dpr=1.0
+2026-09-06 02:58:18,244 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-06 02:58:25,654 compacto alvo=80x80 mascara=84x84+182+19 janela=448x366 dpr=1.0
+2026-09-06 02:58:25,656 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-06 02:58:29,971 compacto alvo=80x80 mascara=84x84+182+19 janela=448x366 dpr=1.0
+2026-09-06 02:58:29,973 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-06 02:58:34,425 compacto alvo=80x80 mascara=84x84+182+19 janela=448x366 dpr=1.0
+2026-09-06 02:58:34,427 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-06 02:58:34,958 compacto alvo=80x80 mascara=84x84+182+19 janela=448x366 dpr=1.0
+2026-09-06 02:58:34,959 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-06 02:58:36,242 compacto alvo=80x80 mascara=84x84+182+19 janela=448x366 dpr=1.0
+2026-09-06 02:58:36,244 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-06 02:58:38,677 compacto alvo=80x80 mascara=84x84+182+19 janela=448x366 dpr=1.0
+2026-09-06 02:58:38,679 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-06 02:58:41,230 compacto alvo=80x80 mascara=84x84+182+19 janela=448x366 dpr=1.0
+2026-09-06 02:58:41,232 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-06 02:58:42,533 tamanho_fora_do_modo expandido=False alvo=448x366 real=300x300
+2026-09-06 02:58:42,987 compacto alvo=80x80 mascara=84x84+182+19 janela=448x366 dpr=1.0
+2026-09-06 02:58:42,988 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-06 02:58:43,166 compacto alvo=80x80 mascara=84x84+182+19 janela=448x366 dpr=1.0
+2026-09-06 02:58:43,167 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-06 02:58:43,841 compacto alvo=80x80 mascara=84x84+182+19 janela=448x366 dpr=1.0
+2026-09-06 02:58:43,843 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-06 02:58:44,625 compacto alvo=80x80 mascara=84x84+182+19 janela=448x366 dpr=1.0
+2026-09-06 02:58:44,626 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-06 02:58:46,219 compacto alvo=80x80 mascara=84x84+182+19 janela=448x366 dpr=1.0
+2026-09-06 02:58:46,220 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-06 02:58:47,743 compacto alvo=80x80 mascara=84x84+182+19 janela=448x366 dpr=1.0
+2026-09-06 02:58:47,745 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-06 02:58:48,687 compacto alvo=80x80 mascara=84x84+182+19 janela=448x366 dpr=1.0
+2026-09-06 02:58:48,689 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-06 02:58:49,824 compacto alvo=80x80 mascara=84x84+182+19 janela=448x366 dpr=1.0
+2026-09-06 02:58:49,825 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-06 02:58:52,247 compacto alvo=80x80 mascara=84x84+182+19 janela=448x366 dpr=1.0
+2026-09-06 02:58:52,248 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-06 02:58:54,956 compacto alvo=80x80 mascara=84x84+182+19 janela=448x366 dpr=1.0
+2026-09-06 02:58:54,957 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-06 02:58:56,490 compacto alvo=80x80 mascara=84x84+182+19 janela=448x366 dpr=1.0
+2026-09-06 02:58:56,491 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-06 02:58:59,103 compacto alvo=80x80 mascara=84x84+182+19 janela=448x366 dpr=1.0
+2026-09-06 02:58:59,105 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-06 02:59:03,110 compacto alvo=80x80 mascara=84x84+182+19 janela=448x366 dpr=1.0
+2026-09-06 02:59:03,111 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-06 02:59:07,445 compacto alvo=80x80 mascara=84x84+182+19 janela=448x366 dpr=1.0
+2026-09-06 02:59:07,447 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-06 02:59:11,875 compacto alvo=80x80 mascara=84x84+182+19 janela=448x366 dpr=1.0
+2026-09-06 02:59:11,877 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-06 02:59:12,406 compacto alvo=80x80 mascara=84x84+182+19 janela=448x366 dpr=1.0
+2026-09-06 02:59:12,408 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-06 02:59:13,715 compacto alvo=80x80 mascara=84x84+182+19 janela=448x366 dpr=1.0
+2026-09-06 02:59:13,716 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-06 02:59:16,152 compacto alvo=80x80 mascara=84x84+182+19 janela=448x366 dpr=1.0
+2026-09-06 02:59:16,153 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-06 02:59:18,703 compacto alvo=80x80 mascara=84x84+182+19 janela=448x366 dpr=1.0
+2026-09-06 02:59:18,704 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-06 02:59:19,932 tamanho_fora_do_modo expandido=False alvo=448x366 real=300x300
+2026-09-06 02:59:20,416 compacto alvo=80x80 mascara=84x84+182+19 janela=448x366 dpr=1.0
+2026-09-06 02:59:20,417 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-06 02:59:20,599 compacto alvo=80x80 mascara=84x84+182+19 janela=448x366 dpr=1.0
+2026-09-06 02:59:20,601 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-06 02:59:21,263 compacto alvo=80x80 mascara=84x84+182+19 janela=448x366 dpr=1.0
+2026-09-06 02:59:21,264 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-06 02:59:22,055 compacto alvo=80x80 mascara=84x84+182+19 janela=448x366 dpr=1.0
+2026-09-06 02:59:22,057 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-06 02:59:23,672 compacto alvo=80x80 mascara=84x84+182+19 janela=448x366 dpr=1.0
+2026-09-06 02:59:23,673 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-06 02:59:25,140 compacto alvo=80x80 mascara=84x84+182+19 janela=448x366 dpr=1.0
+2026-09-06 02:59:25,141 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-06 02:59:26,084 compacto alvo=80x80 mascara=84x84+182+19 janela=448x366 dpr=1.0
+2026-09-06 02:59:26,085 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-06 02:59:27,218 compacto alvo=80x80 mascara=84x84+182+19 janela=448x366 dpr=1.0
+2026-09-06 02:59:27,219 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-06 02:59:29,623 compacto alvo=80x80 mascara=84x84+182+19 janela=448x366 dpr=1.0
+2026-09-06 02:59:29,625 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-06 02:59:32,355 compacto alvo=80x80 mascara=84x84+182+19 janela=448x366 dpr=1.0
+2026-09-06 02:59:32,356 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-06 02:59:33,895 compacto alvo=80x80 mascara=84x84+182+19 janela=448x366 dpr=1.0
+2026-09-06 02:59:33,896 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-06 02:59:36,553 compacto alvo=80x80 mascara=84x84+182+19 janela=448x366 dpr=1.0
+2026-09-06 02:59:36,554 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-06 03:00:26,665 compacto alvo=80x80 mascara=84x84+182+19 janela=448x366 dpr=1.0
+2026-09-06 03:00:26,667 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-06 03:00:27,195 compacto alvo=80x80 mascara=84x84+182+19 janela=448x366 dpr=1.0
+2026-09-06 03:00:27,206 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-06 03:00:27,361 compacto alvo=80x80 mascara=84x84+182+19 janela=448x366 dpr=1.0
+2026-09-06 03:00:27,370 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-06 03:00:33,313 compacto alvo=80x80 mascara=84x84+182+19 janela=448x366 dpr=1.0
+2026-09-06 03:00:33,321 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-06 03:00:37,673 compacto alvo=80x80 mascara=84x84+182+19 janela=448x366 dpr=1.0
+2026-09-06 03:00:37,675 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-06 03:00:42,074 compacto alvo=80x80 mascara=84x84+182+19 janela=448x366 dpr=1.0
+2026-09-06 03:00:42,076 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-06 03:00:42,610 compacto alvo=80x80 mascara=84x84+182+19 janela=448x366 dpr=1.0
+2026-09-06 03:00:42,611 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-06 03:00:43,899 compacto alvo=80x80 mascara=84x84+182+19 janela=448x366 dpr=1.0
+2026-09-06 03:00:43,902 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-06 03:00:46,348 compacto alvo=80x80 mascara=84x84+182+19 janela=448x366 dpr=1.0
+2026-09-06 03:00:46,358 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-06 03:00:48,920 compacto alvo=80x80 mascara=84x84+182+19 janela=448x366 dpr=1.0
+2026-09-06 03:00:48,921 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-06 03:00:50,232 tamanho_fora_do_modo expandido=False alvo=448x366 real=300x300
+2026-09-06 03:00:50,624 compacto alvo=80x80 mascara=84x84+182+19 janela=448x366 dpr=1.0
+2026-09-06 03:00:50,635 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-06 03:00:50,835 compacto alvo=80x80 mascara=84x84+182+19 janela=448x366 dpr=1.0
+2026-09-06 03:00:50,842 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-06 03:00:51,511 compacto alvo=80x80 mascara=84x84+182+19 janela=448x366 dpr=1.0
+2026-09-06 03:00:51,513 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-06 03:00:52,317 compacto alvo=80x80 mascara=84x84+182+19 janela=448x366 dpr=1.0
+2026-09-06 03:00:52,329 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-06 03:00:53,944 compacto alvo=80x80 mascara=84x84+182+19 janela=448x366 dpr=1.0
+2026-09-06 03:00:53,945 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-06 03:00:55,453 compacto alvo=80x80 mascara=84x84+182+19 janela=448x366 dpr=1.0
+2026-09-06 03:00:55,456 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-06 03:00:56,418 compacto alvo=80x80 mascara=84x84+182+19 janela=448x366 dpr=1.0
+2026-09-06 03:00:56,419 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-06 03:00:57,543 compacto alvo=80x80 mascara=84x84+182+19 janela=448x366 dpr=1.0
+2026-09-06 03:00:57,544 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-06 03:00:59,952 compacto alvo=80x80 mascara=84x84+182+19 janela=448x366 dpr=1.0
+2026-09-06 03:00:59,953 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-06 03:01:02,677 compacto alvo=80x80 mascara=84x84+182+19 janela=448x366 dpr=1.0
+2026-09-06 03:01:02,678 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-06 03:01:04,224 compacto alvo=80x80 mascara=84x84+182+19 janela=448x366 dpr=1.0
+2026-09-06 03:01:04,225 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-06 03:01:06,869 compacto alvo=80x80 mascara=84x84+182+19 janela=448x366 dpr=1.0
+2026-09-06 03:01:06,870 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-06 03:04:08,861 compacto alvo=80x80 mascara=84x84+182+19 janela=448x366 dpr=1.0
+2026-09-06 03:04:08,862 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-06 03:04:13,196 compacto alvo=80x80 mascara=84x84+182+19 janela=448x366 dpr=1.0
+2026-09-06 03:04:13,197 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-06 03:04:17,628 compacto alvo=80x80 mascara=84x84+182+19 janela=448x366 dpr=1.0
+2026-09-06 03:04:17,630 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-06 03:04:18,157 compacto alvo=80x80 mascara=84x84+182+19 janela=448x366 dpr=1.0
+2026-09-06 03:04:18,158 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-06 03:04:19,441 compacto alvo=80x80 mascara=84x84+182+19 janela=448x366 dpr=1.0
+2026-09-06 03:04:19,442 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-06 03:04:21,875 compacto alvo=80x80 mascara=84x84+182+19 janela=448x366 dpr=1.0
+2026-09-06 03:04:21,876 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-06 03:04:24,436 compacto alvo=80x80 mascara=84x84+182+19 janela=448x366 dpr=1.0
+2026-09-06 03:04:24,437 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-06 03:04:25,732 tamanho_fora_do_modo expandido=False alvo=448x366 real=300x300
+2026-09-06 03:04:26,182 compacto alvo=80x80 mascara=84x84+182+19 janela=448x366 dpr=1.0
+2026-09-06 03:04:26,184 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-06 03:04:26,364 compacto alvo=80x80 mascara=84x84+182+19 janela=448x366 dpr=1.0
+2026-09-06 03:04:26,366 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-06 03:04:27,041 compacto alvo=80x80 mascara=84x84+182+19 janela=448x366 dpr=1.0
+2026-09-06 03:04:27,043 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-06 03:04:27,827 compacto alvo=80x80 mascara=84x84+182+19 janela=448x366 dpr=1.0
+2026-09-06 03:04:27,828 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-06 03:04:29,448 compacto alvo=80x80 mascara=84x84+182+19 janela=448x366 dpr=1.0
+2026-09-06 03:04:29,449 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-06 03:04:30,930 compacto alvo=80x80 mascara=84x84+182+19 janela=448x366 dpr=1.0
+2026-09-06 03:04:30,931 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-06 03:04:31,885 compacto alvo=80x80 mascara=84x84+182+19 janela=448x366 dpr=1.0
+2026-09-06 03:04:31,886 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-06 03:04:33,019 compacto alvo=80x80 mascara=84x84+182+19 janela=448x366 dpr=1.0
+2026-09-06 03:04:33,021 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-06 03:04:35,426 compacto alvo=80x80 mascara=84x84+182+19 janela=448x366 dpr=1.0
+2026-09-06 03:04:35,427 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-06 03:04:38,157 compacto alvo=80x80 mascara=84x84+182+19 janela=448x366 dpr=1.0
+2026-09-06 03:04:38,159 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-06 03:04:39,692 compacto alvo=80x80 mascara=84x84+182+19 janela=448x366 dpr=1.0
+2026-09-06 03:04:39,705 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-06 03:04:42,352 compacto alvo=80x80 mascara=84x84+182+19 janela=448x366 dpr=1.0
+2026-09-06 03:04:42,354 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-06 03:08:12,303 compacto alvo=80x80 mascara=84x84+182+19 janela=448x366 dpr=1.0
+2026-09-06 03:08:12,305 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-06 03:09:19,583 compacto alvo=80x80 mascara=84x84+182+19 janela=448x366 dpr=1.0
+2026-09-06 03:09:19,584 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-06 03:09:27,168 compacto alvo=80x80 mascara=84x84+182+19 janela=448x366 dpr=1.0
+2026-09-06 03:09:27,169 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-06 03:09:35,429 compacto alvo=80x80 mascara=84x84+182+19 janela=448x366 dpr=1.0
+2026-09-06 03:09:35,430 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-06 03:09:39,771 compacto alvo=80x80 mascara=84x84+182+19 janela=448x366 dpr=1.0
+2026-09-06 03:09:39,773 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-06 03:09:44,229 compacto alvo=80x80 mascara=84x84+182+19 janela=448x366 dpr=1.0
+2026-09-06 03:09:44,230 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-06 03:09:44,759 compacto alvo=80x80 mascara=84x84+182+19 janela=448x366 dpr=1.0
+2026-09-06 03:09:44,760 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-06 03:09:46,049 compacto alvo=80x80 mascara=84x84+182+19 janela=448x366 dpr=1.0
+2026-09-06 03:09:46,051 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-06 03:09:48,510 compacto alvo=80x80 mascara=84x84+182+19 janela=448x366 dpr=1.0
+2026-09-06 03:09:48,512 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-06 03:09:50,931 mascara_fora_do_modo expandido=True regiao=PySide6.QtCore.QRect(0, 0, 448, 366)
+2026-09-06 03:09:51,087 compacto alvo=80x80 mascara=84x84+182+19 janela=448x366 dpr=1.0
+2026-09-06 03:09:51,089 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-06 03:09:52,433 tamanho_fora_do_modo expandido=False alvo=448x366 real=300x300
+2026-09-06 03:09:52,824 compacto alvo=80x80 mascara=84x84+182+19 janela=448x366 dpr=1.0
+2026-09-06 03:09:52,827 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-06 03:09:53,025 compacto alvo=80x80 mascara=84x84+182+19 janela=448x366 dpr=1.0
+2026-09-06 03:09:53,027 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-06 03:09:53,723 compacto alvo=80x80 mascara=84x84+182+19 janela=448x366 dpr=1.0
+2026-09-06 03:09:53,724 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-06 03:09:54,518 compacto alvo=80x80 mascara=84x84+182+19 janela=448x366 dpr=1.0
+2026-09-06 03:09:54,519 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-06 03:09:56,130 compacto alvo=80x80 mascara=84x84+182+19 janela=448x366 dpr=1.0
+2026-09-06 03:09:56,137 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-06 03:09:57,673 compacto alvo=80x80 mascara=84x84+182+19 janela=448x366 dpr=1.0
+2026-09-06 03:09:57,674 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-06 03:09:58,651 compacto alvo=80x80 mascara=84x84+182+19 janela=448x366 dpr=1.0
+2026-09-06 03:09:58,652 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-06 03:10:06,433 compacto alvo=80x80 mascara=84x84+182+19 janela=448x366 dpr=1.0
+2026-09-06 03:10:06,434 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-06 03:10:07,618 compacto alvo=80x80 mascara=84x84+182+19 janela=448x366 dpr=1.0
+2026-09-06 03:10:07,620 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-06 03:10:08,798 compacto alvo=80x80 mascara=84x84+182+19 janela=448x366 dpr=1.0
+2026-09-06 03:10:08,799 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-06 03:10:11,258 compacto alvo=80x80 mascara=84x84+182+19 janela=448x366 dpr=1.0
+2026-09-06 03:10:11,259 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-06 03:10:14,046 compacto alvo=80x80 mascara=84x84+182+19 janela=448x366 dpr=1.0
+2026-09-06 03:10:14,048 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-06 03:10:15,624 compacto alvo=80x80 mascara=84x84+182+19 janela=448x366 dpr=1.0
+2026-09-06 03:10:15,625 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-06 03:10:18,311 compacto alvo=80x80 mascara=84x84+182+19 janela=448x366 dpr=1.0
+2026-09-06 03:10:18,312 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-06 03:10:40,918 compacto alvo=80x80 mascara=84x84+182+19 janela=448x366 dpr=1.0
+2026-09-06 03:10:40,919 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-06 03:11:13,461 compacto alvo=80x80 mascara=84x84+182+19 janela=448x366 dpr=1.0
+2026-09-06 03:11:13,462 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-06 03:11:17,769 compacto alvo=80x80 mascara=84x84+182+19 janela=448x366 dpr=1.0
+2026-09-06 03:11:17,770 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-06 03:11:22,193 compacto alvo=80x80 mascara=84x84+182+19 janela=448x366 dpr=1.0
+2026-09-06 03:11:22,194 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-06 03:11:22,734 compacto alvo=80x80 mascara=84x84+182+19 janela=448x366 dpr=1.0
+2026-09-06 03:11:22,735 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-06 03:11:24,045 compacto alvo=80x80 mascara=84x84+182+19 janela=448x366 dpr=1.0
+2026-09-06 03:11:24,047 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-06 03:11:26,473 compacto alvo=80x80 mascara=84x84+182+19 janela=448x366 dpr=1.0
+2026-09-06 03:11:26,474 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-06 03:11:29,036 compacto alvo=80x80 mascara=84x84+182+19 janela=448x366 dpr=1.0
+2026-09-06 03:11:29,038 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-06 03:11:30,333 tamanho_fora_do_modo expandido=False alvo=448x366 real=300x300
+2026-09-06 03:11:30,784 compacto alvo=80x80 mascara=84x84+182+19 janela=448x366 dpr=1.0
+2026-09-06 03:11:30,787 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-06 03:11:30,967 compacto alvo=80x80 mascara=84x84+182+19 janela=448x366 dpr=1.0
+2026-09-06 03:11:30,969 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-06 03:11:31,638 compacto alvo=80x80 mascara=84x84+182+19 janela=448x366 dpr=1.0
+2026-09-06 03:11:31,639 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-06 03:11:32,432 compacto alvo=80x80 mascara=84x84+182+19 janela=448x366 dpr=1.0
+2026-09-06 03:11:32,433 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-06 03:11:34,049 compacto alvo=80x80 mascara=84x84+182+19 janela=448x366 dpr=1.0
+2026-09-06 03:11:34,050 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-06 03:11:35,541 compacto alvo=80x80 mascara=84x84+182+19 janela=448x366 dpr=1.0
+2026-09-06 03:11:35,542 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-06 03:11:36,516 compacto alvo=80x80 mascara=84x84+182+19 janela=448x366 dpr=1.0
+2026-09-06 03:11:36,517 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-06 03:11:44,248 compacto alvo=80x80 mascara=84x84+182+19 janela=448x366 dpr=1.0
+2026-09-06 03:11:44,249 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-06 03:11:45,431 compacto alvo=80x80 mascara=84x84+182+19 janela=448x366 dpr=1.0
+2026-09-06 03:11:45,432 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-06 03:11:46,589 compacto alvo=80x80 mascara=84x84+182+19 janela=448x366 dpr=1.0
+2026-09-06 03:11:46,590 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-06 03:11:49,016 compacto alvo=80x80 mascara=84x84+182+19 janela=448x366 dpr=1.0
+2026-09-06 03:11:49,017 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-06 03:11:51,748 compacto alvo=80x80 mascara=84x84+182+19 janela=448x366 dpr=1.0
+2026-09-06 03:11:51,749 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-06 03:11:53,306 compacto alvo=80x80 mascara=84x84+182+19 janela=448x366 dpr=1.0
+2026-09-06 03:11:53,308 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-06 03:11:55,968 compacto alvo=80x80 mascara=84x84+182+19 janela=448x366 dpr=1.0
+2026-09-06 03:11:55,969 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-06 03:13:15,567 compacto alvo=80x80 mascara=84x84+182+19 janela=448x366 dpr=1.0
+2026-09-06 03:13:15,571 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-06 03:13:19,921 compacto alvo=80x80 mascara=84x84+182+19 janela=448x366 dpr=1.0
+2026-09-06 03:13:19,922 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-06 03:13:24,352 compacto alvo=80x80 mascara=84x84+182+19 janela=448x366 dpr=1.0
+2026-09-06 03:13:24,353 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-06 03:13:24,884 compacto alvo=80x80 mascara=84x84+182+19 janela=448x366 dpr=1.0
+2026-09-06 03:13:24,885 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-06 03:13:26,168 compacto alvo=80x80 mascara=84x84+182+19 janela=448x366 dpr=1.0
+2026-09-06 03:13:26,169 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-06 03:13:28,605 compacto alvo=80x80 mascara=84x84+182+19 janela=448x366 dpr=1.0
+2026-09-06 03:13:28,606 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-06 03:13:31,033 mascara_fora_do_modo expandido=True regiao=PySide6.QtCore.QRect(0, 0, 448, 366)
+2026-09-06 03:13:31,184 compacto alvo=80x80 mascara=84x84+182+19 janela=448x366 dpr=1.0
+2026-09-06 03:13:31,186 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-06 03:13:32,432 tamanho_fora_do_modo expandido=False alvo=448x366 real=300x300
+2026-09-06 03:13:32,851 compacto alvo=80x80 mascara=84x84+182+19 janela=448x366 dpr=1.0
+2026-09-06 03:13:32,853 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-06 03:13:33,032 compacto alvo=80x80 mascara=84x84+182+19 janela=448x366 dpr=1.0
+2026-09-06 03:13:33,033 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-06 03:13:33,689 compacto alvo=80x80 mascara=84x84+182+19 janela=448x366 dpr=1.0
+2026-09-06 03:13:33,690 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-06 03:13:34,477 compacto alvo=80x80 mascara=84x84+182+19 janela=448x366 dpr=1.0
+2026-09-06 03:13:34,478 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-06 03:13:36,047 compacto alvo=80x80 mascara=84x84+182+19 janela=448x366 dpr=1.0
+2026-09-06 03:13:36,049 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-06 03:13:37,532 compacto alvo=80x80 mascara=84x84+182+19 janela=448x366 dpr=1.0
+2026-09-06 03:13:37,534 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-06 03:13:38,487 compacto alvo=80x80 mascara=84x84+182+19 janela=448x366 dpr=1.0
+2026-09-06 03:13:38,488 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-06 03:13:46,219 compacto alvo=80x80 mascara=84x84+182+19 janela=448x366 dpr=1.0
+2026-09-06 03:13:46,221 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-06 03:13:47,347 compacto alvo=80x80 mascara=84x84+182+19 janela=448x366 dpr=1.0
+2026-09-06 03:13:47,349 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-06 03:13:48,484 compacto alvo=80x80 mascara=84x84+182+19 janela=448x366 dpr=1.0
+2026-09-06 03:13:48,486 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-06 03:13:50,943 compacto alvo=80x80 mascara=84x84+182+19 janela=448x366 dpr=1.0
+2026-09-06 03:13:50,944 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-06 03:13:53,707 compacto alvo=80x80 mascara=84x84+182+19 janela=448x366 dpr=1.0
+2026-09-06 03:13:53,711 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-06 03:13:55,256 compacto alvo=80x80 mascara=84x84+182+19 janela=448x366 dpr=1.0
+2026-09-06 03:13:55,257 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-06 03:13:57,913 compacto alvo=80x80 mascara=84x84+182+19 janela=448x366 dpr=1.0
+2026-09-06 03:13:57,915 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-06 11:28:47,911 compacto alvo=80x80 mascara=84x84+182+19 janela=448x366 dpr=1.25
+2026-09-06 11:28:47,982 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+esc+Ç
+2026-09-06 11:31:42,211 compacto alvo=80x80 mascara=84x84+182+19 janela=448x366 dpr=1.0
+2026-09-06 12:09:33,113 mascara_fora_do_modo expandido=True regiao=PySide6.QtCore.QRect(0, 0, 448, 366)
+2026-09-06 23:30:24,699 tamanho_fora_do_modo expandido=True alvo=448x366 real=286x234
+2026-09-07 01:32:40,667 compacto alvo=80x80 mascara=84x84+182+19 janela=448x366 dpr=1.25
+2026-09-07 13:43:26,959 compacto alvo=80x80 mascara=84x84+182+19 janela=448x366 dpr=1.0
+2026-09-08 19:25:10,680 descarte_por_silencio pico=0.0062 limiar=0.0200
+2026-09-08 20:26:22,534 tamanho_fora_do_modo expandido=True alvo=448x366 real=358x293
+2026-09-08 23:50:27,310 tamanho_fora_do_modo expandido=True alvo=448x366 real=358x293
+2026-09-08 23:50:30,567 compacto alvo=80x80 mascara=84x84+182+19 janela=448x366 dpr=1.25
+2026-09-09 18:50:19,828 descarte_por_silencio pico=0.0028 limiar=0.0200
+2026-09-09 23:46:51,684 compacto alvo=80x80 mascara=84x84+182+19 janela=448x366 dpr=1.0
+2026-09-10 19:34:25,957 compacto alvo=80x80 mascara=84x84+182+19 janela=448x366 dpr=1.25
+2026-09-10 19:34:26,027 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+Ç
+2026-09-18 06:04:36,652 compacto alvo=80x80 mascara=84x84+182+19 janela=448x366 dpr=1.25
+2026-09-18 06:04:36,720 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+Ç
+2026-09-19 17:29:39,608 compacto alvo=80x80 mascara=84x84+182+19 janela=448x366 dpr=1.25
+2026-09-19 17:29:39,720 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+Ç
+2026-09-19 18:05:20,456 tamanho_fora_do_modo expandido=True alvo=448x366 real=358x293
+2026-09-19 18:11:02,954 compacto alvo=80x80 mascara=84x84+182+19 janela=448x366 dpr=1.0
+2026-09-21 15:18:37,458 tamanho_fora_do_modo expandido=True alvo=448x366 real=358x293
+2026-09-21 16:23:46,121 compacto alvo=80x80 mascara=84x84+182+19 janela=448x366 dpr=1.25
+2026-09-21 18:30:33,139 compacto alvo=80x80 mascara=84x84+182+19 janela=448x366 dpr=1.0
+2026-09-21 18:35:15,531 descarte_por_silencio pico=0.0013 limiar=0.0200
+2026-09-21 23:41:12,961 compacto alvo=80x80 mascara=84x84+182+19 janela=448x366 dpr=1.25
+2026-09-21 23:41:13,020 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+Ç
+2026-09-22 14:47:05,905 tamanho_fora_do_modo expandido=True alvo=448x366 real=286x234
+2026-09-22 14:47:18,287 tamanho_fora_do_modo expandido=True alvo=448x366 real=286x234
+2026-09-22 14:48:06,000 compacto alvo=80x80 mascara=84x84+182+19 janela=448x366 dpr=1.0
+2026-09-23 00:20:54,911 erro_gerar_imagem codigo=API_RECUSOU
+2026-09-23 00:21:09,412 erro_gerar_imagem codigo=API_RECUSOU
+2026-09-23 00:22:23,759 compacto alvo=80x80 mascara=84x84+182+19 janela=448x366 dpr=1.25
+2026-09-23 00:22:24,017 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+Ç
+2026-09-23 00:27:13,311 erro_gerar_imagem codigo=API_RECUSOU
+2026-09-23 00:27:17,037 erro_gerar_imagem codigo=API_RECUSOU
+2026-09-23 00:27:28,176 erro_gerar_imagem codigo=API_RECUSOU
+2026-09-23 00:28:18,288 erro_gerar_imagem codigo=API_RECUSOU
+2026-09-23 00:28:26,560 erro_gerar_imagem codigo=API_RECUSOU
+2026-09-23 03:28:30,303 compacto alvo=80x80 mascara=84x84+182+19 janela=448x366 dpr=1.0
+2026-09-25 00:19:09,738 compacto alvo=80x80 mascara=84x84+182+19 janela=448x366 dpr=1.25
+2026-09-25 00:19:09,897 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+Ç
+2026-09-25 00:20:00,859 compacto alvo=80x80 mascara=84x84+182+19 janela=448x366 dpr=1.25
+2026-09-25 00:20:00,951 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+Ç
+2026-09-25 01:39:56,801 descarte_por_silencio pico=0.0052 limiar=0.0200
+2026-09-25 02:45:09,614 compacto alvo=80x80 mascara=84x84+182+19 janela=448x366 dpr=1.25
+2026-09-25 02:45:09,689 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+Ç
+2026-09-25 02:46:00,569 descarte_por_silencio pico=0.0029 limiar=0.0200
+2026-09-25 05:19:21,461 descarte_por_silencio pico=0.0017 limiar=0.0200
+2026-09-25 15:49:33,475 compacto alvo=80x80 mascara=84x84+182+19 janela=448x366 dpr=1.25
+2026-09-25 15:49:33,554 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+Ç
+2026-09-25 15:49:38,086 menu: abrir planejamento
+2026-09-25 17:25:52,794 menu: abrir planejamento
+2026-09-26 23:51:45,097 menu: abrir planejamento
+2026-09-28 02:09:36,527 compacto alvo=80x80 mascara=84x84+182+19 janela=448x366 dpr=1.0
+2026-09-28 21:04:54,588 compacto alvo=80x80 mascara=84x84+182+19 janela=448x366 dpr=1.25
+2026-09-28 21:04:54,660 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+Ç
+2026-09-28 21:10:52,573 compacto alvo=80x80 mascara=84x84+182+19 janela=448x366 dpr=1.25
+2026-09-28 21:10:52,631 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+Ç
+2026-09-28 22:04:50,116 tamanho_fora_do_modo expandido=True alvo=448x366 real=286x234
+2026-09-28 22:10:05,794 compacto alvo=80x80 mascara=84x84+182+19 janela=448x366 dpr=1.0
+2026-09-30 01:29:23,250 compacto alvo=80x80 mascara=84x84+182+19 janela=448x366 dpr=1.25
+2026-09-30 02:18:25,449 tamanho_fora_do_modo expandido=True alvo=448x366 real=286x234
+2026-09-30 02:18:44,812 compacto alvo=80x80 mascara=84x84+182+19 janela=448x366 dpr=1.0
+2026-09-30 03:28:03,388 tamanho_fora_do_modo expandido=True alvo=448x366 real=560x458
+2026-09-30 14:30:26,214 compacto alvo=80x80 mascara=84x84+182+19 janela=448x366 dpr=1.25
+2026-09-30 14:30:26,534 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+Ç
+2026-09-30 14:30:43,189 sessao: login ok
+2026-09-30 14:30:43,205 mascara_fora_do_modo expandido=True regiao=PySide6.QtCore.QRect(6, 6, 436, 354)
+2026-09-30 14:32:49,661 erro_gerar_imagem codigo=API_RECUSOU
+2026-09-30 14:57:47,624 compacto alvo=80x80 mascara=84x84+182+19 janela=448x366 dpr=1.0
+2026-09-30 15:24:26,482 menu: abrir planejamento
+2026-09-30 15:39:20,989 sessao: renovada
+2026-09-30 16:17:45,209 compacto alvo=80x80 mascara=84x84+182+19 janela=448x366 dpr=1.25
+2026-09-30 16:17:45,285 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+Ç
+2026-09-30 16:18:01,484 compacto alvo=80x80 mascara=84x84+182+19 janela=448x366 dpr=1.0

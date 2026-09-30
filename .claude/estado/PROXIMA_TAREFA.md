@@ -1,14 +1,8 @@
 # Próxima tarefa — nenhuma para o Executor
 
-As seis etapas do plano "Núcleo centralizado no Supabase" estão concluídas (2026-09-30). Resta o
-critério de conclusão do plano, que é de **uso**, não de código: o usuário ditar pelo núcleo remoto
-no dia a dia sem nada novo nos `.jsonl`.
-
-## O que vem
-
-O próximo passo é do **PM**, num chat novo: conferir o critério de uso, fechar este plano (arquivar
-PLANO e PROGRESSO em `historico/`) e escrever com o usuário o plano da transcrição como serviço
-para a Mari (`spec/BACKLOG.md`, `B-27`).
+O plano "Núcleo centralizado no Supabase" foi encerrado em 2026-09-30. O acompanhamento do uso
+(`ACOMPANHAMENTO.md`, `A-01`) não consome Executor. O plano seguinte (`B-27`, transcrição como
+serviço para a Mari) ainda não foi aprovado.
 
 ## O que NÃO fazer
 

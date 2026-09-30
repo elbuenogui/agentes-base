@@ -52,9 +52,11 @@ janela sempre no topo. Não é mais a POC-1 que decide isso.
 `PLANO.md`; o que ela deixou como comportamento declarado (não como conserto) está na `D-16`
 (gate de silêncio é obrigação do cliente) e na `D-17` (diarização fora de escopo).
 
-## Plano corrente: Núcleo centralizado no Supabase (desde 2026-09-30)
+## Plano encerrado: Núcleo centralizado no Supabase (2026-09-30)
 
-Decisão `D-36` (reabre `D-05`). Seis etapas, critérios em `.claude/estado/PLANO.md`: reconhecer o
+Decisão `D-36` (reabre `D-05`). Seis etapas, critérios em
+`.claude/estado/historico/PLANO_2026-09-30_nucleo-remoto-encerrado.md`; o uso no dia a dia virou
+`A-01` em `.claude/estado/ACOMPANHAMENTO.md`. As etapas: reconhecer o
 projeto RAG-COMPARTILHADO, banco com histórico importado, transcrever remoto, consumo remoto com a
 imagem registrando no banco, desktop no remoto com login, contrato novo.
 

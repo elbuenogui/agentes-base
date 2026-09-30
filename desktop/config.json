@@ -1,8 +1,15 @@
 {
-  "atalho": "shift+esc+Ç",
-  "url_nucleo": "http://127.0.0.1:8000",
+  "atalho": "shift+Ç",
+  "url_nucleo": "https://wqoeoofhuhsdzpkdblbg.supabase.co/functions/v1",
+  "url_nucleo_imagem": "http://127.0.0.1:8000",
+  "supabase_url": "https://wqoeoofhuhsdzpkdblbg.supabase.co",
+  "supabase_chave_publicavel": "sb_publishable_2bvFHk0139ioveDrSmNpEw_JRhmaD9w",
   "modelo": "gpt-4o-transcribe",
   "streaming": false,
   "dispositivo_entrada": "",
-  "recortar_em_vez_de_copiar": true
+  "recortar_em_vez_de_copiar": true,
+  "modelo_imagem": "gpt-image-1.5",
+  "tamanho_imagem": "1024x1536",
+  "qualidade_imagem": "low",
+  "pasta_saida_imagens": "C:\\Users\\Guilherme Bueno\\Desktop\\projetinhos\\agentes-base\\desktop\\imagens-geradas"
 }
