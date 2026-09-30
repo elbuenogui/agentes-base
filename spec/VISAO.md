@@ -49,7 +49,7 @@ possível de que era lacuna real e não distração de um deles. Fechada no cont
 Fase 1 fecha de verdade.**
 
 ### F2 — Desktop, ditado universal
-`estado: em-andamento`
+`estado: concluida · 2026-09-30, pelo critério de uso em regime`
 Atalho, fala, texto no campo em foco. **É a fase que o usuário quer usar todo dia**, e é o que
 justifica adiar o agente (`D-24`). Régua: **não piorar o que ele já usa** (`D-10`). Windows primeiro,
 com a camada de inserção isolada (`D-11`).
@@ -57,6 +57,12 @@ com a camada de inserção isolada (`D-11`).
 Três etapas no `PLANO.md`, e só três de propósito: a **POC-1** (a única coisa capaz de invalidar o
 desenho do produto, e que decide a linguagem do app), as **histórias, entregáveis e MVP** (`D-13`), e
 só então o resto do plano. **Encerra com uso em regime, não com o app pronto.**
+
+### Núcleo centralizado (entre F2 e F3)
+`estado: em-andamento · desde 2026-09-30`
+O núcleo sai da máquina e vai para o Supabase, com banco e login (`D-36`). Não entrega recurso
+novo de ditado: entrega o chão que deixa a F3 e a F4 serem clientes magros, sem replicar backend e
+sem chave no aparelho. Plano em `.claude/estado/PLANO.md`.
 
 ### F3 — Android, ditado universal
 `estado: bloqueada:POC-3`
@@ -83,7 +89,7 @@ não funcionar, entra imediatamente; se funcionar, é testada por mais tempo e o
 ### F7 — Contexto
 `estado: nao-iniciada`
 Captura sob demanda, no acionamento. Monitoramento contínuo de tela fica fora. É aqui que o
-servidor próprio deixa de ser opcional (`D-05`).
+servidor próprio deixaria de ser opcional (`D-05`) — antecipado para depois da F2 pela `D-36`.
 
 ### F8 — Ferramentas e automações
 `estado: nao-iniciada`

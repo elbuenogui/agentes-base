@@ -10,21 +10,6 @@ lacuna é **trabalho que ainda não foi feito**. Cada uma diz que fase ela trava
 
 ## Abertas
 
-### L-A — Nenhuma história de usuário foi escrita
-`trava: F2` · A cadeia de rastreabilidade começa em `US-XXX` e hoje começa vazia — a SPEC-001 não
-deriva de história nenhuma. Para um contrato técnico isso é honesto, porque o núcleo não tem
-usuário direto. Para a Fase 2, não.
-**Encaminhamento (D-13)**: é a primeira entrega da própria Fase 2, não pré-requisito dela.
-
-### L-B — A Fase 2 não tem lista de entregáveis
-`trava: F2` · A regra manda escrever a lista antes de especificar.
-**Encaminhamento (D-13)**: primeira entrega da Fase 2.
-
-### L-C — Não existe definição declarada de MVP
-`trava: F2` · O pré-projeto separa MVP, próxima etapa e futuro como conceito, mas nunca listou o
-que é o MVP.
-**Encaminhamento (D-13)**: primeira entrega da Fase 2.
-
 ### L-D — Nenhuma PoC rodou
 `trava: F2 (POC-1), F3 (POC-3), F4 (POC-5)` · A POC-1 é a única coisa capaz de invalidar o desenho
 do produto e **não depende da Fase 1 terminar**. Agora tem alvo definido: terminal do Claude Code,
@@ -33,6 +18,22 @@ extensão do Claude Code no VS Code, e a aba do WhatsApp no navegador.
 
 
 ## Fechadas
+
+### ~~L-A — Nenhuma história de usuário foi escrita~~
+`fechada em 2026-09-06` · Sete histórias escritas em
+[historias/F2_ditado-universal.md](historias/F2_ditado-universal.md), reaproveitando os
+identificadores do pré-projeto. São spec retroativa: o app já existia quando elas foram escritas, o
+que é consequência direta da `D-13`.
+
+### ~~L-B — A Fase 2 não tem lista de entregáveis~~
+`fechada em 2026-09-06` · Sete entregáveis em
+[F2_MVP_E_ENTREGAVEIS.md](F2_MVP_E_ENTREGAVEIS.md), seis entregues e o sétimo — uso em regime — em
+curso, que é o critério da fase.
+
+### ~~L-C — Não existe definição declarada de MVP~~
+`fechada em 2026-09-06` · *"Ditar com um atalho e ter o texto pronto para colar, sem tirar a mão do
+teclado e sem piorar o que eu já uso"* (`D-34`), com a lista do que fica **fora** do MVP declarada
+junto. O MVP da F2 é o app que já está em uso.
 
 ### ~~L-E — Não havia teto de custo mensal~~
 `fechada em 2026-08-23` · A medição trouxe o número (US$ 0,53 no projeto inteiro, 343 requisições,

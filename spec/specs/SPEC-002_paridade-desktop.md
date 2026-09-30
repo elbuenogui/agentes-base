@@ -2,8 +2,9 @@
 artefato: SPEC-002
 titulo: Paridade do app de desktop com a interface web
 fase: F2
-status: viva
+status: fechada como critério · viva como registro de divergências (D-30)
 data: 2026-08-27
+fechada_em: 2026-08-27, confirmada pelo usuário no app rodando
 nasceu_de: reprovação da Etapa 1 no uso real (2026-08-27)
 ---
 
@@ -139,7 +140,7 @@ Cinco itens, e só. Cada um vale imediatamente, sem reiniciar:
 | **F2** Streaming do transcript | interruptor | texto aos poucos conforme a API responde, em vez de esperar a resposta inteira |
 | **F3** Dispositivo de entrada | lista | microfone usado a partir da gravação seguinte |
 | **F4** Recortar em vez de copiar | interruptor | ver `D1` — **nasce ligado** (`D-30`) |
-| **F5** ~~Transcrição em tempo real~~ | — | **não transporta** — modo ao vivo congelado (`D-02`) |
+| **F5** ~~Transcrição em tempo real~~ | — | **não transporta** — modo ao vivo morto (`D-02` → `D-33`) |
 
 `gpt-4o-transcribe-diarize` continua **fora** da lista de modelos oferecidos (qualidade reprovada em
 2026-08-18); o núcleo segue aceitando.
@@ -206,9 +207,15 @@ escala atual:
   marca e toda virada de dia trazem `dd/mm` junto; as demais, só a hora.
 - **O ponto**: círculo de raio 4 com anel de 2 px na cor do fundo, para pontos sobrepostos se
   separarem. **Alvo de clique de raio 14** — bem maior que o desenho.
-- **A roda do mouse**: com a linha do tempo *ativada* (clique nela), a roda **desliza a janela**; sem
-  ativar, a roda rola a janela como qualquer conteúdo. O estado ativado é visível, e sai com `Esc` ou
-  clique fora. Sem isso, rolar a janela dentro da linha do tempo vira uma briga.
+- **A roda do mouse** — *corrigido em 2026-08-27, ver nota abaixo*: com a linha do tempo *ativada*
+  (clique nela), a roda **desliza a janela**; **sem ativar, a roda troca de escala** (para baixo vai
+  para minuto, para cima vai para hora). Com **Shift** pressionado, a roda rola o conteúdo
+  normalmente, sem interferência. O estado ativado é visível, e sai com `Esc` ou clique fora.
+
+  > **Esta frase estava errada até 2026-08-27**: dizia que sem ativar a roda "rola a janela como
+  > qualquer conteúdo". O `index.html` faz `preventDefault()` e troca de escala. Achado pelo Executor
+  > **lendo o original**, e corrigido aqui — é a válvula da tarefa funcionando: o dono do
+  > comportamento é o código da web, não o resumo que eu escrevi dele.
 - **Ao trocar de escala, as duas concordam sobre o período**: quem estava vendo o dia 23 na escala
   hora vê o mesmo trecho ao ir para minuto, e vice-versa.
 - **Não pular para o fim ao deslizar.** O salto automático para o ponto mais recente só acontece ao
@@ -244,6 +251,15 @@ dentro de uma área com rolagem. Ver a armadilha do QSS na seção I.
 > `transcritor/frontend/index.html`. Esta tabela existe porque "o layout não está igual" precisava
 > virar número conferível — **se divergir do CSS, o CSS vence**, e esta seção é que está velha.
 > `1rem = 16px`.
+
+**A conferência por captura tem um ponto cego, e ele é conhecido**
+
+Renderizar a janela com `QT_QPA_PLATFORM=offscreen` + `grab()` pega layout, cor, proporção e estado —
+e **não pega** o que depende do estilo nativo da plataforma. O caso medido em 2026-08-27: uma camada
+que devia ser transparente saiu transparente na captura e **opaca no Windows real**, tapando o botão
+vizinho. Ou seja: captura limpa **não** é prova de que está certo na máquina do usuário, quando o
+achado é sobre fundo, transparência ou desenho nativo de widget. Nesses casos a conferência termina
+no uso real, e a tarefa tem de dizer isso em vez de marcar o item como confirmado.
 
 **Armadilha do Qt que já causou três defeitos visíveis**
 
@@ -309,6 +325,13 @@ também… dá pra ficar mais claro e também colocar bola nos outros em uma cor
 | balão | rodapé, centralizado, `2rem` da borda de baixo, raio `0.375rem`, sombra |
 | fonte | Segoe UI (ou a do sistema) |
 
+**Nota de 2026-09-05 (`D-32`, 7ª rodada):** a "largura útil da coluna principal" (`40rem`/640px)
+acima descreve a janela cheia do app (configurações, consumo etc.) — a janela flutuante do botão de
+gravar (`D-15`, `D-32`), no estado expandido, **deixou de seguir essa medida por pedido explícito do
+usuário** ("diminuir horizontalmente a janela"). Ela agora tem largura própria, menor, definida e
+justificada em `D-32` (`spec/DECISOES.md`), não nesta tabela. Quem conferir paridade não deve
+marcar essa diferença de largura como divergência — é uma exceção deliberada, só para esta janela.
+
 **O interruptor é um interruptor**
 
 Um retângulo arredondado que muda de cor **não é um interruptor** — é o que o `QCheckBox::indicator`
@@ -346,6 +369,12 @@ alguma coisa ou surge um novo campo… gostaria que fosse mais estável"*.
 - **J4 — Redimensionar continua sendo do usuário.** Ele arrasta a borda se quiser; a janela só não
   decide isso sozinha.
 
+**Nota de 2026-09-05 (`D-32`):** este item é sobre conteúdo interno aparecendo/sumindo (cronômetro,
+faixa, balão) fazer a janela pular de tamanho sem ninguém ter pedido. A troca **compacto ⇄
+expandido** do botão flutuante (`D-15`, `D-32`) é diferente: é deliberada, nomeada, e é o próprio
+desenho decidido para o estado "minimizada". Não é o que este item foi escrito para proibir — quem
+conferir paridade não deve tratar o hover/expansão como achado de J1.
+
 ---
 
 ## O que **não** transporta
@@ -353,7 +382,7 @@ alguma coisa ou surge um novo campo… gostaria que fosse mais estável"*.
 | item | por quê |
 |---|---|
 | **Hover como gatilho** | não existe em toque, e no desktop compete com a janela flutuante (`COMPORTAMENTOS_PARQUEADOS`) |
-| **Modo ao vivo / tempo real** | congelado (`D-02`), e fora do contrato (`SPEC-001`) |
+| **Modo ao vivo / tempo real** | morto (`D-02` → `D-33`, 2026-09-05), e fora do contrato (`SPEC-001`) |
 | **Aviso de "backend na porta 8000"** no texto de erro | o desktop conhece a URL por configuração; a mensagem tem de falar a língua do desktop |
 
 ## O que o desktop tem **além** da paridade
@@ -362,9 +391,10 @@ Não é paridade, e por isso **não** entra nesta lista como critério — está
 confundir escopo com omissão. Cada um vira etapa própria, "aos poucos", como o usuário pediu:
 
 - atalho global de teclado, configurável, como acionamento principal (`D-01`, `D-25`);
-- os três estados da janela e o botão flutuante (`D-15`);
-- inserir a transcrição no campo em foco (`B-22`, `D-26`) e a segunda ação "colocar a última
-  transcrição", que lê da **memória do app**, nunca do clipboard (`COMPORTAMENTOS_PARQUEADOS`);
+- os três estados da janela e o botão flutuante — **em construção** (`D-15`, `D-32`);
+- a segunda ação "colocar a última transcrição", com atalho próprio, que lê da **memória do app**,
+  nunca do clipboard (`COMPORTAMENTOS_PARQUEADOS`) — ~~inserir a transcrição automaticamente no
+  campo em foco (`B-22`, `D-26`)~~ saiu de vez (`D-33`, 2026-09-05), não é mais item desta lista;
 - arrastar e soltar áudio (`B-01`), cópia automática configurável (`B-23`).
 
 ## Defeitos que a Etapa 1 deixou, e que esta spec resolve por construção

@@ -66,10 +66,11 @@ uma tecla única da faixa `F13`–`F24`, se o mouse tiver essa opção — achad
   em vez de copiar" nasce ligado** (era desligado) — no desktop o texto ditado vai embora para
   outro app e quase nunca volta; deixar o anterior na caixa fazia a gravação seguinte empilhar em
   cima de lixo.
-- **E** — menu `⋮` com Configurações/Consumo/Enviar arquivo. **`E2`, novo**: arrastar um arquivo de
-  áudio até o botão de gravar e soltar transcreve pelo mesmo caminho do Enviar arquivo — nome e
-  extensão reais preservados, botão realça enquanto o arquivo paira, formato não aceito ou mais de
-  um arquivo avisam pelo balão (nunca em silêncio).
+- **E** — menu `⋮` com Configurações/Consumo/Enviar arquivo/**Gerar imagem** (este último fora da
+  paridade, ver seção própria abaixo). **`E2`, novo**: arrastar um arquivo de áudio até o botão de
+  gravar e soltar transcreve pelo mesmo caminho do Enviar arquivo — nome e extensão reais
+  preservados, botão realça enquanto o arquivo paira, formato não aceito ou mais de um arquivo
+  avisam pelo balão (nunca em silêncio).
 - **F** — modelo, streaming, dispositivo, recortar — cinco linhas no painel de Configurações
   (continua sobreposto dentro da janela pequena).
 - **G — Consumo abre em janela própria** (era um painel sobreposto de 42rem dentro da janela
@@ -88,6 +89,49 @@ uma tecla única da faixa `F13`–`F24`, se o mouse tiver essa opção — achad
 - **J, nova** — a janela não muda de tamanho sozinha: cronômetro, faixa de amplitude e cancelar
   ocupam o espaço deles desde a abertura (vazios, não removidos — o mesmo princípio da lixeira em
   `C3`); balão e painéis flutuam por cima, nunca entram no layout.
+
+## Gerar imagem (`D-31`, fora do plano da Fase 2)
+
+Pedido direto do usuário — *"eu precisava de fazer isso... a solução mais rápida possível"* —, não
+é paridade com a web nem etapa da `SPEC-002`. Menu **⋮ → Gerar imagem**, janela própria e
+redimensionável (mesma razão do Consumo: precisa de espaço para a pré-visualização).
+
+- **Imagens de referência** — três formas de escolher: **Escolher arquivos…**, **Escolher pasta…**
+  (não entra em subpastas) e **arrastar e soltar** na janela. Miniaturas com botão de remover no
+  canto, contagem `N de 16` sempre visível; passar de 16 avisa pelo balão e não deixa entrar;
+  formato fora de PNG/JPG/WEBP também avisa e não entra.
+- **Prompt** — caixa de várias linhas, com foco assim que a janela abre.
+- **Opções**: modelo (`gpt-image-1.5` como padrão), tamanho, qualidade — mudar qualquer uma
+  atualiza o **custo estimado** ao lado (só a saída, ver aviso abaixo).
+- **Gerar** — desabilitado sem prompt ou sem imagem de referência. Durante a chamada, um aviso
+  explícito ("pode demorar bem mais que uma transcrição") substitui o botão; erros usam o mesmo
+  balão do resto do app, tratados pelo `codigo` do núcleo (`MENSAGENS_ERRO_IMAGEM`).
+- **Resultado** — pré-visualização, **custo real** (vem na resposta do núcleo) e dois botões:
+  **Salvar como…** e **Abrir a pasta**. A imagem é salva **automaticamente** ao chegar, em
+  `pasta_saida_imagens` (padrão: `imagens-geradas/` ao lado do app), com nome
+  `AAAA-MM-DD_HHMMSS.png` — o que já foi pago nunca se perde, mesmo que o usuário feche a janela
+  sem clicar em nada.
+
+**O custo estimado antes de gerar é aproximado de propósito** — é calculado só a partir dos tokens
+de saída típicos por qualidade; o custo real de uma chamada com imagens de referência é dominado
+pela **entrada** (as próprias imagens), não pela saída. Medido de verdade: duas referências de
+256×256 custaram entre **US$ 0,075 e US$ 0,082** por chamada com `gpt-image-1.5` — a estimativa de
+saída sozinha, para as mesmas qualidades, ficava em torno de **US$ 0,009 a US$ 0,034**. A diferença
+é esperada e está dita na tela; só a resposta da chamada sabe o valor exato. Ver
+`spec/contrato/NUCLEO.md`, Operação 3, para a tabela de preços completa e os erros medidos.
+
+**Config novo**: `modelo_imagem`, `tamanho_imagem`, `qualidade_imagem`, `pasta_saida_imagens` em
+`config.json` — os três primeiros valem a partir da próxima geração; o quarto, a partir do próximo
+salvamento automático.
+
+**Testado de verdade** (2026-08-27, `gpt-image-1.5`, duas referências, ver `PROGRESSO.md` para os
+números completos): chamada real via a janela do app até a imagem aparecer, ser salva sozinha em
+`imagens-geradas/` e o botão "Abrir a pasta" funcionar; cinco erros reais provocados contra o
+núcleo (`PROMPT_VAZIO`, `FORMATO_NAO_ACEITO`, `IMAGENS_DEMAIS`, `MODELO_INVALIDO`,
+`TAMANHO_INVALIDO`); o custo apareceu no painel de Consumo, na linha do tempo, com valor não-zero,
+sem nenhuma mudança no painel (o núcleo grava pelo mesmo caminho das transcrições). O fluxo de
+ditado foi conferido de novo depois (enviar `audio-teste/fala-real.wav` — texto real voltou,
+`processando` voltou a `False`).
 
 ## Conferência de aparência (método obrigatório desta tarefa, de novo)
 

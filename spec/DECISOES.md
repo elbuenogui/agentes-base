@@ -33,6 +33,8 @@ qualquer cliente. O ao vivo custa quase três vezes mais e não tem consumidor.
 **Reabre se:** aparecer caso de uso de transcrição contínua (legenda de reunião), que é outro
 produto, não o ditado.
 
+**Endurecida em 2026-09-05 (`D-33`):** o usuário confirmou que isto não é mais reabrível por uso futuro — está descartado de vez, não só congelado.
+
 ### D-03 — O relógio é cliente magro, sempre
 `estado: fechada · 2026-08-21 · fase: F4`
 
@@ -53,7 +55,7 @@ preciso.
 o serviço de forma incontornável.
 
 ### D-05 — Servidor próprio adiado, com gatilho declarado
-`estado: fechada · 2026-08-21 · fase: F7`
+`estado: substituída por D-36 em 2026-09-30 · 2026-08-21 · fase: F7`
 
 O servidor nasce quando houver **estado compartilhado entre aparelhos** — Fase 7, obrigatório na 9.
 
@@ -246,6 +248,11 @@ grandeza acima do observado, o que o torna um sinal de anomalia e não um freio 
 
 **Reabre se:** o padrão de uso mudar de fato — por exemplo, se o modo ao vivo voltar (custa 2,8×
 mais por minuto) ou se o assistente passar a chamar LLM a cada acionamento.
+
+> **A condição de reabertura foi acionada em 2026-08-27** pela `D-31` (geração de imagem): uma imagem
+> de qualidade média custa ~US$ 0,042, contra ~US$ 0,0003 de uma transcrição de 30 s. O alarme
+> continua em US$ 100/mês, mas a referência que o justificava (US$ 0,53 em cinco dias) não vale mais
+> como base de comparação. **Reavaliar depois de uma semana de uso do gerador de imagem.**
 
 ### D-19 — Entre dois documentos que se contradizem, o mais recente vence
 `estado: fechada · migrada para o cérebro em 2026-08-23`
@@ -499,3 +506,459 @@ spec é achado; listada, é decisão, e não se toca.
 **Reabre se:** as divergências crescerem a ponto de a `SPEC-002` virar mais tabela de exceção que
 lista de paridade — sinal de que o desktop passou a ter desenho próprio, e aí ele merece uma spec
 própria em vez de uma lista de diferenças.
+
+### D-31 — Geração de imagem entra fora do plano, e o núcleo deixa de ser só de transcrição
+`estado: fechada · 2026-08-27 · fase: F2, fora do plano da fase`
+
+O app ganha **gerar imagem a partir de imagens de referência e um prompt**, no menu ⋮. E o núcleo
+ganha uma segunda operação de IA — deixa de ser **núcleo de transcrição** e passa a ser, de fato,
+**a camada que fala com a OpenAI** em nome dos clientes.
+
+**Por quê:** pedido direto do usuário em 2026-08-27, com a razão dita: ele precisa gerar essas
+imagens **agora**, e quer a solução mais rápida possível. É uso real batendo à porta, que é
+exatamente o que este projeto existe para atender.
+
+**Está fora do plano da Fase 2, e isso fica escrito em vez de disfarçado.** A F2 é "desktop, ditado
+universal"; imagem não é ditado. Não vira etapa da fase nem entra no critério de conclusão dela —
+entra como **anexo declarado**, com data e motivo, para ninguém acher daqui a um mês que a fase
+mudou de objetivo.
+
+**Por que no núcleo, e não no app chamando a OpenAI direto:** a chave da OpenAI mora num lugar só
+(`transcritor/.env`), e o registro de consumo mora num lugar só (`consumo.jsonl`). Duplicar a chave
+no desktop para ganhar meia hora sairia caro na primeira vez que alguém precisasse trocá-la — e o
+custo de imagem, que é **duas ordens de grandeza maior** que o de transcrição, ficaria invisível no
+painel de Consumo.
+
+**Guarda-corpo obrigatório, não opcional:** uma imagem de qualidade média a 1024×1024 custa
+~**US$ 0,042** — contra ~US$ 0,0003 de uma transcrição de 30 s. São ~140×. O alarme de US$ 100/mês
+(`D-18`) foi calibrado sobre um padrão de uso em que o gasto do projeto inteiro em cinco dias foi
+US$ 0,53; **este recurso muda o padrão**, que é literalmente a condição de reabertura escrita na
+`D-18`. Por isso: preço por token dos modelos de imagem entra na tabela do backend, o custo aparece
+no painel de Consumo como qualquer outra requisição, e a estimativa fica visível **antes** de gerar.
+
+**Reabre se:** o recurso pegar e crescer. Aí a pergunta certa não é "como melhorar isto dentro do app
+de ditado", é **se ele ainda deve morar num app de ditado** — e a resposta provavelmente é um segundo
+cliente do mesmo núcleo, que é o desenho que a `D-07` já previa.
+
+### D-32 — O botão flutuante entra em construção: compacto por padrão, expande no hover e nos estados ativos (refina D-15)
+`estado: fechada · 2026-09-05 · fase: F2, além da paridade (já listado na SPEC-002)`
+
+O app passa a nascer **compacto**: só o botão de gravar (o círculo de 72×72 já existente), sem
+moldura, sempre no topo, arrastável. A janela cheia de hoje (caixa de transcrição, copiar/recortar,
+menu ⋮ com Configurações · Consumo · Enviar arquivo · Gerar imagem) só aparece quando:
+
+- o mouse passa por cima do botão (hover) — mostra **tudo**, como já é hoje, sem versão reduzida;
+- o app entra em **gravando** ou **processando** — expande sozinho, independente do mouse estar em
+  cima ou não, para o estado ficar visível sem exigir hover.
+
+**Volta a encolher só depois de duas condições juntas**: o texto já ter sido colocado (copiado ou
+recortado) **e** o mouse ter saído da área expandida. Encolher com o resultado ainda na tela e sem
+ação do usuário perderia o texto de vista sem ele ter decidido isso.
+
+**Por quê:** isto é a `D-15` finalmente construída — três estados da janela e botão flutuante,
+decidido em 21/08, listado na `SPEC-002` como "além da paridade... vira etapa própria, aos poucos".
+Pedido direto do usuário em 2026-09-05: a janela grande de hoje fica no caminho quando ele não está
+ditando.
+
+**Reconciliação com a `SPEC-002`, item J1** (*"a janela nunca muda de tamanho por conta própria"*):
+J1 foi escrito contra conteúdo interno aparecendo/sumindo (cronômetro, faixa de amplitude, balão)
+fazendo a janela pular de tamanho **sem ninguém ter pedido isso**. A troca compacto ⇄ expandido é
+diferente: é deliberada, nomeada, e é o próprio desenho da `D-15` desde 21/08 — não é o que J1 foi
+escrito para proibir. Registrar isto explicitamente para a próxima conferência de paridade não tratar
+o hover/expansão como achado de J1.
+
+**Sobre o Android (F3):** divergência já conhecida e escrita na própria `D-15` — toque não tem hover.
+O equivalente por toque se resolve na especificação da F3, não aqui; esta decisão é só do Windows.
+
+**Reabre se:** o uso real mostrar que expandir durante a gravação distrai mais do que ajuda, ou que
+o critério de recolhimento (colocado + mouse fora) deixa o resultado sumindo antes da hora.
+
+### D-33 — Inserção automática e modo ao vivo saem de vez, não é "depois"
+`estado: fechada · 2026-09-05 · fase: F1 e F2`
+
+**Confirmado pelo usuário, ao revisar o plano numa retomada:** tanto a **inserção automática no
+campo em foco** (`B-22`, a investigação da `POC-1`) quanto o **modo ao vivo / tempo real** (`D-02`)
+estão **definitivamente fora** — não é adiamento nem congelamento, é descarte.
+
+**Por quê registrar como decisão nova, em vez de só mudar o estado do backlog:** os dois apareciam
+nos arquivos com palavras que sugerem reversibilidade — `B-22` como `adiada`, com um gatilho
+declarado; `D-02` como "congelada". Foi exatamente essa leitura que fez o PM reapresentar os dois
+como assunto em aberto numa conversa de retomada, quando o usuário já os considerava encerrados. O
+erro não foi de memória de conversa — foi de **status desatualizado em arquivo**, e por isso o
+conserto é no arquivo, não só no que se fala.
+
+**O que muda, e onde:**
+- `spec/BACKLOG.md`: `B-22` vira `morta`; `B-03` e `B-04`, que dependiam do ao vivo descongelar,
+  também viram `morta` — o gatilho deles nunca vai acontecer.
+- `D-02` e `D-26` **continuam existindo como registro histórico** (o achado técnico da `D-26` segue
+  verdadeiro se algo parecido for revisitado por outro motivo), mas `VISAO.md`, `SPEC-002` e
+  `COMPORTAMENTOS_PARQUEADOS.md`, que diziam "congelado"/"adiada", passam a apontar para esta
+  decisão.
+- **O que não muda:** a segunda ação "colocar a última transcrição", com atalho próprio (lida da
+  memória do app, nunca do clipboard) — é outra coisa, disparada por gesto explícito do usuário, e
+  continua parqueada normalmente em `COMPORTAMENTOS_PARQUEADOS.md`. Não confundir as duas.
+
+**Reabre se:** nunca, na prática — é decisão de produto, não investigação técnica pendente (mesmo
+padrão da `D-03`).
+
+**Refinada em 2026-09-05, segunda rodada (achados do usuário rodando no Windows real):**
+
+1. **O compacto está grande demais.** 110×110 foi escolha da primeira volta, não medida do usuário.
+   O tamanho compacto deve **abraçar o botão de gravar** — largura e altura pouco maiores que o
+   próprio `BotaoGravar`, não um valor redondo arbitrário.
+2. **Bug: parou de encolher depois do primeiro ciclo.** Funciona uma vez (grava → coloca → encolhe)
+   e nos ciclos seguintes fica preso expandido. Isto é regressão, não refinamento — corrigir antes
+   de qualquer outra coisa.
+3. **Transição abrupta.** Expandir e encolher devem ser **animados** (suaves), não um resize
+   instantâneo — nos dois sentidos.
+
+**Reabre se:** o item 2 (bug) reaparecer depois de corrigido, ou o tamanho/animação escolhidos ainda
+incomodarem no próximo uso.
+
+**Segunda rodada entregue em 2026-09-05 (mesmo dia, por outro subagente Executor):**
+
+- **Causa do bug, achada por medição, não suposição**: `_resultado_pendente` era um booleano
+  desligado só em dois lugares; qualquer outro caminho que mudasse o texto (apagar pelo teclado,
+  Ctrl+X, editar à mão, copiar com a caixa vazia) deixava o sinalizador ligado para sempre, travando
+  o encolhimento a partir do segundo ciclo. Corrigido na raiz: virou função **derivada** (compara a
+  caixa com o último texto colocado) — não existe mais estado para travar.
+- Rede de segurança adicionada: `_corrigir_tamanho_do_modo()` reassenta a janela a cada 100ms se o
+  tamanho fugir do modo atual — defesa para o que não dá para testar fora do Windows real.
+- Tamanho compacto passou a ser **medido em tempo de execução** contra o `BotaoGravar` real (72×72
+  + 8px de margem = 88×88), não mais um valor fixo.
+- Animação: `QPropertyAnimation`, `InOutCubic`, 160ms, com a âncora refeita contra o layout real a
+  cada quadro (não interpolada) — achou e corrigiu um desvio de 39px perto da borda superior da
+  tela, exatamente onde este app abre por padrão.
+- Suíte `desktop/testes_janela_compacta.py` criada e versionada (fora da lista original de arquivos
+  da tarefa; aceito pelo PM — é o que teria pego o bug antes de chegar ao usuário).
+
+**Pendências que seguem só confirmáveis no Windows real**: suavidade percebida da animação, hover,
+sempre-no-topo, translucidez, microfone e núcleo real.
+
+**Terceira rodada entregue em 2026-09-05 (mesmo dia):**
+
+- **Botão pulando na animação — causa provada por medição de pixel**: o reflow de layout por
+  quadro (segunda rodada) posicionava o botão nas coordenadas do layout de 672px enquanto a janela
+  real ainda tinha 88px — o botão ficava **recortado pelo próprio limite da janela** (círculo de
+  21×25px em vez de 65×65px no primeiro quadro). Achou também um bônus: o menu ⋮ ficava preso em
+  estado de hover depois de cada expansão, mesma causa.
+- **Arquitetura da animação trocada**: em vez de refluir o layout a cada quadro, agora interpola a
+  janela inteira (posição + tamanho) entre dois retângulos fixos, com os layouts congelados; o
+  conteúdo fica escondido durante os 160ms e volta no assentamento. Desvio medido: **0px**, círculo
+  sempre 65×65, nos dois sentidos e nos três cantos testados.
+- **Largura do compacto — não reproduzida em headless, hipótese específica registrada**: o plugin
+  `offscreen` não propaga tamanho mínimo ao sistema de janelas (`propagateSizeHints()` não
+  suportado); no Windows real isso pode fazer o sistema impor um mínimo próprio
+  (`SM_CXMINTRACK`, ~112–136px), que é **assimétrico entre largura e altura** — bate exatamente com
+  "não diminuiu a lateral". A rodada anterior também zerava o mínimo durante as transições
+  (`setMinimumSize(0,0)`); corrigido para declarar sempre 88. Log de diagnóstico acrescentado
+  (tamanho alvo vs. real vs. DPI) para a próxima execução real revelar a causa de fato.
+- Monitor do usuário roda a 125%: 88px lógicos = 110px físicos — é escala, não bug.
+- **"Sair" adicionado ao menu ⋮**, quinto item, `close()` + `QApplication.quit()`, testado com um
+  laço de evento real.
+- **Prova de regressão**: a suíte nova rodada contra o `app.py` da rodada anterior falhou nos
+  mesmos pontos relatados pelo usuário — evidência de que os testes agora pegam o que headless não
+  pegava antes.
+
+**Quarta rodada entregue em 2026-09-05 (mesmo dia) — mudança de arquitetura, não confirmação:**
+
+- **Nova hipótese, do PM, apoiada em leitura de código**: a janela é `Qt.FramelessWindowHint |
+  Qt.WindowStaysOnTopHint | Qt.Tool` com `WA_TranslucentBackground` — uma janela "layered" de
+  verdade no Windows. A animação da terceira volta ainda chamava `setGeometry()` na janela
+  **nativa** a cada quadro (~11 vezes em 160ms). Redimensionar repetidamente uma janela
+  layered/translúcida sem moldura é fonte conhecida de flicker no Windows, e nada disso aparece em
+  teste headless — mesma classe de achado que a largura não reproduzida (ambos só no Windows real).
+  A hipótese de corrida com o vigia do ponteiro (100ms) foi **checada e refutada** por leitura de
+  código antes desta rodada: `self._expandido` já troca antes da animação começar, então não há
+  novo disparo de `_aplicar_modo` no meio da transição.
+- **Mudança feita**: a janela nativa agora só muda de tamanho **2 vezes por transição** (antes: 12)
+  — uma vez no início, para o retângulo-união dos dois extremos (`_geo_transicao`), e uma vez no
+  fim, para o tamanho final exato. Durante os 160ms, cartão e botão continuam interpolados como
+  antes, só que dentro dessa janela já fixa (a área extra é transparente, logo invisível).
+  Redimensionamentos nativos medidos: **1x** em cada sentido. Desvio do botão: **0px**, círculo
+  inteiro nos dois sentidos e nos três cantos — a suíte (`desktop/testes_janela_compacta.py`,
+  estendida com um teste novo) prova as duas coisas; 76 verificações, 0 falhas.
+- **Efeito colateral pequeno e aceito por ora**: durante os 160ms a janela nativa ocupa o
+  retângulo-união (maior que o compacto) e a área transparente fora do cartão não é clicável-através
+  — um clique ali durante a transição vira arrasto. Já existia um comportamento parecido na janela
+  expandida (16px de borda transparente clicável); se incomodar, o conserto (`setMask()` ou
+  `WA_TransparentForMouseEvents`) é decisão de produto, não bug.
+- **Honestidade explícita, registrada no `PROGRESSO.md`**: esta volta não prova que o tremor ou a
+  largura sumiram — elimina uma causa plausível para os dois, comum ao fato de nenhuma rodada ter
+  conseguido reproduzir nenhum dos dois sintomas fora do Windows real. O `app.log` com a linha
+  `compacto alvo=... real=...` continua sendo a prova que falta, ainda não lida pelo PM.
+
+**Quinta rodada entregue em 2026-09-05 (mesmo dia) — sintoma mais preciso, causa mais provável, sem confirmação:**
+
+- **Usuário testou a 4ª volta**: tremor "melhorou, mas não sumiu"; sintoma mais preciso — o botão
+  fica **invisível por um instante** especificamente no início/fim da transição (hover entrando ou
+  saindo), não no meio (já corrigido).
+- **Causa achada por leitura de código, não suposição**: em `_aplicar_modo`, `_configurar_layout_do_modo`
+  (muda margens/estilo do cartão) e um `widget.setVisible(expandido)` sobre o conteúdo só-expandido
+  rodavam **antes** de os dois layouts serem desabilitados e antes de a janela nativa crescer para a
+  união (mudança da 4ª volta) — ou seja, ao vivo, com o layout ainda no comando, na janela ainda do
+  tamanho antigo. Medido: `_configurar_layout_do_modo` rodava com layout ligado em 2 de 2 transições;
+  corrigido para 0 de 2.
+- **Ajuste em relação ao pedido original, por medição**: apagar o `setVisible(expandido)` sem mais
+  quebraria a âncora — o layout só conta widget visível, e o centro do botão na janela expandida
+  muda 163px conforme o conteúdo esteja visível ou escondido. A garantia foi para dentro de
+  `_centro_local_do_botao`, que agora aplica a visibilidade certa só durante a própria medição e
+  devolve a de antes. O redimensionamento nativo para a união também não pôde vir antes de
+  `_configurar_layout_do_modo`: a união depende de `geo_final`, que depende das margens e da folha
+  de estilo já aplicadas (1px de diferença por causa da borda do QSS) — adiantar exigiria um
+  redimensionamento nativo a mais, o que a 4ª volta eliminou.
+- **Honestidade explícita, medida**: a checagem "nenhum widget visível durante a transição" passa
+  também no código da 4ª volta — o show antigo era desfeito na mesma chamada, sem voltar ao laço de
+  eventos, e nenhum teste headless a 4ms o enxerga. O que ficou provado é que a ordem mudou (layout
+  não é mais mexido ao vivo antes de estar seguro); se o flash relatado vinha disso, deve sumir; se
+  vinha de outra causa, não. Suíte: 91 verificações, 0 falhas (76 antes + 15 novas); 0px de desvio e
+  1 redimensionamento nativo por sentido mantidos (sem regressão da 4ª volta).
+
+**Correção de processo, mesmo dia**: o PM pediu 3 vezes que o usuário colasse trechos do
+`app.log`, quando já tinha acesso direto ao arquivo pela ponte com a máquina do usuário — o usuário
+corrigiu isto diretamente ("quem vai fazer isso é você"). PM leu o arquivo e achou, na sessão de
+teste mais recente (a da 4ª volta): **20 ocorrências seguidas de
+`compacto alvo=88x88 real=88x88 moldura=88x88 dpr=1.0`** — alvo, real e moldura idênticos, sem
+escala aplicada. **Isto refuta, com dado real, as duas hipóteses de causa da largura levantadas nas
+rodadas 3 e 4** (mínimo de largura do Windows / `SM_CXMINTRACK`; discrepância de escala DPI
+88↔110): o próprio Qt relata ter alcançado exatamente o tamanho pedido. Se o usuário ainda vê o
+compacto como errado, não é nenhuma das duas causas técnicas já descartadas — resta perguntar o que
+exatamente ele está vendo (parece maior que 88px na prática, é sobre o expandido, é aparência e não
+tamanho). Achado incidental de uma medição antiga (13:09, rodada anterior): uma linha
+`tamanho_fora_do_modo expandido=True alvo=672x480 real=141x110` prova que a rede de segurança
+(`_corrigir_tamanho_do_modo`, 2ª volta) já pegou um caso real de janela presa no tamanho errado.
+
+**Ainda pendente de confirmação real**: se o "invisível por um instante" sumiu; o que exatamente o
+usuário via quando disse "tamanho ainda péssimo", já que os números do `app.log` não sustentam
+nenhuma das hipóteses técnicas registradas até aqui; suavidade percebida, hover/arrasto reais,
+translucidez, microfone, núcleo.
+
+**Achado sem ação, para decisão do PM**: perto do canto onde a janela nasce, o centro do botão
+percorre 252–359px durante a animação (a janela cheia não cabe à esquerda do ponto de abertura) —
+é geometria do ponto de partida, não bug; mexer nisso tocaria a correção de posição inicial de uma
+entrada anterior, e o Executor preferiu não mexer sem pedido explícito.
+
+**Sexta rodada, mesmo dia — escopo novo (não é mais bug do compacto):** o PM tirou print da tela
+real do usuário (com permissão, controle remoto) e **confirmou visualmente que o modo compacto está
+correto** — só o círculo do botão, sem moldura, fundo transparente. O usuário esclareceu que sua
+reclamação era sobre a janela **expandida** ("está com o mesmo tamanho de quando eu não tinha pedido
+para mexer nisso ainda"), pedindo para reduzir "o box de copiar" (a caixa de transcrição,
+`caixa_texto`) a um terço do total, para a janela expandida ficar "um retângulo bem menor". Medido
+antes de mudar: dos 480px de altura de hoje, `caixa_texto` já ocupava **171px (35,6%)** — já estava
+perto de 1/3; quem domina a altura é o que é **fixo** (309px, 64%: margens, espaçamentos, a linha do
+botão de gravar, o cronômetro, a barra de amplitude, a linha de copiar/lixeira). Implementado ao pé
+da letra (`caixa_texto` → 160px, `_tamanho_expandido` → 672×469, largura mantida, `SPEC-002` I):
+a janela só encolheu **11px (2,3%)** — **é provável que o usuário não perceba diferença**. Compacto
+confirmado intocado (88×88, testado). Suíte: 107 verificações, 0 falhas (91+16).
+
+**Decisão pendente, para antes de uma 7ª rodada**: se o objetivo é uma janela expandida
+visivelmente menor, a "caixa de copiar" não é o lugar — é preciso mexer nos elementos fixos, hoje
+fora do escopo autorizado. Candidatos já medidos pelo Executor: espaçamento 16→8 (−32px), margem do
+cartão 24→16 (−16px), margem externa 16→8 (−16px), barra de amplitude 40→24 (−16px), linha do topo
+72→56 com botões 44→32 (−16px), cronômetro fundido na linha do topo (−35px). Tudo junto, com a caixa
+em 160: **~354px** de altura (~26% menor que os 480 originais) — decisão de produto do usuário, não
+falta de execução.
+
+**Ainda pendente de confirmação real**: aparência da janela expandida menor (mesmo os 11px);
+"invisível por um instante" do botão (5ª volta); o que exatamente o usuário via ao dizer "tamanho
+ainda péssimo" do compacto (refutado por print, mas a causa do relato original nunca foi explicada);
+suavidade percebida, hover/arrasto reais, translucidez, microfone, núcleo.
+
+**Sétima rodada, mesmo dia — usuário rejeita o resultado da 6ª e dá ordem direta, sem mais perguntas:**
+"Simplesmente você não conseguiu fazer nada nessa rodada. Você não diminuiu horizontalmente a
+janela... Não consegue colocar a janela padrão num formato menor? Acabar com essa borda ao redor do
+botão tão grande? E outra coisa, o botão continua piscando quando passa o hover. Bota uma transição
+maior, ele não sumir, né? Porque ele tá tentando desaparecer também o botão vermelho." Quatro
+ordens diretas, sem espaço para nova pergunta de esclarecimento:
+
+1. **Reduzir a LARGURA da janela expandida** — revoga, para esta janela flutuante especificamente,
+   o vínculo com `SPEC-002` item I ("largura útil da coluna principal: 40rem/640px"). Este vínculo
+   nunca foi uma exigência de paridade visual com o resto do app — foi uma escolha de reaproveitar
+   uma medida já existente; o usuário agora pede explicitamente que a janela flutuante seja mais
+   estreita que o resto do app. `SPEC-002` item I continua valendo para as outras janelas (painel
+   de configurações, consumo, etc.) — só a janela flutuante do botão (`D-15`/`D-32`) passa a ter
+   largura própria, menor, documentada aqui e não naquela tabela compartilhada.
+2. **Reduzir `MARGEM_JANELA_COMPACTA`** (hoje 8px por lado, compacto 88×88) — o usuário chama isso
+   de "borda ao redor do botão tão grande".
+3. **Aumentar `DURACAO_ANIMACAO_MODO_MS`** (hoje 160ms) — pedido explícito do usuário ("bota uma
+   transição maior"), para a transição parecer mais suave e não como um sumiço abrupto.
+4. **Piscar do botão vermelho ao gravar, ainda não resolvido pelas rodadas 4 e 5**: o PM leu
+   `_definir_estado_botao` (linha ~3166) e confirmou uma causa plausível ainda não tratada:
+   `self.botao_gravar.definir_estado(estado)` roda **antes** de `self._aplicar_modo(True)` — ou
+   seja, ao iniciar uma gravação a partir do compacto, o botão fica vermelho e o temporizador
+   independente de 30ms da `CamadaPulso` (`_timer_pulso`, linha 870) começa a disparar **no mesmo
+   instante** em que a transição de modo (160ms, depois 240ms) começa — dois sistemas de animação
+   com relógios próprios e não sincronizados, repintando a mesma região da tela ao mesmo tempo. É a
+   explicação mais concreta encontrada por leitura de código para "o botão vermelho tentando
+   desaparecer" durante a transição — ainda não confirmada no Windows real, mas nunca antes
+   atacada (rodadas 4 e 5 mexeram em redimensionamento nativo e ordem de layout, não neste ponto
+   específico).
+
+PM despachou a 7ª rodada (subagente `opus`) com as quatro mudanças acima, mais a aplicação real
+(ainda pendente desde a 6ª) dos cortes nos elementos fixos já medidos (espaçamento, margens, barra
+de amplitude, linha do topo, cronômetro fundido) para a janela expandida ficar visivelmente menor
+em altura também (~354px, ~26% menor que os 480 originais) — o usuário não teve chance de reagir a
+essa opção antes de já rejeitar a 6ª rodada como um todo, mas seu pedido geral ("formato menor") a
+cobre.
+
+**Sétima rodada entregue, mesmo dia:** as quatro ordens do usuário foram implementadas e medidas,
+não estimadas.
+- **Largura própria da janela expandida**: `LARGURA_EXPANDIDA = 448` (era 672, `-224px`/`-33%`) —
+  não segue mais `SPEC-002` item I (nota já registrada lá). Piso medido da linha do topo (três
+  botões + cronômetro + espelho, margens e borda): 324px; 448 escolhido medindo caracteres por
+  linha na caixa de transcrição com a fonte real (448 → ~46 caracteres, banda legível), bem abaixo
+  dos 672 originais.
+- **Altura**: os seis cortes de elementos fixos, medidos na 6ª rodada e só agora aplicados de
+  verdade, deram `ALTURA_FIXA_EXPANDIDA = 186` (era 309) + `ALTURA_CAIXA_TEXTO = 160` (inalterado) =
+  `ALTURA_EXPANDIDA = 346` (era 469 depois da 6ª, 480 original — **-28%** desde o início). Um dos
+  seis cortes (linha do topo 72→56) não rendeu o esperado: `QHBoxLayout` fica na altura do maior
+  filho, e o botão de gravar (72px) foi explicitamente preservado — a redução real veio dos outros
+  cinco cortes.
+- **Janela compacta**: `MARGEM_JANELA_COMPACTA = 4` (era 8) → 80×80 (era 88×88), testado sem
+  regressão.
+- **Transição**: `DURACAO_ANIMACAO_MODO_MS = 240` (era 160), a pedido direto do usuário.
+- **Pisca-pisca do botão vermelho**: hipótese do PM confirmada como mecanismo plausível e corrigida
+  no código — `CamadaPulso` agora pergunta à janela se há uma transição de modo em andamento
+  (`esta_em_transicao_de_modo()`, incluindo o instante "prestes a começar" que `_definir_estado_botao`
+  sinaliza antes de chamar `_aplicar_modo`) e adia o início do temporizador de 30ms até
+  `_assentar_modo` liberar; cor/ícone do botão continuam mudando na hora. Testado (`[15]`): 0
+  quadros com o temporizador ativo durante os 10 quadros amostrados da transição. **Não é
+  confirmação real** — só o Windows real confirma que o "botão vermelho tentando desaparecer"
+  sumiu.
+- Suíte: **143 verificações, 0 falhas** (107→143, +36), reconferido pelo PM de forma independente.
+  Invariantes das rodadas 3-5 intactos (0px de desvio do botão, 1 redimensionamento nativo por
+  direção, 0 widgets só-expandido visíveis durante a transição). Menu ⋮, Sair, configurações,
+  consumo, geração de imagem, copiar/recortar/lixeira: conferidos, nenhum quebrado; painel de
+  configurações (384×244) cabe dentro da nova janela de 448×346 sem cortar.
+- Arquivo temporário da 6ª rodada (`desktop/_medicao/medir.py`) **apagado** (permissão de exclusão
+  concedida desta vez). Nada de temporário ficou no repositório.
+
+**Ainda pendente de confirmação real**: aparência e sensação da janela expandida menor (448×346);
+se o pisca-pisca do botão vermelho de fato sumiu; borda do compacto (80×80) e transição de 240ms
+percebidas como corretas. Tudo isso só o usuário confirma testando no Windows.
+
+**Oitava rodada, mesmo dia — usuário testou a 7ª no Windows real, achou uma regressão:**
+"você quebrou o layout e colcou o botao de cortar sobrepondo a caixa. a caixa ta num tamanho bom.
+o botao pisca quando tira o mouse de cima, mas consertou o primeira piscada." Dois pontos:
+
+1. **Regressão real, diagnosticada pelo PM por medição direta** (script headless instanciando
+   `JanelaDitado`, sem alterar `app.py`): `ALTURA_EXPANDIDA = 346` (7ª rodada) esqueceu de somar os
+   `2 * MARGEM_EXTERNA_EXPANDIDA` (16px) que ficam por fora do cartão — o cartão sozinho já precisa
+   de 346px (`minimumSizeHint`), mas só recebe `346 - 16 = 330`. Como `layout_externo` usa
+   `SetNoConstraint` (necessário para a animação), o Qt espreme o conteúdo em vez de recusar: a
+   `caixa_texto` fica mais baixa que os 160px declarados e sobrepõe a `linha_acoes`
+   (`botao_lixeira`/`botao_copiar`) — medido 7px de sobreposição. O tamanho da `caixa_texto` em si
+   (160px) e a largura (`LARGURA_EXPANDIDA`, 448px) foram confirmados como bons pelo usuário — só a
+   conta da altura total que esqueceu a margem externa.
+2. **Pisca-pisca do botão vermelho ao começar a gravar melhorou** ("consertou o primeira
+   piscada") — o fix da 7ª rodada (adiar o temporizador de pulso da `CamadaPulso`) parece ter
+   funcionado. **Mas o flicker ao tirar o mouse de cima (hover-out, expandido→compacto) continua**
+   — classe diferente, a mesma que as rodadas 4-5 atacaram (redimensionamento nativo de janela
+   translúcida), ainda não eliminada de vez nesse sentido.
+
+PM despachou a 8ª rodada: (1) corrigir a conta de `ALTURA_EXPANDIDA` incluindo a margem externa,
+com um teste novo de sobreposição de geometria real (não só soma de números — é o tipo de teste
+que teria pego este bug antes de chegar ao usuário); (2) tentativa adicional para o flicker de
+encolhimento, envolvendo os `setGeometry` nativos existentes com `setUpdatesEnabled`/`repaint()`
+síncrono, sem inventar nova hipótese de causa nem mudar a arquitetura de redimensionamento das
+rodadas 4-5.
+
+**Oitava rodada entregue, mesmo dia:** a regressão corrigida e medida (não estimada) — o PM
+reconferiu de forma independente.
+- **Altura corrigida**: `ALTURA_FIXA_EXPANDIDA` 186→202 (a conta certa desta vez inclui os
+  `2×8=16px` de `MARGEM_EXTERNA_EXPANDIDA` que a 7ª rodada esqueceu) + nova constante
+  `FOLGA_ALTURA_EXPANDIDA = 4` (margem de segurança contra variação de fonte entre máquinas) →
+  `ALTURA_EXPANDIDA = 202 + 160 + 4 = 366` (era 346). Reconferido pelo PM: `caixa_texto` termina em
+  y=300, a linha de ações (lixeira/copiar) começa em y=309 — 9px de vão, sem sobreposição.
+  `caixa_texto` renderiza a 164px (o piso de 160 + os 4px de folga, absorvidos por ela por ser a
+  única com fator de esticar). `ALTURA_CAIXA_TEXTO` (160) e `LARGURA_EXPANDIDA` (448) inalterados,
+  como pedido. Redução real desde os 480px originais: ~24% (não os ~28% que a 7ª rodada tinha
+  calculado sobre uma altura que na verdade não cabia o conteúdo).
+- **Teste novo `[16]`**: mede a geometria real de todos os widgets do cartão (via `mapTo`) e checa
+  ausência de sobreposição par a par, não só a soma de números — a classe de teste que teria
+  pegado o bug da 7ª rodada antes de chegar ao usuário. Reconferido pelo PM instanciando a janela
+  diretamente: sem sobreposição confirmada.
+- **Tentativa adicional no flicker de encolhimento**: os dois `setGeometry` nativos existentes
+  (união em `_aplicar_modo`, assentamento em `_assentar_modo`) agora rodam com
+  `setUpdatesEnabled(False)` → reflow/`setFixedSize` → `setUpdatesEnabled(True)` → `repaint()`
+  síncrono, para evitar o compositor do Windows capturar um quadro intermediário sem repintura
+  completa. Arquitetura de redimensionamento das rodadas 4-5 intocada (1 redimensionamento nativo
+  por sentido, 0px de desvio, 0 widgets indevidos visíveis — reconferido). **Não é confirmação
+  real** — só o Windows real confirma se o flicker no hover-out sumiu.
+- Suíte: **167 verificações, 0 falhas** (143→167, +24), reconferida pelo PM de forma independente.
+  Achado incidental (não é bug de produto): um teste antigo deixava o cursor perto de onde a
+  próxima janela nasce, e o vigia de ponteiro (100ms) podia expandir a janela antes da primeira
+  medição — corrigido afastando o mouse no início de cada teste.
+- Nenhum arquivo temporário deixado no repositório (`git status` conferido pelo PM).
+
+**Ainda pendente de confirmação real**: se o flicker no hover-out (encolher) de fato sumiu ou
+melhorou; aparência final da janela expandida (448×366) e compacta (80×80); tudo o que só o
+Windows real confirma.
+
+### D-34 — O MVP da Fase 2 é o app que já está em uso
+
+`estado: fechada · 2026-09-06 · fase: F2`
+
+**Ditar com um atalho e ter o texto pronto para colar, sem tirar a mão do teclado e sem piorar o que
+eu já uso.** É a definição declarada de MVP da F2 (`L-C`), e ela não descreve trabalho futuro:
+descreve o app de hoje.
+
+Fica **fora** do MVP, declarado: a ação "colocar a última transcrição no campo em foco" (segue
+parqueada), o histórico navegável (`D-22`/`B-11`), o seletor de idioma (`D-08`), o adiantamento de
+exibição no streaming (`B-05`), e o que já estava morto (`D-33`).
+
+**Por quê:** pergunta direta ao usuário em 2026-09-06 — *qual passo manual mais incomoda hoje, no
+uso real?* — e a resposta foi **"nada, o fluxo já serve"**. A mesma conversa adiou o histórico. Uma
+definição de MVP escrita contra o uso real vale mais que uma escrita contra a lista de desejos: o
+que sobrar de incômodo aparece ditando, não planejando.
+
+**Consequência para a fase:** não há funcionalidade entre o app de hoje e o fim da F2. O critério de
+conclusão — *usar o ditado deste app no dia a dia, no lugar do que usava* — fica sozinho, e a Etapa
+4 (o resto do plano) só se escreve com dias de uso acumulados. Também fecha o `B-06` dentro da
+`US-D02`.
+
+**Reabre se:** o uso em regime revelar um atrito que o usuário não previu hoje — que é exatamente o
+que a Etapa 4 espera colher.
+
+### D-35 — "Abrir planejamento" entra no menu ⋮, fora do plano
+
+`estado: fechada · 2026-09-25 · fase: F2`
+
+O menu ⋮ do app de desktop ganha, como **primeiro item**, "Abrir planejamento": abre no navegador
+padrão a página de Planejamento e Execução do Sistema de Organização
+(`ARQUIVO-PESSOAL/02_PROJETOS/SISTEMA-DE-ORGANIZACAO`), cujo endereço é fixo (`URL_PLANEJAMENTO` em
+`desktop/app.py`). Ícone próprio, `planejamento` (barras escalonadas, como uma linha do tempo).
+
+**Por quê:** pedido direto do usuário em 2026-09-25 — o app já fica aberto o dia todo, e o plano
+precisa estar a um clique. Mesmo caso da `D-31`: fora da paridade (`D-27`) e fora do MVP (`D-34`),
+sem mudar o critério da fase.
+
+**Verificação:** `desktop/testes_janela_compacta.py` [10] passa a exigir os seis itens na ordem e
+que o primeiro abra exatamente `URL_PLANEJAMENTO` (sem abrir navegador no teste). 231 verificações,
+0 falhas, rodadas headless.
+
+### D-36 — O núcleo sai da máquina: centralizado no Supabase, com login (reabre D-05)
+
+`estado: fechada · 2026-09-30 · fase: Núcleo centralizado`
+
+O núcleo de transcrição passa a ser **remoto**, em Edge Functions no projeto Supabase
+**RAG-COMPARTILHADO**, com banco Postgres (schema próprio) no lugar dos `.jsonl` e **login pelo
+Supabase Auth** desde já. O app de desktop vira cliente do núcleo remoto. A **geração de imagem fica
+no núcleo local**, mas o consumo dela é registrado no mesmo banco.
+
+**Por quê:** motivo novo, trazido pelo usuário — não é a condição de reabertura escrita na `D-05`
+(consumo fragmentado). O backend já foi replicado uma vez (interface web, depois desktop); o Android
+e o relógio seriam a terceira e a quarta, ou exigiriam a chave da OpenAI dentro do aparelho. Com um
+núcleo central, todo cliente novo é magro, lê o contrato e chama a API; a chave mora num lugar só.
+É a `D-07` (compartilha-se comportamento, não código) pagando: o contrato medido vira a
+especificação da reescrita.
+
+**Trade-offs aceitos:** um salto de rede a mais e um serviço externo na ferramenta de todo dia (os
+dois riscos que a `D-05` apontava); reescrita em TypeScript/Deno, porque Edge Functions não rodam
+Python; limite de 150 s por requisição no plano gratuito (tira o `diarize` do núcleo remoto);
+projeto dividido com outro uso (cota, segredos e usuários do Auth). Mitigação: `url_nucleo` de volta
+para o local continua sendo saída de emergência. A medição local × remoto foi **dispensada pelo
+usuário**. O login entra agora, e não com o Android, por escolha do usuário: deixar pronto.
+
+**Reabre se:** o núcleo remoto falhar no uso diário a ponto de o usuário voltar para o local, ou o
+plano gratuito (pausa por inatividade, limites) virar obstáculo real.

@@ -36,7 +36,7 @@ o menu de três pontos com Configurações / Consumo / Enviar arquivo, o painel 
 do tempo, e a lista de configurações que importam.
 
 O que **não** se transporta: hover como gatilho (não existe em toque, e no desktop compete com a
-janela flutuante) e o modo ao vivo, congelado.
+janela flutuante) e o modo ao vivo, morto (`D-33`, 2026-09-05 — deixou de ser "congelado").
 
 ## "Colocar a última transcrição aqui" como ação própria — *fase: F2*
 

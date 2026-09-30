@@ -2,11 +2,16 @@
 artefato: Contrato do núcleo de transcrição
 origem: SPEC-001_contrato-do-nucleo.md
 medido_em: 2026-08-23
-atualizado_em: 2026-08-24 (Etapa 3 — R1 a R4, ver PROGRESSO.md)
+atualizado_em: 2026-08-27 (Operação 3 — geração de imagem, D-31, ver PROGRESSO.md)
 status: observado (não é aspiração — é o que a máquina faz hoje)
 ---
 
 # Contrato do núcleo de transcrição
+
+**Acrescentado em 2026-08-27**: o núcleo ganhou uma operação que **não é de transcrição** —
+`POST /gerar-imagem` (Operação 3, abaixo). É uma entrada fora do plano da Fase 2 (`D-31`), pedida
+direto pelo usuário; o nome deste documento continua "contrato do núcleo de transcrição" por
+inércia histórica, não porque o núcleo só transcreva mais.
 
 Este documento descreve tudo que um cliente novo (app desktop, Android, Wear, ou qualquer outro)
 precisa saber para consumir o núcleo de transcrição — **sem abrir `index.html` nem `main.py`**.
@@ -44,6 +49,9 @@ interface web, também fora do contrato.
 real: presente nas duas rotas em todos os casos testados, **ausente** em `GET /tempo-real/token`
 (fora do contrato, ver acima). Se o formato mudar no futuro, o número muda junto — um cliente pode
 checar o cabeçalho antes de assumir o formato.
+
+**`POST /gerar-imagem` (Operação 3, 2026-08-27) entrou na mesma lista** — carrega o mesmo cabeçalho,
+confirmado por medição (ver abaixo).
 
 ---
 
@@ -267,6 +275,126 @@ o diarize), o cálculo cai no default `{"entrada": 0.0, "saida": 0.0}` e o custo
 histórico de gasto** — sub-relatando o custo real do projeto sempre que esse modelo é usado. Não é
 uma lacuna do contrato (a *forma* da resposta está certa), é um bug de cálculo — reportado aqui
 como achado, não corrigido (fora do escopo desta tarefa).
+
+---
+
+## Operação 3 — Gerar imagem
+
+**Acrescentada em 2026-08-27, fora do plano da Fase 2 (`D-31`)** — pedido direto do usuário, não é
+transcrição. `POST /gerar-imagem`, `multipart/form-data`. Quem fala com a API da OpenAI é sempre o
+núcleo; nenhum cliente tem (nem precisa) da chave.
+
+| Campo | Tipo | Obrigatório | Padrão | Observação |
+|---|---|---|---|---|
+| `imagens` | arquivo, repetido | sim | — | uma ou mais, até 16; `.png`, `.jpg`/`.jpeg` ou `.webp`, até 50 MB cada |
+| `prompt` | texto | sim | — | vazio (ou só espaço) é erro |
+| `modelo` | texto | não | `gpt-image-1.5` | ver lista abaixo |
+| `tamanho` | texto | não | `auto` | `auto`, `1024x1024`, `1536x1024`, `1024x1536` |
+| `qualidade` | texto | não | `medium` | `low`, `medium`, `high`, `auto` |
+
+### Modelos aceitos
+
+| Modelo | Observação |
+|---|---|
+| `gpt-image-2` | o mais novo (flagship atual) |
+| `gpt-image-1.5` | **padrão desta rota** — decisão explícita da tarefa que criou esta operação, não do modelo mais novo estar disponível |
+| `gpt-image-1` | a OpenAI já avisa remoção futura (23/10/2026, confirmado por busca em 2026-08-27) |
+| `gpt-image-1-mini` | mais barato dos quatro |
+
+**`dall-e-2` não está na lista** — a tarefa original que criou esta operação o citava como aceito,
+mas uma busca em 2026-08-27 confirmou que **a OpenAI removeu `dall-e-2`/`dall-e-3` da API em
+2026-05-12**. Chamá-lo hoje devolveria erro da própria API; por isso o backend rejeita antes, com
+`MODELO_INVALIDO` (confirmado por medição — ver tabela de erros abaixo).
+
+### Resposta de sucesso
+
+`200`, `Content-Type: application/json`. Captura real (chamada com duas imagens de referência —
+um quadrado vermelho e um azul — e o prompt *"Combine as duas cores de referência num degradê
+diagonal simples, sem texto"*, `gpt-image-1.5`, `tamanho=1024x1024`, `qualidade=low`):
+
+```json
+{
+  "imagem_b64": "iVBORw0KGgoAAAANSUhEUgAABAA...",
+  "formato": "png",
+  "custo_usd": 0.08183800000000001,
+  "revised_prompt": null
+}
+```
+
+- `imagem_b64` — a imagem inteira em base64 (`b64_json` da API, repassado direto). A chamada real
+  devolveu um PNG 1024×1024 válido (decodificado e conferido nesta medição).
+- `formato` — vem de `output_format` da resposta; `png` nesta captura (o backend não força nenhum).
+- `custo_usd` — calculado pelo backend a partir de `usage` (ver "O custo, medido de verdade"
+  abaixo), **sempre presente**, mesmo que o registro em `consumo.jsonl` falhe (acessório).
+- `revised_prompt` — só existe para `dall-e-3` segundo a documentação da OpenAI; **veio `null`
+  nesta medição com `gpt-image-1.5`**, consistente com isso.
+
+### O custo, medido de verdade — bem mais caro que transcrever (`D-31`, `D-18`)
+
+Confirmado por medição em 2026-08-27, `gpt-image-1.5`, duas imagens de referência de 256×256:
+
+| tamanho | qualidade | `input_tokens` | `output_tokens` | `custo_usd` |
+|---|---|---|---|---|
+| `1024x1024` | `low` | 8.762 | 372 | **US$ 0,0818** |
+| `auto` | `medium` (padrão) | 4.378 | 1.254 | **US$ 0,0751** |
+
+Para comparar: uma transcrição de ~13s custa em torno de **US$ 0,0007** — a geração de imagem
+custou entre **~115× e ~120×** mais nestas duas medições. A maior parte do custo real vem da
+**entrada** (as imagens de referência), não só da saída — a estimativa que um cliente mostra
+**antes** de gerar (baseada só em tokens de saída típicos por qualidade) fica bem abaixo do custo
+real quando há imagens de referência grandes; só a resposta da API sabe o valor exato.
+
+`usage` desta operação não tem campo `type` (diferente da Operação 1) — tem
+`input_tokens_details.{text_tokens, image_tokens}` em vez de um `input_tokens` só. O backend
+detecta esse formato (por `input_tokens_details` estar presente) e aplica os três preços por
+token (texto de entrada, imagem de entrada, saída) da tabela `PRECOS_POR_TOKEN_USD`, confirmados
+em <https://developers.openai.com/api/docs/pricing> (consulta em 2026-08-27):
+
+| modelo | texto de entrada | imagem de entrada | saída |
+|---|---|---|---|
+| `gpt-image-2` | US$ 5,00 / milhão | US$ 8,00 / milhão | US$ 30,00 / milhão |
+| `gpt-image-1.5` | US$ 5,00 / milhão | US$ 8,00 / milhão | US$ 32,00 / milhão |
+| `gpt-image-1` | US$ 5,00 / milhão | US$ 10,00 / milhão | US$ 40,00 / milhão |
+| `gpt-image-1-mini` | US$ 2,00 / milhão | US$ 2,50 / milhão | US$ 8,00 / milhão |
+
+**Atenção para quem for reusar a Etapa anterior desta tarefa**: o rascunho original citava
+US$ 5/US$ 10/US$ 40 como se fossem os preços de `gpt-image-1.5` — são os preços de `gpt-image-1`.
+`gpt-image-1.5` (o padrão desta rota) é **US$ 5/US$ 8/US$ 32** — mais barato na entrada de imagem e
+mais caro na saída. Confira sempre contra a página oficial antes de fixar um número.
+
+### O registro reaproveita o caminho de `/transcrever`, sem mudar o cliente
+
+Confirmado por medição: a requisição aparece em `consumo.jsonl` com o mesmo formato de campos
+(`id`, `timestamp`, `modelo`, `custo_usd`, `total_tokens`), e em `transcricoes.jsonl` com o
+**prompt no lugar do texto transcrito** — então `GET /consumo` devolve a geração de imagem
+misturada com as transcrições, sem nenhuma mudança no cliente que já lê essa rota:
+
+```json
+{"id": "ba16ae0c...", "timestamp": "2026-08-27T21:47:54...", "modelo": "gpt-image-1.5", "custo_usd": 0.08183800000000001, "texto": "Combine as duas cores de referência num degradê diagonal simples, sem texto"}
+```
+
+### Erros de `POST /gerar-imagem`
+
+Cinco situações provocadas de verdade contra o backend (2026-08-27), todas com `codigo` estável ao
+lado de `detail`, mesmo padrão da Operação 1:
+
+| Situação | `codigo` | Resposta medida |
+|---|---|---|
+| Prompt vazio ou só espaço | `PROMPT_VAZIO` | `400` `{"detail":"O prompt não pode ficar vazio","codigo":"PROMPT_VAZIO"}` |
+| Arquivo que não é imagem aceita (`.txt` testado) | `FORMATO_NAO_ACEITO` | `415` `{"detail":"Formato não aceito em 'arquivo.txt'. Use PNG, JPG ou WEBP","codigo":"FORMATO_NAO_ACEITO"}` |
+| Mais de 16 imagens de referência (17 testadas) | `IMAGENS_DEMAIS` | `413` `{"detail":"No máximo 16 imagens de referência; recebi 17","codigo":"IMAGENS_DEMAIS"}` |
+| Modelo fora da lista aceita (`dall-e-2` testado — ver acima por quê) | `MODELO_INVALIDO` | `422` `{"detail":"Modelo inválido: 'dall-e-2'. Valores aceitos: gpt-image-2, gpt-image-1.5, gpt-image-1, gpt-image-1-mini","codigo":"MODELO_INVALIDO"}` |
+| Tamanho fora da lista aceita | `TAMANHO_INVALIDO` | `422` `{"detail":"Tamanho inválido: '9999x9999'. Valores aceitos: auto, 1024x1024, 1536x1024, 1024x1536","codigo":"TAMANHO_INVALIDO"}` |
+
+Não provocados nesta medição (implementados pelo mesmo padrão da Operação 1, reaproveitando
+`_erro_api_para_codigo`, mas sem uma condição real de rede/chave à mão para testar): `SEM_CHAVE`,
+`FALHA_AUTENTICACAO`, `SEM_CONEXAO`, `TEMPO_ESGOTADO`, `API_RECUSOU`, `QUALIDADE_INVALIDA`,
+`IMAGEM_AUSENTE`, `IMAGEM_VAZIA`, `ARQUIVO_MUITO_GRANDE` (50 MB por imagem, mesmo limite —
+`"Files can be up to 50MB in size."` para a rota de edição de imagem).
+
+Todas as validações de campo (`PROMPT_VAZIO`, `MODELO_INVALIDO`, `TAMANHO_INVALIDO`,
+`QUALIDADE_INVALIDA`, `IMAGENS_DEMAIS`, `FORMATO_NAO_ACEITO`, `IMAGEM_AUSENTE`, `IMAGEM_VAZIA`)
+acontecem **antes** de qualquer chamada à API — não geram custo, mesmo padrão da Operação 1.
 
 ---
 

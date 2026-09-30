@@ -39,10 +39,37 @@ MODELOS_QUE_EXIGEM_CHUNKING = ("gpt-4o-transcribe-diarize",)
 # são cobrados por token (confirmado empiricamente: usage.type == "tokens" nos dois); o preço por
 # minuto abaixo só entra em jogo no fallback por duração (usage.type == "duration", ou usage
 # ausente) — mesmos valores já usados em benchmark.py.
+#
+# Modelos de imagem (Operação 3 — geração de imagem, D-31) têm 3 preços por token em vez de 2: a
+# entrada se divide entre texto e imagem (usage.input_tokens_details.{text_tokens,image_tokens}),
+# sem "saida"/"entrada" únicos. Confirmado em developers.openai.com/api/docs/pricing, 2026-08-27 —
+# **atenção**: gpt-image-1 tem preço diferente de gpt-image-1.5/gpt-image-2 (imagem de entrada
+# US$10/US$8/US$8 por milhão, saída US$40/US$32/US$30) — não são intercambiáveis. `dall-e-2`, que
+# a tarefa original listava como aceito, **foi removido da API em 2026-05-12** (confirmado por
+# busca em 2026-08-27) — por isso não entra na lista de modelos permitidos abaixo.
 PRECOS_POR_TOKEN_USD = {
     "gpt-4o-transcribe": {"entrada": 2.50 / 1_000_000, "saida": 10.00 / 1_000_000},
     "gpt-4o-mini-transcribe": {"entrada": 1.25 / 1_000_000, "saida": 5.00 / 1_000_000},
+    "gpt-image-2": {"texto_entrada": 5.00 / 1_000_000, "imagem_entrada": 8.00 / 1_000_000, "saida": 30.00 / 1_000_000},
+    "gpt-image-1.5": {"texto_entrada": 5.00 / 1_000_000, "imagem_entrada": 8.00 / 1_000_000, "saida": 32.00 / 1_000_000},
+    "gpt-image-1": {"texto_entrada": 5.00 / 1_000_000, "imagem_entrada": 10.00 / 1_000_000, "saida": 40.00 / 1_000_000},
+    "gpt-image-1-mini": {"texto_entrada": 2.00 / 1_000_000, "imagem_entrada": 2.50 / 1_000_000, "saida": 8.00 / 1_000_000},
 }
+
+# Operação 3 — geração de imagem (D-31, fora do plano da Fase 2). gpt-image-1.5 como padrão, por
+# pedido explícito da tarefa (gpt-image-2 é o mais novo, mas isso não muda essa decisão).
+MODELO_IMAGEM_PADRAO = "gpt-image-1.5"
+MODELOS_IMAGEM_PERMITIDOS = ("gpt-image-2", "gpt-image-1.5", "gpt-image-1", "gpt-image-1-mini")
+TAMANHOS_IMAGEM_PERMITIDOS = ("auto", "1024x1024", "1536x1024", "1024x1536")
+QUALIDADES_IMAGEM_PERMITIDAS = ("low", "medium", "high", "auto")
+MAX_IMAGENS_REFERENCIA = 16
+# Formatos de imagem comuns aceitos pela API para referência/edição; 50MB por arquivo é o limite
+# documentado ("less than 50MB in size") para a rota de edição de imagem.
+FORMATOS_IMAGEM_ACEITOS = (".png", ".jpg", ".jpeg", ".webp")
+TAMANHO_MAXIMO_IMAGEM_BYTES = 50 * 1024 * 1024
+# Gerar imagem demora bem mais que transcrever — timeout de leitura bem mais folgado que o de
+# /transcrever (120s).
+TIMEOUT_CLIENTE_API_IMAGEM = Timeout(300.0, connect=5.0)
 PRECO_POR_MINUTO_USD = {
     "gpt-4o-transcribe": 0.006,
     "gpt-4o-mini-transcribe": 0.003,
@@ -70,7 +97,7 @@ TAMANHO_MAXIMO_AUDIO_BYTES = 25 * 1024 * 1024
 
 # Rotas cobertas pelo contrato do núcleo (R4) — só essas recebem o cabeçalho de versão. O modo ao
 # vivo (`/tempo-real/*`) está fora do contrato por decisão de 2026-08-21 (ver spec/contrato/NUCLEO.md).
-ROTAS_DO_CONTRATO = {"/transcrever", "/consumo"}
+ROTAS_DO_CONTRATO = {"/transcrever", "/consumo", "/gerar-imagem"}
 VERSAO_CONTRATO_NUCLEO = "1"
 
 # Registro de consumo: um JSON por linha, arquivo local (não versionado — ver .gitignore).
@@ -120,11 +147,15 @@ async def _manipulador_erro_nucleo(request: Request, exc: ErroNucleo) -> JSONRes
     )
 
 
-def _erro_api_para_codigo(erro: Exception) -> tuple[str, str, int]:
+def _erro_api_para_codigo(erro: Exception, o_que_verificar: str = "o formato do arquivo de áudio") -> tuple[str, str, int]:
     """Traduz uma exceção da SDK da OpenAI em (codigo, detail, status_http) — usado tanto no modo
     sem streaming (vira ErroNucleo) quanto no modo streaming (vira evento "erro"). A ordem dos
     `isinstance` importa: APITimeoutError é subclasse de APIConnectionError, e AuthenticationError
-    é subclasse de APIStatusError — a checagem mais específica precisa vir primeiro."""
+    é subclasse de APIStatusError — a checagem mais específica precisa vir primeiro.
+
+    `o_que_verificar` só troca a mensagem do caso genérico (API_RECUSOU) — os outros três já são
+    independentes de operação; usado por /gerar-imagem para não sugerir "arquivo de áudio" num
+    erro de geração de imagem."""
     if isinstance(erro, APITimeoutError):
         return "TEMPO_ESGOTADO", "A API da OpenAI não respondeu a tempo — tente novamente", 504
     if isinstance(erro, AuthenticationError):
@@ -137,8 +168,7 @@ def _erro_api_para_codigo(erro: Exception) -> tuple[str, str, int]:
         return "SEM_CONEXAO", "Não foi possível conectar à API da OpenAI — verifique a rede", 502
     return (
         "API_RECUSOU",
-        f"A API da OpenAI recusou a requisição (HTTP {erro.status_code}) — "
-        "verifique o formato do arquivo de áudio",
+        f"A API da OpenAI recusou a requisição (HTTP {erro.status_code}) — verifique {o_que_verificar}",
         502,
     )
 
@@ -171,6 +201,31 @@ FAVICON_ICO = _gerar_favicon_ico()
 def _calcular_custo_usd(modelo: str, usage) -> tuple[float, dict]:
     """Calcula o custo estimado em USD e os campos de consumo a persistir junto do registro."""
     tipo = getattr(usage, "type", None) if usage is not None else None
+
+    # Operação 3 (geração de imagem): usage não tem "type" — tem input_tokens_details com a
+    # entrada já dividida em texto/imagem. Checar isso primeiro identifica o formato sem precisar
+    # de um parâmetro extra nesta função (mantém /transcrever e /gerar-imagem chamando a mesma
+    # _registrar_consumo, sem duplicar o código que grava o arquivo e atualiza a sessão).
+    detalhes_entrada = getattr(usage, "input_tokens_details", None) if usage is not None else None
+    if detalhes_entrada is not None:
+        precos = PRECOS_POR_TOKEN_USD.get(
+            modelo, {"texto_entrada": 0.0, "imagem_entrada": 0.0, "saida": 0.0}
+        )
+        texto_tokens = getattr(detalhes_entrada, "text_tokens", 0) or 0
+        imagem_tokens = getattr(detalhes_entrada, "image_tokens", 0) or 0
+        saida_tokens = getattr(usage, "output_tokens", 0) or 0
+        custo = (
+            texto_tokens * precos.get("texto_entrada", 0.0)
+            + imagem_tokens * precos.get("imagem_entrada", 0.0)
+            + saida_tokens * precos.get("saida", 0.0)
+        )
+        return custo, {
+            "tipo_usage": "tokens_imagem",
+            "input_tokens": getattr(usage, "input_tokens", None),
+            "output_tokens": saida_tokens,
+            "total_tokens": getattr(usage, "total_tokens", None),
+            "segundos": None,
+        }
 
     if tipo == "tokens":
         precos = PRECOS_POR_TOKEN_USD.get(modelo, {"entrada": 0.0, "saida": 0.0})
@@ -344,6 +399,113 @@ async def transcrever(
 
     response.headers["X-Nucleo-Contrato"] = VERSAO_CONTRATO_NUCLEO
     return {"transcricao": resultado.text}
+
+
+@app.post("/gerar-imagem")
+async def gerar_imagem(
+    response: Response,
+    imagens: list[UploadFile] = File(...),
+    prompt: str = Form(...),
+    modelo: str = Form(MODELO_IMAGEM_PADRAO),
+    tamanho: str = Form("auto"),
+    qualidade: str = Form("medium"),
+):
+    """Operação 3 (D-31, fora do plano da Fase 2): gera uma imagem nova a partir de uma ou mais
+    imagens de referência e um prompt, via POST https://api.openai.com/v1/images/edits. Quem fala
+    com a OpenAI é sempre o núcleo — nenhum cliente tem (nem precisa) da chave."""
+    if not prompt or not prompt.strip():
+        raise ErroNucleo(status_code=400, codigo="PROMPT_VAZIO", detail="O prompt não pode ficar vazio")
+
+    if modelo not in MODELOS_IMAGEM_PERMITIDOS:
+        raise ErroNucleo(
+            status_code=422,
+            codigo="MODELO_INVALIDO",
+            detail=f"Modelo inválido: '{modelo}'. Valores aceitos: " + ", ".join(MODELOS_IMAGEM_PERMITIDOS),
+        )
+    if tamanho not in TAMANHOS_IMAGEM_PERMITIDOS:
+        raise ErroNucleo(
+            status_code=422,
+            codigo="TAMANHO_INVALIDO",
+            detail=f"Tamanho inválido: '{tamanho}'. Valores aceitos: " + ", ".join(TAMANHOS_IMAGEM_PERMITIDOS),
+        )
+    if qualidade not in QUALIDADES_IMAGEM_PERMITIDAS:
+        raise ErroNucleo(
+            status_code=422,
+            codigo="QUALIDADE_INVALIDA",
+            detail=f"Qualidade inválida: '{qualidade}'. Valores aceitos: " + ", ".join(QUALIDADES_IMAGEM_PERMITIDAS),
+        )
+
+    if not imagens:
+        raise ErroNucleo(status_code=400, codigo="IMAGEM_AUSENTE", detail="Envie ao menos uma imagem de referência")
+    if len(imagens) > MAX_IMAGENS_REFERENCIA:
+        raise ErroNucleo(
+            status_code=413,
+            codigo="IMAGENS_DEMAIS",
+            detail=f"No máximo {MAX_IMAGENS_REFERENCIA} imagens de referência; recebi {len(imagens)}",
+        )
+
+    chave = os.getenv("OPENAI_API_KEY")
+    if not chave:
+        raise ErroNucleo(
+            status_code=503,
+            codigo="SEM_CHAVE",
+            detail="OPENAI_API_KEY não configurada — preencha transcritor/.env",
+        )
+
+    arquivos_para_api = []
+    for arquivo in imagens:
+        extensao = Path(arquivo.filename or "").suffix.lower()
+        if extensao not in FORMATOS_IMAGEM_ACEITOS:
+            raise ErroNucleo(
+                status_code=415,
+                codigo="FORMATO_NAO_ACEITO",
+                detail=f"Formato não aceito em '{arquivo.filename}'. Use PNG, JPG ou WEBP",
+            )
+        conteudo = await arquivo.read()
+        if not conteudo:
+            raise ErroNucleo(status_code=400, codigo="IMAGEM_VAZIA", detail=f"Arquivo vazio: '{arquivo.filename}'")
+        if len(conteudo) > TAMANHO_MAXIMO_IMAGEM_BYTES:
+            limite_mb = TAMANHO_MAXIMO_IMAGEM_BYTES // (1024 * 1024)
+            raise ErroNucleo(
+                status_code=413,
+                codigo="ARQUIVO_MUITO_GRANDE",
+                detail=f"'{arquivo.filename}' passa de {limite_mb} MB",
+            )
+        arquivos_para_api.append((arquivo.filename or "imagem.png", conteudo))
+
+    cliente = OpenAI(api_key=chave, timeout=TIMEOUT_CLIENTE_API_IMAGEM)
+    try:
+        resultado = cliente.images.edit(
+            model=modelo,
+            image=arquivos_para_api,
+            prompt=prompt,
+            size=tamanho,
+            quality=qualidade,
+            input_fidelity="high",  # são imagens de referência — a fidelidade ao que foi enviado é o ponto
+            n=1,
+        )
+    except (APITimeoutError, AuthenticationError, APIConnectionError, APIStatusError) as erro:
+        codigo, detail, status_http = _erro_api_para_codigo(erro, "o prompt e as imagens de referência enviadas")
+        raise ErroNucleo(status_code=status_http, codigo=codigo, detail=detail)
+
+    dados = resultado.data[0] if resultado.data else None
+    if dados is None or not dados.b64_json:
+        raise ErroNucleo(status_code=502, codigo="API_RECUSOU", detail="A API não devolveu nenhuma imagem")
+
+    # Custo calculado uma vez, sempre — a resposta ao usuário reporta o que foi cobrado de
+    # verdade, mesmo que o registro em consumo.jsonl falhe (acessório, ver _registrar_consumo).
+    custo_usd, _campos = _calcular_custo_usd(modelo, resultado.usage)
+    id_consumo = _registrar_consumo(modelo, resultado.usage)
+    if id_consumo is not None:
+        _registrar_transcricao(id_consumo, modelo, prompt)  # transcricoes.jsonl guarda o prompt no lugar do texto
+
+    response.headers["X-Nucleo-Contrato"] = VERSAO_CONTRATO_NUCLEO
+    return {
+        "imagem_b64": dados.b64_json,
+        "formato": resultado.output_format or "png",
+        "custo_usd": custo_usd,
+        "revised_prompt": dados.revised_prompt,
+    }
 
 
 @app.get("/tempo-real/token")

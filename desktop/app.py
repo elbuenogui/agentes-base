@@ -5,6 +5,7 @@ desenho e os caminhos SVG dos ícones). Contrato consumido: spec/contrato/NUCLEO
 campo em foco, três estados de janela e modo ao vivo ficam de fora por decisão — ver
 desktop/README.md.
 """
+import base64
 import json
 import logging
 import math
@@ -22,9 +23,14 @@ import numpy as np
 import requests
 import sounddevice as sd
 from PySide6.QtCore import (
-    Qt, QTimer, Signal, QThread, QSize, QRectF, QPoint, QEvent, QPropertyAnimation, QEasingCurve, Property,
+    Qt, QTimer, Signal, QThread, QSize, QRect, QRectF, QPoint, QUrl, QEvent, QPropertyAnimation, QEasingCurve,
+    Property,
+    QAbstractAnimation,
 )
-from PySide6.QtGui import QGuiApplication, QColor, QPainter, QBrush, QPen, QFont, QIcon, QPixmap
+from PySide6.QtGui import (
+    QGuiApplication, QColor, QPainter, QBrush, QPen, QFont, QIcon, QPixmap, QDesktopServices, QCursor,
+    QRegion,
+)
 from PySide6.QtSvg import QSvgRenderer
 from PySide6.QtWidgets import (
     QApplication,
@@ -34,6 +40,7 @@ from PySide6.QtWidgets import (
     QVBoxLayout,
     QHBoxLayout,
     QFormLayout,
+    QLayout,
     QPlainTextEdit,
     QComboBox,
     QMenu,
@@ -48,6 +55,10 @@ from PySide6.QtWidgets import (
 PASTA_APP = os.path.dirname(__file__)
 CAMINHO_CONFIG = os.path.join(PASTA_APP, "config.json")
 CAMINHO_LOG = os.path.join(PASTA_APP, "app.log")
+# Menu ⋮ → Abrir planejamento (pedido direto do usuário, 2026-09-25, fora do plano da Fase 2): a
+# página do Sistema de Organização (ARQUIVO-PESSOAL/02_PROJETOS/SISTEMA-DE-ORGANIZACAO). O endereço
+# é fixo: a página é sempre republicada no mesmo link.
+URL_PLANEJAMENTO = "https://claude.ai/artifact/Do6KoH3PAY3BEPkd946Cow"
 
 TAXA_AMOSTRAGEM = 16000
 CANAIS = 1
@@ -67,8 +78,85 @@ DURACAO_TOAST_ERRO_MS = 6000
 DURACAO_TOAST_SEM_FALA_MS = 3000
 DEBOUNCE_ATALHO_S = 0.4
 CICLO_PULSO_GRAVANDO_MS = 1200
+INTERVALO_PULSO_MS = 30  # quadro do anel de pulso da CamadaPulso (era literal, D-32 7ª volta)
 CICLO_SPINNER_PROCESSANDO_MS = 800
 DURACAO_ANIMACAO_INTERRUPTOR_MS = 150
+
+# D-32 — janela flutuante compacta (só o botão de gravar) que expande no hover e nos estados
+# gravando/processando.
+MARGEM_JANELA_COMPACTA = 4  # D-32 7ª volta: respiro em volta do BotaoGravar — o compacto é
+                            # 72 + 2x4 = 80px. Era 8 (88x88) até a 6ª volta; o usuário chamou o
+                            # sobrando de "essa borda ao redor do botão tão grande".
+ATRASO_ENCOLHER_MS = 250  # debounce: micro-saída do mouse pela borda não pode encolher na hora
+INTERVALO_VIGIA_PONTEIRO_MS = 100
+DURACAO_ANIMACAO_MODO_MS = 240  # D-32 7ª volta: era 160. Pedido direto do usuário ("bota uma
+                                # transição maior, ele não sumir") — a transição curta lia como
+                                # sumiço abrupto do botão, não como movimento.
+LIMIAR_ARRASTE_PX = 6  # abaixo disso é clique (tremida da mão), acima é arrastar a janela
+TAMANHO_MAXIMO_QT = 16777215  # QWIDGETSIZE_MAX — sem uso desde a 9ª volta (a janela é fixa)
+FOLGA_MASCARA_PX = 2  # D-32 9ª volta: a máscara é o retângulo do cartão visível mais esta
+                      # folga. setMask é 1 bit — a folga existe para a máscara nunca comer a
+                      # borda do cartão (o arredondado continua vindo do alfa por pixel).
+
+# D-32 7ª volta (2026-09-05) — métricas de layout da janela EXPANDIDA. Vivem aqui porque
+# _montar_ui e _configurar_layout_do_modo precisam declarar exatamente as mesmas: se as duas
+# saírem de sincronia, a janela muda de altura ao voltar do compacto (o gate J1/J2).
+MARGEM_EXTERNA_EXPANDIDA = 8   # era 16 — borda transparente em volta do cartão
+MARGEM_CARTAO_EXPANDIDA = 16   # era 24 (1.5rem) — respiro interno do cartão branco
+ESPACAMENTO_CARTAO = 8         # era 16 (1rem) — entre as linhas do cartão
+ALTURA_BARRA_AMPLITUDE = 24    # era 40 (2.5rem) — ver BarraAmplitude
+LADO_BOTAO_SECUNDARIO = 32     # ⋮ e cancelar; eram 44. O BotaoGravar continua 72 (alvo central).
+
+# D-32 7ª volta — LARGURA da janela expandida. Este valor é PRÓPRIO desta janela flutuante e não
+# segue mais o item I da SPEC-002 (coluna de 40rem/672px): aquele vínculo era reaproveitamento de
+# medida, nunca exigência de paridade, e foi revogado só para esta janela (as outras — painel de
+# configurações, consumo — continuam em 40rem).
+#
+# Piso absoluto, MEDIDO no layout real (offscreen), não somado à mão: a linha do topo é quem manda.
+#   cronômetro 49 + 10 + [mola] + ⋮ 32 + 10 + gravar 72 + 10 + cancelar 32 + 10 + [mola] +
+#   espelho 49 = 274 de linha do topo
+#   + 2x16 margem do cartão = 306 · + 2x1 borda do QSS = 308 · + 2x8 margem externa = 324.
+# Em 324 as duas molas ficam em 0px (cronômetro colado no ⋮), ou seja: cabe, mas sem respiro.
+#
+# Escolha entre 324 e 672, por medição de leitura da caixa de transcrição (fonte real, offscreen):
+#   324 -> 30 caracteres por linha · 384 -> 38 · 432 -> 44 · 448 -> 46 · 672 -> 74.
+# 448 é o menor valor medido em que a caixa ainda fica na faixa legível de ~45+ caracteres por
+# linha (abaixo disso a transcrição vira coluna de jornal, quebrando quase toda frase ditada), e
+# ainda sobram 62px em cada mola da linha do topo. Corta 224px (-33%) dos 672 anteriores — a 6ª
+# volta cortou 11px e o usuário disse, com razão, que não mudou nada.
+LARGURA_EXPANDIDA = 448  # 672 -> 448 (-224px, -33%); piso medido = 324
+
+# D-32 6ª volta — altura da caixa de transcrição, a pedido do usuário ("o box de copiar tem de
+# ficar num terço do total"). NÃO muda na 7ª volta.
+ALTURA_CAIXA_TEXTO = 160  # ~1/3 dos 480px que a janela expandida tinha antes (480/3 = 160)
+# D-32 7ª volta — tudo que NÃO é a caixa de transcrição, depois dos cortes nos elementos fixos
+# (a 6ª volta tinha medido 309 e só encolhido a caixa, o que deu 11px de diferença total e foi
+# rejeitado pelo usuário). Medido no layout real, não somado à mão — testar_altura_expandida
+# refaz a conta contra o layout e falha se alguém mexer numa margem:
+#   8+8 margem externa · 1+1 borda do cartão · 16+16 margem do cartão · 3x8 espaçamento ·
+#   72 linha do topo (cronômetro + ⋮ + gravar + cancelar, fundidos numa linha só) ·
+#   24 barra de amplitude · 32 linha de ações.
+# Essa lista soma 202 — a 7ª volta escreveu 186, que é a mesma lista SEM os 8+8 da margem
+# externa; foi exatamente esse esquecimento que produziu a sobreposição corrigida na 8ª volta.
+# Desvio registrado: a 6ª volta previa a linha do topo em 56px (⋮/cancelar 44->32), mas a linha é
+# tão alta quanto o widget mais alto dela, e o BotaoGravar continua 72 por ordem explícita — os
+# 16px previstos ali não existem sem encolher o botão central, o que a tarefa proíbe.
+# D-32 8ª volta — a conta da 7ª volta esquecia os 2x MARGEM_EXTERNA_EXPANDIDA (16px) que ficam
+# POR FORA do cartão: o cartão sozinho já pedia 346px (minimumSizeHint), mas recebia 346-16=330.
+# Como layout_externo usa SetNoConstraint (necessário para a animação), o Qt não recusa o tamanho
+# pequeno demais — ele empilha os itens sobrepostos, e a linha de ações (lixeira/copiar) subia
+# para dentro da caixa de transcrição (medido: 7px de sobreposição, relatado pelo usuário).
+# Novo valor MEDIDO no layout real (offscreen), não somado à mão:
+#   j._layout_externo.minimumSize().height() = 362  <- mínimo real da JANELA (cartão + margem
+#   externa + a borda de 1px do QSS, que uma conta manual erra)
+#   362 - ALTURA_CAIXA_TEXTO(160) = 202  <- tudo que não é a caixa
+# = os 186 da 7ª volta + os 16 da margem externa que faltavam.
+ALTURA_FIXA_EXPANDIDA = 202  # medida, não estimada — testar_altura_expandida refaz a conta
+# Folga pequena contra variação de métrica de fonte entre máquinas (a caixa de transcrição, que é
+# quem tem fator de esticar, absorve estes 4px e fica em 164 em vez de 160 — ALTURA_CAIXA_TEXTO
+# continua sendo o PISO declarado da caixa, que o usuário confirmou como bom).
+FOLGA_ALTURA_EXPANDIDA = 4
+ALTURA_EXPANDIDA = ALTURA_FIXA_EXPANDIDA + ALTURA_CAIXA_TEXTO + FOLGA_ALTURA_EXPANDIDA  # 366
 
 # SPEC-002 G3 — transcritos de transcritor/frontend/index.html (constantes calibradas por medição,
 # comentário "--- Linha do tempo das requisições ---"). A escala "minuto" é uma janela móvel de
@@ -106,6 +194,11 @@ CONFIG_PADRAO = {
     "streaming": False,
     "dispositivo_entrada": "",
     "recortar_em_vez_de_copiar": True,  # SPEC-002 F4 (D-30): nasce ligado
+    # D-31 — Gerar imagem (fora do plano da Fase 2, ver desktop/README.md e NUCLEO.md Operação 3).
+    "modelo_imagem": "gpt-image-1.5",
+    "tamanho_imagem": "auto",
+    "qualidade_imagem": "medium",
+    "pasta_saida_imagens": os.path.join(PASTA_APP, "imagens-geradas"),
 }
 
 MENSAGENS_ERRO = {
@@ -116,6 +209,46 @@ MENSAGENS_ERRO = {
     "FALHA_AUTENTICACAO": "Chave da OpenAI inválida no núcleo.",
     "SEM_CONEXAO": "Não foi possível conectar à API da OpenAI.",
     "API_RECUSOU": "A API da OpenAI recusou o áudio enviado.",
+    "TEMPO_ESGOTADO": "A API da OpenAI não respondeu a tempo.",
+}
+
+# D-31 — Gerar imagem. Espelha (do lado do cliente) a tabela de preços e a lista de modelos do
+# núcleo (transcritor/backend/main.py) — os dois processos não compartilham código, então esta
+# cópia precisa ser atualizada manualmente se os preços da OpenAI mudarem (mesmo padrão já usado
+# para MODELOS_ATIVOS de transcrição). dall-e-2 fica fora: removido da API em 2026-05-12
+# (confirmado por busca em 2026-08-27) — ver NUCLEO.md.
+MODELOS_IMAGEM_ATIVOS = ["gpt-image-2", "gpt-image-1.5", "gpt-image-1", "gpt-image-1-mini"]
+TAMANHOS_IMAGEM_ATIVOS = ["auto", "1024x1024", "1536x1024", "1024x1536"]
+QUALIDADES_IMAGEM_ATIVAS = ["low", "medium", "high", "auto"]
+# Só o preço de saída — a estimativa mostrada antes de gerar não inclui as imagens de referência
+# (o custo real, que inclui isso, só é conhecido depois da chamada; ver NUCLEO.md Operação 3).
+PRECOS_SAIDA_IMAGEM_POR_TOKEN_USD = {
+    "gpt-image-2": 30.00 / 1_000_000,
+    "gpt-image-1.5": 32.00 / 1_000_000,
+    "gpt-image-1": 40.00 / 1_000_000,
+    "gpt-image-1-mini": 8.00 / 1_000_000,
+}
+# Tokens de saída típicos por qualidade, em 1024x1024 (mesmo valor usado nos 4 modelos — a
+# diferença de custo entre eles já está no preço por token, não neste número).
+TOKENS_SAIDA_ESTIMADOS_POR_QUALIDADE = {"low": 272, "medium": 1056, "high": 4160, "auto": 1056}
+MAX_IMAGENS_REFERENCIA = 16
+FORMATOS_IMAGEM_ACEITOS = (".png", ".jpg", ".jpeg", ".webp")
+TIMEOUT_GERAR_IMAGEM_S = 320  # gerar imagem demora bem mais que transcrever (núcleo usa 300s)
+
+MENSAGENS_ERRO_IMAGEM = {
+    "MODELO_INVALIDO": "Modelo de imagem inválido.",
+    "TAMANHO_INVALIDO": "Tamanho de imagem inválido.",
+    "QUALIDADE_INVALIDA": "Qualidade de imagem inválida.",
+    "PROMPT_VAZIO": "Escreva um prompt antes de gerar.",
+    "IMAGEM_AUSENTE": "Adicione ao menos uma imagem de referência.",
+    "IMAGEM_VAZIA": "Uma das imagens de referência está vazia.",
+    "IMAGENS_DEMAIS": f"No máximo {MAX_IMAGENS_REFERENCIA} imagens de referência.",
+    "FORMATO_NAO_ACEITO": "Formato não aceito — use PNG, JPG ou WEBP.",
+    "ARQUIVO_MUITO_GRANDE": "Uma das imagens passa do limite de 50 MB.",
+    "SEM_CHAVE": "O núcleo não tem chave da OpenAI configurada.",
+    "FALHA_AUTENTICACAO": "Chave da OpenAI inválida no núcleo.",
+    "SEM_CONEXAO": "Não foi possível conectar à API da OpenAI.",
+    "API_RECUSOU": "A API da OpenAI recusou a geração — revise o prompt e as imagens.",
     "TEMPO_ESGOTADO": "A API da OpenAI não respondeu a tempo.",
 }
 
@@ -148,7 +281,9 @@ PALETA = {
 }
 
 QSS = f"""
-QWidget#janelaDitado {{ background-color: {PALETA['fundo_janela']}; }}
+/* D-32: sem moldura e com fundo translúcido — no modo compacto só o círculo do botão aparece na
+   tela; quem pinta o fundo visível na janela cheia é o cartão. */
+QWidget#janelaDitado {{ background: transparent; }}
 QFrame#cartaoGravacao {{
   background-color: {PALETA['fundo_cartao']};
   border: 1px solid {PALETA['borda_cartao']};
@@ -239,8 +374,13 @@ def carregar_config():
 
 
 def salvar_config(config):
-    with open(CAMINHO_CONFIG, "w", encoding="utf-8") as f:
+    # newline="\n": sem isto, o modo texto do Windows troca \n por \r\n na escrita — e o
+    # `config.json` versionado é LF, então todo `git status` mostrava uma diferença fantasma
+    # (conteúdo idêntico, só o fim de linha). A quebra de linha final depois do `json.dump` (que
+    # não escreve uma sozinho) fecha a mesma regra que `.gitattributes` passa a exigir dos `.json`.
+    with open(CAMINHO_CONFIG, "w", encoding="utf-8", newline="\n") as f:
         json.dump(config, f, ensure_ascii=False, indent=2)
+        f.write("\n")
 
 
 def copiar_para_area_de_transferencia(texto):
@@ -367,6 +507,20 @@ ICONES_SVG = {
         '<path d="M4 20a1 1 0 0 1-1-1v-6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v6a1 1 0 0 1-1 1H4Zm7 0a1 1 0 0 1-1-1V9a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1h-2Zm7 0a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v15a1 1 0 0 1-1 1h-2Z"/>'
     ),
     "enviar": '<path d="M5 20h14v-2H5v2Zm7-16-6 6h4v6h4v-6h4l-6-6Z"/>',
+    # D-32 3a volta — "Sair" no menu 3 pontos: sem moldura nao existe X para fechar. Icone proprio
+    # (mesmo caso ja aberto por "enviar" e "imagem"), simbolo de energia.
+    "sair": (
+        '<path d="M13 3h-2v10h2V3Zm4.83 2.17-1.42 1.42A6.92 6.92 0 0 1 19 12a7 7 0 0 1-14 0 '
+        '6.92 6.92 0 0 1 2.59-5.41L6.17 5.17A8.93 8.93 0 0 0 3 12a9 9 0 0 0 18 0 8.93 8.93 0 0 '
+        '0-3.17-6.83Z"/>'
+    ),
+    # Abrir planejamento (2026-09-25, pedido direto): barras escalonadas, como uma linha do tempo.
+    "planejamento": '<path d="M3 5h10v3H3V5Zm4 5.5h12v3H7v-3ZM11 16h10v3H11v-3Z"/>',
+    # D-31 — Gerar imagem: fora da paridade (D-27), ícone próprio (mesmo caso já aberto por "enviar").
+    "imagem": (
+        '<path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2Z'
+        'M8.5 13.5 11 16.51 14.5 12l4.5 6H5l3.5-4.5Z"/>'
+    ),
 }
 
 
@@ -523,6 +677,111 @@ class TrabalhoConsumo(QThread):
             self.falhou.emit("Resposta inesperada do núcleo ao consultar consumo.")
 
 
+def _mime_da_imagem(caminho):
+    extensao = os.path.splitext(caminho)[1].lower()
+    return {
+        ".png": "image/png", ".jpg": "image/jpeg", ".jpeg": "image/jpeg", ".webp": "image/webp",
+    }.get(extensao, "application/octet-stream")
+
+
+class TrabalhoGeracaoImagem(QThread):
+    """Chama POST /gerar-imagem fora da thread do Qt (D-31) — igual timeout generoso do núcleo
+    (gerar imagem demora bem mais que transcrever).
+
+    Decodifica o base64 e **salva o arquivo em disco aqui dentro**, antes de emitir qualquer
+    sinal — achado no uso real: o app derrubou duas vezes com uma falha nativa do Qt
+    (`Qt6Core.dll`, sempre no mesmo endereço, fora do alcance de um `try/except` Python) bem na
+    janela de tempo em que a thread de rede termina e entrega o resultado à thread da GUI. Salvar
+    aqui, com E/S pura de arquivo (sem nenhuma chamada a widget), tira a persistência do que já foi
+    pago da dependência de a GUI sobreviver para processar o sinal — e o sinal de sucesso passa a
+    carregar só strings/números pequenos, não a imagem inteira em base64 (que para uma imagem
+    1024×1024 real passa de 1 MB), reduzindo o que atravessa a fila entre as duas threads."""
+
+    sucesso = Signal(str, str, float)  # caminho_salvo ("" se não deu para salvar), formato, custo_usd
+    falhou = Signal(str, str)  # mensagem legível, codigo (pode vir vazio)
+
+    def __init__(self, url_nucleo, caminhos_imagens, prompt, modelo, tamanho, qualidade, pasta_saida):
+        super().__init__()
+        self.url = url_nucleo.rstrip("/") + "/gerar-imagem"
+        self.caminhos_imagens = list(caminhos_imagens)
+        self.prompt = prompt
+        self.modelo = modelo
+        self.tamanho = tamanho
+        self.qualidade = qualidade
+        self.pasta_saida = pasta_saida
+        # Lido pela GUI depois do sinal `sucesso` (não é parâmetro do sinal — não passa pela fila
+        # entre threads): só precisa dos bytes se o salvamento automático abaixo falhar, para
+        # "Salvar como…" ainda funcionar; no caminho comum (salvou), a GUI relê do próprio arquivo.
+        self.imagem_bytes = None
+
+    def run(self):
+        arquivos_abertos = []
+        try:
+            arquivos_multipart = []
+            for caminho in self.caminhos_imagens:
+                f = open(caminho, "rb")
+                arquivos_abertos.append(f)
+                arquivos_multipart.append(
+                    ("imagens", (os.path.basename(caminho), f, _mime_da_imagem(caminho)))
+                )
+            try:
+                resposta = requests.post(
+                    self.url,
+                    files=arquivos_multipart,
+                    data={
+                        "prompt": self.prompt, "modelo": self.modelo,
+                        "tamanho": self.tamanho, "qualidade": self.qualidade,
+                    },
+                    timeout=TIMEOUT_GERAR_IMAGEM_S,
+                )
+            except requests.exceptions.RequestException:
+                self.falhou.emit(f"Não foi possível conectar ao núcleo em {self.url}.", "")
+                return
+        finally:
+            for f in arquivos_abertos:
+                f.close()
+
+        if resposta.status_code != 200:
+            self._emitir_erro_http(resposta)
+            return
+        try:
+            dados = resposta.json()
+        except ValueError:
+            self.falhou.emit("Resposta inesperada do núcleo.", "")
+            return
+
+        try:
+            imagem_bytes = base64.b64decode(dados.get("imagem_b64") or "")
+        except (ValueError, TypeError):
+            self.falhou.emit("Resposta inesperada do núcleo — imagem inválida.", "")
+            return
+        formato = dados.get("formato") or "png"
+        custo_usd = float(dados.get("custo_usd") or 0.0)
+
+        caminho_salvo = ""
+        try:
+            os.makedirs(self.pasta_saida, exist_ok=True)
+            nome = datetime.now().strftime("%Y-%m-%d_%H%M%S") + "." + formato
+            caminho_tentativa = os.path.join(self.pasta_saida, nome)
+            with open(caminho_tentativa, "wb") as arquivo:
+                arquivo.write(imagem_bytes)
+            caminho_salvo = caminho_tentativa
+        except OSError:
+            self.imagem_bytes = imagem_bytes  # só guarda em memória se não deu para salvar sozinho
+
+        self.sucesso.emit(caminho_salvo, formato, custo_usd)
+
+    def _emitir_erro_http(self, resposta):
+        try:
+            corpo = resposta.json()
+        except ValueError:
+            self.falhou.emit(f"Erro do núcleo (HTTP {resposta.status_code}).", "")
+            return
+        codigo = corpo.get("codigo") or ""
+        mensagem = MENSAGENS_ERRO_IMAGEM.get(codigo, corpo.get("detail") or "Erro desconhecido do núcleo.")
+        self.falhou.emit(mensagem, codigo)
+
+
 class BotaoGravar(QPushButton):
     """Um só controle que alterna figura: microfone (parado) / quadrado (gravando) / spinner (A1)."""
 
@@ -540,6 +799,10 @@ class BotaoGravar(QPushButton):
         self._timer_spinner = QTimer(self)
         self._timer_spinner.timeout.connect(self._girar)
         self.camada_pulso = None  # anexada por fora (B.2) — quem desenha pulso/realce é ela
+        # D-32: no modo compacto o botão é a janela inteira; sem barra de título, arrastar a janela
+        # tem de sair daqui — e o arrasto não pode virar clique (que alternaria a gravação).
+        self._pos_press_arraste = None
+        self._arrastando = False
         self.definir_estado("parado")
 
     def anexar_camada_pulso(self, camada):
@@ -567,6 +830,48 @@ class BotaoGravar(QPushButton):
         if self.camada_pulso is not None:
             self.camada_pulso.definir_estado(estado)
         self.update()
+
+    # --- arrastar a janela pelo próprio botão (D-32) ------------------------------
+    def _janela_arrastavel(self):
+        janela = self.window()
+        return janela if hasattr(janela, "arraste_iniciar") else None
+
+    def mousePressEvent(self, evento):
+        if evento.button() == Qt.LeftButton:
+            self._pos_press_arraste = evento.globalPosition().toPoint()
+            self._arrastando = False
+        super().mousePressEvent(evento)
+
+    def mouseMoveEvent(self, evento):
+        if self._pos_press_arraste is not None and (evento.buttons() & Qt.LeftButton):
+            pos = evento.globalPosition().toPoint()
+            janela = self._janela_arrastavel()
+            if janela is not None and (
+                self._arrastando
+                or (pos - self._pos_press_arraste).manhattanLength() >= LIMIAR_ARRASTE_PX
+            ):
+                if not self._arrastando:
+                    # ancora no ponto do press, não no de agora: a janela não dá o pulo do limiar
+                    janela.arraste_iniciar(self._pos_press_arraste)
+                    self._arrastando = True
+                janela.arraste_mover(pos)
+                evento.accept()
+                return
+        super().mouseMoveEvent(evento)
+
+    def mouseReleaseEvent(self, evento):
+        if self._arrastando:
+            # arrastou: solta a janela onde está e engole o clique (não alterna a gravação)
+            self._arrastando = False
+            self._pos_press_arraste = None
+            janela = self._janela_arrastavel()
+            if janela is not None:
+                janela.arraste_fim()
+            self.setDown(False)
+            evento.accept()
+            return
+        self._pos_press_arraste = None
+        super().mouseReleaseEvent(evento)
 
     def _girar(self):
         # 360 graus a cada CICLO_SPINNER_PROCESSANDO_MS, com tick de 20ms
@@ -626,6 +931,9 @@ class CamadaPulso(QWidget):
         self._estado = "parado"
         self._fase_pulso = 0.0
         self._realce_arrastar = False
+        # D-32 7ª volta: "o pulso está pedido, mas a troca de modo ainda não assentou". Ver
+        # definir_estado e liberar_pulso_adiado.
+        self._pulso_adiado = False
         self._timer_pulso = QTimer(self)
         self._timer_pulso.timeout.connect(self._pulsar)
         self.lower()
@@ -635,14 +943,50 @@ class CamadaPulso(QWidget):
         self.move(centro.x() - self.TAMANHO // 2, centro.y() - self.TAMANHO // 2)
         self.lower()
 
+    def _janela_do_modo(self):
+        """A JanelaDitado dona, quando ela existe e sabe responder sobre a transição de modo."""
+        janela = self.window()
+        return janela if hasattr(janela, "esta_em_transicao_de_modo") else None
+
     def definir_estado(self, estado):
+        """D-32 7ª volta — a cor/ícone mudam na hora (quem faz isso é o BotaoGravar, já chamado);
+        o que é ADIADO aqui é só o temporizador do anel pulsante.
+
+        Por quê: este temporizador tem relógio próprio (30ms) e nasce no mesmo instante em que a
+        transição compacto→expandido (240ms) começa, quando a gravação é iniciada a partir do
+        compacto — `_definir_estado_botao` troca o estado do botão e logo em seguida chama
+        `_aplicar_modo(True)`. Os dois repintam a mesma região da tela (a camada fica atrás do
+        botão e é reposicionada a cada quadro da transição por `reposicionar()`), com relógios não
+        sincronizados. É a explicação mais concreta encontrada por leitura de código para o "botão
+        vermelho tentando desaparecer" que o usuário relata desde a 4ª volta. Agora o pulso só
+        começa quando a transição assenta (`_assentar_modo` → `liberar_pulso_adiado`)."""
         self._estado = estado
-        if estado == "gravando":
-            self._fase_pulso = 0.0
-            self._timer_pulso.start(30)
-        else:
+        if estado != "gravando":
+            # parar é seguro em qualquer momento — quem compete por quadro é começar.
+            self._pulso_adiado = False
             self._timer_pulso.stop()
+            self.update()
+            return
+        self._fase_pulso = 0.0
+        janela = self._janela_do_modo()
+        if janela is not None and janela.esta_em_transicao_de_modo():
+            self._pulso_adiado = True
+            self._timer_pulso.stop()
+        else:
+            self._pulso_adiado = False
+            self._timer_pulso.start(INTERVALO_PULSO_MS)
         self.update()
+
+    def liberar_pulso_adiado(self):
+        """Chamado pela janela quando a troca de modo assenta (fim da animação, ou troca sem
+        animação). Só liga o pulso se ele continua fazendo sentido — se a gravação já parou no meio
+        da transição, não há nada para retomar."""
+        if not self._pulso_adiado:
+            return
+        self._pulso_adiado = False
+        if self._estado == "gravando" and not self._timer_pulso.isActive():
+            self._timer_pulso.start(INTERVALO_PULSO_MS)
+            self.update()
 
     def definir_realce_arrastar(self, ativo):
         self._realce_arrastar = ativo
@@ -682,7 +1026,9 @@ class BarraAmplitude(QWidget):
 
     def __init__(self, parent=None):
         super().__init__(parent)
-        self.setFixedHeight(40)  # 2.5rem
+        # D-32 7ª volta: era 40 (2.5rem). O desenho das barras é proporcional à altura do
+        # widget, então encolher aqui não corta nada — só deixa a faixa mais baixa.
+        self.setFixedHeight(ALTURA_BARRA_AMPLITUDE)
         self._amostras = deque([0.0] * NUM_BARRAS, maxlen=NUM_BARRAS)
         # J2: o *espaço* fica reservado (setFixedHeight, sempre) — mas parada, o conteúdo some de
         # verdade (A4): uma fileira de pontinhos parada no repouso virou ruído permanente na tela,
@@ -887,6 +1233,11 @@ class OverlayModal(QWidget):
         # na conferência visual desta tarefa (ver PROGRESSO.md).
         self.setObjectName("veuModal")
         self.setStyleSheet(f"QWidget#veuModal {{ background-color: {PALETA['veu_modal']}; }}")
+        # Sem isto, um QWidget puro ignora "background-color" do QSS — o véu nunca escurecia o
+        # conteúdo atrás (achado no uso real, confirmado por amostra de pixel: fundo ficava
+        # (255,255,255) atrás do popup). Mesma regra que o comentário abaixo já explicava para
+        # justificar por que o painel branco é QFrame, só que não tinha sido aplicada aqui.
+        self.setAttribute(Qt.WA_StyledBackground, True)
         self.hide()
         # QFrame aplica "background-color" do QSS nativamente; QWidget puro precisaria de
         # WA_StyledBackground — mais simples usar QFrame direto para o painel branco por cima do véu.
@@ -1136,6 +1487,10 @@ class LinhaDoTempoConsumo(QWidget):
         super().__init__(parent)
         self.setFixedHeight(self.ALTURA)
         self.setMouseTracking(True)
+        # G4: o widget inteiro é um único ponto de tabulação (Tab entra/sai normalmente); dentro
+        # dele, ←/→ movem um "ponto focado" próprio — não é o tabindex por ponto do SVG original,
+        # que não existe num único QWidget pintado à mão (adaptação combinada com o PM).
+        self.setFocusPolicy(Qt.StrongFocus)
         self._area = None
         self.requisicoes = []  # [{"quando": datetime, ...dados}], ordenadas
         self.escala = "hora"
@@ -1145,6 +1500,7 @@ class LinhaDoTempoConsumo(QWidget):
         self.ativada = False
         self._rolar_para_fim = True
         self._layout = None  # cache do último cálculo de desenho, para o paintEvent reusar
+        self._indice_focado = None  # índice em layout["pontos"] (ordem de tempo) do ponto focado
 
     def anexar_area(self, area):
         """A QScrollArea que hospeda este widget — usada para medir a largura visível (escala
@@ -1319,6 +1675,9 @@ class LinhaDoTempoConsumo(QWidget):
         return self.LARGURA_MINIMA_HORA
 
     def atualizar(self):
+        # O recorte visível mudou (escala, dia, janela, dados) — um índice de foco antigo
+        # apontaria para outro ponto sem o usuário pedir; melhor recomeçar do que focar errado.
+        self._indice_focado = None
         if not self.requisicoes:
             self._layout = {"vazio_geral": True}
             self.setFixedWidth(max(self._largura_viewport(), self.LARGURA_MINIMA_HORA))
@@ -1420,7 +1779,8 @@ class LinhaDoTempoConsumo(QWidget):
             pintor.setPen(QColor("#898781"))
             pintor.drawText(int(x - 30), self.Y_PONTO + 8, 60, 12, Qt.AlignCenter, rotulo)
 
-        for x, req in layout["pontos"]:
+        pontos = layout["pontos"]
+        for indice, (x, req) in enumerate(pontos):
             if self.escala == "minuto":
                 pintor.setPen(QColor(PALETA["texto_dica"]))
                 pintor.drawText(
@@ -1433,6 +1793,16 @@ class LinhaDoTempoConsumo(QWidget):
                 int(x - self.RAIO_PONTO), int(self.Y_PONTO - self.RAIO_PONTO),
                 self.RAIO_PONTO * 2, self.RAIO_PONTO * 2,
             )
+
+            # G4 — foco pelo teclado: contorno de 2px em #2563eb com 2px de folga, só visível com
+            # o foco de verdade no widget (Tab), não só com um índice guardado.
+            if self.hasFocus() and indice == self._indice_focado:
+                raio_foco = self.RAIO_PONTO + 2
+                pintor.setPen(QPen(QColor(PALETA["azul"]), 2))
+                pintor.setBrush(Qt.NoBrush)
+                pintor.drawEllipse(
+                    int(x - raio_foco), int(self.Y_PONTO - raio_foco), raio_foco * 2, raio_foco * 2,
+                )
 
         if layout["vazio_visivel"]:
             pintor.setPen(QColor(PALETA["texto_dica"]))
@@ -1471,6 +1841,49 @@ class LinhaDoTempoConsumo(QWidget):
         else:
             self.trocar_escala("minuto" if delta_y > 0 else "hora")
         evento.accept()
+
+    def _pontos_atuais(self):
+        layout = self._layout
+        if not layout or layout.get("vazio_geral"):
+            return []
+        return layout["pontos"]
+
+    def focusInEvent(self, evento):
+        super().focusInEvent(evento)
+        pontos = self._pontos_atuais()
+        if pontos and self._indice_focado is None:
+            self._indice_focado = 0
+        self.update()
+
+    def focusOutEvent(self, evento):
+        super().focusOutEvent(evento)
+        self.update()  # some o anel de foco ao sair (Tab continua sem interferência nossa)
+
+    def keyPressEvent(self, evento):
+        pontos = self._pontos_atuais()
+        if not pontos:
+            super().keyPressEvent(evento)
+            return
+
+        if evento.key() in (Qt.Key_Left, Qt.Key_Right):
+            n = len(pontos)  # já em ordem de tempo (G4: "←/→ movem o ponto focado, ordem de tempo")
+            if self._indice_focado is None:
+                self._indice_focado = n - 1 if evento.key() == Qt.Key_Left else 0
+            else:
+                delta = -1 if evento.key() == Qt.Key_Left else 1
+                self._indice_focado = max(0, min(n - 1, self._indice_focado + delta))
+            self.update()
+            evento.accept()
+            return
+
+        if evento.key() in (Qt.Key_Return, Qt.Key_Enter, Qt.Key_Space):
+            if self._indice_focado is not None and 0 <= self._indice_focado < len(pontos):
+                _, req = pontos[self._indice_focado]
+                self.ponto_clicado.emit(req)
+                evento.accept()
+                return
+
+        super().keyPressEvent(evento)
 
 
 class PopupRequisicao(OverlayModal):
@@ -1585,6 +1998,9 @@ class PainelConsumo(QDialog):
         self.area_linha_tempo.setFrameShape(QFrame.NoFrame)
         self.area_linha_tempo.setFixedHeight(LinhaDoTempoConsumo.ALTURA + 14)
         self.area_linha_tempo.setVerticalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
+        # G4: Tab precisa alcançar a linha do tempo — sem isto, o QScrollArea (que não aceita foco
+        # por si) quebrava a cadeia de tabulação antes de chegar no widget de verdade.
+        self.area_linha_tempo.setFocusProxy(self.linha_tempo)
         self.linha_tempo.anexar_area(self.area_linha_tempo)
 
         linha_nav_dia = QHBoxLayout()
@@ -1804,6 +2220,422 @@ class PainelConsumo(QDialog):
         super().keyPressEvent(evento)
 
 
+class MiniaturaReferencia(QFrame):
+    """D-31 — uma imagem de referência escolhida, com botão de remover embutido no canto."""
+
+    removida = Signal(str)  # caminho
+
+    TAMANHO = 72
+
+    def __init__(self, caminho, parent=None):
+        super().__init__(parent)
+        self.caminho = caminho
+        self.setFixedSize(self.TAMANHO, self.TAMANHO)
+        self.setStyleSheet(
+            f"QFrame {{ border: 1px solid {PALETA['borda_campo']}; border-radius: 6px; "
+            f"background-color: {PALETA['fundo_cartao']}; }}"
+        )
+
+        rotulo = QLabel(self)
+        rotulo.setGeometry(0, 0, self.TAMANHO, self.TAMANHO)
+        rotulo.setAlignment(Qt.AlignCenter)
+        pixmap = QPixmap(caminho)
+        if not pixmap.isNull():
+            pixmap = pixmap.scaled(
+                self.TAMANHO, self.TAMANHO, Qt.KeepAspectRatioByExpanding, Qt.SmoothTransformation
+            )
+        rotulo.setPixmap(pixmap)
+
+        self.botao_remover = QPushButton(self)
+        self.botao_remover.setIcon(icone("cancelar", "white", 10))
+        estilizar_botao_circular(self.botao_remover, 18, "rgba(15,23,42,0.55)", "rgba(15,23,42,0.75)")
+        self.botao_remover.move(self.TAMANHO - 20, 2)
+        self.botao_remover.setToolTip(os.path.basename(caminho))
+        self.botao_remover.clicked.connect(lambda: self.removida.emit(self.caminho))
+
+
+class JanelaGeracaoImagem(QDialog):
+    """Menu ⋮ → Gerar imagem (D-31, fora do plano da Fase 2 — pedido direto do usuário, "priorize
+    funcionar hoje sobre ficar bonito"). Escolhe imagens de referência (arquivos, pasta ou
+    arrastar-soltar), escreve um prompt, e o núcleo devolve uma imagem nova via POST
+    /gerar-imagem (Operação 3, NUCLEO.md) — a chave da OpenAI mora só no núcleo."""
+
+    def __init__(self, janela):
+        super().__init__(janela, Qt.Window)
+        self.janela = janela
+        self.setWindowTitle("Gerar imagem")
+        self.resize(640, 760)
+        self.setStyleSheet(QSS + f"QDialog {{ background-color: {PALETA['fundo_cartao']}; }}")
+        self.setAcceptDrops(True)
+
+        self.caminhos_referencia = []
+        self._trabalho = None
+        self._ultima_imagem_bytes = None
+        self._ultimo_caminho_salvo = None
+
+        self.rotulo_titulo_referencia = QLabel("Imagens de referência")
+        self.rotulo_contagem = QLabel()
+        self.rotulo_contagem.setProperty("class", "dica")
+
+        self.botao_escolher_arquivos = QPushButton("Escolher arquivos…")
+        self.botao_escolher_arquivos.clicked.connect(self._escolher_arquivos)
+        self.botao_escolher_pasta = QPushButton("Escolher pasta…")
+        self.botao_escolher_pasta.clicked.connect(self._escolher_pasta)
+
+        self.widget_miniaturas = QWidget()
+        self.layout_miniaturas = QHBoxLayout(self.widget_miniaturas)
+        self.layout_miniaturas.setContentsMargins(4, 4, 4, 4)
+        self.layout_miniaturas.setSpacing(6)
+        self.layout_miniaturas.addStretch(1)
+        self.area_miniaturas = QScrollArea()
+        self.area_miniaturas.setWidget(self.widget_miniaturas)
+        self.area_miniaturas.setWidgetResizable(True)
+        self.area_miniaturas.setFixedHeight(90)
+        self.area_miniaturas.setHorizontalScrollBarPolicy(Qt.ScrollBarAsNeeded)
+        self.area_miniaturas.setVerticalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
+        self.area_miniaturas.setFrameShape(QFrame.NoFrame)
+
+        self.caixa_prompt = QPlainTextEdit()
+        self.caixa_prompt.setPlaceholderText("Descreva a imagem que você quer gerar…")
+        self.caixa_prompt.setMinimumHeight(96)
+        self.caixa_prompt.textChanged.connect(self._atualizar_botao_gerar)
+
+        self.combo_modelo = QComboBox()
+        self.combo_modelo.addItems(MODELOS_IMAGEM_ATIVOS)
+        self.combo_modelo.setCurrentText(janela.config["modelo_imagem"])
+        self.combo_modelo.currentTextChanged.connect(self._mudou_modelo)
+
+        self.combo_tamanho = QComboBox()
+        self.combo_tamanho.addItems(TAMANHOS_IMAGEM_ATIVOS)
+        self.combo_tamanho.setCurrentText(janela.config["tamanho_imagem"])
+        self.combo_tamanho.currentTextChanged.connect(self._mudou_tamanho)
+
+        self.combo_qualidade = QComboBox()
+        self.combo_qualidade.addItems(QUALIDADES_IMAGEM_ATIVAS)
+        self.combo_qualidade.setCurrentText(janela.config["qualidade_imagem"])
+        self.combo_qualidade.currentTextChanged.connect(self._mudou_qualidade)
+
+        self.rotulo_custo_estimado = QLabel()
+        self.rotulo_custo_estimado.setProperty("class", "dica")
+
+        self.botao_gerar = QPushButton("Gerar")
+        self.botao_gerar.clicked.connect(self._gerar)
+
+        self.rotulo_carregando = QLabel("Gerando imagem — pode demorar bem mais que uma transcrição…")
+        self.rotulo_carregando.setProperty("class", "dica")
+        self.rotulo_carregando.hide()
+
+        self.rotulo_preview = QLabel()
+        self.rotulo_preview.setAlignment(Qt.AlignCenter)
+        self.rotulo_preview.setMinimumHeight(280)
+        self.rotulo_preview.hide()
+        self.rotulo_custo_real = QLabel()
+        self.rotulo_custo_real.hide()
+        self.rotulo_caminho_salvo = QLabel()
+        self.rotulo_caminho_salvo.setProperty("class", "dica")
+        self.rotulo_caminho_salvo.setWordWrap(True)
+        self.rotulo_caminho_salvo.hide()
+        self.botao_salvar_como = QPushButton("Salvar como…")
+        self.botao_salvar_como.clicked.connect(self._salvar_como)
+        self.botao_salvar_como.hide()
+        self.botao_abrir_pasta = QPushButton("Abrir a pasta")
+        self.botao_abrir_pasta.clicked.connect(self._abrir_pasta)
+        self.botao_abrir_pasta.hide()
+
+        linha_titulo_ref = QHBoxLayout()
+        linha_titulo_ref.addWidget(self.rotulo_titulo_referencia)
+        linha_titulo_ref.addStretch()
+        linha_titulo_ref.addWidget(self.rotulo_contagem)
+
+        linha_botoes_ref = QHBoxLayout()
+        linha_botoes_ref.addWidget(self.botao_escolher_arquivos)
+        linha_botoes_ref.addWidget(self.botao_escolher_pasta)
+        linha_botoes_ref.addStretch()
+
+        linha_opcoes = QHBoxLayout()
+        linha_opcoes.addWidget(QLabel("Modelo"))
+        linha_opcoes.addWidget(self.combo_modelo)
+        linha_opcoes.addWidget(QLabel("Tamanho"))
+        linha_opcoes.addWidget(self.combo_tamanho)
+        linha_opcoes.addWidget(QLabel("Qualidade"))
+        linha_opcoes.addWidget(self.combo_qualidade)
+        linha_opcoes.addStretch()
+        linha_opcoes.addWidget(self.rotulo_custo_estimado)
+
+        linha_botoes_resultado = QHBoxLayout()
+        linha_botoes_resultado.addWidget(self.botao_salvar_como)
+        linha_botoes_resultado.addWidget(self.botao_abrir_pasta)
+        linha_botoes_resultado.addStretch()
+
+        corpo = QWidget()
+        layout_corpo = QVBoxLayout(corpo)
+        layout_corpo.setContentsMargins(0, 0, 0, 0)
+        layout_corpo.setSpacing(14)
+        layout_corpo.addLayout(linha_titulo_ref)
+        layout_corpo.addLayout(linha_botoes_ref)
+        layout_corpo.addWidget(self.area_miniaturas)
+        layout_corpo.addWidget(QLabel("Prompt"))
+        layout_corpo.addWidget(self.caixa_prompt)
+        layout_corpo.addLayout(linha_opcoes)
+        layout_corpo.addWidget(self.botao_gerar)
+        layout_corpo.addWidget(self.rotulo_carregando)
+        layout_corpo.addWidget(self.rotulo_preview)
+        layout_corpo.addWidget(self.rotulo_custo_real)
+        layout_corpo.addWidget(self.rotulo_caminho_salvo)
+        layout_corpo.addLayout(linha_botoes_resultado)
+        layout_corpo.addStretch(1)
+
+        area_rolagem = QScrollArea()
+        area_rolagem.setWidget(corpo)
+        area_rolagem.setWidgetResizable(True)
+        area_rolagem.setFrameShape(QFrame.NoFrame)
+
+        layout_janela = QVBoxLayout(self)
+        layout_janela.setContentsMargins(20, 20, 20, 20)
+        layout_janela.addWidget(area_rolagem)
+
+        # balão efêmero (B4), mesmo estilo do resto do app — ancorado no botão Gerar.
+        self.toast = Toast(self.botao_gerar)
+
+        self._atualizar_contagem_referencia()
+        self._atualizar_custo_estimado()
+        self._atualizar_botao_gerar()
+
+    # --- imagens de referência (escolher arquivos / pasta / arrastar-soltar) -----------------
+    def dragEnterEvent(self, evento):
+        if evento.mimeData().hasUrls():
+            evento.acceptProposedAction()
+
+    def dropEvent(self, evento):
+        caminhos = [u.toLocalFile() for u in evento.mimeData().urls() if u.isLocalFile()]
+        self._adicionar_imagens(caminhos)
+
+    def _escolher_arquivos(self):
+        caminhos, _ = QFileDialog.getOpenFileNames(
+            self, "Escolher imagens de referência", "",
+            "Imagens (*.png *.jpg *.jpeg *.webp);;Todos os arquivos (*)",
+        )
+        if caminhos:
+            self._adicionar_imagens(caminhos)
+
+    def _escolher_pasta(self):
+        pasta = QFileDialog.getExistingDirectory(self, "Escolher pasta de imagens de referência")
+        if not pasta:
+            return
+        try:
+            nomes = sorted(os.listdir(pasta))
+        except OSError:
+            return
+        caminhos = [
+            os.path.join(pasta, nome) for nome in nomes
+            if os.path.splitext(nome)[1].lower() in FORMATOS_IMAGEM_ACEITOS
+        ]
+        self._adicionar_imagens(caminhos)
+
+    def _adicionar_imagens(self, caminhos):
+        aceitos, recusados = [], []
+        for caminho in caminhos:
+            if os.path.splitext(caminho)[1].lower() not in FORMATOS_IMAGEM_ACEITOS:
+                recusados.append(os.path.basename(caminho))
+                continue
+            if caminho in self.caminhos_referencia or caminho in aceitos:
+                continue
+            aceitos.append(caminho)
+
+        vagas = MAX_IMAGENS_REFERENCIA - len(self.caminhos_referencia)
+        excedentes = len(aceitos) - vagas
+        aceitos = aceitos[: max(0, vagas)]
+
+        for caminho in aceitos:
+            self._acrescentar_miniatura(caminho)
+
+        if recusados:
+            self.toast.mostrar(
+                "erro", "Formato não aceito — use PNG, JPG ou WEBP.", DURACAO_TOAST_ERRO_MS
+            )
+        elif excedentes > 0:
+            self.toast.mostrar(
+                "erro", f"Limite de {MAX_IMAGENS_REFERENCIA} imagens — {excedentes} não entraram.",
+                DURACAO_TOAST_ERRO_MS,
+            )
+        self._atualizar_contagem_referencia()
+        self._atualizar_botao_gerar()
+
+    def _acrescentar_miniatura(self, caminho):
+        self.caminhos_referencia.append(caminho)
+        miniatura = MiniaturaReferencia(caminho)
+        miniatura.removida.connect(self._remover_imagem)
+        self.layout_miniaturas.insertWidget(self.layout_miniaturas.count() - 1, miniatura)
+
+    def _remover_imagem(self, caminho):
+        if caminho in self.caminhos_referencia:
+            self.caminhos_referencia.remove(caminho)
+        for indice in range(self.layout_miniaturas.count()):
+            item = self.layout_miniaturas.itemAt(indice)
+            widget = item.widget() if item else None
+            if isinstance(widget, MiniaturaReferencia) and widget.caminho == caminho:
+                self.layout_miniaturas.removeWidget(widget)
+                widget.deleteLater()
+                break
+        self._atualizar_contagem_referencia()
+        self._atualizar_botao_gerar()
+
+    def _atualizar_contagem_referencia(self):
+        self.rotulo_contagem.setText(f"{len(self.caminhos_referencia)} de {MAX_IMAGENS_REFERENCIA}")
+
+    # --- opções e custo estimado -------------------------------------------------------------
+    def _mudou_modelo(self, texto):
+        self.janela.config["modelo_imagem"] = texto
+        salvar_config(self.janela.config)
+        self._atualizar_custo_estimado()
+
+    def _mudou_tamanho(self, texto):
+        self.janela.config["tamanho_imagem"] = texto
+        salvar_config(self.janela.config)
+
+    def _mudou_qualidade(self, texto):
+        self.janela.config["qualidade_imagem"] = texto
+        salvar_config(self.janela.config)
+        self._atualizar_custo_estimado()
+
+    def _atualizar_custo_estimado(self):
+        modelo = self.combo_modelo.currentText()
+        qualidade = self.combo_qualidade.currentText()
+        preco_saida = PRECOS_SAIDA_IMAGEM_POR_TOKEN_USD.get(modelo)
+        if preco_saida is None:
+            self.rotulo_custo_estimado.setText("")
+            return
+        tokens = TOKENS_SAIDA_ESTIMADOS_POR_QUALIDADE.get(qualidade, 1056)
+        estimado = tokens * preco_saida
+        self.rotulo_custo_estimado.setText(
+            f"Custo estimado (só a saída, sem as referências): ~{formatar_usd(estimado)}/imagem"
+        )
+
+    # --- gerar --------------------------------------------------------------------------------
+    def _atualizar_botao_gerar(self):
+        tem_prompt = bool(self.caixa_prompt.toPlainText().strip())
+        tem_imagem = bool(self.caminhos_referencia)
+        self.botao_gerar.setEnabled(tem_prompt and tem_imagem and self._trabalho is None)
+
+    def _gerar(self):
+        prompt = self.caixa_prompt.toPlainText().strip()
+        if not prompt or not self.caminhos_referencia:
+            return
+        self.botao_gerar.setEnabled(False)
+        self.rotulo_carregando.show()
+        self.rotulo_preview.hide()
+        self.rotulo_custo_real.hide()
+        self.rotulo_caminho_salvo.hide()
+        self.botao_salvar_como.hide()
+        self.botao_abrir_pasta.hide()
+
+        pasta_saida = self.janela.config.get("pasta_saida_imagens") or CONFIG_PADRAO["pasta_saida_imagens"]
+        self._trabalho = TrabalhoGeracaoImagem(
+            self.janela.config["url_nucleo"],
+            list(self.caminhos_referencia),
+            prompt,
+            self.combo_modelo.currentText(),
+            self.combo_tamanho.currentText(),
+            self.combo_qualidade.currentText(),
+            pasta_saida,
+        )
+        self._trabalho.sucesso.connect(self._ao_gerar_sucesso)
+        self._trabalho.falhou.connect(self._ao_gerar_falhar)
+        self._trabalho.start()
+
+    def _ao_gerar_sucesso(self, caminho_salvo, formato, custo_usd):
+        # A thread já decodificou e salvou o arquivo (ver TrabalhoGeracaoImagem) — o que já foi
+        # pago está em disco antes mesmo deste método rodar, independente do que acontecer daqui
+        # em diante (achado no uso real: um crash nativo do Qt bem nesta janela de tempo).
+        trabalho = self._trabalho
+        self.rotulo_carregando.hide()
+        self._trabalho = None
+        self._atualizar_botao_gerar()
+
+        self._ultimo_caminho_salvo = caminho_salvo or None
+        if caminho_salvo:
+            self.rotulo_caminho_salvo.setText(f"Salva automaticamente em: {caminho_salvo}")
+            self.rotulo_caminho_salvo.show()
+            self.botao_abrir_pasta.show()
+        else:
+            self.rotulo_caminho_salvo.setText("Não foi possível salvar automaticamente — use \"Salvar como…\".")
+            self.rotulo_caminho_salvo.show()
+            self.toast.mostrar(
+                "erro", "Imagem gerada, mas não foi possível salvar em disco — use \"Salvar como…\".",
+                DURACAO_TOAST_ERRO_MS,
+            )
+        self.botao_salvar_como.show()
+
+        self.rotulo_custo_real.setText(f"Custo real: {formatar_usd(custo_usd)}")
+        self.rotulo_custo_real.show()
+
+        # Bytes para a pré-visualização e o "Salvar como…": relidos do arquivo que a thread já
+        # salvou (caminho comum) ou, se não deu para salvar, os que a thread guardou em memória.
+        imagem_bytes = None
+        if caminho_salvo:
+            try:
+                with open(caminho_salvo, "rb") as arquivo:
+                    imagem_bytes = arquivo.read()
+            except OSError:
+                imagem_bytes = None
+        elif trabalho is not None:
+            imagem_bytes = trabalho.imagem_bytes
+        self._ultima_imagem_bytes = imagem_bytes
+
+        if imagem_bytes:
+            pixmap = QPixmap()
+            pixmap.loadFromData(imagem_bytes)
+            if not pixmap.isNull():
+                self.rotulo_preview.setPixmap(
+                    pixmap.scaled(560, 560, Qt.KeepAspectRatio, Qt.SmoothTransformation)
+                )
+                self.rotulo_preview.show()
+
+        if caminho_salvo:
+            self.toast.mostrar("confirmacao", "Imagem gerada e salva.", DURACAO_TOAST_CONFIRMACAO_MS)
+
+    def _ao_gerar_falhar(self, mensagem, codigo):
+        self.rotulo_carregando.hide()
+        self._trabalho = None
+        self._atualizar_botao_gerar()
+        if codigo:
+            log.info("erro_gerar_imagem codigo=%s", codigo)
+        self.toast.mostrar("erro", mensagem, DURACAO_TOAST_ERRO_MS)
+
+    def _salvar_como(self):
+        if self._ultima_imagem_bytes is None:
+            return
+        sugestao = self._ultimo_caminho_salvo or "imagem.png"
+        caminho, _ = QFileDialog.getSaveFileName(
+            self, "Salvar imagem como", sugestao, "PNG (*.png);;JPEG (*.jpg);;WEBP (*.webp)"
+        )
+        if not caminho:
+            return
+        with open(caminho, "wb") as arquivo:
+            arquivo.write(self._ultima_imagem_bytes)
+        self.toast.mostrar("confirmacao", "Cópia salva.", DURACAO_TOAST_CONFIRMACAO_MS)
+
+    def _abrir_pasta(self):
+        if not self._ultimo_caminho_salvo:
+            return
+        QDesktopServices.openUrl(QUrl.fromLocalFile(os.path.dirname(self._ultimo_caminho_salvo)))
+
+    # --- janela ---------------------------------------------------------------------------------
+    def mostrar(self):
+        self.show()
+        self.raise_()
+        self.activateWindow()
+        self.caixa_prompt.setFocus()
+
+    def esconder(self):
+        self.hide()
+
+    def resizeEvent(self, evento):
+        super().resizeEvent(evento)
+        if self.toast.isVisible():
+            self.toast._reposicionar()
+
+
 class JanelaDitado(QWidget):
     sinal_atalho_disparado = Signal()
 
@@ -1821,6 +2653,49 @@ class JanelaDitado(QWidget):
         self.snapshot_texto = None
         self._trabalho = None
         self._ultimo_disparo_atalho = 0.0
+        # D-32 — janela compacta: _montar_ui monta a janela cheia e encolhe no final.
+        self._expandido = True
+        self._ponteiro_dentro = False
+        # D-32 item 4 — o que já foi colocado (copiado/recortado). "Tem resultado pendente na
+        # tela?" é derivado disto e da caixa, nunca guardado num sinalizador próprio: ver
+        # _resultado_pendente().
+        self._texto_colocado = ""
+        self._progresso_modo = 1.0
+        # D-32 3a volta — a animacao interpola a janela INTEIRA (posicao e tamanho) e a posicao do
+        # botao dentro dela, com os layouts congelados; ver _aplicar_modo.
+        self._geo_inicial = None
+        self._geo_final = None
+        # D-32 4a volta — retangulo em que a janela NATIVA fica parada durante a transicao (a
+        # uniao das duas pontas) e o retangulo que o usuario de fato enxerga em cada quadro (o
+        # cartao dentro dela). Fora de uma transicao os dois sao None: manda self.geometry().
+        self._geo_transicao = None
+        self._geo_visivel = None
+        self._centro_inicial_global = QPoint(0, 0)
+        self._centro_final_global = QPoint(0, 0)
+        self._margem_inicial = 0
+        self._margem_final = 0
+        # D-32 9ª volta — a janela nativa tem UM tamanho só (o expandido) e não se mexe em
+        # transição: o que cresce e encolhe é a máscara. `_offset_visivel` é onde o retângulo
+        # do modo mora dentro da janela (0,0 no expandido; ancorado no botão no compacto), e
+        # `_mascara_atual` evita chamar setMask de novo com a mesma região.
+        # O retângulo do modo ASSENTADO, em coordenada da janela: onde ele mora e que tamanho
+        # tem. Os dois vêm do assentamento, e não de `self._expandido`, porque `_aplicar_modo`
+        # troca `_expandido` logo no começo — perguntar o tamanho pelo modo faria a transição
+        # começar já no retângulo de destino (medido: a expansão só animava os últimos 16px).
+        self._offset_visivel = QPoint(0, 0)
+        self._tamanho_visivel = QSize(LARGURA_EXPANDIDA, ALTURA_EXPANDIDA)
+        self._mascara_atual = None
+        self._ultima_marca_compacta = None
+        self._ultimo_log_correcao = 0.0
+        self._mola_compacta = None  # ver _prender_botao_no_topo
+        self._offset_arraste = None
+        # D-32 7ª volta — "a transição de modo vai começar agora, neste mesmo turno do laço de
+        # eventos": ver _definir_estado_botao e esta_em_transicao_de_modo.
+        self._transicao_de_modo_pendente = False
+        # D-32 7ª volta: largura e altura próprias desta janela flutuante — a largura deixou
+        # de ser a coluna de 40rem da SPEC-002 item I (vínculo revogado só aqui), ver
+        # LARGURA_EXPANDIDA/ALTURA_EXPANDIDA.
+        self._tamanho_expandido = QSize(LARGURA_EXPANDIDA, ALTURA_EXPANDIDA)
 
         self._montar_ui()
         self.sinal_atalho_disparado.connect(self.alternar_gravacao)
@@ -1834,33 +2709,84 @@ class JanelaDitado(QWidget):
     # --- montagem da interface -------------------------------------------------
     def _montar_ui(self):
         self.setObjectName("janelaDitado")
-        self.setWindowFlags(Qt.WindowStaysOnTopHint | Qt.Tool)
+        # D-32: sem moldura (o compacto é só o círculo) — o preço é arrastar à mão, ver arraste_*.
+        self.setWindowFlags(Qt.WindowStaysOnTopHint | Qt.Tool | Qt.FramelessWindowHint)
         self.setAttribute(Qt.WA_ShowWithoutActivating)
+        self.setAttribute(Qt.WA_TranslucentBackground)
         self.setWindowTitle("Ditado")
         self.setStyleSheet(QSS)
-        self.resize(int(40 * 16) + 32, 480)  # SPEC-002 I: coluna principal 40rem + respiro
+        # D-32 9ª volta — tamanho ÚNICO da janela nativa, para sempre. Redimensionar uma
+        # janela layered/translúcida no Windows realoca a superfície do UpdateLayeredWindow, e
+        # é o suspeito que sobrou depois de três rodadas (4ª, 5ª e 8ª) atacarem quantos
+        # resizes existem, em que ordem e como são publicados. Aqui não existe mais nenhum:
+        # quem cresce e encolhe na tela é a máscara (ver _aplicar_mascara).
+        self.setFixedSize(self._tamanho_expandido)
+        # Sem isto, a posição inicial fica por conta do SO — e num desktop virtual com monitores
+        # em layout irregular (vão sem cobertura entre eles) a janela pode nascer nesse vão, longe
+        # de qualquer tela de verdade (achado no uso real, 2026-09). `_geometria_do_modo` já
+        # resolve isso nas trocas de modo (D-32), mas só depois de já haver uma posição válida —
+        # aqui é a primeira, antes de qualquer show().
+        tela_inicial = QGuiApplication.primaryScreen()
+        if tela_inicial is not None:
+            area_inicial = tela_inicial.availableGeometry()
+            # 9ª volta: a janela nasce com 448x366 (antes nascia e logo virava 80x80), então o
+            # canto de +40,+40 já não cabe em qualquer tela — `_encaixar_na_tela` empurra o
+            # retângulo inteiro para dentro da área visível. É o único lugar onde ela ainda é
+            # usada: nas trocas de modo a janela não se mexe mais.
+            topo_inicial = QPoint(area_inicial.x() + 40, area_inicial.y() + 40)
+            self.move(self._encaixar_na_tela(
+                topo_inicial, self._tamanho_expandido, topo_inicial))
 
         layout_externo = QVBoxLayout(self)
-        layout_externo.setContentsMargins(16, 16, 16, 16)
+        layout_externo.setContentsMargins(*(4 * [MARGEM_EXTERNA_EXPANDIDA]))
+        # Quem manda no tamanho da janela é o modo (compacto/expandido) e os quadros da
+        # animação — não o mínimo do layout. Com a restrição padrão, QLayout.activate() empurra
+        # o mínimo da janela para o mínimo do conteúdo expandido, e todo resize menor que isso
+        # (todos os quadros do encolhimento) sairia grudado nesse piso.
+        layout_externo.setSizeConstraint(QLayout.SetNoConstraint)
+        self._layout_externo = layout_externo
 
         cartao = QFrame()
         cartao.setObjectName("cartaoGravacao")
+        self.cartao = cartao
         layout = QVBoxLayout(cartao)
-        layout.setContentsMargins(24, 24, 24, 24)  # 1.5rem
-        layout.setSpacing(16)  # 1rem
+        self._layout_cartao = layout
+        layout.setContentsMargins(*(4 * [MARGEM_CARTAO_EXPANDIDA]))
+        layout.setSpacing(ESPACAMENTO_CARTAO)
         layout_externo.addWidget(cartao)
+
+        # D-32 7ª volta — o cronômetro deixou de ser uma linha própria e entrou nesta linha, à
+        # esquerda: uma linha só a menos vale 19px de rótulo + 8px de espaçamento na altura da
+        # janela. Ele é criado antes do trio porque agora é o primeiro item da linha do topo.
+        self.rotulo_cronometro = QLabel("")
+        self.rotulo_cronometro.setAlignment(Qt.AlignCenter)
+        fonte_mono = QFont("Consolas")
+        fonte_mono.setStyleHint(QFont.Monospace)
+        fonte_mono.setPointSize(12)
+        self.rotulo_cronometro.setFont(fonte_mono)
+        self.rotulo_cronometro.setText("00:00")
+        # largura e altura travadas no maior texto que ele exibe (a gravação para em 5 min, então
+        # "00:00" já é o pior caso): assim o rótulo não empurra o trio de botões quando o
+        # cronômetro liga/desliga — J1/J2, o espaço fica reservado desde a abertura.
+        dimensao_cronometro = self.rotulo_cronometro.sizeHint()
+        self.rotulo_cronometro.setFixedWidth(dimensao_cronometro.width())
+        self.rotulo_cronometro.setMinimumHeight(dimensao_cronometro.height())
+        self.rotulo_cronometro.setText("")
 
         # trio encostado e centralizado (não uma barra espalhada — achado no uso real: os dois
         # addStretch nas pontas empurravam ⋮ e cancelar para as bordas). Vão de 10px (0.6rem) entre
         # os três; o botão de gravar não se move porque o trio inteiro é um bloco só, centralizado
-        # por stretches simétricos nas duas pontas.
+        # por stretches simétricos nas duas pontas — e, desde a 7ª volta, porque à direita há um
+        # espelho invisível da largura do cronômetro (senão o rótulo à esquerda empurraria o trio
+        # inteiro para a direita, e o botão de gravar é o alvo visual central desta janela).
         linha_topo = QHBoxLayout()
         linha_topo.setSpacing(10)
+        linha_topo.addWidget(self.rotulo_cronometro)
         linha_topo.addStretch(1)
 
         self.botao_menu = QPushButton()
         self.botao_menu.setIcon(icone("tres_pontos", PALETA["texto_secundario"], 20))
-        estilizar_botao_circular(self.botao_menu, 44)
+        estilizar_botao_circular(self.botao_menu, LADO_BOTAO_SECUNDARIO)
         linha_topo.addWidget(self.botao_menu)
 
         self.botao_gravar = BotaoGravar()
@@ -1874,32 +2800,34 @@ class JanelaDitado(QWidget):
         QTimer.singleShot(0, self.camada_pulso.reposicionar)
 
         self.botao_cancelar = QPushButton()
-        estilizar_botao_circular(self.botao_cancelar, 44, PALETA["cancelar_fundo"], PALETA["cancelar_fundo_hover"])
+        estilizar_botao_circular(
+            self.botao_cancelar, LADO_BOTAO_SECUNDARIO,
+            PALETA["cancelar_fundo"], PALETA["cancelar_fundo_hover"],
+        )
         self.botao_cancelar.setEnabled(False)
         self.botao_cancelar.clicked.connect(self.cancelar_gravacao)
         linha_topo.addWidget(self.botao_cancelar)
 
         linha_topo.addStretch(1)
+        # espelho do cronômetro: um widget vazio da mesma largura, do outro lado, só para o trio
+        # continuar centralizado. É um WIDGET (não um addSpacing) de propósito — no modo compacto
+        # ele entra em _widgets_so_expandido e some junto com o resto; um espaçador de layout não
+        # some, e os 49px dele empurrariam o botão para fora da janela de 80px (foi exatamente
+        # esse tipo de "botão fora do recorte" que a 3ª volta corrigiu).
+        self.espelho_cronometro = QWidget()
+        self.espelho_cronometro.setFixedWidth(dimensao_cronometro.width())
+        self.espelho_cronometro.setAttribute(Qt.WA_TransparentForMouseEvents)
+        linha_topo.addWidget(self.espelho_cronometro)
         layout.addLayout(linha_topo)
-
-        self.rotulo_cronometro = QLabel("")
-        self.rotulo_cronometro.setAlignment(Qt.AlignCenter)
-        fonte_mono = QFont("Consolas")
-        fonte_mono.setStyleHint(QFont.Monospace)
-        fonte_mono.setPointSize(12)
-        self.rotulo_cronometro.setFont(fonte_mono)
-        self.rotulo_cronometro.setText("00:00")
-        self.rotulo_cronometro.setMinimumHeight(self.rotulo_cronometro.sizeHint().height())
-        self.rotulo_cronometro.setText("")
-        # nunca some (J1/J2): o espaço da linha fica reservado desde a abertura, só o texto muda.
-        layout.addWidget(self.rotulo_cronometro)
 
         self.barra_amplitude = BarraAmplitude()
         layout.addWidget(self.barra_amplitude)
 
         self.caixa_texto = QPlainTextEdit()
         self.caixa_texto.setPlaceholderText("A transcrição aparece aqui — editável, soma cada gravação.")
-        self.caixa_texto.setMinimumHeight(128)  # 8rem
+        self.caixa_texto.setMinimumHeight(ALTURA_CAIXA_TEXTO)  # D-32 6ª volta: 160px, ~1/3 da
+        # janela de antes. Com o fator de esticar 1 abaixo e a janela em ALTURA_EXPANDIDA,
+        # a caixa fica exatamente nesses 160px — o mínimo é o que ela ocupa, não um piso solto.
         self.caixa_texto.textChanged.connect(self._ao_editar_texto)
         layout.addWidget(self.caixa_texto, 1)
 
@@ -1920,14 +2848,18 @@ class JanelaDitado(QWidget):
 
         self.painel_configuracoes = PainelConfiguracoes(self)
         self.painel_consumo = PainelConsumo(self)
+        self.janela_gerar_imagem = JanelaGeracaoImagem(self)  # D-31, fora do plano da Fase 2
 
         # Itens do menu ⋮ são ItemMenuAvancado dentro de QWidgetAction (não addAction com ícone
         # direto) — ver o docstring de ItemMenuAvancado para o porquê.
         self.menu_avancado = QMenu(self)
         for nome_icone, texto, callback in (
+            ("planejamento", "Abrir planejamento", self._abrir_planejamento),
             ("engrenagem", "Configurações", self.painel_configuracoes.mostrar),
             ("consumo", "Consumo", self.painel_consumo.mostrar),
             ("enviar", "Enviar arquivo", self._clicar_enviar_arquivo),
+            ("imagem", "Gerar imagem", self.janela_gerar_imagem.mostrar),
+            ("sair", "Sair", self._sair),
         ):
             item = ItemMenuAvancado(nome_icone, texto, self.menu_avancado)
             item.clicado.connect(callback)
@@ -1955,6 +2887,702 @@ class JanelaDitado(QWidget):
 
         self.atualizar_botao_copiar()
         self._atualizar_botao_lixeira()
+
+        # D-32 — tudo que só existe na janela cheia; no compacto sobra o botão de gravar.
+        self._widgets_so_expandido = (
+            self.botao_menu, self.botao_cancelar, self.rotulo_cronometro,
+            self.espelho_cronometro, self.barra_amplitude,
+            self.caixa_texto, self.botao_lixeira, self.botao_copiar,
+        )
+        self._timer_encolher = QTimer(self)
+        self._timer_encolher.setSingleShot(True)
+        self._timer_encolher.timeout.connect(self._encolher_se_puder)
+        self._anim_modo = QPropertyAnimation(self, b"progressoModo", self)
+        self._anim_modo.setDuration(DURACAO_ANIMACAO_MODO_MS)
+        self._anim_modo.setEasingCurve(QEasingCurve.InOutCubic)
+        self._anim_modo.finished.connect(self._ao_terminar_animacao_modo)
+        self._timer_vigia_ponteiro = QTimer(self)
+        self._timer_vigia_ponteiro.timeout.connect(self._vigiar_ponteiro)
+        self._timer_vigia_ponteiro.start(INTERVALO_VIGIA_PONTEIRO_MS)
+        # Sem isto o botão ainda está em (0,0) quando a âncora abaixo o mede, e o cartão
+        # compacto nasce no canto da janela em vez de em cima do botão — na primeira expansão o
+        # botão saltava 184x21px (medido em headless, 9ª volta).
+        self._layout_externo.activate()
+        self._layout_cartao.activate()
+        # 9ª volta: ancorado, ao contrário das voltas anteriores. Ancorar deixou de mover a
+        # janela (`_geometria_do_modo` não encaixa mais nada na tela e o expandido é a própria
+        # janela), e é a âncora que põe o cartão compacto no offset em que o botão da janela
+        # expandida já está — sem ela o cartão nasceria em (0,0) e o botão saltaria na primeira
+        # expansão. A posição inicial escolhida acima continua intacta.
+        self._aplicar_modo(expandido=False, ancorar=True, animar=False)
+
+    # --- janela compacta: expandir por hover e por estado (D-32) ------------------
+    def _lado_compacto(self):
+        """O compacto abraça o BotaoGravar de verdade (72px hoje) mais uma margem pequena — medido
+        contra o botão, não escolhido redondo: se o botão mudar de tamanho, a janela acompanha."""
+        return self.botao_gravar.height() + 2 * MARGEM_JANELA_COMPACTA
+
+    def _tamanho_do_modo(self, expandido):
+        if expandido:
+            return QSize(self._tamanho_expandido)
+        lado = self._lado_compacto()
+        return QSize(lado, lado)
+
+    def _configurar_layout_do_modo(self, expandido):
+        """Só as escolhas de layout do modo (margens, mola, estilo do cartão, balão) — nada de
+        tamanho nem de posição, que são responsabilidade de _aplicar_modo."""
+        if expandido:
+            self.cartao.setStyleSheet("")  # volta ao cartão branco do QSS
+            self._layout_externo.setContentsMargins(*(4 * [MARGEM_EXTERNA_EXPANDIDA]))
+            self._layout_cartao.setContentsMargins(*(4 * [MARGEM_CARTAO_EXPANDIDA]))
+            self._layout_cartao.setSpacing(ESPACAMENTO_CARTAO)
+            self._prender_botao_no_topo(False)
+            return
+        self.toast.esconder()  # o balão é mais largo que o compacto — sairia cortado
+        self.cartao.setStyleSheet("QFrame#cartaoGravacao { background: transparent; border: none; }")
+        self._layout_externo.setContentsMargins(0, 0, 0, 0)
+        margem = MARGEM_JANELA_COMPACTA
+        self._layout_cartao.setContentsMargins(margem, margem, margem, margem)
+        self._layout_cartao.setSpacing(0)
+        self._prender_botao_no_topo(True)
+
+    def esta_em_transicao_de_modo(self):
+        """D-32 7ª volta — a troca compacto⇄expandido está em andamento (ou começa neste mesmo
+        turno do laço de eventos). Quem pergunta é a CamadaPulso, para não ligar o temporizador de
+        pulso de 30ms em cima dos quadros da transição; ver CamadaPulso.definir_estado."""
+        return (
+            self._transicao_de_modo_pendente
+            or self._anim_modo.state() == QAbstractAnimation.Running
+        )
+
+    def _aplicar_modo(self, expandido, ancorar=True, animar=True):
+        """Troca o layout na hora e leva a janela inteira — posição e tamanho — até o retângulo do
+        modo, animada. Chamar de novo no meio de uma animação reverte: o alvo novo é recalculado a
+        partir do retângulo atual (é o caso do mouse que muda de lado no meio do caminho).
+
+        Terceira volta (2026-09-05): a animação **não reflui mais o layout a cada quadro**. O
+        reflow por quadro pedia ao layout do tamanho cheio que se acomodasse em larguras
+        intermediárias: nos primeiros quadros da expansão ele punha o botão a ~47px da borda de uma
+        janela de 88px, ou seja, fora do recorte — o círculo aparecia como um pedaço de 21x25px de
+        um círculo de 65x65 (medido quadro a quadro por grab(), ver PROGRESSO). E como a âncora era
+        refeita a cada quadro contra esse layout, perto da borda da tela o encaixe na área visível
+        empurrava o centro do botão em até ~250px durante a expansão. Agora os dois layouts ficam
+        congelados durante a transição e quem posiciona o cartão e o botão é esta classe, por
+        coordenada absoluta interpolada entre as duas pontas: o botão fica parado na tela (ou
+        desliza suave, quando a borda da tela obriga a janela cheia a se deslocar) e nunca sai do
+        recorte. O conteúdo do cartão só reaparece no fim — com o layout congelado ele estaria com
+        a geometria do tamanho final dentro de uma janela menor, isto é, cortado e fora do lugar.
+
+        Quarta volta (2026-09-05): a animação **não redimensiona mais a janela nativa a cada
+        quadro**. Esta janela é `FramelessWindowHint | WindowStaysOnTopHint | Tool` com
+        `WA_TranslucentBackground` — no Windows isso é uma janela *layered* de verdade, e pedir ao
+        sistema ~10 redimensionamentos em 160ms é fonte conhecida de tremor/flicker (e o suspeito
+        de a janela às vezes ficar presa num tamanho intermediário). Agora a janela do SO é levada
+        **uma única vez** ao retângulo-união das duas pontas (`_geo_transicao`) e fica parada ali
+        até `_assentar_modo` dar o tamanho final exato — dois redimensionamentos nativos na
+        transição inteira, no pior caso; um só quando a união já é o retângulo expandido, que é o
+        caso normal. Como a janela é translúcida, a área que sobra é invisível: quem "cresce" e
+        "encolhe" na tela é o cartão, posicionado por `_set_progresso_modo` dentro dessa janela
+        fixa. Nada disso é observável em teste headless (não há compositor), então a confirmação do
+        flicker continua sendo do uso real no Windows.
+
+        Quinta volta (2026-09-05): **a ordem**. Até aqui, `_configurar_layout_do_modo` (margens,
+        mola e folha de estilo do cartão) e um `setVisible(expandido)` sobre o conteúdo
+        só-expandido rodavam com os dois layouts ainda **habilitados** e a janela nativa ainda no
+        tamanho do modo *antigo* — ou seja, mexiam ao vivo num layout que ainda mandava na
+        geometria, dentro de uma janela pequena demais (na expansão) ou grande demais (no
+        encolhimento). É o suspeito do "o botão some por um instante" bem no começo/fim da
+        transição relatado no Windows. Agora nada é reconfigurado antes de os layouts saírem do
+        comando, e o conteúdo só-expandido é escondido **uma vez, para os dois sentidos** (na
+        expansão ele só reaparece em `_assentar_modo`, no fim). O `setVisible(expandido)` antigo
+        era desfeito duas linhas adiante, antes do primeiro quadro: nunca teve função, só efeito
+        colateral.
+
+        O que **não** deu para adiantar, e por quê (medido, não suposto): a janela nativa não pode
+        crescer para a união antes de `_configurar_layout_do_modo`, porque a união depende de
+        `geo_final` e `geo_final` depende das margens **e da folha de estilo** já aplicadas — a
+        borda de 1px do QSS do cartão desloca o centro medido do botão em 1px (76 vs 75 na janela
+        expandida). Adiantar o resize exigiria ou um redimensionamento nativo a mais por transição
+        (justo o que a 4ª volta eliminou) ou aceitar 1px de erro de âncora no assentamento. Com os
+        layouts já congelados, `_configurar_layout_do_modo` não reflui nada e não há volta ao laço
+        de eventos entre ele e `_set_progresso_modo(0.0)` — nenhum quadro chega a ser pintado no
+        tamanho antigo."""
+        self._anim_modo.stop()
+        centro_inicial_global = self.botao_gravar.mapToGlobal(self.botao_gravar.rect().center())
+        centro_antes = centro_inicial_global if ancorar else None
+        margem_inicial = self._layout_externo.contentsMargins().left()
+        self._expandido = expandido
+        self._timer_encolher.stop()
+        # 5ª volta: os dois layouts saem do comando ANTES de qualquer reconfiguração, e o conteúdo
+        # só-expandido é escondido aqui, de uma vez, para os dois sentidos. Ver o docstring.
+        self._layout_externo.setEnabled(False)
+        self._layout_cartao.setEnabled(False)
+        for widget in self._widgets_so_expandido:
+            widget.setVisible(False)
+        self._configurar_layout_do_modo(expandido)
+        # 9ª volta: nada de mínimo/máximo por modo — a janela é fixa no tamanho expandido desde
+        # _montar_ui e não muda mais. Com isso o mínimo que o Qt informa ao sistema de janelas
+        # também para de oscilar entre os modos.
+        # Uma medição só para a transição inteira: `_geometria_do_modo` e o centro final abaixo
+        # pedem o mesmo número (o mesmo tamanho de modo), e cada medição roda um activate() do
+        # layout cheio e liga/desliga a visibilidade do conteúdo — trabalho ao vivo justamente no
+        # instante em que o usuário relata o botão sumindo. Medir uma vez e reaproveitar.
+        centro_local_final = None
+        if centro_antes is not None:
+            centro_local_final = self._centro_local_do_botao(self._tamanho_do_modo(expandido))
+        geo_final = self._geometria_do_modo(expandido, centro_antes, centro_local_final)
+        # No meio de uma transição a janela nativa está no retângulo-união, que não é o que se vê:
+        # o ponto de partida de uma reversão é o retângulo visível (o cartão), não self.geometry().
+        geo_atual = self._geometria_visivel()
+        if not animar or not self.isVisible() or geo_atual == geo_final:
+            self._assentar_modo(geo_final)
+            return
+        self._geo_inicial = geo_atual
+        self._geo_final = geo_final
+        # Os dois centros do botão em coordenada de TELA, medidos antes de a janela sair do lugar:
+        # é entre eles que _set_progresso_modo interpola, e assim o botão não depende mais de onde
+        # a janela nativa está.
+        self._centro_inicial_global = centro_inicial_global
+        if centro_local_final is None:  # sem âncora (abertura) ninguém mediu ainda
+            centro_local_final = self._centro_local_do_botao(geo_final.size())
+        self._centro_final_global = geo_final.topLeft() + centro_local_final
+        # A margem externa também é interpolada: o cartão recorta os filhos, e um cartão já com a
+        # margem do modo final dentro de uma janela ainda pequena corta o próprio botão (medido:
+        # círculo de 55x55 em vez de 65x65 no primeiro quadro da expansão).
+        self._margem_inicial = margem_inicial
+        self._margem_final = self._layout_externo.contentsMargins().left()
+        # ÚNICO redimensionamento nativo do começo da transição: a união das duas pontas cabe os
+        # dois extremos (e, por ser retângulo e a interpolação ser linear, cabe todo quadro do
+        # meio também — cartão e botão inclusive). Daqui até _assentar_modo o SO não é mais
+        # incomodado com o tamanho da janela.
+        # 9ª volta: a base da transição é a própria janela — nenhum setGeometry, nunca.
+        # `_geo_transicao` continua existindo porque é ele que diz a `_set_progresso_modo` em
+        # que retângulo o cartão está sendo desenhado, e é ele que o arrasto translada quando o
+        # usuário arrasta no meio da transição.
+        # 10ª volta: o ÚNICO movimento nativo permitido, e só quando ele é necessário — a
+        # expansão perto de uma borda da tela, em que a janela de 448x366 não caberia. O que
+        # causa o flicker da janela layered é o RE-DIMENSIONAMENTO (realoca a superfície do
+        # UpdateLayeredWindow), não o deslocamento; esse invariante — zero resize — continua
+        # absoluto. Longe das bordas, `destino_janela` é a posição atual e nada se move.
+        destino_janela = geo_final.topLeft() if expandido else self.pos()
+        # A base é a janela JÁ MOVIDA: `_set_progresso_modo` põe o cartão por coordenada de
+        # tela descontando `base.topLeft()`, então é isto que faz o cartão ficar parado na tela
+        # no instante em que a janela se desloca — e o botão deslizar suave até o lugar novo em
+        # vez de saltar. Trocar esta ordem é o jeito de quebrar a rodada.
+        self._geo_transicao = QRect(destino_janela, self.size())
+        # D-32 8ª volta, mantido: tirar a máscara e pôr o quadro zero saem juntos, sem pintura
+        # parcial no meio, e o repaint() síncrono publica o primeiro quadro já pronto.
+        atualizacoes_ligadas = self.updatesEnabled()
+        self.setUpdatesEnabled(False)
+        try:
+            # Durante a transição a janela fica INTEIRA (sem máscara), como era o retângulo-união
+            # da 4ª volta. A máscara do modo volta em _assentar_modo: um setMask por transição,
+            # nunca quadro a quadro — SetWindowRgn por quadro seria o mesmo erro da 3ª/4ª volta
+            # com outro nome.
+            self._limpar_mascara()
+            if destino_janela != self.pos():
+                self.move(destino_janela)
+            # o quadro zero é aplicado aqui, e não no primeiro tique da animação: entre trocar o
+            # layout e o primeiro tique o botão ficaria um quadro inteiro na posição velha. Com
+            # a janela recém-movida ele tem um segundo papel: o move arrasta o cartão junto (é
+            # filho), e é este quadro zero que o devolve ao ponto de tela em que ele estava.
+            self._set_progresso_modo(0.0)
+        finally:
+            self.setUpdatesEnabled(atualizacoes_ligadas)
+        if atualizacoes_ligadas and self.isVisible():
+            self.repaint()
+        self._anim_modo.setStartValue(0.0)
+        self._anim_modo.setEndValue(1.0)
+        self._anim_modo.start()
+
+    def _prender_botao_no_topo(self, prender):
+        """No modo compacto o botão fica encostado no topo do cartão, não centrado na vertical.
+
+        Em repouso dá no mesmo (a janela tem a altura do botão), mas isso é o que faz o centro do
+        botão no compacto ficar a 44px do topo em vez de no meio de um cartão alto — e é desse
+        número que sai a posição da janela compacta ancorada pelo botão."""
+        if prender:
+            if self._mola_compacta is None:
+                self._layout_cartao.addStretch(1)
+                self._mola_compacta = self._layout_cartao.itemAt(self._layout_cartao.count() - 1)
+            return
+        if self._mola_compacta is not None:
+            self._layout_cartao.removeItem(self._mola_compacta)
+            self._mola_compacta = None
+
+    def _reassentar_layout(self):
+        """Os dois layouts, na ordem: o de fora dá a geometria do cartão, o de dentro recoloca o
+        botão. Só é chamado quando os layouts estão no comando de novo (fim da animação)."""
+        self.layout().activate()
+        self._layout_cartao.activate()
+        self.camada_pulso.reposicionar()
+
+    def _centro_local_do_botao(self, tamanho):
+        """Onde o layout do modo já configurado põe o centro do botão numa janela deste tamanho, em
+        coordenadas da janela — sem redimensionar a janela de verdade.
+
+        A medição roda o layout do cartão **do mesmo jeito que o assentamento final roda**: põe o
+        cartão no retângulo que ele terá e chama `activate()`. Chamar `setGeometry()` direto no
+        layout dá outro número quando o layout foi congelado no meio de uma animação (medido: botão
+        em x=35 em vez de x=8 numa janela de 88px), e um erro aqui vira erro de posição da janela
+        inteira, porque é deste centro que sai a âncora. Como nada volta ao laço de eventos entre
+        isto e o quadro seguinte — quem chama sempre reposiciona logo depois —, nada disso chega a
+        ser pintado.
+
+        5ª volta: a medição também impõe, **só durante o `activate()`**, a visibilidade que o
+        conteúdo só-expandido terá no modo `self._expandido`, e devolve a de antes. Um layout só
+        conta widget visível: medido nesta suíte, o centro do botão na janela expandida sai em
+        y=76 com esse conteúdo visível e em y=239 com ele escondido — 163px de erro, que viraria
+        um pulo do botão no assentamento. Antes da 5ª volta quem garantia isso era um
+        `setVisible(expandido)` ao vivo dentro de `_aplicar_modo`, que mostrava a caixa de texto e
+        os botões dentro da janela de 88px por um instante; aqui a mesma condição vale só pelo
+        tempo da conta, sem nunca voltar ao laço de eventos (nada é pintado)."""
+        margens = self._layout_externo.contentsMargins()
+        largura = max(0, tamanho.width() - margens.left() - margens.right())
+        altura = max(0, tamanho.height() - margens.top() - margens.bottom())
+        estava_ligado = self._layout_cartao.isEnabled()
+        # isHidden(), não isVisible(): antes do primeiro show() da janela todo filho é "invisível"
+        # sem estar escondido, e restaurar por isVisible() esconderia tudo para sempre.
+        escondidos_antes = [widget.isHidden() for widget in self._widgets_so_expandido]
+        geometria_anterior = QRect(self.cartao.geometry())
+        for widget in self._widgets_so_expandido:
+            widget.setVisible(self._expandido)
+        self._layout_cartao.setEnabled(True)
+        self.cartao.setGeometry(margens.left(), margens.top(), largura, altura)
+        self._layout_cartao.invalidate()
+        self._layout_cartao.activate()
+        centro = self.botao_gravar.geometry().center()
+        self.cartao.setGeometry(geometria_anterior)
+        self._layout_cartao.setEnabled(estava_ligado)
+        for widget, escondido in zip(self._widgets_so_expandido, escondidos_antes):
+            widget.setVisible(not escondido)
+        return QPoint(centro.x() + margens.left(), centro.y() + margens.top())
+
+    def _encaixar_na_tela(self, topo, tamanho, referencia):
+        """Empurra o retângulo para dentro da área visível da tela onde está a referência."""
+        tela = QGuiApplication.screenAt(referencia) or self.screen() or QGuiApplication.primaryScreen()
+        if tela is None:
+            return QPoint(topo)
+        area = tela.availableGeometry()
+        return QPoint(
+            min(max(topo.x(), area.left()), max(area.left(), area.right() - tamanho.width() + 1)),
+            min(max(topo.y(), area.top()), max(area.top(), area.bottom() - tamanho.height() + 1)),
+        )
+
+    def _geometria_do_modo(self, expandido, centro_global, centro_local=None):
+        """Retângulo final da janela no modo: o tamanho do modo, posicionado para o centro do botão
+        de gravar cair em `centro_global` (a âncora — os dois tamanhos giram em torno do mesmo ponto
+        da tela), encaixado na área visível. Com `centro_global` nulo a janela não se move: é o caso
+        da abertura, cuja posição inicial é escolhida em _montar_ui e não pode ser desfeita aqui.
+
+        `centro_local` é o resultado de `_centro_local_do_botao` para este mesmo tamanho, quando
+        quem chama já mediu (5ª volta: `_aplicar_modo` reaproveita a medição em vez de repeti-la)."""
+        tamanho = self._tamanho_do_modo(expandido)
+        if expandido:
+            # 9ª volta: o modo expandido É a janela — ela tem esse tamanho sempre, então não há
+            # o que ancorar aqui; quem mantém o botão parado é o offset do compacto, medido
+            # contra este mesmo layout.
+            # 10ª volta: mas o encaixe na tela VOLTOU, e só para este modo. Sem ele, um botão
+            # arrastado para perto de uma borda deixa a janela de 448x366 pela metade fora da
+            # tela e o cartão expandido aparece cortado — medido pelo PM: o botão precisaria
+            # ficar a 223px das laterais e 305px da base, o que é o canto onde um botão
+            # flutuante de ditado mora. Quem move a janela (uma vez, no começo da transição) é
+            # `_aplicar_modo`; aqui só se diz para onde.
+            referencia = centro_global if centro_global is not None else self.geometry().center()
+            return QRect(self._encaixar_na_tela(self.pos(), tamanho, referencia), tamanho)
+        if centro_global is None:
+            return QRect(self.pos(), tamanho)
+        if centro_local is None:
+            centro_local = self._centro_local_do_botao(tamanho)
+        # Sem `_encaixar_na_tela`: encaixar o retângulo compacto empurraria o botão na tela ao
+        # encolher (o desvio de 0px das rodadas 3-5 é invariante) e, como a janela não se mexe,
+        # o encaixe teria de mover a janela — justamente o que esta volta elimina. A janela
+        # nasce dentro da tela em _montar_ui e o usuário a arrasta a partir dali.
+        return QRect(centro_global - centro_local, tamanho)
+
+    def _offset_do_retangulo(self, geo):
+        """Onde o retângulo do modo mora DENTRO da janela fixa (9ª volta, D-32).
+
+        No expandido é sempre (0,0) — o modo expandido é a janela inteira. No compacto é a
+        diferença entre o retângulo ancorado no botão e o canto da janela, presa aos limites da
+        janela: um offset fora deles poria o cartão para fora do recorte e sumiria com o botão."""
+        if self._expandido:
+            return QPoint(0, 0)
+        offset = geo.topLeft() - self.pos()
+        limite_x = max(0, self.width() - geo.width())
+        limite_y = max(0, self.height() - geo.height())
+        preso = QPoint(
+            min(max(offset.x(), 0), limite_x),
+            min(max(offset.y(), 0), limite_y),
+        )
+        if preso != offset:
+            log.info(
+                "offset_compacto_preso pedido=%d,%d virou=%d,%d janela=%dx%d",
+                offset.x(), offset.y(), preso.x(), preso.y(), self.width(), self.height(),
+            )
+        return preso
+
+    def _retangulo_mascara(self):
+        """A parte da janela que fica visível e clicável — o resto passa clique para a janela de
+        baixo (9ª volta, D-32).
+
+        É o retângulo do cartão do modo com `FOLGA_MASCARA_PX` de folga, unido ao de qualquer
+        sobreposto que passe dele. **Retangular de propósito**: `setMask` é 1 bit e uma região
+        arredondada serrilharia os cantos do cartão; dentro da máscara o alfa por pixel de
+        `WA_TranslucentBackground` continua valendo, então o arredondado segue suave — a máscara só
+        corta área que já era 100% transparente. O preço são os quatro cantinhos externos do
+        retângulo, que seguem não-clicáveis-através.
+
+        Os sobrepostos entram na conta porque o painel de Configurações ocupa a janela inteira (ver
+        `resizeEvent`): recortar só o cartão o cortaria junto. Popups de janela própria (menu ⋮,
+        Consumo, Gerar imagem) não entram — não são recortados pela máscara desta janela."""
+        area = QRect(self.cartao.geometry())
+        # A CamadaPulso NÃO entra: ela é um widget de 110x110 em volta de um botão de 72 (só
+        # para o anel ter espaço para crescer), e no compacto isso inflaria a máscara de 84
+        # para 96 — área invisível clicável de novo, que é o que esta volta veio tirar. O anel
+        # que ela de fato desenha (raio ~46px) cabe dentro do cartão expandido, e no compacto
+        # ele nunca chega a existir: gravar expande a janela antes de pulsar.
+        if self.toast is not None and self.toast.isVisible():
+            area = area.united(QRect(self.toast.mapTo(self, QPoint(0, 0)), self.toast.size()))
+        for filho in self.children():
+            if not isinstance(filho, QWidget) or filho is self.cartao:
+                continue
+            if filho.isWindow() or not filho.isVisible():
+                continue
+            area = area.united(filho.geometry())
+        folga = FOLGA_MASCARA_PX
+        return area.adjusted(-folga, -folga, folga, folga).intersected(self.rect())
+
+    def _aplicar_mascara(self):
+        """Põe a máscara do modo. Devolve True se ela mudou de fato — é o que garante *um* setMask
+        por transição: o vigia de 100ms chama isto toda hora e não chama o sistema à toa."""
+        retangulo = self._retangulo_mascara()
+        if self._mascara_atual is not None and self._mascara_atual == retangulo:
+            return False
+        self._mascara_atual = QRect(retangulo)
+        self.setMask(QRegion(retangulo))
+        return True
+
+    def _limpar_mascara(self):
+        """Tira a máscara: a janela inteira volta a aparecer, como o retângulo-união da 4ª volta.
+        É o que roda no começo de cada transição — a máscara não muda quadro a quadro."""
+        if self._mascara_atual is None:
+            return False
+        self._mascara_atual = None
+        self.clearMask()
+        return True
+
+    def _assentar_modo(self, geo):
+        """Fim da animação (ou troca sem animação): layouts de volta no comando, cartão no
+        retângulo do modo e máscara do modo aplicada.
+
+        9ª volta (D-32): `geo` é o retângulo do MODO em coordenada de tela — o que o usuário
+        enxerga —, não mais a geometria da janela nativa, que é fixa e não se mexe. O que se faz
+        com ele é guardar onde ele mora dentro da janela (`_offset_visivel`) e recortar a janela
+        nessa área com `setMask`. No expandido o retângulo do modo é a janela inteira e quem
+        posiciona o cartão continua sendo o layout externo; no compacto o layout externo fica
+        FORA do comando (ele encheria os 448x366 com o cartão) e o cartão de 80x80 é posto à mão
+        no offset ancorado — o mesmo ponto em que a animação o deixou, então nada salta na tela
+        no instante do assentamento."""
+        self._geo_inicial = None
+        self._geo_final = None
+        self._geo_transicao = None
+        self._geo_visivel = None
+        self._offset_visivel = self._offset_do_retangulo(geo)
+        self._tamanho_visivel = QSize(geo.size())
+        self._layout_cartao.setEnabled(True)
+        self._layout_externo.setEnabled(self._expandido)
+        for widget in self._widgets_so_expandido:
+            widget.setVisible(self._expandido)
+        # D-32 9ª volta — aqui NÃO há mais redimensionamento nativo nenhum (era o único que
+        # sobrava, e é o suspeito que explicava a assimetria do sintoma: no encolhimento ele
+        # caía no fim da transição, que é exatamente onde o usuário via o pisca). O envelope da
+        # 8ª volta continua valendo para o que sobrou — reflow do cartão e troca de máscara sem
+        # pintura parcial no meio, com repaint() SÍNCRONO (não update(), que é assíncrono) para
+        # publicar o quadro já correto antes de devolver o controle ao laço de eventos.
+        atualizacoes_ligadas = self.updatesEnabled()
+        self.setUpdatesEnabled(False)
+        try:
+            if self._expandido:
+                # 10ª volta: assentamento sem animação (abertura, reversão instantânea, rede de
+                # segurança) — aqui não passou ninguém para mover a janela antes, então o
+                # encaixe na tela é aplicado agora. Na transição animada este move nunca
+                # dispara: `_aplicar_modo` já pôs a janela em `geo_final.topLeft()`.
+                if geo.topLeft() != self.pos():
+                    self.move(geo.topLeft())
+                self._reassentar_layout()
+            else:
+                # sem layout externo no comando: o cartão do compacto é um retângulo posto à mão
+                # dentro da janela grande, no offset que mantém o botão onde ele estava.
+                self.cartao.setGeometry(QRect(self._offset_visivel, geo.size()))
+                self._layout_cartao.activate()
+                self.camada_pulso.reposicionar()
+            self._aplicar_mascara()
+        finally:
+            self.setUpdatesEnabled(atualizacoes_ligadas)
+        if atualizacoes_ligadas and self.isVisible():
+            self.repaint()
+        # D-32 7ª volta: agora que a transição assentou, o anel de pulso pode começar sem disputar
+        # quadro com ela (ver CamadaPulso.definir_estado).
+        self.camada_pulso.liberar_pulso_adiado()
+        self._registrar_geometria_compacta()
+
+    def _ao_terminar_animacao_modo(self):
+        if self._geo_final is None:
+            return
+        self._assentar_modo(self._geo_final)
+
+    def _get_progresso_modo(self):
+        return self._progresso_modo
+
+    def _set_progresso_modo(self, valor):
+        self._progresso_modo = valor
+        inicial, final = self._geo_inicial, self._geo_final
+        if inicial is None or final is None:
+            return
+
+        def entre(a, b):
+            return round(a + (b - a) * valor)
+
+        # O retângulo VISÍVEL do quadro — o que a janela nativa mostrava a cada quadro até a 3ª
+        # volta. Da 4ª volta em diante a janela do SO não se mexe mais aqui (ficou parada em
+        # _geo_transicao, ver _aplicar_modo): quem cresce e encolhe na tela é o cartão.
+        geo = QRect(
+            entre(inicial.x(), final.x()), entre(inicial.y(), final.y()),
+            entre(inicial.width(), final.width()), entre(inicial.height(), final.height()),
+        )
+        self._geo_visivel = geo
+        base = self._geo_transicao if self._geo_transicao is not None else geo
+        # Com os dois layouts congelados, quem põe o cartão e o botão no lugar é isto — por
+        # coordenada absoluta. Quando a âncora é respeitada nas duas pontas (o caso normal), os
+        # dois centros são o mesmo ponto da tela e o botão fica parado quadro a quadro; quando a
+        # borda da tela obriga a janela cheia a se deslocar, ele desliza em vez de saltar.
+        margem = entre(self._margem_inicial, self._margem_final)
+        # O cartão vai para onde a janela iria: mesmo lugar na TELA de antes, só que expresso em
+        # coordenada da janela-união (por isso o desconto de base.topLeft()).
+        self.cartao.setGeometry(
+            geo.x() - base.x() + margem, geo.y() - base.y() + margem,
+            max(0, geo.width() - 2 * margem), max(0, geo.height() - 2 * margem),
+        )
+        # O centro do botão é interpolado em coordenadas de TELA e só então convertido para
+        # dentro do cartão já arredondado — assim, quando as duas pontas são o mesmo ponto (âncora
+        # respeitada), todo quadro dá exatamente esse ponto, sem o 1px de erro que apareceria ao
+        # arredondar a posição do cartão e a do botão em separado.
+        global_ini = self._centro_inicial_global
+        global_fim = self._centro_final_global
+        centro = QPoint(entre(global_ini.x(), global_fim.x()), entre(global_ini.y(), global_fim.y()))
+        meio = self.botao_gravar.rect().center()  # (35,35) num botão de 72: não é width()//2
+        # o cartão está, na tela, em geo.topLeft() + margem — a conta não muda com a janela-união
+        self.botao_gravar.move(
+            centro.x() - geo.x() - margem - meio.x(),
+            centro.y() - geo.y() - margem - meio.y(),
+        )
+        self.camada_pulso.reposicionar()
+
+    progressoModo = Property(float, _get_progresso_modo, _set_progresso_modo)
+
+    def _animando_modo(self):
+        return self._anim_modo.state() == QAbstractAnimation.Running
+
+    def _geometria_visivel(self):
+        """O retângulo do modo que o usuário enxerga, em coordenada de tela.
+
+        9ª volta (D-32): `self.geometry()` deixou de ser o que aparece **também fora da
+        transição** — a janela nativa é 448x366 nos dois modos, e no compacto quase tudo isso é
+        área invisível em volta de um cartão de 80x80. Por aqui passam o hover
+        (`_vigiar_ponteiro`), a reversão no meio da animação, a âncora e a rede de segurança:
+        quem perguntasse a `self.geometry()` acharia que o usuário enxerga 448x366 e expandiria
+        a janela com o mouse a 200px do botão.
+
+        Durante a transição vale o retângulo interpolado (`_geo_visivel`), que é o cartão
+        desenhado naquele quadro; fora dela, o retângulo do modo no offset em que ele mora
+        dentro da janela. Sobra uma diferença conhecida no expandido: o retângulo do modo
+        inclui os 8px de `MARGEM_EXTERNA_EXPANDIDA` (borda transparente), enquanto a máscara
+        para no cartão + folga — ou seja, o hover ainda pega essa borda, como sempre pegou."""
+        if self._geo_visivel is not None:
+            return QRect(self._geo_visivel)
+        return QRect(self.pos() + self._offset_visivel, self._tamanho_visivel)
+
+    def _registrar_geometria_compacta(self):
+        """Evidência para a próxima rodada, escrita uma vez por valor novo (não a cada troca de
+        modo): o que o Qt entrega depois de assentar o compacto.
+
+        9ª volta (D-32): quem tem o tamanho do modo agora é a MÁSCARA — a janela é 448x366 nos
+        dois modos. Então a linha passa a trazer a região aplicada (posição e tamanho dentro da
+        janela) ao lado do alvo e do tamanho nativo. Se no Windows real a máscara não pegar, é
+        aqui que se vê: alvo 80x80 com região de outro tamanho, ou nenhuma região."""
+        if self._expandido:
+            return
+        regiao = self._mascara_atual
+        marca = (
+            (regiao.x(), regiao.y(), regiao.width(), regiao.height()) if regiao is not None
+            else None,
+            self.width(), self.height(),
+            round(self.devicePixelRatioF(), 2),
+        )
+        if marca == self._ultima_marca_compacta:
+            return
+        self._ultima_marca_compacta = marca
+        lado = self._lado_compacto()
+        log.info(
+            "compacto alvo=%dx%d mascara=%s janela=%dx%d dpr=%s",
+            lado, lado,
+            "%dx%d+%d+%d" % (marca[0][2], marca[0][3], marca[0][0], marca[0][1])
+            if marca[0] is not None else "nenhuma",
+            marca[1], marca[2], marca[3],
+        )
+
+    def _vigiar_ponteiro(self):
+        if not self.isVisible():
+            return
+        self._atualizar_ponteiro(self._geometria_visivel().contains(QCursor.pos()))
+        self._corrigir_tamanho_do_modo()
+
+    def _corrigir_tamanho_do_modo(self):
+        """Rede de segurança do vigia (10x/s), agora sobre a MÁSCARA (9ª volta, D-32).
+
+        Até a 8ª volta isto comparava `self.width()/height()` com o tamanho do modo. Não serve
+        mais: a janela nativa é 448x366 nos dois modos, então a comparação antiga acusaria
+        "fora do modo" 10 vezes por segundo, para sempre, no compacto. Quem carrega o tamanho
+        do modo hoje é a região da máscara — e é ela que este vigia mantém em dia.
+
+        Duas coisas, por ordem de gravidade: (1) se o sistema de janelas mexeu no tamanho fixo
+        da janela, reassenta o modo inteiro (é o caso que a 2ª volta pegou no uso real, janela
+        presa no tamanho errado); (2) se só a região divergiu — um sobreposto abriu ou fechou —,
+        reaplica a máscara, que é barato e não mexe em layout. `_aplicar_mascara` só chama o
+        sistema quando a região mudou de verdade, então isto não vira um SetWindowRgn por tique.
+
+        O log é limitado a uma linha a cada 5s: se o sistema estiver recusando o tamanho, esta
+        rede dispara 10 vezes por segundo e sem o limite encheria o app.log — mas a primeira
+        linha já é a prova de que a recusa vem de fora deste código."""
+        if self._animando_modo() or self._geo_transicao is not None:
+            return
+        destino = QSize(self._tamanho_expandido)
+        if abs(self.width() - destino.width()) > 2 or abs(self.height() - destino.height()) > 2:
+            agora = time.monotonic()
+            if agora - self._ultimo_log_correcao >= 5.0:
+                self._ultimo_log_correcao = agora
+                log.info(
+                    "tamanho_fora_do_modo expandido=%s alvo=%dx%d real=%dx%d",
+                    self._expandido, destino.width(), destino.height(),
+                    self.width(), self.height(),
+                )
+            self.setFixedSize(destino)
+            centro = self.botao_gravar.mapToGlobal(self.botao_gravar.rect().center())
+            self._assentar_modo(self._geometria_do_modo(self._expandido, centro))
+            return
+        if self._aplicar_mascara():
+            agora = time.monotonic()
+            if agora - self._ultimo_log_correcao >= 5.0:
+                self._ultimo_log_correcao = agora
+                log.info(
+                    "mascara_fora_do_modo expandido=%s regiao=%s",
+                    self._expandido, self._mascara_atual,
+                )
+
+    def _atualizar_ponteiro(self, dentro):
+        """Vigia a posição do cursor em vez de usar enterEvent/leaveEvent: num widget cheio de
+        filhos o leaveEvent dispara toda vez que o mouse entra num filho — era a receita do
+        flicker. Sair de verdade só encolhe depois do debounce, cancelado se o mouse voltar."""
+        self._ponteiro_dentro = dentro
+        if dentro:
+            self._timer_encolher.stop()
+            if not self._expandido:
+                self._aplicar_modo(True)
+            return
+        if self._pode_encolher():
+            if not self._timer_encolher.isActive():
+                self._timer_encolher.start(ATRASO_ENCOLHER_MS)
+        else:
+            self._timer_encolher.stop()
+
+    def _resultado_pendente(self):
+        """D-32 item 4 — há resultado na tela que ainda não foi colocado? Derivado da caixa de
+        texto e do último texto colocado, e não de um sinalizador guardado à parte: o sinalizador
+        só era desligado em dois cliques (copiar/recortar e apagar pela lixeira), então qualquer
+        outro caminho que mexesse no texto — apagar pelo teclado, editar à mão, Ctrl+X dentro da
+        caixa — o deixava ligado para sempre e a janela nunca mais encolhia (bug de 2026-09-05)."""
+        atual = self.caixa_texto.toPlainText().strip()
+        return bool(atual) and atual != self._texto_colocado
+
+    def _pode_encolher(self):
+        if not self._expandido or self.gravando or self.processando:
+            return False
+        if self._resultado_pendente():
+            return False  # D-32 item 4: resultado na tela e ainda não colocado — não encolhe
+        if self.menu_avancado.isVisible() or self.painel_configuracoes.isVisible():
+            return False
+        if self.painel_consumo.isVisible() or self.janela_gerar_imagem.isVisible():
+            return False
+        return True
+
+    def _encolher_se_puder(self):
+        if self._ponteiro_dentro or not self._pode_encolher():
+            return
+        self._aplicar_modo(False)
+
+    def _definir_estado_botao(self, estado):
+        """Um lugar só troca o estado do botão — e é por aqui que gravando/processando expandem a
+        janela sozinhos, com o mouse longe (D-32 item 3)."""
+        vai_expandir = estado in ("gravando", "processando") and not self._expandido
+        # D-32 7ª volta — a troca de estado do botão (cor/ícone, imediata) acontece ANTES de
+        # _aplicar_modo, então, no instante em que a CamadaPulso pergunta se há transição em
+        # andamento, ela ainda não começou. Este sinalizador é o "vai começar agora" que a
+        # pergunta sozinha não enxerga — sem ele o temporizador de 30ms do pulso nasceria junto
+        # com os quadros da transição, que é a hipótese de causa do pisca-pisca do botão vermelho.
+        self._transicao_de_modo_pendente = vai_expandir
+        try:
+            self.botao_gravar.definir_estado(estado)
+        finally:
+            self._transicao_de_modo_pendente = False
+        if estado in ("gravando", "processando"):
+            if vai_expandir:
+                self._aplicar_modo(True)
+            return
+        # voltou a parado: reavalia na hora (o vigia do ponteiro também reavalia, 100ms depois)
+        self._atualizar_ponteiro(self._ponteiro_dentro)
+
+    # --- arrastar sem moldura (D-32) ---------------------------------------------
+    def arraste_iniciar(self, pos_global):
+        self._offset_arraste = pos_global - self.frameGeometry().topLeft()
+
+    def arraste_mover(self, pos_global):
+        if self._offset_arraste is None:
+            return False
+        destino = pos_global - self._offset_arraste
+        if self._geo_transicao is not None:
+            # A transição guarda retângulos e centros em coordenada de TELA; arrastar no meio dela
+            # move a janela por fora da animação, então todos acompanham o deslocamento — senão o
+            # assentamento final devolveria a janela para onde ela estava antes do arrasto.
+            delta = destino - self.pos()
+            self._geo_inicial.translate(delta)
+            self._geo_final.translate(delta)
+            self._geo_transicao.translate(delta)
+            self._centro_inicial_global += delta
+            self._centro_final_global += delta
+        self.move(destino)
+        return True
+
+    def arraste_fim(self):
+        self._offset_arraste = None
+
+    def mousePressEvent(self, evento):
+        if evento.button() == Qt.LeftButton:
+            self.arraste_iniciar(evento.globalPosition().toPoint())
+            evento.accept()
+            return
+        super().mousePressEvent(evento)
+
+    def mouseMoveEvent(self, evento):
+        if self._offset_arraste is not None and (evento.buttons() & Qt.LeftButton):
+            self.arraste_mover(evento.globalPosition().toPoint())
+            evento.accept()
+            return
+        super().mouseMoveEvent(evento)
+
+    def mouseReleaseEvent(self, evento):
+        self.arraste_fim()
+        super().mouseReleaseEvent(evento)
 
     def _atualizar_icone_cancelar(self, ativo):
         # slot do cancelar sempre ocupado (grade de 3 colunas fixa) — só o ícone/estado mudam (A2)
@@ -2006,7 +3634,7 @@ class JanelaDitado(QWidget):
             return
         nome_arquivo = os.path.basename(caminho)
         self.processando = True
-        self.botao_gravar.definir_estado("processando")
+        self._definir_estado_botao("processando")
         self._disparar_transcricao(caminho, nome_arquivo, apagar_arquivo_depois=False)
 
     def _abrir_menu_avancado(self):
@@ -2016,6 +3644,19 @@ class JanelaDitado(QWidget):
         largura_menu = self.menu_avancado.sizeHint().width()
         x = self.botao_menu.width() - largura_menu
         self.menu_avancado.popup(self.botao_menu.mapToGlobal(QPoint(x, self.botao_menu.height() + 4)))
+
+    def _abrir_planejamento(self):
+        """Abre a página de Planejamento e Execução no navegador padrão (pedido direto, 2026-09-25)."""
+        log.info("menu: abrir planejamento")
+        QDesktopServices.openUrl(QUrl(URL_PLANEJAMENTO))
+
+    def _sair(self):
+        """D-32 3a volta — encerramento normal pela interface. Sem moldura nao ha X para fechar, e
+        sobrava so o Alt+F4. Fecha a janela (o closeEvent solta o atalho global e o stream de audio)
+        e derruba o laco de eventos: as janelas filhas escondidas (Consumo, Gerar imagem) segurariam
+        a aplicacao viva se o fechamento da janela principal fosse o unico gesto."""
+        self.close()
+        QApplication.quit()
 
     def closeEvent(self, evento):
         self.desregistrar_atalho_global()
@@ -2078,7 +3719,7 @@ class JanelaDitado(QWidget):
         self._quadros_pendentes_barra = []
         self._pico_gravacao = 0.0
 
-        self.botao_gravar.definir_estado("gravando")
+        self._definir_estado_botao("gravando")
         self._atualizar_icone_cancelar(ativo=True)
         self.rotulo_cronometro.setText("00:00")
         self.barra_amplitude.reiniciar(gravando=True)
@@ -2100,7 +3741,7 @@ class JanelaDitado(QWidget):
         except Exception as erro:
             self.gravando = False
             self._parar_temporizadores_e_stream()
-            self.botao_gravar.definir_estado("parado")
+            self._definir_estado_botao("parado")
             self._atualizar_icone_cancelar(ativo=False)
             self.toast.mostrar("erro", f"Não foi possível abrir o microfone: {erro}", DURACAO_TOAST_ERRO_MS)
 
@@ -2145,7 +3786,7 @@ class JanelaDitado(QWidget):
             return
         self.gravando = False
         self._parar_temporizadores_e_stream()
-        self.botao_gravar.definir_estado("parado")
+        self._definir_estado_botao("parado")
         self._atualizar_icone_cancelar(ativo=False)
         self.toast.mostrar("confirmacao", "Gravação cancelada.", DURACAO_TOAST_CONFIRMACAO_MS)
 
@@ -2164,12 +3805,12 @@ class JanelaDitado(QWidget):
         pico = self._pico_gravacao
 
         if pico < LIMIAR_SILENCIO_PICO:
-            self.botao_gravar.definir_estado("parado")
+            self._definir_estado_botao("parado")
             log.info("descarte_por_silencio pico=%.4f limiar=%.4f", pico, LIMIAR_SILENCIO_PICO)
             self.toast.mostrar("erro", "Não foi identificado nenhuma fala", DURACAO_TOAST_SEM_FALA_MS)
             return
 
-        self.botao_gravar.definir_estado("processando")
+        self._definir_estado_botao("processando")
         self.processando = True
 
         if aviso_corte:
@@ -2206,7 +3847,7 @@ class JanelaDitado(QWidget):
             return
         nome_arquivo = os.path.basename(caminho)
         self.processando = True
-        self.botao_gravar.definir_estado("processando")
+        self._definir_estado_botao("processando")
         self._disparar_transcricao(caminho, nome_arquivo, apagar_arquivo_depois=False)
 
     # --- transcrição (chamada ao núcleo) -----------------------------------------
@@ -2233,12 +3874,12 @@ class JanelaDitado(QWidget):
     def _ao_concluir_transcricao(self, texto_final):
         self._escrever_texto(texto_final)
         self.processando = False
-        self.botao_gravar.definir_estado("parado")
+        self._definir_estado_botao("parado")
         self.toast.mostrar("confirmacao", "Transcrição adicionada ao texto abaixo.", DURACAO_TOAST_CONFIRMACAO_MS)
 
     def _ao_falhar_transcricao(self, mensagem, codigo):
         self.processando = False
-        self.botao_gravar.definir_estado("parado")
+        self._definir_estado_botao("parado")
         if codigo:
             log.info("erro_nucleo codigo=%s", codigo)
         self.toast.mostrar("erro", mensagem, DURACAO_TOAST_ERRO_MS)
@@ -2251,6 +3892,8 @@ class JanelaDitado(QWidget):
         cursor.movePosition(cursor.MoveOperation.End)
         self.caixa_texto.setTextCursor(cursor)
         self.caixa_texto.blockSignals(False)
+        # D-32 item 4: nada a marcar aqui — texto novo na caixa já é "pendente" por definição,
+        # porque difere do último texto colocado (ver _resultado_pendente()).
         self._atualizar_botao_lixeira()
         self._agendar_snapshot()
 
@@ -2278,7 +3921,7 @@ class JanelaDitado(QWidget):
         self.caixa_texto.blockSignals(True)
         self.caixa_texto.clear()
         self.caixa_texto.blockSignals(False)
-        self._atualizar_botao_lixeira()
+        self._atualizar_botao_lixeira()  # caixa vazia já não é pendente (ver _resultado_pendente)
 
     def _clicar_lixeira(self):
         tem_texto = bool(self.caixa_texto.toPlainText().strip())
@@ -2304,6 +3947,7 @@ class JanelaDitado(QWidget):
             self.toast.mostrar("erro", f"Nada para {acao} — a caixa de transcrição está vazia.", DURACAO_TOAST_ERRO_MS)
             return
         copiar_para_area_de_transferencia(texto)
+        self._texto_colocado = texto.strip()  # colocado — agora o mouse sair pode encolher (D-32)
         if recortar:
             self._apagar_com_snapshot()
             self.toast.mostrar("confirmacao", "Texto recortado para a área de transferência.", DURACAO_TOAST_CONFIRMACAO_MS)

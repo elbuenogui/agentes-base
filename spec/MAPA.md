@@ -21,20 +21,25 @@ status: vivo
 |---|---|---|
 | E1.1 Contrato da API | [SPEC-001](specs/SPEC-001_contrato-do-nucleo.md) → [contrato/NUCLEO.md](contrato/NUCLEO.md) | **concluída 2026-08-23** — medida, não suposta |
 | E1.2 ~~POC-6 tempo real fora do navegador~~ | — | **cancelada**: já respondida por `.claude/tmp/teste_tempo_real.py` (2026-08-20) e sem consumidor, com o ao vivo congelado |
-| E1.3 ADR onde roda o núcleo / chave | — | **adiada por decisão** (`D-05`): gatilho é estado compartilhado entre aparelhos (F7/F9) |
+| E1.3 ADR onde roda o núcleo / chave | — | **decidida em 2026-09-30** (`D-36`, reabre `D-05`): núcleo remoto no Supabase, com login |
 | E1.4 Comportamento de erro do núcleo | parte da SPEC-001 | **medido 2026-08-23**; virou requisito na Etapa 3 do `PLANO.md` (L1, L2, L3, L5) |
 | E1.5 Promover o harness do ao vivo | tarefa de arrumação | Etapa 4 do `PLANO.md` — decidida pelo PM, não requer usuário |
 | ~~E1.6 Parâmetro `idioma`~~ | lacuna L8 | **cancelada 2026-08-23**: a medição refutou o problema (`D-08` revisada) |
 | E1.7 Atualizar o `CLAUDE.md` | — | Etapa 6 do `PLANO.md` — descreve o repo como "MVP de transcrição" e não cita `spec/` |
 
-## Fase corrente: F2 — Desktop, ditado universal
+## F2 — Desktop, ditado universal (concluída em 2026-09-30, por uso em regime)
 
 | Entrega | Artefato | Status |
 |---|---|---|
-| E2.1 App de desktop — paridade com a interface web | [SPEC-002](specs/SPEC-002_paridade-desktop.md) | **etapa 1 do `PLANO.md`, reaberta em 2026-08-27** — a primeira volta foi reprovada no uso; o escopo agora é a lista A–I da spec, entregue inteira (`D-29`) |
+| E2.1 App de desktop — paridade com a interface web | [SPEC-002](specs/SPEC-002_paridade-desktop.md) | **concluída 2026-08-27** — reprovada três vezes e refeita; fechada com a lista A–I inteira, confirmada pelo usuário no app rodando |
 | E2.2 POC-1 — mecanismo de inserção no Windows | [pocs/POC-1/](pocs/POC-1/) | **etapa 2** — interrompida por achado, que virou a `D-26`; o resto da investigação foi para `B-22` |
-| E2.3 Histórias, entregáveis e MVP | — | **etapa 3** — fecha `L-A`, `L-B` e `L-C` (`D-13`) |
-| E2.4 O resto do plano | — | **etapa 4** — só se escreve com o app em uso |
+| E2.3 Histórias, entregáveis e MVP | [historias/F2_ditado-universal.md](historias/F2_ditado-universal.md) · [F2_MVP_E_ENTREGAVEIS.md](F2_MVP_E_ENTREGAVEIS.md) | **concluída 2026-09-06** — fecha `L-A`, `L-B` e `L-C` (`D-13`); MVP declarado na `D-34` |
+| E2.4 O resto do plano | — | **fechada em 2026-09-30** — não faltaram etapas; a fase encerrou pelo critério de uso em regime |
+
+**Anexos fora do plano da fase** (não são etapa, `.claude/estado/historico/PLANO_2026-09-30_fase2-encerrada.md` tem o
+detalhe de cada um): geração de imagem (`D-31`, 2026-08-27, concluída) e botão flutuante compacto (`D-32`,
+2026-09-05/06, **concluído** — dez rodadas, fechado com a arquitetura de máscara e confirmado no uso
+real).
 
 **Estado da SPEC-002**: viva. É o critério de pronto da Etapa 1 e a régua do que "no mínimo o mesmo
 que o HTML" quer dizer, item a item. O dono do comportamento continua sendo
@@ -46,6 +51,12 @@ janela sempre no topo. Não é mais a POC-1 que decide isso.
 **Estado da SPEC-001**: fechada em 2026-08-23. O que ela deixou como requisito está na Etapa 3 do
 `PLANO.md`; o que ela deixou como comportamento declarado (não como conserto) está na `D-16`
 (gate de silêncio é obrigação do cliente) e na `D-17` (diarização fora de escopo).
+
+## Plano corrente: Núcleo centralizado no Supabase (desde 2026-09-30)
+
+Decisão `D-36` (reabre `D-05`). Seis etapas, critérios em `.claude/estado/PLANO.md`: reconhecer o
+projeto RAG-COMPARTILHADO, banco com histórico importado, transcrever remoto, consumo remoto com a
+imagem registrando no banco, desktop no remoto com login, contrato novo.
 
 ## Duas famílias de "lacuna" — não confundir
 
@@ -60,9 +71,11 @@ mais que conviver com ela até lá.
 
 ## Histórias
 
-Nenhuma promovida ainda. A consolidação proposta na revisão do pré-projeto (US-D02 + US-A02 + US-D03
-viram uma capacidade só, *entrega do texto no destino*, com escada de fallback) entra quando a F2
-for especificada (`D-13`).
+[historias/F2_ditado-universal.md](historias/F2_ditado-universal.md) — `US-D01` a `US-D07`, escritas
+em 2026-09-06. A consolidação proposta na revisão do pré-projeto (US-D02 + US-A02 + US-D03 viram uma
+capacidade só, *entrega do texto no destino*, com escada de fallback) **entrou na `US-D02` e fechou o
+`B-06`** — com dois degraus vivos em vez de três: o primeiro, inserir no campo em foco, morreu na
+`D-33`.
 
 ## PoCs
 

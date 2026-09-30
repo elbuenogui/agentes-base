@@ -62,32 +62,32 @@ um arquivo de áudio até o botão ele transcrevesse"*. O alvo do solte é o **b
 caminho é o mesmo do "Enviar arquivo" (`E1`). Detalhe em `spec/specs/SPEC-002_paridade-desktop.md`.
 
 ### B-03 — Commit guiado por silêncio (plano B das emendas)
-`estado: amadurecendo · nasceu: 2026-08-20, modo ao vivo · olhar de novo em: quando o ao vivo descongelar (D-02)`
+`estado: morta · nasceu: 2026-08-20, modo ao vivo · morta: 2026-09-05 (D-33)`
 Os 6s viram **piso** em vez de corte: o turno fecha na primeira pausa depois disso, com um teto para
 não segurar o texto indefinidamente.
-**Por quê ainda não:** o modo ao vivo está congelado (`D-02`). A ideia é boa e barata — não muda
-custo (quem define custo é o gate de envio, não o commit), mantém `gpt-live-transcribe` e resolve o
-corte de palavra na emenda sem depender da API. Fica esperando o consumidor aparecer.
+**Por quê morta:** dependia do modo ao vivo descongelar (`D-02`), e o modo ao vivo saiu de vez
+(`D-33`, 2026-09-05) — o gatilho desta ideia nunca vai acontecer. A ideia em si continua boa e
+barata, registrada aqui só para quem um dia reconsiderar o modo ao vivo por outro motivo.
 
 ### B-04 — Transcrição em blocos com sobreposição
-`estado: amadurecendo · nasceu: 2026-08-19, contas de custo · olhar de novo em: quando o ao vivo descongelar (D-02)`
+`estado: morta · nasceu: 2026-08-19, contas de custo · morta: 2026-09-05 (D-33)`
 Fatiar o áudio em blocos que se sobrepõem, para dar precisão nas bordas sem a API ao vivo.
-**Por quê ainda não:** o usuário decidiu em 2026-08-19 testar a API ao vivo primeiro, por ser mais
-simples de integrar. Sai mais barato por minuto que a API ao vivo mesmo com sobreposição generosa,
-mas exige lógica própria de continuidade nas bordas.
+**Por quê morta:** dependia do modo ao vivo descongelar (`D-02`), que saiu de vez (`D-33`,
+2026-09-05) — o cenário que justificava esta ideia (precisão de borda sem a API ao vivo) deixou de
+existir junto com o modo ao vivo.
 
 ### B-05 — Adiantamento artificial de exibição no streaming
-`estado: amadurecendo · nasceu: 2026-08-19 · olhar de novo em: F2`
+`estado: amadurecendo · nasceu: 2026-08-19 · olhado em 2026-09-06, mantido fora do MVP da F2 (D-34)`
 Em áudios curtos o efeito de streaming é imperceptível: o texto chega quase de uma vez.
 **Por quê ainda não:** é decisão de sensação de uso, e o único cliente que vai sentir isso é o app
 de ditado da F2. **Decisão pendente do usuário** sobre se vale a pena.
 
-### B-06 — Consolidar US-D02 + US-A02 + US-D03 numa capacidade só
-`estado: amadurecendo · nasceu: 2026-08-21, revisão do pré-projeto · olhar de novo em: F2`
-As três histórias viram *entrega do texto no destino*, com escada de fallback: campo em foco →
-área de transferência → janela.
-**Por quê ainda não:** histórias são a primeira entrega da própria F2 (`D-13`), e escrever isso antes
-da POC-1 seria escrever sobre suposição.
+### ~~B-06 — Consolidar US-D02 + US-A02 + US-D03 numa capacidade só~~
+`estado: fechado em 2026-09-06 · nasceu: 2026-08-21, revisão do pré-projeto`
+Virou a **`US-D02`** (`historias/F2_ditado-universal.md`): *entrega do texto no destino*, uma
+capacidade só. A escada de fallback ficou com **dois degraus** em vez de três — área de
+transferência (padrão) e a janela para copiar à mão; o degrau 1, inserir no campo em foco, morreu
+na `D-33`.
 
 ### B-07 — Plataforma de chat self-hosted como motor de fase futura
 `estado: amadurecendo · nasceu: 2026-08-18 · olhar de novo em: F6`
@@ -100,13 +100,13 @@ certo.
 ## Adiadas com gatilho
 
 ### B-08 — Fechar o CORS do backend
-`estado: adiada · nasceu: 2026-08-18 · gatilho: o núcleo ser servido fora da máquina do usuário`
+`estado: subiu em 2026-09-30 — gatilho disparado (D-36), entra no plano Núcleo centralizado · nasceu: 2026-08-18`
 `allow_origins=["*"]` hoje. Confirmado por medição em 2026-08-23 (lacuna L7 do contrato).
 **Por quê ainda não:** aceitável enquanto tudo roda local. Vira restrição declarada no dia em que
 sair da máquina — o mesmo gatilho da `D-05` (servidor próprio).
 
 ### B-09 — Trocar os `.jsonl` por banco de dados
-`estado: adiada · nasceu: 2026-08-18 · gatilho: ver D-22`
+`estado: subiu em 2026-09-30 — entra no plano Núcleo centralizado (D-36) · nasceu: 2026-08-18`
 `consumo.jsonl` e `transcricoes.jsonl` viram banco de verdade.
 **Por quê ainda não:** decisão explícita do usuário em 2026-08-18 de adiar. **O motivo e as
 consequências abertas moram na `D-22`** (histórico é requisito) — inclusive a retenção de
@@ -123,10 +123,11 @@ disso é versionado — é ruído visual, não risco.
 ## Longo prazo, sem fase atribuída
 
 ### B-11 — Histórico por projeto/entrevista, exportação, metadados
-`estado: amadurecendo · nasceu: 2026-08-16 · olhar de novo em: F2 (ver D-22)`
+`estado: amadurecendo · nasceu: 2026-08-16 · olhar de novo em: depois da F2 (ver D-22)`
 Organizar transcrições por projeto ou entrevista, exportar, guardar metadados.
-**Por quê ainda não:** o histórico virou requisito (`D-22`) mas ganha história de usuário própria só
-quando a F2 for especificada.
+**Por quê ainda não:** olhado na especificação da F2, em 2026-09-06, e **adiado pelo usuário** — não
+entra no MVP da fase (`D-34`). Continua requisito (`D-22`): quando voltar à mesa, dado de histórico
+errado é defeito, não ruído.
 
 ### B-12 — Pipeline de limpeza → segmentação → classificação → resumo
 `estado: amadurecendo · nasceu: 2026-08-16 · olhar de novo em: F5/F6`
@@ -226,22 +227,18 @@ mapeamento no backend.
 múltiplo dos 120s declarados. Registrado no `NUCLEO.md` para quem for revisar esse número.
 
 ### B-22 — Inserção automática no campo em foco (a POC-1 original)
-`estado: adiada · nasceu: 2026-08-24, escopo da Fase 2 · gatilho: o uso mostrar que copiar e colar à mão atrapalha`
+`estado: morta · nasceu: 2026-08-24, escopo da Fase 2 · morta: 2026-09-05 (D-33)`
 Investigar por qual mecanismo inserir texto no campo em foco no Windows, e onde ele falha: quatro
 alvos (terminal do VS Code, editor do VS Code, WhatsApp no Opera, Bloco de Notas como controle
 nativo) × três mecanismos (teclado sintético, API de acessibilidade, área de transferência com
 restauração), com escalada para o Text Services Framework se os três falharem.
-**Por quê ainda não:** decisão do usuário em 2026-08-25 (`D-25`) — começar a usar antes de
-investigar. A régua da fase é uso diário, e app que não existe não entra em rotina.
-**O que faria virar etapa:** você usar o app por alguns dias e o copiar-colar manual virar atrito
-real. Aí a investigação volta com **evidência de uso**, que é base melhor do que a PoC teria dado —
-inclusive porque você vai saber em quais aplicativos isso dói, e a lista de alvos deixa de ser
-suposição.
-**Já decidido, e continua valendo**: o alvo de controle nativo (`Bloco de Notas`) importa porque os
-três alvos reais são todos Chromium/Electron; e a área de transferência se **mede** (janela de
-exposição, confiabilidade da restauração), não se escolhe por preferência.
+**Por quê morta:** estava `adiada` desde 2026-08-25 (`D-25`) esperando o copiar-colar manual
+incomodar no uso. O usuário confirmou em 2026-09-05 (`D-33`) que isto está descartado de vez, não é
+mais "esperando o gatilho" — **não confundir com** a segunda ação "colocar a última transcrição" com
+atalho próprio (`COMPORTAMENTOS_PARQUEADOS.md`), que é outra coisa e continua viva.
 
-**Evidência parcial já levantada (2026-08-25), antes do adiamento** — em `spec/pocs/POC-1/`:
+**Evidência parcial levantada (2026-08-25), preservada como registro técnico** — em
+`spec/pocs/POC-1/`:
 
 - **`D-26`, o achado que muda tudo**: a injeção tem de disparar de dentro do handler do atalho
   global. Quatro tentativas falharam **em silêncio** por serem disparadas de um processo desacoplado.
@@ -263,3 +260,28 @@ copiar sempre atrapalha — se você perde o que tinha copiado, com que frequên
 Decidir agora seria decidir sem o dado que chega de graça na primeira semana.
 **O que faria virar etapa:** você reclamar de ter perdido algo do clipboard. Aí a opção entra, e já
 com a resposta de qual deve ser o padrão.
+
+### B-24 — Duas transcrições idênticas seguidas confundem o detector de "resultado pendente"
+`estado: amadurecendo · nasceu: 2026-09-05, correção do bug do encolhimento (D-32) · olhar de novo em: se incomodar no uso`
+O detector de pendência da janela compacta (`D-32`, segunda rodada) compara o texto da caixa com o
+último texto colocado; se as duas transcrições seguidas saírem **idênticas**, a segunda é lida como
+"já colocada" mesmo sem ter sido, e a janela pode encolher antes da hora.
+**Por quê ainda não:** achado ao corrigir o bug principal, não reportado pelo usuário. Caso raro
+(precisa ditar a mesma frase duas vezes seguidas) e o pior efeito é a janela encolher cedo demais —
+incômodo pequeno, não perda de dado.
+**O que faria virar etapa:** você notar isso acontecendo de verdade.
+
+### B-25 — Janela compacta deriva de tamanho depois de dias de uso, e o botão some
+`estado: amadurecendo · nasceu: 2026-09-21, suporte ao vivo no Windows real (achado do Executor no PROGRESSO) · olhar de novo em: retorno ao planejamento da Etapa 4, a partir de 2026-09-25`
+Com o app aberto há dias, a janela nativa sai do tamanho-alvo da `D-32`: medida de fora do processo
+(`GetWindowRect`), ficou em **358×293** em vez de **448×366** — exatamente `× 0,8 = 1/1,25`, o `dpr`
+que o próprio log registra. O `app.log` capturou o evento (`tamanho_fora_do_modo expandido=True
+alvo=448x366 real=358x293`). A máscara continua calculada para 448×366, então o recorte não coincide
+mais com onde o botão está desenhado: você vê uma área vazia ("cadê o botão"). Reiniciar o app resolve
+na hora (testado duas vezes). Suspeita, não confirmada: troca entre monitores com DPI diferente.
+**Por quê ainda não:** achado registrado, não corrigido. A rede de segurança
+`_corrigir_tamanho_do_modo` loga o desvio, mas não se sabe se converge sozinha nem em quanto tempo.
+**O que faria virar etapa:** já aconteceu uma vez no uso real, e atrapalha o uso em regime, que é o
+critério da Fase 2 (`D-24`, `D-34`). Decisão de subir ou não fica para o retorno ao planejamento.
+Ponto de partida sugerido pelo Executor: cronometrar se a rede converge; se não, recalcular a
+máscara a partir do tamanho **real** em vez de reafirmar o alvo lógico.

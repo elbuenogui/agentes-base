@@ -230,3 +230,112 @@ seguem esse formato — sintoma primeiro, mecanismo depois.
 - [VÁLVULA] Se a leitura do original revelar comportamento que a spec ainda não descreve, o Executor
   escreve isso no PROGRESSO como **lacuna da spec**. É o caminho de volta que faltava — até aqui, o
   que a spec não dizia simplesmente não existia.
+
+---
+
+## 12. O consumo transcrito — e a válvula funcionando pela primeira vez
+
+- [ENTREGA] Painel de consumo refeito a partir do original: as duas escalas com domínios diferentes,
+  escada de marcas do eixo, janela móvel, alvo de clique grande, roda ativada, popup da requisição.
+  `desktop/app.py` foi de 918 para **2.323 linhas**. Conferido por mim no artefato real.
+- [A VÁLVULA PEGOU UM ERRO MEU] O Executor leu o `index.html` e achou que a `G3` estava **errada**:
+  eu escrevi que "sem ativar, a roda rola a janela como qualquer conteúdo", e o `wheel` real faz
+  `preventDefault()` e **troca de escala**; o scroll nativo só acontece com `Shift`. Ele implementou
+  o que o código faz — dono único — e registrou a divergência em vez de me obedecer. **Conferi na
+  fonte: ele está certo.** Spec corrigida. Foi a primeira vez que o caminho de volta funcionou: até
+  aqui, o que a spec não dizia simplesmente não existia.
+- [ACHADO DE MÉTODO, o mais importante desta volta] **A conferência por captura tem ponto cego.** O
+  `grab()` offscreen não reproduz o estilo nativo da plataforma: uma camada que devia ser
+  transparente saiu transparente na captura e **opaca no Windows real**, tapando o botão vizinho. A
+  captura limpa não é prova quando o achado é sobre fundo, transparência ou desenho nativo. Virou
+  parágrafo próprio na seção I, com a consequência escrita: nesses casos a conferência **termina no
+  uso real**, e a tarefa diz isso em vez de marcar o item como confirmado.
+- [ARMADILHA DO ÍCONE NO MENU] Tentativa 1 do Executor foi inflar o pixmap com margem transparente —
+  só encolheu o ícone. A coluna de ícone de um `QAction` nativo tem largura fixa dada pelo estilo, e
+  o pixmap maior é reamostrado para caber nela. Resolvido com `QWidgetAction` e layout próprio.
+- [DEFEITO CONFIRMADO PELO PM] `OverlayModal` é `QWidget` puro com fundo no QSS e **sem
+  `WA_StyledBackground`** — o véu escuro nunca pinta, e Configurações e o popup aparecem sem
+  escurecer o fundo. O detalhe que dói: **o comentário duas linhas abaixo, no mesmo `__init__`,
+  explica exatamente essa regra** — para justificar por que o painel branco é `QFrame`. A regra
+  estava escrita e não foi aplicada ao vizinho.
+- [PENDÊNCIA VS. SPEC] `G4` pede clique **ou `Enter`/`Espaço`** no ponto da linha do tempo; o
+  critério que eu escrevi na tarefa só pedia clique. O Executor entregou clique e registrou a
+  diferença. Erro meu de critério, não dele — o critério tem de cobrir o item da spec inteiro.
+- [HIGIENE] `desktop/config.json` gera diferença fantasma em todo `git status`: o app grava CRLF, o
+  versionado é LF, e o arquivo não termina com quebra de linha. Vai junto na próxima volta, com
+  `.gitattributes`.
+- [OBSERVAÇÃO] O usuário commitou duas vezes por conta própria nesta sequência (`35ceff9`,
+  `fc461fa`) e configurou o atalho como `shift+esc+Ç` — a `D-28` (atalho escolhido por ele, pela
+  interface) está sendo exercida na prática.
+
+---
+
+## 13. Etapa 1 fechada
+
+- [MARCO] *"Tá funcionando como o esperado."* A Etapa 1 fecha em 2026-08-27, depois de **três
+  reprovações e sete voltas de Executor**, com a `SPEC-002` cumprida de A a I e confirmada pelo
+  usuário no app rodando. `desktop/app.py`: 2.323 linhas.
+- [CONFIRMAÇÃO PENDENTE RESOLVIDA] A correção da `CamadaPulso` — a única que a captura offscreen não
+  conseguia provar — está confirmada pelo uso real, que era exatamente onde a spec dizia que essa
+  classe de conserto termina.
+- [ESTADO DA SPEC-002] Fechada **como critério**, viva **como registro de divergências**. São cinco
+  (`D-30`), e a interface web não mudou em nenhuma. Enquanto o desktop divergir, é nela que se
+  escreve.
+- [PENDÊNCIAS PEQUENAS, NÃO SEGURAM A ETAPA] Véu sem `WA_StyledBackground`, teclado no ponto da linha
+  do tempo (`G4`), CRLF × LF do `config.json`. Descritas na `PROXIMA_TAREFA.md`, prontas para
+  disparar quando incomodarem.
+- [O CRITÉRIO DA FASE CONTINUA ABERTO] *"O usuário usa o ditado deste app no dia a dia, no lugar do
+  que usa hoje."* Isso é uso em regime e se mede em dias. A etapa entregou a condição; o regime é o
+  que falta.
+
+## 14. O saldo do dia, em uma linha
+
+Cinco reprovações, todas com a mesma raiz e nenhuma repetida: **escopo cortado abaixo do piso**
+(`D-29`), **spec descrevendo o meio e não o fim** (grade de três colunas, trilho e bolinha, `J2`
+aplicado ao contrário) e **resumo no lugar de transcrição** (a `G` de cinco linhas para 800 de
+código). Todas viraram regra escrita. A última volta foi a primeira em que o Executor **me
+corrigiu** — leu o original, viu que a `G3` estava errada e registrou em vez de obedecer.
+
+## 15. Decisão de rumo, com a Etapa 1 fechada
+
+Quatro caminhos na mesa: limpar as pendências e deixar assentar · atacar a inserção no campo em foco
+(`B-22`) · escrever as histórias e o MVP (Etapa 3) · encerrar o chat.
+
+**Escolha do usuário: limpar as três pendências e deixar assentar.** É o que a `D-25` já dizia — *o
+que o app precisa aprender, ele aprende sendo usado* — e é o único caminho que responde ao critério
+da fase, que é uso em regime e se mede em dias. A `B-22` continua sendo o maior salto de valor e o
+maior risco (quatro tentativas já falharam em silêncio uma vez); esperar o app assentar antes de
+mexer na camada de inserção é ordem, não adiamento.
+
+---
+
+## 16. Geração de imagem — entrada fora do plano, declarada
+
+- [PEDIDO] *"Eu quero a solução mais rápida possível, porque eu precisava de fazer isso."* Escolher
+  imagens (ou uma pasta), escrever um prompt, e a OpenAI devolve uma imagem nova. Interface no ⋮.
+- [DECISÃO — `D-31`] Aceito, e **declarado como anexo fora do plano da F2**. A fase é ditado
+  universal; imagem não é ditado. Não vira etapa nem entra no critério de conclusão. Fica escrito
+  com data e motivo em vez de disfarçado de escopo — para ninguém achar, daqui a um mês, que a fase
+  mudou de objetivo.
+- [DECISÃO DE ARQUITETURA] Vai no **núcleo**, não no app chamando a OpenAI direto. A chave mora num
+  lugar só e o registro de consumo mora num lugar só. Duplicar a chave no desktop ganharia meia hora
+  e custaria caro na primeira troca de chave — e deixaria invisível justamente o custo que mais
+  importa. Consequência assumida: **o núcleo deixa de ser "de transcrição"** e passa a ser a camada
+  que fala com a OpenAI.
+- [CUSTO, e o guarda-corpo] Imagem de qualidade média a 1024×1024: **~US$ 0,042**. Transcrição de
+  30 s: ~US$ 0,0003. **~140×.** Isso aciona literalmente a condição de reabertura escrita na `D-18`
+  ("o padrão de uso mudar de fato") — anotado lá, com prazo de reavaliação de uma semana. Por isso a
+  tarefa exige: preço dos modelos de imagem na tabela do backend, custo registrado em
+  `consumo.jsonl` pelo mesmo caminho das transcrições, estimativa visível **antes** de gerar e custo
+  real depois. Sem isso o painel de Consumo passaria a mentir.
+- [ARMADILHA APROVEITADA] O bug conhecido do `diarize` — modelo fora da tabela de preços grava
+  `custo_usd: 0.0` em silêncio — vira aviso explícito na tarefa. Já documentado no `NUCLEO.md` desde
+  24/08, agora finalmente serve para prevenir em vez de só explicar.
+- [API CONFIRMADA NA DOC, 2026-08-27] `POST /v1/images/edits`, multipart com `image[]` repetido (até
+  16), `prompt` até 32k caracteres, modelos `gpt-image-2` / `gpt-image-1.5` / `gpt-image-1` /
+  `gpt-image-1-mini`, `input_fidelity: high` (é o que importa quando a entrada são referências), e
+  `usage` com tokens na resposta — o que permite calcular custo pelo mesmo caminho já existente.
+- [INVERSÃO DECLARADA] Única tarefa deste projeto em que "funcionar hoje" vem antes de "ficar bom" —
+  e está escrito na tarefa que a inversão é porque **o usuário pediu**, não porque acabou o tempo.
+- [PENDÊNCIAS PRESERVADAS] As três de limpeza saíram da `PROXIMA_TAREFA.md` e foram para o `PLANO.md`
+  com o conserto de cada uma escrito. Substituir a tarefa não pode apagar o que estava nela.
