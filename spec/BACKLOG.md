@@ -308,7 +308,7 @@ registrada na Etapa 4: a OpenAI recusou `gpt-image-1-mini` nesta rota (provavelm
 OpenAI (hoje só o código chega ao `app.log`) e conferir quais parâmetros cada modelo aceita.
 
 ### B-27 — Transcrição como serviço para a Mari (recurso de acessibilidade)
-`estado: amadurecendo · nasceu: 2026-09-30, ideia do usuário · olhar de novo em: ao fechar o plano Núcleo centralizado (depois da Etapa 6)`
+`estado: promovida em 2026-09-30 — plano "Transcrição como serviço para a Mari" (`D-37`) · nasceu: 2026-09-30, ideia do usuário`
 O RAG-COMPARTILHADO vira um projeto de **serviços** (RAG + transcrição). A Mari grava o áudio no
 navegador de quem usa o site, manda para a transcrição e devolve o texto para a pessoa enviar —
 recurso de acessibilidade. Diferença para o desktop: quem usa a Mari é público, sem login no Auth.
@@ -318,3 +318,20 @@ registrado por projeto (`mari`), não por usuário; limites de tamanho, frequên
 se o texto de terceiros é guardado (pesquisa com pessoas, comitê de ética).
 **Por quê ainda não:** o plano corrente não fechou; a Etapa 6 (contrato novo) é o documento que essa
 integração vai ler.
+
+### B-28 — Observabilidade centralizada dos gastos da Mari e dos serviços
+`estado: amadurecendo · nasceu: 2026-09-30, pedido do usuário no planejamento do B-27 · olhar de novo em: ao fechar o plano "Transcrição como serviço para a Mari"`
+Uma vista única do gasto da Mari (conversa, RAG, transcrição) e dos outros serviços do
+RAG-COMPARTILHADO, mais robusta que olhar tabela por tabela. Hoje o gasto está espalhado: consumo
+pessoal em `assistente.consumo`, buscas em `rag.buscas` (sem custo), e a transcrição da Mari vai
+para a tabela de uso do schema `servicos`.
+**Por quê ainda não:** o usuário disse "depois"; o serviço de transcrição precisa existir antes.
+**O que faria virar etapa:** pedido do usuário, com o serviço em uso.
+
+### B-29 — Proteção contra senha vazada desligada no Auth do RAG-COMPARTILHADO
+`estado: amadurecendo · nasceu: 2026-09-30, advisor de segurança lido na Etapa 1 do plano da Mari (anterior a ela) · olhar de novo em: quando o usuário pedir`
+O advisor do Supabase avisa (WARN `auth_leaked_password_protection`) que o Auth não confere senhas
+contra a base de senhas vazadas. Hoje o Auth tem um usuário só, o do ditado pessoal, com cadastro
+público fechado. Não se conferiu se a opção está disponível no plano gratuito.
+**Por quê ainda não:** fora do plano corrente, e o risco é baixo com cadastro fechado.
+**O que faria virar etapa:** pedido do usuário, ou o Auth ganhar mais usuários.

@@ -7,12 +7,15 @@ divide o mesmo banco e não é tocado daqui.
 | Arquivo | O que é |
 |---|---|
 | `banco/assistente_base.sql` | A migração do schema `assistente` (tabelas `consumo` e `transcricoes`, RLS, permissões). Idempotente. Aplicada pelo conector do Supabase com o nome `assistente_base` — **nunca** por `supabase db push`. |
+| `banco/servicos_base.sql` | A migração do schema `servicos` (tabela `transcricao_uso`: só consumo por projeto cliente, sem texto; função `gasto_do_dia`). Só o `service_role` acessa; o schema não é exposto na API. Idempotente. Aplicada pelo conector com o nome `servicos_base`. |
 | `banco/importar_historico.py` | Leva `transcritor/consumo.jsonl` e `transcritor/transcricoes.jsonl` para o banco, logado como você. Só biblioteca padrão do Python. |
 | `banco/importar_historico.cmd` | Atalho de duplo clique para o importador no Windows. |
 | `funcoes/transcrever/index.ts` | A Edge Function `transcrever` — Operação 1 do contrato (`POST /transcrever`) no Supabase. É exatamente o código implantado (`verify_jwt: true`). Grava consumo e transcrição com o JWT de quem chamou (`origem = 'nucleo-remoto'`). |
 | `testes/testar_transcrever.py` e `.cmd` | Teste real da função, no Windows: seis casos, resultado em `testes/testar_transcrever.log`. |
 | `funcoes/consumo/index.ts` | A Edge Function `consumo` — Operação 2 do contrato (`GET /consumo`) lida do banco, só com as linhas de quem chamou. É exatamente o código implantado (`verify_jwt: true`). |
 | `testes/testar_consumo_e_imagem.py` e `.cmd` | Teste real da Etapa 4, no Windows: `/consumo` remoto e a imagem do núcleo local registrando no banco (sobe um segundo núcleo na porta 8001). Resultado em `testes/testar_consumo_e_imagem.log`. |
+| `funcoes/transcrever-servico/index.ts` | A Edge Function `transcrever-servico` — o serviço de transcrição para projetos clientes (D-37), começando pela Mari: chave por projeto no cabeçalho `x-servico-chave`, teto de gasto por dia, e só consumo em `servicos.transcricao_uso` (nunca o texto). É exatamente o código implantado (`verify_jwt: false`). |
+| `testes/testar_servico.py` e `.cmd` | Teste real do serviço, no Windows: cinco casos (o quinto pede para criar o segredo do teto e, no fim, apagá-lo). Resultado em `testes/testar_servico.log`. |
 
 Cada linha do banco pertence a um usuário do Auth; só ele lê e insere as próprias linhas. Não há
 update nem delete pela API, e o papel `anon` não enxerga o schema.

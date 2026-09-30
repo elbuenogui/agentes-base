@@ -969,3 +969,29 @@ assistente de vendas, que o usuário unificou lá (rótulo `assistente-nova-form
 escolha de **convergência de infraestrutura**, não só falta de vaga no plano gratuito; no futuro o
 assistente pode ler parte desse banco. O limite de conexões que estourou em 29/09 veio de muitas
 requisições simultâneas, padrão que o núcleo não tem.
+
+### D-37 — A transcrição vira serviço para a Mari, sem guardar o texto
+
+`estado: fechada · 2026-09-30 · fase: Transcrição como serviço`
+
+O RAG-COMPARTILHADO passa a oferecer transcrição a outros projetos, começando pela Mari (recurso de
+acessibilidade: a pessoa grava no navegador, recebe o texto e o envia). A chamada sai **do servidor**
+do projeto cliente, com uma **chave do serviço por projeto** — a chave decide o projeto, não o
+corpo da requisição —, numa função **separada** da `transcrever` pessoal. A chamada à OpenAI usa a
+**chave da OpenAI da própria Mari**. O serviço registra **só consumo**, numa tabela sem coluna de
+texto; a transcrição volta para a pessoa e não é gravada. O código do lado da Mari fica no projeto
+dela e é feito a partir de prompts escritos pelo PM sobre o contrato do serviço.
+
+**Por quê:** ideia do usuário (`B-27`). Chave por projeto porque o padrão `x-rag-chave` do RAG usa
+uma chave só para todos os projetos, com o projeto escolhido no corpo — num serviço pago e aberto ao
+público, quem tivesse a chave agiria como qualquer projeto. Função separada para não mexer no ditado
+de todo dia. Chave da OpenAI da Mari "para os gastos ficarem bem alinhados" (usuário). Sem texto
+porque guardar fala de terceiros depende do comitê de ética; a pergunta que a pessoa envia à Mari
+continua indo para `rag.buscas`, como já ia.
+
+**Trade-offs aceitos:** sem material de fala crua para a pesquisa de IHC; o plano fecha dependendo
+de trabalho feito em outro repositório; limites (2 min, 4 MB, US$ 1/dia, `gpt-4o-transcribe`) são
+escolha, não medição.
+
+**Reabre se:** o comitê de ética aprovar guardar a fala com consentimento, ou um segundo projeto
+cliente precisar de algo que a chave por projeto não resolve.

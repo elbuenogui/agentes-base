@@ -65,6 +65,12 @@ novo de ditado: entrega o chão que deixa a F3 e a F4 serem clientes magros, sem
 sem chave no aparelho. Plano em `.claude/estado/historico/PLANO_2026-09-30_nucleo-remoto-encerrado.md`;
 o uso no dia a dia segue observado em `.claude/estado/ACOMPANHAMENTO.md` (`A-01`).
 
+### Transcrição como serviço (fora da sequência)
+`estado: em-andamento · desde 2026-09-30`
+Não é fase do assistente: é o RAG-COMPARTILHADO virando projeto de serviços. A Mari transcreve o
+áudio de quem usa o site, com chave por projeto, teto de gasto e sem guardar o texto (`D-37`).
+Plano em `.claude/estado/PLANO.md`.
+
 ### F3 — Android, ditado universal
 `estado: bloqueada:POC-3`
 A mesma capacidade no S22. Entrega duas coisas: o app e o documento do que a plataforma permite e

@@ -52,6 +52,12 @@ janela sempre no topo. Não é mais a POC-1 que decide isso.
 `PLANO.md`; o que ela deixou como comportamento declarado (não como conserto) está na `D-16`
 (gate de silêncio é obrigação do cliente) e na `D-17` (diarização fora de escopo).
 
+## Plano corrente: Transcrição como serviço para a Mari (desde 2026-09-30)
+
+Decisão `D-37`, nascida do `B-27`. Etapas e critérios em `.claude/estado/PLANO.md`: registro
+de consumo por projeto, função do serviço, contrato do serviço, prompts de integração (PM), chamada
+real da Mari.
+
 ## Plano encerrado: Núcleo centralizado no Supabase (2026-09-30)
 
 Decisão `D-36` (reabre `D-05`). Seis etapas, critérios em
