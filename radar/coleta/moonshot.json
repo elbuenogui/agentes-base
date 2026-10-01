@@ -1,0 +1,655 @@
+{
+  "provedor": {
+    "id": "moonshot",
+    "nome": "Moonshot AI (Kimi)",
+    "grupo": "laboratorio",
+    "site": "https://www.moonshot.ai",
+    "pais": "China",
+    "resumo": "Laboratório chinês por trás do Kimi. Destaca-se por modelos de pesos abertos de fronteira (K3, 2,8T parâmetros, 1M de contexto) a preço de API baixo e pelo Kimi Code, agente de código no terminal incluído na assinatura.",
+    "fontes": [
+      "https://www.kimi.com/en/blog/kimi-k3",
+      "https://platform.kimi.com/docs/pricing/chat-k3",
+      "https://platform.kimi.com/docs/models",
+      "https://www.kimi.com/en/help/membership/membership-pricing",
+      "https://www.kimi.com/code/docs/en/kimi-code/models.html"
+    ]
+  },
+  "coletado_em": "2026-10-01",
+  "canais": [
+    {
+      "tipo": "outro",
+      "nome": "Site Moonshot AI",
+      "url": "https://www.moonshot.ai/",
+      "handle": null,
+      "observacao": null
+    },
+    {
+      "tipo": "docs",
+      "nome": "Kimi API Platform (internacional)",
+      "url": "https://platform.moonshot.ai/",
+      "handle": null,
+      "observacao": "docs em chinês e tabelas de preço também em platform.kimi.com"
+    },
+    {
+      "tipo": "precos",
+      "nome": "Preços da API",
+      "url": "https://platform.kimi.com/docs/pricing/chat",
+      "handle": null,
+      "observacao": null
+    },
+    {
+      "tipo": "precos",
+      "nome": "Planos de assinatura",
+      "url": "https://www.kimi.com/membership/pricing",
+      "handle": null,
+      "observacao": null
+    },
+    {
+      "tipo": "blog",
+      "nome": "Kimi Research & Tech Blog",
+      "url": "https://www.kimi.com/blog/",
+      "handle": null,
+      "observacao": null
+    },
+    {
+      "tipo": "changelog",
+      "nome": "Kimi Code — What's New",
+      "url": "https://www.kimi.com/code/docs/en/kimi-code/whats-new.html",
+      "handle": null,
+      "observacao": null
+    },
+    {
+      "tipo": "outro",
+      "nome": "Fórum Kimi (anúncios)",
+      "url": "https://forum.moonshot.ai/c/announcement/5",
+      "handle": null,
+      "observacao": "anúncios de modelos e preços"
+    },
+    {
+      "tipo": "github",
+      "nome": "MoonshotAI no GitHub",
+      "url": "https://github.com/MoonshotAI",
+      "handle": null,
+      "observacao": "kimi-code (CLI atual); kimi-cli arquivado"
+    },
+    {
+      "tipo": "x_oficial",
+      "nome": "Kimi.ai",
+      "url": "https://x.com/Kimi_Moonshot",
+      "handle": "@Kimi_Moonshot",
+      "observacao": "declarada a única conta oficial no X"
+    }
+  ],
+  "planos": [
+    {
+      "nome": "Gratuito",
+      "publico": "individual",
+      "preco_mensal_usd": 0,
+      "preco_anual_usd": null,
+      "inclui": "Chat no kimi.com/app com K3; Deep Research com cota mensal limitada.",
+      "limites": "Cota de créditos pequena (1 Deep Research ≈ 5–10% da cota). Sem Kimi Code.",
+      "fonte_url": "https://www.kimi.com/membership/pricing",
+      "conferido_em": "2026-10-01"
+    },
+    {
+      "nome": "Moderato",
+      "publico": "individual",
+      "preco_mensal_usd": 19,
+      "preco_anual_usd": null,
+      "inclui": "Pool único de créditos para Agent, Agent Swarm, Deep Research, PPT/sites, Kimi Code, Kimi Work e Kimi Claw; K3 no app. Kimi Code incluído.",
+      "limites": "US$15/mês no plano anual (total anual não publicado na fonte lida). Kimi Code: janela móvel de 5 h.",
+      "fonte_url": "https://www.kimi.com/en/help/membership/membership-pricing",
+      "conferido_em": "2026-10-01"
+    },
+    {
+      "nome": "Allegretto",
+      "publico": "individual",
+      "preco_mensal_usd": 39,
+      "preco_anual_usd": null,
+      "inclui": "Pool único de créditos para Agent, Agent Swarm, Deep Research, PPT/sites, Kimi Code, Kimi Work e Kimi Claw; K3 no app. Mais créditos de Agent e paralelismo; Kimi Claw dedicado.",
+      "limites": "US$31/mês no plano anual.",
+      "fonte_url": "https://www.kimi.com/en/help/membership/membership-pricing",
+      "conferido_em": "2026-10-01"
+    },
+    {
+      "nome": "Allegro",
+      "publico": "individual",
+      "preco_mensal_usd": 99,
+      "preco_anual_usd": null,
+      "inclui": "Pool único de créditos para Agent, Agent Swarm, Deep Research, PPT/sites, Kimi Code, Kimi Work e Kimi Claw; K3 no app. Créditos altos; conversas de 1M tokens.",
+      "limites": "US$79/mês no plano anual.",
+      "fonte_url": "https://www.kimi.com/en/help/membership/membership-pricing",
+      "conferido_em": "2026-10-01"
+    },
+    {
+      "nome": "Vivace",
+      "publico": "individual",
+      "preco_mensal_usd": 199,
+      "preco_anual_usd": null,
+      "inclui": "Pool único de créditos para Agent, Agent Swarm, Deep Research, PPT/sites, Kimi Code, Kimi Work e Kimi Claw; K3 no app. Maior cota.",
+      "limites": "US$159/mês no plano anual.",
+      "fonte_url": "https://www.kimi.com/en/help/membership/membership-pricing",
+      "conferido_em": "2026-10-01"
+    },
+    {
+      "nome": "API pré-paga (Kimi API Platform)",
+      "publico": "api",
+      "preco_mensal_usd": null,
+      "preco_anual_usd": null,
+      "inclui": "Pagamento por token, compatível com formatos OpenAI e Anthropic; Batch a 60% do preço; busca web cobrada por chamada; agentes hospedados (sandbox + tokens + plugins).",
+      "limites": "K3 liberado após recarga mínima de US$1; tier de rate limit sobe com o total recarregado.",
+      "fonte_url": "https://www.kimi.com/en/help/kimi-api/api-rate-limits",
+      "conferido_em": "2026-10-01"
+    }
+  ],
+  "modelos": [
+    {
+      "id": "moonshot/kimi-k3",
+      "nome": "Kimi K3",
+      "tipo": "texto",
+      "pesos_abertos": true,
+      "lancado_em": "2026-07-16",
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": null,
+      "preco": {
+        "entrada_usd_mtok": 3.0,
+        "saida_usd_mtok": 15.0,
+        "fonte_url": "https://platform.kimi.com/docs/pricing/chat-k3",
+        "divergencia": null
+      },
+      "outros_precos": [
+        {
+          "unidade": "mtok_cache",
+          "valor_usd": 0.3,
+          "condicao": "leitura de cache (input cache hit)",
+          "fonte_url": "https://platform.kimi.com/docs/pricing/chat-k3"
+        },
+        {
+          "unidade": "mtok_cache",
+          "valor_usd": 3.0,
+          "condicao": "escrita de cache (TTL 5 min ou 1 h; valor publicado na página de preços dos agentes hospedados)",
+          "fonte_url": "https://platform.kimi.com/docs/pricing/hosted-agents"
+        }
+      ],
+      "notas": [
+        {
+          "benchmark": "aa_index",
+          "valor": 44,
+          "medido_em": "2026-10-01",
+          "fonte_url": "https://artificialanalysis.ai/models/kimi-k3",
+          "observacao": "variante max (página atual do modelo). O artigo de lançamento da AA (https://artificialanalysis.ai/articles/kimi-k3-achieves-3-in-the-artificial-analysis-intelligence-index-comparable-to-opus-4-8-and-gpt-5-5) cita 57, provavelmente em versão anterior do índice; variante low = 39"
+        },
+        {
+          "benchmark": "lmarena_elo",
+          "valor": 1488,
+          "medido_em": "2026-10-01",
+          "fonte_url": "https://arena.ai/leaderboard/text",
+          "observacao": "kimi-k3-max, ±5, 27.719 votos, 18º lugar geral"
+        }
+      ],
+      "observacao": "2,8 trilhões de parâmetros, visão nativa, contexto anunciado como '1M tokens' (contagem exata não confirmada, por isso null). Pesos abertos desde 2026-07-27. Liberado na API após recarga mínima de US$1. No Kimi Code também existe 'k3-256k'."
+    },
+    {
+      "id": "moonshot/kimi-k2.7-code",
+      "nome": "Kimi K2.7 Code",
+      "tipo": "texto",
+      "pesos_abertos": true,
+      "lancado_em": "2026-06-12",
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": 262144,
+      "preco": {
+        "entrada_usd_mtok": 0.95,
+        "saida_usd_mtok": 4.0,
+        "fonte_url": "https://www.kimi.com/resources/kimi-2-7-pricing",
+        "divergencia": null
+      },
+      "outros_precos": [
+        {
+          "unidade": "mtok_cache",
+          "valor_usd": 0.19,
+          "condicao": "leitura de cache (input cache hit)",
+          "fonte_url": "https://www.kimi.com/resources/kimi-2-7-pricing"
+        }
+      ],
+      "notas": [
+        {
+          "benchmark": "aa_index",
+          "valor": 26,
+          "medido_em": "2026-10-01",
+          "fonte_url": "https://artificialanalysis.ai/models/kimi-k2-7-code",
+          "observacao": null
+        }
+      ],
+      "observacao": "Modelo de código; ~30% menos tokens de raciocínio que o K2.6. Página de preço oficial em chinês: https://platform.kimi.com/docs/pricing/chat-k27-code"
+    },
+    {
+      "id": "moonshot/kimi-k2.7-code-highspeed",
+      "nome": "Kimi K2.7 Code HighSpeed",
+      "tipo": "texto",
+      "pesos_abertos": true,
+      "lancado_em": "2026-06-12",
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": 262144,
+      "preco": {
+        "entrada_usd_mtok": 1.9,
+        "saida_usd_mtok": 8.0,
+        "fonte_url": "https://www.kimi.com/resources/kimi-2-7-pricing",
+        "divergencia": null
+      },
+      "outros_precos": [
+        {
+          "unidade": "mtok_cache",
+          "valor_usd": 0.38,
+          "condicao": "leitura de cache (input cache hit)",
+          "fonte_url": "https://www.kimi.com/resources/kimi-2-7-pricing"
+        }
+      ],
+      "notas": [],
+      "observacao": "Mesmo modelo do K2.7 Code servido em alta velocidade (~5–6× mais rápido, segundo a doc do Kimi Code). Data de lançamento assumida igual à do K2.7 Code; não confirmada separadamente."
+    },
+    {
+      "id": "moonshot/kimi-k2.6",
+      "nome": "Kimi K2.6",
+      "tipo": "texto",
+      "pesos_abertos": true,
+      "lancado_em": "2026-04-20",
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": 262144,
+      "preco": {
+        "entrada_usd_mtok": 0.95,
+        "saida_usd_mtok": 4.0,
+        "fonte_url": "https://www.kimi.com/resources/kimi-k2-6-pricing",
+        "divergencia": null
+      },
+      "outros_precos": [
+        {
+          "unidade": "mtok_cache",
+          "valor_usd": 0.16,
+          "condicao": "leitura de cache (input cache hit)",
+          "fonte_url": "https://www.kimi.com/resources/kimi-k2-6-pricing"
+        }
+      ],
+      "notas": [
+        {
+          "benchmark": "aa_index",
+          "valor": 27,
+          "medido_em": "2026-10-01",
+          "fonte_url": "https://artificialanalysis.ai/models/kimi-k2-6",
+          "observacao": null
+        }
+      ],
+      "observacao": "Entrada de texto, imagem e vídeo; modos com e sem raciocínio. Página em chinês: https://platform.kimi.com/docs/pricing/chat-k26"
+    },
+    {
+      "id": "moonshot/kimi-for-coding",
+      "nome": "Kimi K2.8 Preview (kimi-for-coding)",
+      "tipo": "texto",
+      "pesos_abertos": false,
+      "lancado_em": "2026-09-11",
+      "status": "restrito",
+      "desativa_em": null,
+      "contexto_tokens": null,
+      "preco": {
+        "entrada_usd_mtok": null,
+        "saida_usd_mtok": null,
+        "fonte_url": null,
+        "divergencia": null
+      },
+      "outros_precos": [],
+      "notas": [],
+      "observacao": "Disponível só dentro do Kimi Code (assinatura), id 'kimi-for-coding'; rollout completo em 2026-09-11; esforço de raciocínio low/high/max, contexto 'até 1M'. Sem preço de API publicado. Fonte: https://www.kimi.com/code/docs/en/kimi-code/whats-new.html"
+    },
+    {
+      "id": "moonshot/kimi-k2.5",
+      "nome": "Kimi K2.5",
+      "tipo": "texto",
+      "pesos_abertos": true,
+      "lancado_em": null,
+      "status": "desativado",
+      "desativa_em": "2026-08-31",
+      "contexto_tokens": 262144,
+      "preco": {
+        "entrada_usd_mtok": null,
+        "saida_usd_mtok": null,
+        "fonte_url": null,
+        "divergencia": null
+      },
+      "outros_precos": [],
+      "notas": [],
+      "observacao": "Desativado na API em 2026-08-31 (https://platform.kimi.com/docs/models). Pesos continuam públicos."
+    },
+    {
+      "id": "moonshot/kimi-k2-thinking",
+      "nome": "Kimi K2 Thinking",
+      "tipo": "texto",
+      "pesos_abertos": true,
+      "lancado_em": null,
+      "status": "desativado",
+      "desativa_em": "2026-05-25",
+      "contexto_tokens": 262144,
+      "preco": {
+        "entrada_usd_mtok": null,
+        "saida_usd_mtok": null,
+        "fonte_url": null,
+        "divergencia": null
+      },
+      "outros_precos": [],
+      "notas": [],
+      "observacao": "Série kimi-k2 desativada na API em 2026-05-25 (https://platform.kimi.com/docs/models)."
+    },
+    {
+      "id": "moonshot/kimi-k2-thinking-turbo",
+      "nome": "Kimi K2 Thinking Turbo",
+      "tipo": "texto",
+      "pesos_abertos": false,
+      "lancado_em": null,
+      "status": "desativado",
+      "desativa_em": "2026-05-25",
+      "contexto_tokens": 262144,
+      "preco": {
+        "entrada_usd_mtok": null,
+        "saida_usd_mtok": null,
+        "fonte_url": null,
+        "divergencia": null
+      },
+      "outros_precos": [],
+      "notas": [],
+      "observacao": "Versão de alta velocidade do K2 Thinking; desativada junto com a série kimi-k2 (data de desligamento atribuída à série)."
+    },
+    {
+      "id": "moonshot/kimi-k2-0905-preview",
+      "nome": "Kimi K2 0905",
+      "tipo": "texto",
+      "pesos_abertos": true,
+      "lancado_em": null,
+      "status": "desativado",
+      "desativa_em": "2026-05-25",
+      "contexto_tokens": 262144,
+      "preco": {
+        "entrada_usd_mtok": null,
+        "saida_usd_mtok": null,
+        "fonte_url": null,
+        "divergencia": null
+      },
+      "outros_precos": [],
+      "notas": [],
+      "observacao": "Série kimi-k2 desativada em 2026-05-25."
+    },
+    {
+      "id": "moonshot/kimi-k2-turbo-preview",
+      "nome": "Kimi K2 Turbo",
+      "tipo": "texto",
+      "pesos_abertos": false,
+      "lancado_em": null,
+      "status": "desativado",
+      "desativa_em": "2026-05-25",
+      "contexto_tokens": 262144,
+      "preco": {
+        "entrada_usd_mtok": null,
+        "saida_usd_mtok": null,
+        "fonte_url": null,
+        "divergencia": null
+      },
+      "outros_precos": [],
+      "notas": [],
+      "observacao": "Série kimi-k2 desativada em 2026-05-25. Preço antigo (nov/2025, fórum oficial): US$1,15 entrada / US$8,00 saída / US$0,15 cache — histórico, não vigente."
+    },
+    {
+      "id": "moonshot/moonshot-v1",
+      "nome": "Moonshot V1 (8k/32k/128k, auto, vision-preview)",
+      "tipo": "texto",
+      "pesos_abertos": false,
+      "lancado_em": null,
+      "status": "desativado",
+      "desativa_em": "2026-08-31",
+      "contexto_tokens": null,
+      "preco": {
+        "entrada_usd_mtok": null,
+        "saida_usd_mtok": null,
+        "fonte_url": null,
+        "divergencia": null
+      },
+      "outros_precos": [],
+      "notas": [],
+      "observacao": "Série moonshot-v1 desativada em 2026-08-31 (https://platform.kimi.com/docs/models)."
+    },
+    {
+      "id": "moonshot/kimi-latest",
+      "nome": "kimi-latest",
+      "tipo": "texto",
+      "pesos_abertos": false,
+      "lancado_em": null,
+      "status": "desativado",
+      "desativa_em": "2026-01-28",
+      "contexto_tokens": null,
+      "preco": {
+        "entrada_usd_mtok": null,
+        "saida_usd_mtok": null,
+        "fonte_url": null,
+        "divergencia": null
+      },
+      "outros_precos": [],
+      "notas": [],
+      "observacao": "Desativado em 2026-01-28."
+    },
+    {
+      "id": "moonshot/kimi-vl-a3b-instruct",
+      "nome": "Kimi-VL-A3B-Instruct",
+      "tipo": "multimodal",
+      "pesos_abertos": true,
+      "lancado_em": null,
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": null,
+      "preco": {
+        "entrada_usd_mtok": null,
+        "saida_usd_mtok": null,
+        "fonte_url": null,
+        "divergencia": null
+      },
+      "outros_precos": [],
+      "notas": [],
+      "observacao": "Visão-linguagem MoE com 2,8B parâmetros ativos no decodificador, encoder MoonViT, contexto '128K'. Só pesos abertos (https://github.com/MoonshotAI/Kimi-VL); não está na API. Data e contagem exata de contexto não confirmadas (limite de buscas)."
+    },
+    {
+      "id": "moonshot/kimi-vl-a3b-thinking-2506",
+      "nome": "Kimi-VL-A3B-Thinking-2506",
+      "tipo": "multimodal",
+      "pesos_abertos": true,
+      "lancado_em": null,
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": null,
+      "preco": {
+        "entrada_usd_mtok": null,
+        "saida_usd_mtok": null,
+        "fonte_url": null,
+        "divergencia": null
+      },
+      "outros_precos": [],
+      "notas": [],
+      "observacao": "Variante com raciocínio longo do Kimi-VL; só pesos abertos (https://github.com/MoonshotAI/Kimi-VL). Data não confirmada."
+    }
+  ],
+  "capacidades": [
+    {
+      "capacidade": "texto",
+      "produto": "Kimi (app/web) com K3",
+      "como_acessar": [
+        "app",
+        "web"
+      ],
+      "plano_minimo": "Gratuito",
+      "gratis": true,
+      "headless": false,
+      "comando": null,
+      "limites": "cota de créditos por plano",
+      "fonte_url": "https://www.kimi.com/membership/pricing"
+    },
+    {
+      "capacidade": "texto",
+      "produto": "Kimi API (K3, K2.7 Code, K2.6)",
+      "como_acessar": [
+        "api"
+      ],
+      "plano_minimo": "API pré-paga",
+      "gratis": false,
+      "headless": true,
+      "comando": "POST https://api.moonshot.ai/v1/chat/completions (compatível OpenAI)",
+      "limites": "rate limit por tier de recarga",
+      "fonte_url": "https://platform.moonshot.ai/"
+    },
+    {
+      "capacidade": "codigo",
+      "produto": "Kimi Code (CLI, VS Code, Desktop, ferramentas de terceiros)",
+      "como_acessar": [
+        "cli",
+        "ide",
+        "app"
+      ],
+      "plano_minimo": "Moderato",
+      "gratis": false,
+      "headless": true,
+      "comando": "curl -fsSL https://code.kimi.com/kimi-code/install.sh | bash",
+      "limites": "Compartilha a cota da assinatura; janela móvel de 5 h; Extra Usage opcional. Modelos: k3, k3-256k, kimi-for-coding (K2.8 Preview), kimi-for-coding-highspeed (K2.7 Code HighSpeed).",
+      "fonte_url": "https://www.kimi.com/code/docs/en/kimi-code/membership.html"
+    },
+    {
+      "capacidade": "cli_headless",
+      "produto": "Kimi Code CLI",
+      "como_acessar": [
+        "cli"
+      ],
+      "plano_minimo": "Moderato (ou chave de API)",
+      "gratis": false,
+      "headless": true,
+      "comando": "kimi -p \"prompt\" --print --output-format stream-json",
+      "limites": "mesma cota do Kimi Code",
+      "fonte_url": "https://www.kimi.com/code/docs/en/kimi-code-cli/reference/kimi-command.html"
+    },
+    {
+      "capacidade": "pesquisa_profunda",
+      "produto": "Kimi Deep Research",
+      "como_acessar": [
+        "app",
+        "web"
+      ],
+      "plano_minimo": "Gratuito",
+      "gratis": true,
+      "headless": false,
+      "comando": null,
+      "limites": "cota mensal limitada no gratuito; inclui bases profissionais",
+      "fonte_url": "https://www.kimi.com/features/deep-research"
+    },
+    {
+      "capacidade": "agente_nuvem",
+      "produto": "Kimi Agent / Agent Swarm",
+      "como_acessar": [
+        "app",
+        "web"
+      ],
+      "plano_minimo": "Gratuito (créditos limitados)",
+      "gratis": true,
+      "headless": false,
+      "comando": null,
+      "limites": "consome créditos da assinatura",
+      "fonte_url": "https://www.kimi.com/en/help/agent/agent-overview"
+    },
+    {
+      "capacidade": "agente_nuvem",
+      "produto": "Agentes hospedados (Hosted Agents) da API",
+      "como_acessar": [
+        "api",
+        "nuvem"
+      ],
+      "plano_minimo": "API pré-paga",
+      "gratis": false,
+      "headless": true,
+      "comando": null,
+      "limites": "cobra sandbox por tempo + tokens + plugins por chamada",
+      "fonte_url": "https://platform.kimi.com/docs/pricing/hosted-agents"
+    },
+    {
+      "capacidade": "agente_agendado",
+      "produto": "Tarefas agendadas do Kimi (membership)",
+      "como_acessar": [
+        "app",
+        "web"
+      ],
+      "plano_minimo": "Moderato",
+      "gratis": false,
+      "headless": false,
+      "comando": null,
+      "limites": "10 tarefas agendadas no Moderato, 15 no Allegretto, 20 no Allegro (página da China; equivalência com planos em US$ não confirmada)",
+      "fonte_url": "https://www.kimi.com/en-cn/help/membership/membership-pricing"
+    },
+    {
+      "capacidade": "busca_web",
+      "produto": "Ferramenta de busca web da API",
+      "como_acessar": [
+        "api"
+      ],
+      "plano_minimo": "API pré-paga",
+      "gratis": false,
+      "headless": true,
+      "comando": null,
+      "limites": "¥0,03 por chamada, além dos tokens",
+      "fonte_url": "https://platform.kimi.com/docs/pricing/tools"
+    }
+  ],
+  "gratis": [
+    {
+      "titulo": "Plano gratuito do Kimi com K3",
+      "resumo": "Chat, Agent e Deep Research no kimi.com/app com cota mensal de créditos.",
+      "limites": "1 Deep Research ≈ 5–10% da cota gratuita",
+      "chamavel_por_agente": false,
+      "url": "https://www.kimi.com/membership/pricing",
+      "valido_ate": null,
+      "origem": "verificado"
+    },
+    {
+      "titulo": "Pesos abertos (K3, K2.7 Code, K2.6, Kimi-VL)",
+      "resumo": "Modelos publicados com pesos abertos para rodar localmente ou em provedores terceiros.",
+      "limites": "K3 tem 2,8T parâmetros (inviável localmente); Kimi-VL-A3B roda em GPU modesta",
+      "chamavel_por_agente": true,
+      "url": "https://github.com/MoonshotAI",
+      "valido_ate": null,
+      "origem": "verificado"
+    },
+    {
+      "titulo": "Voucher de ¥15 na API para novos usuários",
+      "resumo": "Crédito automático na API para cadastro com celular da China continental, válido por 3 meses.",
+      "limites": "exige número de celular chinês — Guilherme não se qualifica",
+      "chamavel_por_agente": true,
+      "url": "https://www.kimi.com/en/help/kimi-api/api-free-trial",
+      "valido_ate": null,
+      "origem": "verificado"
+    }
+  ],
+  "programas": [],
+  "indicadores": [
+    {
+      "modelo_id": "moonshot/kimi-k3",
+      "nome": "custo por tarefa no índice AA",
+      "valor": 2.0,
+      "unidade": "USD",
+      "descricao": "Custo médio por tarefa para avaliar o Kimi K3 (max) no Artificial Analysis Intelligence Index",
+      "medido_em": "2026-10-01",
+      "fonte_url": "https://artificialanalysis.ai/models/kimi-k3"
+    },
+    {
+      "modelo_id": "moonshot/kimi-k3",
+      "nome": "custo para rodar o índice AA",
+      "valor": 3658,
+      "unidade": "USD",
+      "descricao": "Custo total para rodar todas as avaliações do Intelligence Index com o Kimi K3 (max)",
+      "medido_em": "2026-10-01",
+      "fonte_url": "https://artificialanalysis.ai/models/kimi-k3"
+    }
+  ],
+  "observacoes": "Rede: sites oficiais bloqueados ao WebFetch; dados vieram de buscas restritas a domínios oficiais (moonshot.ai, platform.moonshot.ai, platform.kimi.com, kimi.com, github.com) e AA/arena. platform.kimi.com é o domínio atual das docs da API (chinês). Contexto do K3 e do K2.8 Preview anunciado como '1M' sem contagem exata: null. Planos: preços em US$ mensais 19/39/99/199 e anuais equivalentes a 15/31/79/159 por mês; preco_anual_usd ficou null porque a fonte não publica o total anual. Na China os planos são Andante ¥49, Moderato ¥99, Allegretto ¥199, Allegro ¥699 (nomes não batem 1:1 com os planos em US$); a doc do Kimi Code fala em tier 'Go' sem cota de código e 'Plus' em diante — mapeamento não confirmado. Busca web da API: ¥0,03 por chamada (a versão em espanhol traria o valor em US$, não confirmado literalmente). Batch: 60% do preço padrão. Preços de modelos desativados (K2.5, série K2, moonshot-v1) não registrados por estarem fora de uso; o resumo de busca citou K2.5 a US$0,60/3,00/cache 0,10 (histórico). Sem programa para estudante/pesquisador encontrado em domínios oficiais. Handle do X do CEO Yang Zhilin (杨植麟) não confirmado; omitido. Sem página de status encontrada. Nota lmarena do K2.6/K2.7 Code não confirmada. Datas de lançamento do Kimi-VL e K2.5 não confirmadas (limite de 200 buscas atingido). Kimi-Audio/Kimi-Linear e outros repositórios abertos não verificados."
+}

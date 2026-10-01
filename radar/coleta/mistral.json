@@ -1,0 +1,963 @@
+{
+  "provedor": {
+    "id": "mistral",
+    "nome": "Mistral AI",
+    "grupo": "laboratorio",
+    "site": "https://mistral.ai",
+    "pais": "França",
+    "resumo": "Laboratório francês de IA que publica boa parte dos modelos com pesos abertos (Apache 2.0 ou MIT modificada), do Ministral 3B ao Mistral Large 3 e ao Medium 3.5. Destaca-se em preço baixo por token, OCR de documentos (OCR 4.1), voz (família Voxtral) e soberania europeia. Em agosto de 2026 o assistente Le Chat passou a se chamar Vibe, unindo chat, trabalho e agente de código (CLI, IDE e agentes remotos).",
+    "fontes": [
+      "https://mistral.ai/pricing/",
+      "https://docs.mistral.ai/models/overview",
+      "https://help.mistral.ai/en/articles/682992-le-chat-is-now-vibe",
+      "https://mistral.ai/products/vibe/"
+    ]
+  },
+  "coletado_em": "2026-10-01",
+  "canais": [
+    {
+      "tipo": "blog",
+      "nome": "Mistral AI News",
+      "url": "https://mistral.ai/news/",
+      "handle": null,
+      "observacao": "anúncios de modelos e produtos"
+    },
+    {
+      "tipo": "changelog",
+      "nome": "Changelog da API",
+      "url": "https://docs.mistral.ai/resources/changelogs",
+      "handle": null,
+      "observacao": null
+    },
+    {
+      "tipo": "docs",
+      "nome": "Documentação",
+      "url": "https://docs.mistral.ai/",
+      "handle": null,
+      "observacao": "model cards com datas de deprecação"
+    },
+    {
+      "tipo": "precos",
+      "nome": "Preços (Vibe e API)",
+      "url": "https://mistral.ai/pricing/",
+      "handle": null,
+      "observacao": "preços da API em https://mistral.ai/pricing/api/"
+    },
+    {
+      "tipo": "outro",
+      "nome": "Central de ajuda",
+      "url": "https://help.mistral.ai/en/",
+      "handle": null,
+      "observacao": null
+    },
+    {
+      "tipo": "github",
+      "nome": "mistralai",
+      "url": "https://github.com/mistralai",
+      "handle": null,
+      "observacao": "endereço não aberto nesta coleta (rede bloqueada)"
+    },
+    {
+      "tipo": "x_oficial",
+      "nome": "Mistral AI",
+      "url": "https://x.com/MistralAI",
+      "handle": "@MistralAI",
+      "observacao": "endereço não conferido nesta coleta"
+    },
+    {
+      "tipo": "x_ceo",
+      "nome": "Arthur Mensch",
+      "url": "https://x.com/arthurmensch",
+      "handle": "@arthurmensch",
+      "observacao": "CEO; endereço não conferido nesta coleta"
+    },
+    {
+      "tipo": "x_lider",
+      "nome": "Guillaume Lample",
+      "url": "https://x.com/GuillaumeLample",
+      "handle": "@GuillaumeLample",
+      "observacao": "cofundador e cientista-chefe; endereço não conferido nesta coleta"
+    },
+    {
+      "tipo": "discord",
+      "nome": "Discord da Mistral",
+      "url": "https://discord.gg/mistralai",
+      "handle": null,
+      "observacao": "endereço não conferido nesta coleta"
+    }
+  ],
+  "planos": [
+    {
+      "nome": "Vibe Free",
+      "publico": "individual",
+      "preco_mensal_usd": 0,
+      "preco_anual_usd": null,
+      "inclui": "Chat, buscas na web e sessões de código limitadas.",
+      "limites": "Vibe Code Web: 2 sessões por dia; mensagens e buscas limitadas (números não publicados).",
+      "fonte_url": "https://mistral.ai/pricing/",
+      "conferido_em": "2026-10-01"
+    },
+    {
+      "nome": "Pro",
+      "publico": "individual",
+      "preco_mensal_usd": 14.99,
+      "preco_anual_usd": null,
+      "inclui": "Mais mensagens e buscas, raciocínio estendido, relatórios de pesquisa profunda, acesso completo ao Vibe Code (CLI, extensão VS Code, web e agentes remotos).",
+      "limites": "Vibe Code Web: 100 sessões por dia; além dos limites, pay-as-you-go a preço de API. Anual com 20% de desconto sobre o mensal (valor anual não publicado em US$ nas buscas).",
+      "fonte_url": "https://mistral.ai/pricing/",
+      "conferido_em": "2026-10-01"
+    },
+    {
+      "nome": "Education (Pro para estudantes)",
+      "publico": "estudante",
+      "preco_mensal_usd": 5.99,
+      "preco_anual_usd": null,
+      "inclui": "Mesmo conteúdo do Pro.",
+      "limites": "Exige verificar e-mail institucional (Gmail, Outlook etc. não valem; documentos não substituem); válido por no máximo 12 meses; para estudantes de ensino superior credenciado que não usaram Vibe/Le Chat antes. Inscrição em https://chat.mistral.ai/upgrade/student.",
+      "fonte_url": "https://help.mistral.ai/en/articles/698530-i-m-a-student-or-a-teacher-am-i-eligible-for-a-discount",
+      "conferido_em": "2026-10-01"
+    },
+    {
+      "nome": "Team",
+      "publico": "equipe",
+      "preco_mensal_usd": 24.99,
+      "preco_anual_usd": null,
+      "inclui": "Espaço compartilhado, controles de administração e mais armazenamento.",
+      "limites": "Preço por usuário por mês; anual com 20% de desconto.",
+      "fonte_url": "https://mistral.ai/pricing/",
+      "conferido_em": "2026-10-01"
+    },
+    {
+      "nome": "Enterprise",
+      "publico": "empresa",
+      "preco_mensal_usd": null,
+      "preco_anual_usd": null,
+      "inclui": "Implantações personalizadas, treino de modelos e suporte dedicado.",
+      "limites": "Preço sob consulta.",
+      "fonte_url": "https://mistral.ai/pricing/",
+      "conferido_em": "2026-10-01"
+    },
+    {
+      "nome": "API Experiment (Studio grátis)",
+      "publico": "api",
+      "preco_mensal_usd": 0,
+      "preco_anual_usd": null,
+      "inclui": "Acesso gratuito à API do Mistral Studio (antiga La Plateforme) para teste e protótipo, sem cartão de crédito.",
+      "limites": "Limites por requisições por segundo, tokens por minuto e tokens por mês; valores exibidos na página Limits do painel, não publicados nas buscas.",
+      "fonte_url": "https://docs.mistral.ai/admin/user-management-finops/tier",
+      "conferido_em": "2026-10-01"
+    },
+    {
+      "nome": "API pay-as-you-go",
+      "publico": "api",
+      "preco_mensal_usd": null,
+      "preco_anual_usd": null,
+      "inclui": "Cobrança por token/minuto/página conforme o modelo.",
+      "limites": "Batch API com 50% de desconto; cache de entrada reduz até 90% do custo de entrada.",
+      "fonte_url": "https://mistral.ai/pricing/api/",
+      "conferido_em": "2026-10-01"
+    }
+  ],
+  "modelos": [
+    {
+      "id": "mistral/mistral-medium-3.5",
+      "nome": "Mistral Medium 3.5",
+      "tipo": "multimodal",
+      "pesos_abertos": true,
+      "lancado_em": "2026-04-29",
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": 256000,
+      "preco": {
+        "entrada_usd_mtok": 1.5,
+        "saida_usd_mtok": 7.5,
+        "fonte_url": "https://docs.mistral.ai/models/model-cards/mistral-medium-3-5-26-04",
+        "divergencia": null
+      },
+      "outros_precos": [
+        {
+          "unidade": "mtok_cache",
+          "valor_usd": 0.15,
+          "condicao": "entrada em cache",
+          "fonte_url": "https://docs.mistral.ai/models/model-cards/mistral-medium-3-5-26-04"
+        }
+      ],
+      "notas": [],
+      "observacao": "Denso, 128B, pesos abertos sob licença MIT modificada; texto e imagem na entrada. Modelo padrão dos agentes remotos do Vibe. Nota da Artificial Analysis omitida: as buscas retornaram valores conflitantes (14 na página do modelo e 23 a 30 em páginas de comparação)."
+    },
+    {
+      "id": "mistral/mistral-large-3",
+      "nome": "Mistral Large 3",
+      "tipo": "multimodal",
+      "pesos_abertos": true,
+      "lancado_em": "2025-12-02",
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": 256000,
+      "preco": {
+        "entrada_usd_mtok": 0.5,
+        "saida_usd_mtok": 1.5,
+        "fonte_url": "https://docs.mistral.ai/models/model-cards/mistral-large-3-25-12",
+        "divergencia": null
+      },
+      "outros_precos": [],
+      "notas": [
+        {
+          "benchmark": "aa_index",
+          "valor": 9,
+          "medido_em": "2026-10-01",
+          "fonte_url": "https://artificialanalysis.ai/models/mistral-large-3",
+          "observacao": "Artificial Analysis Intelligence Index v4.3.2; modelo sem raciocínio"
+        }
+      ],
+      "observacao": "MoE com 675B parâmetros totais e 41B ativos; Apache 2.0 (v25.12)."
+    },
+    {
+      "id": "mistral/mistral-medium-3",
+      "nome": "Mistral Medium 3",
+      "tipo": "multimodal",
+      "pesos_abertos": false,
+      "lancado_em": null,
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": null,
+      "preco": {
+        "entrada_usd_mtok": 0.4,
+        "saida_usd_mtok": 2,
+        "fonte_url": "https://mistral.ai/news/mistral-medium-3/",
+        "divergencia": null
+      },
+      "outros_precos": [],
+      "notas": [],
+      "observacao": "Lançado em maio de 2025 (dia não confirmado). Preço retirado do anúncio oficial; não foi conferido na página de preços atual."
+    },
+    {
+      "id": "mistral/mistral-small-4",
+      "nome": "Mistral Small 4",
+      "tipo": "multimodal",
+      "pesos_abertos": true,
+      "lancado_em": "2026-03-16",
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": 256000,
+      "preco": {
+        "entrada_usd_mtok": 0.15,
+        "saida_usd_mtok": 0.6,
+        "fonte_url": "https://docs.mistral.ai/models/mistral-small-4-0-26-03",
+        "divergencia": null
+      },
+      "outros_precos": [],
+      "notas": [
+        {
+          "benchmark": "aa_index",
+          "valor": 11,
+          "medido_em": "2026-10-01",
+          "fonte_url": "https://artificialanalysis.ai/models/mistral-small-4",
+          "observacao": "variante com raciocínio (Reasoning); a variante sem raciocínio tem 9 (estimado)"
+        }
+      ],
+      "observacao": "MoE com 119B totais e 6B ativos; Apache 2.0. Une instruct, raciocínio (antigo Magistral), visão (antigo Pixtral) e código agêntico (antigo Devstral)."
+    },
+    {
+      "id": "mistral/ministral-3-14b",
+      "nome": "Ministral 3 14B",
+      "tipo": "multimodal",
+      "pesos_abertos": true,
+      "lancado_em": null,
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": null,
+      "preco": {
+        "entrada_usd_mtok": 0.2,
+        "saida_usd_mtok": 0.2,
+        "fonte_url": "https://docs.mistral.ai/models/model-cards/ministral-3-14b-25-12",
+        "divergencia": null
+      },
+      "outros_precos": [],
+      "notas": [],
+      "observacao": "Versão 25.12 (dezembro de 2025); texto e visão. Contexto e data exata não confirmados."
+    },
+    {
+      "id": "mistral/ministral-3-8b",
+      "nome": "Ministral 3 8B",
+      "tipo": "multimodal",
+      "pesos_abertos": true,
+      "lancado_em": null,
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": null,
+      "preco": {
+        "entrada_usd_mtok": 0.15,
+        "saida_usd_mtok": 0.15,
+        "fonte_url": "https://docs.mistral.ai/models/model-cards/ministral-3-8b-25-12",
+        "divergencia": null
+      },
+      "outros_precos": [],
+      "notas": [],
+      "observacao": "Versão 25.12 (dezembro de 2025). Contexto e data exata não confirmados."
+    },
+    {
+      "id": "mistral/ministral-3-3b",
+      "nome": "Ministral 3 3B",
+      "tipo": "multimodal",
+      "pesos_abertos": true,
+      "lancado_em": null,
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": null,
+      "preco": {
+        "entrada_usd_mtok": 0.1,
+        "saida_usd_mtok": 0.1,
+        "fonte_url": "https://docs.mistral.ai/models/model-cards/ministral-3-3b-25-12",
+        "divergencia": null
+      },
+      "outros_precos": [],
+      "notas": [],
+      "observacao": "Versão 25.12 (dezembro de 2025). Contexto e data exata não confirmados."
+    },
+    {
+      "id": "mistral/codestral-25.08",
+      "nome": "Codestral 25.08",
+      "tipo": "texto",
+      "pesos_abertos": false,
+      "lancado_em": null,
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": 128000,
+      "preco": {
+        "entrada_usd_mtok": 0.3,
+        "saida_usd_mtok": 0.9,
+        "fonte_url": "https://docs.mistral.ai/models/model-cards/codestral-25-08",
+        "divergencia": null
+      },
+      "outros_precos": [],
+      "notas": [],
+      "observacao": "Modelo de completar código (FIM), baixa latência. Lançado no fim de julho de 2025 (dia não confirmado)."
+    },
+    {
+      "id": "mistral/leanstral-1.5",
+      "nome": "Leanstral 1.5",
+      "tipo": "texto",
+      "pesos_abertos": true,
+      "lancado_em": null,
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": null,
+      "preco": {
+        "entrada_usd_mtok": null,
+        "saida_usd_mtok": null,
+        "fonte_url": null,
+        "divergencia": null
+      },
+      "outros_precos": [],
+      "notas": [],
+      "observacao": "Modelo de provas formais (Lean), 6B ativos, Apache 2.0. A busca indicou uso gratuito, mas o preço da API não foi confirmado com valor literal."
+    },
+    {
+      "id": "mistral/voxtral-small-25.07",
+      "nome": "Voxtral Small",
+      "tipo": "audio",
+      "pesos_abertos": true,
+      "lancado_em": null,
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": null,
+      "preco": {
+        "entrada_usd_mtok": 0.1,
+        "saida_usd_mtok": 0.4,
+        "fonte_url": "https://docs.mistral.ai/models/voxtral-small-25-07",
+        "divergencia": null
+      },
+      "outros_precos": [
+        {
+          "unidade": "minuto_audio",
+          "valor_usd": 0.004,
+          "condicao": "entrada de áudio",
+          "fonte_url": "https://docs.mistral.ai/models/voxtral-small-25-07"
+        }
+      ],
+      "notas": [],
+      "observacao": "24B, entrada de áudio para uso de chat/instrução. Versão 25.07."
+    },
+    {
+      "id": "mistral/voxtral-mini-transcribe-2",
+      "nome": "Voxtral Mini Transcribe 2",
+      "tipo": "audio_stt",
+      "pesos_abertos": null,
+      "lancado_em": null,
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": null,
+      "preco": {
+        "entrada_usd_mtok": null,
+        "saida_usd_mtok": null,
+        "fonte_url": null,
+        "divergencia": null
+      },
+      "outros_precos": [
+        {
+          "unidade": "minuto_audio",
+          "valor_usd": 0.003,
+          "condicao": "transcrição em lote",
+          "fonte_url": "https://mistral.ai/news/voxtral-transcribe-2/"
+        }
+      ],
+      "notas": [],
+      "observacao": "Versão 26.02. Pesos abertos e data exata não confirmados."
+    },
+    {
+      "id": "mistral/voxtral-mini-transcribe-realtime",
+      "nome": "Voxtral Mini Transcribe Realtime",
+      "tipo": "audio_stt",
+      "pesos_abertos": true,
+      "lancado_em": "2026-02-26",
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": null,
+      "preco": {
+        "entrada_usd_mtok": null,
+        "saida_usd_mtok": null,
+        "fonte_url": null,
+        "divergencia": null
+      },
+      "outros_precos": [
+        {
+          "unidade": "minuto_audio",
+          "valor_usd": 0.006,
+          "condicao": "transcrição ao vivo (streaming)",
+          "fonte_url": "https://docs.mistral.ai/models/model-cards/voxtral-mini-transcribe-realtime-26-02"
+        }
+      ],
+      "notas": [],
+      "observacao": "4B, Apache 2.0, latência configurável abaixo de 200 ms, 13 idiomas."
+    },
+    {
+      "id": "mistral/voxtral-tts",
+      "nome": "Voxtral TTS",
+      "tipo": "audio_tts",
+      "pesos_abertos": true,
+      "lancado_em": "2026-03-23",
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": null,
+      "preco": {
+        "entrada_usd_mtok": null,
+        "saida_usd_mtok": null,
+        "fonte_url": null,
+        "divergencia": null
+      },
+      "outros_precos": [
+        {
+          "unidade": "mil_caracteres",
+          "valor_usd": 0.016,
+          "condicao": "síntese de voz",
+          "fonte_url": "https://docs.mistral.ai/models/model-cards/voxtral-tts-26-03"
+        }
+      ],
+      "notas": [],
+      "observacao": "4B, pesos abertos sob CC BY-NC 4.0 (uso não comercial), 9 idiomas, ~90 ms até o primeiro áudio."
+    },
+    {
+      "id": "mistral/ocr-4.1",
+      "nome": "Mistral OCR 4.1",
+      "tipo": "multimodal",
+      "pesos_abertos": false,
+      "lancado_em": "2026-08-13",
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": null,
+      "preco": {
+        "entrada_usd_mtok": null,
+        "saida_usd_mtok": null,
+        "fonte_url": null,
+        "divergencia": null
+      },
+      "outros_precos": [
+        {
+          "unidade": "outro",
+          "valor_usd": 4,
+          "condicao": "por 1.000 páginas",
+          "fonte_url": "https://docs.mistral.ai/models/ocr-4-1"
+        },
+        {
+          "unidade": "outro",
+          "valor_usd": 5,
+          "condicao": "por 1.000 páginas anotadas (Annotated Pages)",
+          "fonte_url": "https://docs.mistral.ai/models/ocr-4-1"
+        }
+      ],
+      "notas": [],
+      "observacao": "Caixas delimitadoras por parágrafo, rótulos de bloco e confiança por bloco. Batch API com 50% de desconto (informado para o OCR 4)."
+    },
+    {
+      "id": "mistral/mistral-embed",
+      "nome": "Mistral Embed",
+      "tipo": "embedding",
+      "pesos_abertos": false,
+      "lancado_em": null,
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": null,
+      "preco": {
+        "entrada_usd_mtok": 0.1,
+        "saida_usd_mtok": null,
+        "fonte_url": "https://docs.mistral.ai/models/mistral-embed-23-12",
+        "divergencia": null
+      },
+      "outros_precos": [],
+      "notas": [],
+      "observacao": "Versão 23.12. Sem nota MTEB confirmada (busca esgotada)."
+    },
+    {
+      "id": "mistral/codestral-embed-2505",
+      "nome": "Codestral Embed",
+      "tipo": "embedding",
+      "pesos_abertos": false,
+      "lancado_em": null,
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": null,
+      "preco": {
+        "entrada_usd_mtok": 0.15,
+        "saida_usd_mtok": null,
+        "fonte_url": "https://mistral.ai/news/codestral-embed/",
+        "divergencia": null
+      },
+      "outros_precos": [],
+      "notas": [],
+      "observacao": "Embeddings para código; batch com 50% de desconto."
+    },
+    {
+      "id": "mistral/mistral-moderation-2",
+      "nome": "Mistral Moderation 2",
+      "tipo": "texto",
+      "pesos_abertos": false,
+      "lancado_em": null,
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": 128000,
+      "preco": {
+        "entrada_usd_mtok": 0,
+        "saida_usd_mtok": 0,
+        "fonte_url": "https://docs.mistral.ai/models/model-cards/mistral-moderation-26-03",
+        "divergencia": null
+      },
+      "outros_precos": [],
+      "notas": [],
+      "observacao": "Classificador de moderação com detecção de jailbreak. Página oficial informa entrada, cache e saída gratuitos. Versão 26.03."
+    },
+    {
+      "id": "mistral/shieldstral-1.0",
+      "nome": "Shieldstral 1.0",
+      "tipo": "multimodal",
+      "pesos_abertos": true,
+      "lancado_em": "2026-08-04",
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": null,
+      "preco": {
+        "entrada_usd_mtok": null,
+        "saida_usd_mtok": null,
+        "fonte_url": null,
+        "divergencia": null
+      },
+      "outros_precos": [],
+      "notas": [],
+      "observacao": "Classificador de segurança multimodal de 3B, Apache 2.0. Preço de API não confirmado."
+    },
+    {
+      "id": "mistral/devstral-2",
+      "nome": "Devstral 2",
+      "tipo": "texto",
+      "pesos_abertos": true,
+      "lancado_em": null,
+      "status": "legado",
+      "desativa_em": null,
+      "contexto_tokens": 256000,
+      "preco": {
+        "entrada_usd_mtok": null,
+        "saida_usd_mtok": null,
+        "fonte_url": null,
+        "divergencia": null
+      },
+      "outros_precos": [],
+      "notas": [],
+      "observacao": "Marcado como deprecated na documentação oficial; data de deprecação informada: 2026-05-22. A data de retirada definitiva (retirement) não foi confirmada; recomendação oficial de migração: Mistral Medium 3.5."
+    },
+    {
+      "id": "mistral/devstral-small-2",
+      "nome": "Devstral Small 2",
+      "tipo": "texto",
+      "pesos_abertos": true,
+      "lancado_em": null,
+      "status": "legado",
+      "desativa_em": null,
+      "contexto_tokens": 256000,
+      "preco": {
+        "entrada_usd_mtok": null,
+        "saida_usd_mtok": null,
+        "fonte_url": null,
+        "divergencia": null
+      },
+      "outros_precos": [],
+      "notas": [],
+      "observacao": "Marcado como deprecated na documentação oficial; data de deprecação informada: não confirmada. A data de retirada definitiva (retirement) não foi confirmada; recomendação oficial de migração: Mistral Medium 3.5."
+    },
+    {
+      "id": "mistral/magistral-medium-1.2",
+      "nome": "Magistral Medium 1.2",
+      "tipo": "texto",
+      "pesos_abertos": false,
+      "lancado_em": null,
+      "status": "legado",
+      "desativa_em": null,
+      "contexto_tokens": null,
+      "preco": {
+        "entrada_usd_mtok": null,
+        "saida_usd_mtok": null,
+        "fonte_url": null,
+        "divergencia": null
+      },
+      "outros_precos": [],
+      "notas": [],
+      "observacao": "Marcado como deprecated na documentação oficial; data de deprecação informada: 2026-05-22. A data de retirada definitiva (retirement) não foi confirmada; recomendação oficial de migração: Mistral Medium 3.5."
+    },
+    {
+      "id": "mistral/magistral-small-1.2",
+      "nome": "Magistral Small 1.2",
+      "tipo": "texto",
+      "pesos_abertos": true,
+      "lancado_em": null,
+      "status": "legado",
+      "desativa_em": null,
+      "contexto_tokens": null,
+      "preco": {
+        "entrada_usd_mtok": null,
+        "saida_usd_mtok": null,
+        "fonte_url": null,
+        "divergencia": null
+      },
+      "outros_precos": [],
+      "notas": [],
+      "observacao": "Marcado como deprecated na documentação oficial; data de deprecação informada: 2026-04-30. A data de retirada definitiva (retirement) não foi confirmada; recomendação oficial de migração: Mistral Small 4."
+    },
+    {
+      "id": "mistral/mistral-medium-3.1",
+      "nome": "Mistral Medium 3.1",
+      "tipo": "multimodal",
+      "pesos_abertos": false,
+      "lancado_em": null,
+      "status": "legado",
+      "desativa_em": null,
+      "contexto_tokens": null,
+      "preco": {
+        "entrada_usd_mtok": null,
+        "saida_usd_mtok": null,
+        "fonte_url": null,
+        "divergencia": null
+      },
+      "outros_precos": [],
+      "notas": [],
+      "observacao": "Marcado como deprecated na documentação oficial; data de deprecação informada: 2026-05-22. A data de retirada definitiva (retirement) não foi confirmada; recomendação oficial de migração: Mistral Medium 3.5."
+    },
+    {
+      "id": "mistral/mistral-small-3.2",
+      "nome": "Mistral Small 3.2",
+      "tipo": "multimodal",
+      "pesos_abertos": true,
+      "lancado_em": null,
+      "status": "legado",
+      "desativa_em": null,
+      "contexto_tokens": null,
+      "preco": {
+        "entrada_usd_mtok": null,
+        "saida_usd_mtok": null,
+        "fonte_url": null,
+        "divergencia": null
+      },
+      "outros_precos": [],
+      "notas": [],
+      "observacao": "Marcado como deprecated na documentação oficial; data de deprecação informada: 2026-04-30. A data de retirada definitiva (retirement) não foi confirmada; recomendação oficial de migração: Mistral Small 4."
+    },
+    {
+      "id": "mistral/pixtral-large",
+      "nome": "Pixtral Large",
+      "tipo": "multimodal",
+      "pesos_abertos": false,
+      "lancado_em": null,
+      "status": "legado",
+      "desativa_em": null,
+      "contexto_tokens": null,
+      "preco": {
+        "entrada_usd_mtok": null,
+        "saida_usd_mtok": null,
+        "fonte_url": null,
+        "divergencia": null
+      },
+      "outros_precos": [],
+      "notas": [],
+      "observacao": "Marcado como deprecated na documentação oficial; data de deprecação informada: 2026-02-27. A data de retirada definitiva (retirement) não foi confirmada; recomendação oficial de migração: Mistral Medium 3.5."
+    },
+    {
+      "id": "mistral/mistral-saba",
+      "nome": "Mistral Saba",
+      "tipo": "texto",
+      "pesos_abertos": false,
+      "lancado_em": null,
+      "status": "desativado",
+      "desativa_em": null,
+      "contexto_tokens": null,
+      "preco": {
+        "entrada_usd_mtok": null,
+        "saida_usd_mtok": null,
+        "fonte_url": null,
+        "divergencia": null
+      },
+      "outros_precos": [],
+      "notas": [],
+      "observacao": "Documentação oficial diz que o modelo foi retirado; recomenda Mistral Small 4."
+    },
+    {
+      "id": "mistral/mistral-small-3.1",
+      "nome": "Mistral Small 3.1",
+      "tipo": "multimodal",
+      "pesos_abertos": true,
+      "lancado_em": null,
+      "status": "desativado",
+      "desativa_em": null,
+      "contexto_tokens": null,
+      "preco": {
+        "entrada_usd_mtok": null,
+        "saida_usd_mtok": null,
+        "fonte_url": null,
+        "divergencia": null
+      },
+      "outros_precos": [],
+      "notas": [],
+      "observacao": "Data de retirada informada na documentação: 2025-11-30."
+    }
+  ],
+  "capacidades": [
+    {
+      "capacidade": "texto",
+      "produto": "Vibe Chat (antigo Le Chat)",
+      "como_acessar": [
+        "web",
+        "app"
+      ],
+      "plano_minimo": "Free",
+      "gratis": true,
+      "headless": false,
+      "comando": null,
+      "limites": "mensagens limitadas no Free",
+      "fonte_url": "https://mistral.ai/products/vibe/"
+    },
+    {
+      "capacidade": "codigo",
+      "produto": "Vibe Code (CLI, VS Code, JetBrains/Zed via ACP, web)",
+      "como_acessar": [
+        "cli",
+        "ide",
+        "web"
+      ],
+      "plano_minimo": "Free",
+      "gratis": true,
+      "headless": null,
+      "comando": "vibe",
+      "limites": "Free: 2 sessões/dia no Vibe Code Web; Pro: 100 sessões/dia",
+      "fonte_url": "https://docs.mistral.ai/vibe/code/cli/install-setup"
+    },
+    {
+      "capacidade": "agente_nuvem",
+      "produto": "Vibe remote agents",
+      "como_acessar": [
+        "nuvem",
+        "cli",
+        "web"
+      ],
+      "plano_minimo": null,
+      "gratis": null,
+      "headless": true,
+      "comando": null,
+      "limites": "Sessões na nuvem, em paralelo e assíncronas; uma sessão local do CLI pode ser 'teleportada' para a nuvem. Plano mínimo não confirmado.",
+      "fonte_url": "https://mistral.ai/news/vibe-remote-agents-mistral-medium-3-5/"
+    },
+    {
+      "capacidade": "busca_web",
+      "produto": "Vibe Chat",
+      "como_acessar": [
+        "web",
+        "app"
+      ],
+      "plano_minimo": "Free",
+      "gratis": true,
+      "headless": false,
+      "comando": null,
+      "limites": "buscas limitadas no Free",
+      "fonte_url": "https://mistral.ai/pricing/"
+    },
+    {
+      "capacidade": "pesquisa_profunda",
+      "produto": "Vibe (deep research)",
+      "como_acessar": [
+        "web",
+        "app"
+      ],
+      "plano_minimo": "Pro",
+      "gratis": null,
+      "headless": false,
+      "comando": null,
+      "limites": "Pro dá mais relatórios; limite do Free não confirmado",
+      "fonte_url": "https://mistral.ai/pricing/"
+    },
+    {
+      "capacidade": "mcp",
+      "produto": "Conectores MCP personalizados no Vibe/Le Chat",
+      "como_acessar": [
+        "web"
+      ],
+      "plano_minimo": null,
+      "gratis": null,
+      "headless": false,
+      "comando": null,
+      "limites": "detalhes não confirmados",
+      "fonte_url": "https://mistral.ai/news/le-chat-mcp-connectors-memories/"
+    },
+    {
+      "capacidade": "embeddings",
+      "produto": "API: mistral-embed e codestral-embed",
+      "como_acessar": [
+        "api"
+      ],
+      "plano_minimo": "Experiment",
+      "gratis": true,
+      "headless": true,
+      "comando": null,
+      "limites": "limites do tier",
+      "fonte_url": "https://mistral.ai/pricing/api/"
+    },
+    {
+      "capacidade": "audio_stt",
+      "produto": "API: Voxtral Mini Transcribe 2",
+      "como_acessar": [
+        "api"
+      ],
+      "plano_minimo": "Experiment",
+      "gratis": null,
+      "headless": true,
+      "comando": null,
+      "limites": "US$ 0,003/min",
+      "fonte_url": "https://docs.mistral.ai/studio/audio/overview"
+    },
+    {
+      "capacidade": "audio_tempo_real",
+      "produto": "API: Voxtral Mini Transcribe Realtime",
+      "como_acessar": [
+        "api"
+      ],
+      "plano_minimo": "Experiment",
+      "gratis": null,
+      "headless": true,
+      "comando": null,
+      "limites": "US$ 0,006/min; pesos abertos (Apache 2.0) para rodar local",
+      "fonte_url": "https://docs.mistral.ai/studio/audio/speech_to_text/realtime_transcription"
+    },
+    {
+      "capacidade": "audio_tts",
+      "produto": "API: Voxtral TTS",
+      "como_acessar": [
+        "api"
+      ],
+      "plano_minimo": "Experiment",
+      "gratis": null,
+      "headless": true,
+      "comando": null,
+      "limites": "US$ 0,016 por mil caracteres",
+      "fonte_url": "https://docs.mistral.ai/models/model-cards/voxtral-tts-26-03"
+    }
+  ],
+  "gratis": [
+    {
+      "titulo": "API Experiment (tier gratuito do Studio)",
+      "resumo": "Chave de API gratuita, sem cartão, para testar todos os modelos da API.",
+      "limites": "RPS, tokens/minuto e tokens/mês limitados (valores só no painel).",
+      "chamavel_por_agente": true,
+      "url": "https://docs.mistral.ai/admin/user-management-finops/tier",
+      "valido_ate": null,
+      "origem": "verificado"
+    },
+    {
+      "titulo": "Vibe Free",
+      "resumo": "Chat, busca na web e Vibe Code com sessões limitadas.",
+      "limites": "2 sessões/dia no Vibe Code Web.",
+      "chamavel_por_agente": true,
+      "url": "https://mistral.ai/pricing/",
+      "valido_ate": null,
+      "origem": "verificado"
+    },
+    {
+      "titulo": "Mistral Moderation 2 sem custo",
+      "resumo": "Modelo de moderação com entrada e saída gratuitas na API.",
+      "limites": "limites do tier",
+      "chamavel_por_agente": true,
+      "url": "https://docs.mistral.ai/models/model-cards/mistral-moderation-26-03",
+      "valido_ate": null,
+      "origem": "verificado"
+    },
+    {
+      "titulo": "Pesos abertos para rodar localmente",
+      "resumo": "Ministral 3 (3B/8B/14B), Mistral Small 4, Medium 3.5, Large 3, Voxtral Realtime e Voxtral TTS (este só uso não comercial) podem ser baixados e rodados sem custo de licença.",
+      "limites": "exige hardware próprio; licenças variam (Apache 2.0, MIT modificada, CC BY-NC 4.0)",
+      "chamavel_por_agente": true,
+      "url": "https://docs.mistral.ai/models/overview",
+      "valido_ate": null,
+      "origem": "verificado"
+    }
+  ],
+  "programas": [
+    {
+      "nome": "Plano Education (Pro com desconto para estudantes e professores)",
+      "publico": "estudante",
+      "beneficio": "Pro por US$ 5,99/mês em vez de US$ 14,99.",
+      "valor_usd": null,
+      "requisitos": "E-mail institucional verificado; ensino superior credenciado; até 12 meses; não ter usado Vibe/Le Chat antes.",
+      "elegivel": "talvez",
+      "elegivel_motivo": "Guilherme tem e-mail @usp.br, que deve ser aceito, mas a regra exclui quem já usou Vibe/Le Chat; se nunca usou, é elegível.",
+      "como_aplicar": "Na página de preços clicar em 'I'm a student' ou ir a https://chat.mistral.ai/upgrade/student, com conta no e-mail USP.",
+      "url": "https://help.mistral.ai/en/articles/698530-i-m-a-student-or-a-teacher-am-i-eligible-for-a-discount",
+      "status": "continuo",
+      "prazo": null,
+      "verificado_em": "2026-10-01"
+    },
+    {
+      "nome": "Mistral Ambassadors",
+      "publico": "todos",
+      "beneficio": "Créditos gratuitos de API no Studio, acesso antecipado, contato com times de produto e eventos.",
+      "valor_usd": null,
+      "requisitos": "Experiência com IA/ML e modelos Mistral, participação ativa em comunidades, boa comunicação e tempo regular para criar conteúdo e tutoriais.",
+      "elegivel": "talvez",
+      "elegivel_motivo": "Depende de seleção e de atuação pública na comunidade; o perfil técnico atende, mas exige dedicação contínua.",
+      "como_aplicar": "Inscrição contínua pela página Ambassadors; os selecionados são contatados para entrevista.",
+      "url": "https://docs.mistral.ai/resources/ambassadors",
+      "status": "continuo",
+      "prazo": null,
+      "verificado_em": "2026-10-01"
+    },
+    {
+      "nome": "Mistral AI Worldwide Hackathon 2026",
+      "publico": "todos",
+      "beneficio": "Vencedor global: US$ 10.000 em dinheiro + US$ 15.000 em créditos Mistral; 1º lugar por sede: US$ 1.500 + US$ 3.000 em créditos.",
+      "valor_usd": 15000,
+      "requisitos": "Equipes de 1 a 4 pessoas; 48 h; sedes presenciais e online.",
+      "elegivel": "nao",
+      "elegivel_motivo": "A edição 2026 aconteceu de 28/02 a 01/03; já encerrada. Vale acompanhar a próxima.",
+      "como_aplicar": "Inscrição pelo site do hackathon.",
+      "url": "https://worldwide-hackathon.mistral.ai/",
+      "status": "fechado",
+      "prazo": null,
+      "verificado_em": "2026-10-01"
+    }
+  ],
+  "indicadores": [],
+  "observacoes": "Coleta feita só por WebSearch restrito a domínios oficiais (WebFetch bloqueado para mistral.ai); valores conforme atribuídos pelas buscas às páginas oficiais, sem leitura direta. A cota de buscas da sessão acabou antes do fim, por isso ficaram sem dado: notas LMArena de todos os modelos; nota AA do Mistral Medium 3.5 (valores conflitantes, 14 vs 23-30, omitida); notas MTEB dos embeddings e AA de STT/TTS; conferência no OpenRouter; contexto e data exata dos Ministral 3, Codestral, Voxtral Small/Transcribe 2; preços de Leanstral 1.5 e Shieldstral; valor do preço anual em US$ (só há a regra '20% de desconto'); limites numéricos do tier Experiment; plano mínimo dos agentes remotos; existência de programa formal para startups ou pesquisa acadêmica (não encontrado); página de status; canais do X e GitHub não conferidos. Modelos deprecated (Devstral 2/Small 2, Magistral 1.2, Medium 3.1, Small 3.2, Pixtral Large) ficaram como 'legado' sem desativa_em, porque a documentação dá a data de deprecação e a de retirada não foi confirmada. Indicadores de custo-benefício (ex.: custo para rodar o índice AA) não foram buscados por falta de cota."
+}

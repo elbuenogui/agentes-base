@@ -1,0 +1,644 @@
+{
+  "provedor": {
+    "id": "amazon",
+    "nome": "Amazon (Nova / Bedrock)",
+    "grupo": "laboratorio",
+    "site": "https://aws.amazon.com/nova/",
+    "pais": "EUA",
+    "resumo": "A Amazon treina a família de modelos Nova (texto, voz, multimodal, embeddings) e os vende pela Amazon Bedrock, plataforma da AWS que também hospeda modelos de terceiros. Destaca-se pelo preço baixo dos modelos pequenos (Nova 2 Lite, Titan Embeddings), pelo Nova Act (agentes que operam navegador) e pela IDE/CLI de código Kiro, que tem plano gratuito de um ano para estudantes da USP.",
+    "fontes": [
+      "https://aws.amazon.com/bedrock/pricing/",
+      "https://docs.aws.amazon.com/bedrock/latest/userguide/model-lifecycle.html",
+      "https://www.aboutamazon.com/news/aws/aws-agentic-ai-amazon-bedrock-nova-models",
+      "https://kiro.dev/pricing/"
+    ]
+  },
+  "coletado_em": "2026-10-01",
+  "canais": [
+    {
+      "tipo": "blog",
+      "nome": "AWS News Blog — Amazon Nova",
+      "url": "https://aws.amazon.com/blogs/aws/category/artificial-intelligence/amazon-machine-learning/amazon-bedrock/amazon-nova/",
+      "handle": null,
+      "observacao": null
+    },
+    {
+      "tipo": "rss",
+      "nome": "Feed RSS da categoria Amazon Nova",
+      "url": "https://aws.amazon.com/blogs/aws/category/artificial-intelligence/amazon-machine-learning/amazon-bedrock/amazon-nova/feed/",
+      "handle": null,
+      "observacao": null
+    },
+    {
+      "tipo": "blog",
+      "nome": "Amazon Science",
+      "url": "https://www.amazon.science",
+      "handle": null,
+      "observacao": "pesquisa, relatórios técnicos do Nova e Amazon Research Awards"
+    },
+    {
+      "tipo": "docs",
+      "nome": "Documentação do Amazon Nova",
+      "url": "https://docs.aws.amazon.com/nova/",
+      "handle": null,
+      "observacao": null
+    },
+    {
+      "tipo": "docs",
+      "nome": "Ciclo de vida dos modelos na Bedrock",
+      "url": "https://docs.aws.amazon.com/bedrock/latest/userguide/model-lifecycle.html",
+      "handle": null,
+      "observacao": "datas de Legacy e EOL de cada modelo"
+    },
+    {
+      "tipo": "changelog",
+      "nome": "Notas de versão do Amazon Nova 2",
+      "url": "https://docs.aws.amazon.com/nova/latest/nova2-userguide/release-notes.html",
+      "handle": null,
+      "observacao": null
+    },
+    {
+      "tipo": "precos",
+      "nome": "Preços da Amazon Bedrock",
+      "url": "https://aws.amazon.com/bedrock/pricing/",
+      "handle": null,
+      "observacao": null
+    },
+    {
+      "tipo": "precos",
+      "nome": "Preços do Amazon Nova",
+      "url": "https://aws.amazon.com/nova/pricing/",
+      "handle": null,
+      "observacao": null
+    },
+    {
+      "tipo": "status",
+      "nome": "AWS Health Dashboard",
+      "url": "https://health.aws.amazon.com/health/status",
+      "handle": null,
+      "observacao": "endereço público padrão da AWS; não aberto nesta sessão (rede bloqueada)"
+    },
+    {
+      "tipo": "blog",
+      "nome": "Blog do Kiro",
+      "url": "https://kiro.dev/blog/",
+      "handle": null,
+      "observacao": null
+    },
+    {
+      "tipo": "changelog",
+      "nome": "Changelog do Kiro",
+      "url": "https://kiro.dev/changelog/general/",
+      "handle": null,
+      "observacao": null
+    },
+    {
+      "tipo": "discord",
+      "nome": "Discord do Kiro",
+      "url": "https://kiro.dev/discord/",
+      "handle": null,
+      "observacao": null
+    },
+    {
+      "tipo": "x_oficial",
+      "nome": "Amazon Web Services",
+      "url": "https://x.com/awscloud",
+      "handle": "@awscloud",
+      "observacao": "não conferido por busca nesta sessão (cota de buscas esgotada)"
+    },
+    {
+      "tipo": "x_ceo",
+      "nome": "Andy Jassy (CEO da Amazon)",
+      "url": "https://x.com/ajassy",
+      "handle": "@ajassy",
+      "observacao": "não conferido por busca nesta sessão (cota de buscas esgotada)"
+    }
+  ],
+  "planos": [
+    {
+      "nome": "Amazon Bedrock sob demanda",
+      "publico": "api",
+      "preco_mensal_usd": null,
+      "preco_anual_usd": null,
+      "inclui": "Pagamento por token/uso dos modelos Nova, Titan e de terceiros; inferência em lote com 50% de desconto no Nova 2 Lite.",
+      "limites": "Cotas por conta e região.",
+      "fonte_url": "https://aws.amazon.com/bedrock/pricing/",
+      "conferido_em": "2026-10-01"
+    },
+    {
+      "nome": "Kiro Free",
+      "publico": "individual",
+      "preco_mensal_usd": 0,
+      "preco_anual_usd": null,
+      "inclui": "IDE e CLI Kiro com 50 créditos por mês.",
+      "limites": "50 créditos/mês; sem compra de créditos extras.",
+      "fonte_url": "https://kiro.dev/pricing/",
+      "conferido_em": "2026-10-01"
+    },
+    {
+      "nome": "Kiro Pro",
+      "publico": "individual",
+      "preco_mensal_usd": 20,
+      "preco_anual_usd": null,
+      "inclui": "1.000 créditos por mês.",
+      "limites": "Créditos extras a US$ 0,04 cada.",
+      "fonte_url": "https://kiro.dev/pricing/",
+      "conferido_em": "2026-10-01"
+    },
+    {
+      "nome": "Kiro Pro+",
+      "publico": "individual",
+      "preco_mensal_usd": 40,
+      "preco_anual_usd": null,
+      "inclui": "2.000 créditos por mês.",
+      "limites": "Créditos extras a US$ 0,04 cada.",
+      "fonte_url": "https://kiro.dev/pricing/",
+      "conferido_em": "2026-10-01"
+    },
+    {
+      "nome": "Kiro Pro Max",
+      "publico": "individual",
+      "preco_mensal_usd": 100,
+      "preco_anual_usd": null,
+      "inclui": "5.000 créditos por mês.",
+      "limites": "Créditos extras a US$ 0,04 cada.",
+      "fonte_url": "https://kiro.dev/blog/kiro-pro-max/",
+      "conferido_em": "2026-10-01"
+    },
+    {
+      "nome": "Kiro Power",
+      "publico": "individual",
+      "preco_mensal_usd": 200,
+      "preco_anual_usd": null,
+      "inclui": "10.000 créditos por mês.",
+      "limites": "Créditos extras a US$ 0,04 cada.",
+      "fonte_url": "https://kiro.dev/pricing/",
+      "conferido_em": "2026-10-01"
+    },
+    {
+      "nome": "Kiro Students",
+      "publico": "estudante",
+      "preco_mensal_usd": 0,
+      "preco_anual_usd": null,
+      "inclui": "1 ano grátis com 1.000 créditos/mês e acesso aos recursos pagos (modelos premium, Kiro Web).",
+      "limites": "Exige e-mail universitário e verificação pela SheerID; só universidades da lista (USP consta).",
+      "fonte_url": "https://kiro.dev/students/",
+      "conferido_em": "2026-10-01"
+    }
+  ],
+  "modelos": [
+    {
+      "id": "amazon/nova-2-lite",
+      "nome": "Amazon Nova 2 Lite",
+      "tipo": "multimodal",
+      "pesos_abertos": false,
+      "lancado_em": "2025-12-02",
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": 1000000,
+      "preco": {
+        "entrada_usd_mtok": 0.3,
+        "saida_usd_mtok": 2.5,
+        "fonte_url": "https://aws.amazon.com/blogs/aws/introducing-amazon-nova-2-lite-a-fast-cost-effective-reasoning-model/",
+        "divergencia": null
+      },
+      "outros_precos": [],
+      "notas": []
+    },
+    {
+      "id": "amazon/nova-2-pro",
+      "nome": "Amazon Nova 2 Pro (prévia)",
+      "tipo": "multimodal",
+      "pesos_abertos": false,
+      "lancado_em": "2025-12-02",
+      "status": "restrito",
+      "desativa_em": null,
+      "contexto_tokens": null,
+      "preco": {
+        "entrada_usd_mtok": null,
+        "saida_usd_mtok": null,
+        "fonte_url": null,
+        "divergencia": "Em prévia, acesso antecipado para clientes do Nova Forge; preço não encontrado em página oficial."
+      },
+      "outros_precos": [],
+      "notas": []
+    },
+    {
+      "id": "amazon/nova-2-omni",
+      "nome": "Amazon Nova 2 Omni (prévia)",
+      "tipo": "multimodal",
+      "pesos_abertos": false,
+      "lancado_em": "2025-12-02",
+      "status": "restrito",
+      "desativa_em": null,
+      "contexto_tokens": null,
+      "preco": {
+        "entrada_usd_mtok": null,
+        "saida_usd_mtok": null,
+        "fonte_url": null,
+        "divergencia": "Em prévia (entrada texto/imagem/vídeo/fala, saída texto e imagem), acesso antecipado para clientes do Nova Forge; preço não encontrado."
+      },
+      "outros_precos": [],
+      "notas": []
+    },
+    {
+      "id": "amazon/nova-2-sonic",
+      "nome": "Amazon Nova 2 Sonic",
+      "tipo": "audio",
+      "pesos_abertos": false,
+      "lancado_em": "2025-12-02",
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": 1000000,
+      "preco": {
+        "entrada_usd_mtok": null,
+        "saida_usd_mtok": null,
+        "fonte_url": null,
+        "divergencia": "Fonte terceira, a verificar: US$ 3/US$ 12 por milhão de tokens de fala (entrada/saída) e US$ 0,33/US$ 2,75 por milhão de tokens de texto (getmaxim.ai, llm-stats.com). Não confirmado em página oficial."
+      },
+      "outros_precos": [],
+      "notas": []
+    },
+    {
+      "id": "amazon/nova-multimodal-embeddings",
+      "nome": "Amazon Nova Multimodal Embeddings",
+      "tipo": "embedding",
+      "pesos_abertos": false,
+      "lancado_em": null,
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": null,
+      "preco": null,
+      "outros_precos": [
+        {
+          "unidade": "segundo_video",
+          "valor_usd": 0.00056,
+          "condicao": "entrada de vídeo, inferência em lote (batch)",
+          "fonte_url": "https://aws.amazon.com/blogs/machine-learning/multimodal-embeddings-at-scale-ai-data-lake-for-media-and-entertainment-workloads/"
+        }
+      ],
+      "notas": []
+    },
+    {
+      "id": "amazon/titan-embed-text-v2",
+      "nome": "Amazon Titan Text Embeddings V2",
+      "tipo": "embedding",
+      "pesos_abertos": false,
+      "lancado_em": null,
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": null,
+      "preco": {
+        "entrada_usd_mtok": 0.02,
+        "saida_usd_mtok": null,
+        "fonte_url": "https://aws.amazon.com/bedrock/pricing/",
+        "divergencia": null
+      },
+      "outros_precos": [],
+      "notas": []
+    },
+    {
+      "id": "amazon/nova-micro",
+      "nome": "Amazon Nova Micro (v1)",
+      "tipo": "texto",
+      "pesos_abertos": false,
+      "lancado_em": "2024-12-02",
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": null,
+      "preco": {
+        "entrada_usd_mtok": 0.035,
+        "saida_usd_mtok": 0.14,
+        "fonte_url": "https://aws.amazon.com/bedrock/pricing/",
+        "divergencia": null
+      },
+      "outros_precos": [],
+      "notas": []
+    },
+    {
+      "id": "amazon/nova-lite",
+      "nome": "Amazon Nova Lite (v1)",
+      "tipo": "multimodal",
+      "pesos_abertos": false,
+      "lancado_em": "2024-12-02",
+      "status": "desativacao_anunciada",
+      "desativa_em": "2026-10-14",
+      "contexto_tokens": 300000,
+      "preco": {
+        "entrada_usd_mtok": 0.06,
+        "saida_usd_mtok": 0.24,
+        "fonte_url": "https://aws.amazon.com/bedrock/pricing/",
+        "divergencia": null
+      },
+      "outros_precos": [],
+      "notas": []
+    },
+    {
+      "id": "amazon/nova-pro",
+      "nome": "Amazon Nova Pro (v1)",
+      "tipo": "multimodal",
+      "pesos_abertos": false,
+      "lancado_em": "2024-12-02",
+      "status": "desativado",
+      "desativa_em": "2026-09-30",
+      "contexto_tokens": null,
+      "preco": {
+        "entrada_usd_mtok": 0.8,
+        "saida_usd_mtok": 3.2,
+        "fonte_url": "https://aws.amazon.com/bedrock/pricing/",
+        "divergencia": null
+      },
+      "outros_precos": [],
+      "notas": []
+    },
+    {
+      "id": "amazon/nova-premier",
+      "nome": "Amazon Nova Premier (v1)",
+      "tipo": "multimodal",
+      "pesos_abertos": false,
+      "lancado_em": null,
+      "status": "desativado",
+      "desativa_em": "2026-09-14",
+      "contexto_tokens": null,
+      "preco": {
+        "entrada_usd_mtok": null,
+        "saida_usd_mtok": null,
+        "fonte_url": null,
+        "divergencia": "Fonte terceira, a verificar: US$ 2,50/US$ 12,50 por milhão (entrada/saída), cache US$ 0,625 (openrouter.ai, pricepertoken.com). Modelo já em EOL."
+      },
+      "outros_precos": [],
+      "notas": []
+    },
+    {
+      "id": "amazon/nova-sonic",
+      "nome": "Amazon Nova Sonic (v1)",
+      "tipo": "audio",
+      "pesos_abertos": false,
+      "lancado_em": null,
+      "status": "desativado",
+      "desativa_em": "2026-09-14",
+      "contexto_tokens": null,
+      "preco": null,
+      "outros_precos": [],
+      "notas": []
+    },
+    {
+      "id": "amazon/nova-canvas",
+      "nome": "Amazon Nova Canvas (v1)",
+      "tipo": "imagem",
+      "pesos_abertos": false,
+      "lancado_em": "2024-12-02",
+      "status": "desativado",
+      "desativa_em": "2026-09-30",
+      "contexto_tokens": null,
+      "preco": null,
+      "outros_precos": [],
+      "notas": []
+    },
+    {
+      "id": "amazon/nova-reel",
+      "nome": "Amazon Nova Reel (v1)",
+      "tipo": "video",
+      "pesos_abertos": false,
+      "lancado_em": "2024-12-02",
+      "status": "desativado",
+      "desativa_em": "2026-09-30",
+      "contexto_tokens": null,
+      "preco": null,
+      "outros_precos": [],
+      "notas": []
+    }
+  ],
+  "capacidades": [
+    {
+      "capacidade": "texto",
+      "produto": "Amazon Bedrock (Nova 2 Lite)",
+      "como_acessar": [
+        "api",
+        "nuvem"
+      ],
+      "plano_minimo": "conta AWS (pago por uso)",
+      "gratis": false,
+      "headless": true,
+      "comando": "aws bedrock-runtime converse --model-id <id do Nova 2 Lite> ...",
+      "limites": "Cotas por região; Nova 2 Lite via inferência entre regiões (Global/US/EU/JP CRIS).",
+      "fonte_url": "https://aws.amazon.com/blogs/machine-learning/migrate-from-amazon-nova-1-to-amazon-nova-2-on-amazon-bedrock/"
+    },
+    {
+      "capacidade": "embeddings",
+      "produto": "Nova Multimodal Embeddings / Titan Text Embeddings V2",
+      "como_acessar": [
+        "api"
+      ],
+      "plano_minimo": "conta AWS (pago por uso)",
+      "gratis": false,
+      "headless": true,
+      "comando": null,
+      "limites": "Nova MME aceita texto, documentos, imagem, vídeo e áudio; dimensões 3072/1024/384/256.",
+      "fonte_url": "https://aws.amazon.com/blogs/aws/amazon-nova-multimodal-embeddings-now-available-in-amazon-bedrock/"
+    },
+    {
+      "capacidade": "audio_tempo_real",
+      "produto": "Amazon Nova 2 Sonic",
+      "como_acessar": [
+        "api"
+      ],
+      "plano_minimo": "conta AWS (pago por uso)",
+      "gratis": false,
+      "headless": true,
+      "comando": null,
+      "limites": "Fala para fala por streaming bidirecional.",
+      "fonte_url": "https://aws.amazon.com/blogs/aws/introducing-amazon-nova-2-sonic-next-generation-speech-to-speech-model-for-conversational-ai/"
+    },
+    {
+      "capacidade": "computer_use",
+      "produto": "Amazon Nova Act",
+      "como_acessar": [
+        "api",
+        "nuvem",
+        "ide"
+      ],
+      "plano_minimo": "conta AWS (US$ 4,75 por hora de agente)",
+      "gratis": false,
+      "headless": true,
+      "comando": null,
+      "limites": "Agentes que operam navegador; GA só em us-east-1; tempo esperando humano não é cobrado.",
+      "fonte_url": "https://aws.amazon.com/blogs/aws/build-reliable-ai-agents-for-ui-workflow-automation-with-amazon-nova-act-now-generally-available/"
+    },
+    {
+      "capacidade": "agente_nuvem",
+      "produto": "Amazon Nova Act (frotas de agentes)",
+      "como_acessar": [
+        "nuvem",
+        "api"
+      ],
+      "plano_minimo": "conta AWS",
+      "gratis": false,
+      "headless": true,
+      "comando": null,
+      "limites": "US$ 4,75 por hora de agente, cada agente em paralelo cobra separado.",
+      "fonte_url": "https://aws.amazon.com/blogs/aws/build-reliable-ai-agents-for-ui-workflow-automation-with-amazon-nova-act-now-generally-available/"
+    },
+    {
+      "capacidade": "codigo",
+      "produto": "Kiro IDE",
+      "como_acessar": [
+        "ide",
+        "web"
+      ],
+      "plano_minimo": "Free",
+      "gratis": true,
+      "headless": false,
+      "comando": null,
+      "limites": "50 créditos/mês no Free; 1.000/mês no Students.",
+      "fonte_url": "https://kiro.dev/pricing/"
+    },
+    {
+      "capacidade": "cli_headless",
+      "produto": "Kiro CLI",
+      "como_acessar": [
+        "cli"
+      ],
+      "plano_minimo": "Free",
+      "gratis": true,
+      "headless": true,
+      "comando": "kiro-cli chat --no-interactive --trust-all-tools \"<instrução>\" (autenticação por KIRO_API_KEY; saída --output-format stream-json)",
+      "limites": "Sem entrada do usuário no meio da sessão; consome créditos do plano.",
+      "fonte_url": "https://kiro.dev/docs/cli/headless/"
+    },
+    {
+      "capacidade": "imagem_gerar",
+      "produto": "Amazon Nova 2 Omni (prévia)",
+      "como_acessar": [
+        "api"
+      ],
+      "plano_minimo": "cliente Nova Forge",
+      "gratis": false,
+      "headless": true,
+      "comando": null,
+      "limites": "Prévia restrita; substitui o Nova Canvas, que chegou ao EOL em 2026-09-30.",
+      "fonte_url": "https://aws.amazon.com/about-aws/whats-new/2025/12/amazon-nova-2-omni-preview/"
+    }
+  ],
+  "gratis": [
+    {
+      "titulo": "AWS Free Tier: até US$ 200 em créditos",
+      "resumo": "Conta nova ganha US$ 100 no cadastro e até mais US$ 100 explorando serviços; plano Free dura até 6 meses ou até acabar o crédito.",
+      "limites": "Só para quem nunca teve conta AWS; créditos expiram 12 meses após a abertura; plano Free não se estende além de 6 meses.",
+      "chamavel_por_agente": true,
+      "url": "https://aws.amazon.com/free/",
+      "valido_ate": null,
+      "origem": "verificado"
+    },
+    {
+      "titulo": "US$ 20 extras do Free Tier pela atividade da Bedrock",
+      "resumo": "Uma das atividades que liberam crédito adicional é enviar um prompt no playground de texto da Amazon Bedrock (US$ 20).",
+      "limites": "Parte dos US$ 100 adicionais do Free Tier; só contas novas.",
+      "chamavel_por_agente": true,
+      "url": "https://aws.amazon.com/blogs/aws/aws-free-tier-update-new-customers-can-get-started-and-explore-aws-with-up-to-200-in-credits/",
+      "valido_ate": null,
+      "origem": "verificado"
+    },
+    {
+      "titulo": "Kiro Free",
+      "resumo": "IDE e CLI de código com 50 créditos por mês.",
+      "limites": "50 créditos/mês.",
+      "chamavel_por_agente": true,
+      "url": "https://kiro.dev/pricing/",
+      "valido_ate": null,
+      "origem": "verificado"
+    },
+    {
+      "titulo": "Kiro Students: 1 ano grátis",
+      "resumo": "1.000 créditos/mês por um ano e recursos pagos para estudantes de universidades elegíveis (USP está na lista).",
+      "limites": "Verificação pela SheerID com e-mail universitário.",
+      "chamavel_por_agente": true,
+      "url": "https://kiro.dev/students/",
+      "valido_ate": null,
+      "origem": "verificado"
+    },
+    {
+      "titulo": "AWS Educate",
+      "resumo": "Cursos e laboratórios práticos gratuitos de nuvem, só com e-mail, sem cartão de crédito.",
+      "limites": "Laboratórios com tempo fixo; não dá créditos livres para a Bedrock.",
+      "chamavel_por_agente": false,
+      "url": "https://aws.amazon.com/education/awseducate/",
+      "valido_ate": null,
+      "origem": "verificado"
+    }
+  ],
+  "programas": [
+    {
+      "nome": "Kiro for Students",
+      "publico": "estudante",
+      "beneficio": "1 ano do Kiro com 1.000 créditos/mês e recursos pagos.",
+      "valor_usd": null,
+      "requisitos": "Estudante de universidade da lista, com e-mail institucional; verificação SheerID.",
+      "elegivel": "sim",
+      "elegivel_motivo": "A USP aparece entre as universidades brasileiras elegíveis e o Guilherme tem e-mail institucional da USP.",
+      "como_aplicar": "Criar conta no Kiro (Google, GitHub ou AWS Builder ID) ligada ao e-mail @usp.br e verificar pela SheerID na página da conta.",
+      "url": "https://kiro.dev/students/",
+      "status": "aberto",
+      "prazo": null,
+      "verificado_em": "2026-10-01"
+    },
+    {
+      "nome": "AWS Cloud Credit for Research",
+      "publico": "pesquisador",
+      "beneficio": "Créditos promocionais AWS para pesquisa acadêmica (inclui Bedrock); estudantes até US$ 5.000, docentes sem teto.",
+      "valor_usd": 5000,
+      "requisitos": "Estudante de pós-graduação/doutorado ou docente/pesquisador de instituição de pesquisa credenciada; proposta de ferramenta científica na nuvem, prova de conceito ou treinamento.",
+      "elegivel": "talvez",
+      "elegivel_motivo": "Graduando não aparece entre os estudantes elegíveis (pós-graduação/doutorado); o orientador do UrbVerde pode submeter a proposta como docente, sem teto de valor.",
+      "como_aplicar": "Formulário de proposta no site; análise contínua, ciclos de 90 a 120 dias.",
+      "url": "https://aws.amazon.com/government-education/research-and-technical-computing/cloud-credit-for-research/",
+      "status": "continuo",
+      "prazo": null,
+      "verificado_em": "2026-10-01"
+    },
+    {
+      "nome": "Earth on AWS Cloud Credits for Research",
+      "publico": "pesquisador",
+      "beneficio": "Créditos AWS para pesquisa com dados geoespaciais e de observação da Terra.",
+      "valor_usd": null,
+      "requisitos": "Não detalhados nas buscas desta sessão.",
+      "elegivel": "talvez",
+      "elegivel_motivo": "O tema (dados urbanos e ambientais do UrbVerde) combina; regras de elegibilidade não conferidas.",
+      "como_aplicar": "Ver página do programa.",
+      "url": "https://aws.amazon.com/earth/research-credits/",
+      "status": "desconhecido",
+      "prazo": null,
+      "verificado_em": "2026-10-01"
+    },
+    {
+      "nome": "Amazon Research Awards (chamada Fall 2026)",
+      "publico": "pesquisador",
+      "beneficio": "Doação única e irrestrita à instituição do pesquisador principal, em dinheiro e/ou créditos AWS.",
+      "valor_usd": null,
+      "requisitos": "Pesquisador principal em instituição acadêmica ou ONG, de qualquer país; áreas da chamada (Agentic AI, AI for Information Security, Multilingual and Contextual AI Evaluation, Synthetic Data Generation for Multimodal Perception, entre outras).",
+      "elegivel": "talvez",
+      "elegivel_motivo": "Graduando não pode ser pesquisador principal; o orientador poderia propor, mas as áreas da chamada não cobrem diretamente dados urbanos/ambientais.",
+      "como_aplicar": "Proposta pelo site da Amazon Science durante a janela da chamada.",
+      "url": "https://www.amazon.science/research-awards/call-for-proposals",
+      "status": "aberto",
+      "prazo": null,
+      "verificado_em": "2026-10-01"
+    },
+    {
+      "nome": "AWS Educate",
+      "publico": "estudante",
+      "beneficio": "Treinamento e laboratórios práticos gratuitos de nuvem.",
+      "valor_usd": null,
+      "requisitos": "A partir de 13 anos, só e-mail.",
+      "elegivel": "sim",
+      "elegivel_motivo": "Aberto a qualquer estudante; útil para aprender AWS, mas não dá crédito livre para a Bedrock.",
+      "como_aplicar": "Cadastro com e-mail no site do AWS Educate.",
+      "url": "https://aws.amazon.com/education/awseducate/",
+      "status": "continuo",
+      "prazo": null,
+      "verificado_em": "2026-10-01"
+    }
+  ],
+  "indicadores": [],
+  "observacoes": "Rede: WebFetch bloqueado para aws.amazon.com; tudo veio de WebSearch restrito a domínios oficiais. A cota de buscas da sessão (200) acabou antes das notas de benchmark e dos @ do X, então: (1) nenhuma nota aa_index/lmarena/MTEB foi registrada; (2) @awscloud e @ajassy foram registrados sem conferência; (3) não há indicador de custo-benefício. Preços: os da Bedrock (Nova Micro/Lite/Pro, Titan V2) vêm da página oficial de preços, mas o resumo da busca citou a região US East (Ohio) e não us-east-1; os valores costumam ser iguais, não confirmado. Nova 2 Lite: US$ 0,30/2,50 por milhão no blog oficial de lançamento; lote com 50% de desconto. Nova 2 Pro e Nova 2 Omni seguem em prévia restrita a clientes do Nova Forge segundo as páginas encontradas; preço não publicado. Nova 2 Sonic e Nova Premier: preço só em fontes terceiras (ver 'divergencia'). Nova Multimodal Embeddings: só o preço de vídeo em lote (US$ 0,00056/s) foi achado; texto/imagem/áudio não. Ciclo de vida (docs Bedrock): Nova Premier v1 e Nova Sonic v1 com EOL em 2026-09-14; Nova Canvas e Nova Reel v1 com EOL em 2026-09-30 (sucessor: Nova 2 Omni); Nova Pro v1 com EOL em 2026-09-30 (algumas regiões); Nova Lite v1 com EOL divergente entre resultados (2026-09-30 e 2026-10-14), registrado 2026-10-14; status do Nova Micro v1 não confirmado (mantido ativo). Datas de lançamento de Nova Premier, Nova Sonic v1, Nova MME e Titan V2 não confirmadas. Titan Multimodal Embeddings G1 existe na documentação, mas preço e status não foram confirmados, ficou de fora. Nova Act: US$ 4,75/hora de agente, GA em us-east-1. Kiro: planos de kiro.dev (domínio oficial do produto da AWS); o Kiro também tem programa para startups (não aplicável)."
+}

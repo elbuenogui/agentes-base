@@ -1,0 +1,198 @@
+{
+  "provedor": {
+    "id": "typesafe",
+    "nome": "TypeSafe AI (Jev)",
+    "grupo": "laboratorio",
+    "site": "https://typesafe.ai",
+    "pais": "EUA",
+    "resumo": "Laboratório de IA de São Francisco que saiu do modo stealth em 2026-09-15 com o Jev, primeiro modelo 'System One': em vez de gerar texto, recebe um estado e perguntas tipadas (Choice, Score, Noul) e devolve decisões tipadas com probabilidade calibrada. Destaca-se em classificação, roteamento, pontuação por rubrica e moderação em alto volume, com baixa latência e saída gratuita (só a entrada é cobrada).",
+    "fontes": [
+      "https://typesafe.ai/",
+      "https://typesafe.ai/blog/introducing-system-one-models-and-jev",
+      "https://docs.typesafe.ai/models",
+      "https://docs.typesafe.ai/api",
+      "https://docs.digitalocean.com/products/inference/details/pricing/",
+      "https://ideas.digitalocean.com/changelog/now-available-jev-from-typesafe-ai",
+      "https://openrouter.ai/typesafe/jev-1.13",
+      "https://vercel.com/ai-gateway/models/jev",
+      "https://developers.cloudflare.com/ai/models/typesafe/jev/"
+    ]
+  },
+  "coletado_em": "2026-10-01",
+  "canais": [
+    {
+      "tipo": "blog",
+      "nome": "TypeSafe AI Blog",
+      "url": "https://typesafe.ai/blog/introducing-system-one-models-and-jev",
+      "handle": null,
+      "observacao": "post de lançamento do Jev; índice do blog não confirmado"
+    },
+    {
+      "tipo": "docs",
+      "nome": "Documentação TypeSafe",
+      "url": "https://docs.typesafe.ai/introduction",
+      "handle": null,
+      "observacao": null
+    },
+    {
+      "tipo": "precos",
+      "nome": "Modelos e preços",
+      "url": "https://docs.typesafe.ai/models",
+      "handle": null,
+      "observacao": "preço e limites de taxa ficam na página de modelos"
+    },
+    {
+      "tipo": "changelog",
+      "nome": "Changelog do SDK Python",
+      "url": "https://docs.typesafe.ai/sdk/python/changelog",
+      "handle": null,
+      "observacao": "changelog do SDK, não da plataforma"
+    },
+    {
+      "tipo": "status",
+      "nome": "Typesafe AI status",
+      "url": "https://status.typesafe.ai/",
+      "handle": null,
+      "observacao": null
+    },
+    {
+      "tipo": "github",
+      "nome": "typesafe-ai",
+      "url": "https://github.com/typesafe-ai",
+      "handle": null,
+      "observacao": "SDKs oficiais: typesafe-sdk-python (uv add typesafe-sdk) e typesafe-sdk-js (npm install @typesafe-ai/sdk)"
+    },
+    {
+      "tipo": "x_oficial",
+      "nome": "TypeSafe AI",
+      "url": "https://x.com/typesafeai",
+      "handle": "@typesafeai",
+      "observacao": null
+    },
+    {
+      "tipo": "x_ceo",
+      "nome": "Diogo Almeida",
+      "url": "https://x.com/CompleteSkeptic",
+      "handle": "@CompleteSkeptic",
+      "observacao": "cofundador e CEO; anunciou o Jev"
+    },
+    {
+      "tipo": "x_lider",
+      "nome": "Erik Gafni",
+      "url": "https://x.com/EGafni",
+      "handle": "@EGafni",
+      "observacao": "cofundador e CTO"
+    },
+    {
+      "tipo": "x_lider",
+      "nome": "Sasha Sheng",
+      "url": "https://x.com/hackgoofer",
+      "handle": "@hackgoofer",
+      "observacao": "cofundadora e COO"
+    }
+  ],
+  "planos": [
+    {
+      "nome": "API pré-paga (créditos)",
+      "publico": "api",
+      "preco_mensal_usd": null,
+      "preco_anual_usd": null,
+      "inclui": "Acesso ao Jev pela API (POST https://api.typesafe.ai/v1/systemone) e pelo console; pagamento por créditos consumidos a cada entrada; US$ 0,042 por milhão de tokens de entrada, saída grátis.",
+      "limites": "Jev 1.13: 100 mil tokens/s e 40 requisições/s, ajustados dinamicamente sem aviso conforme a demanda.",
+      "fonte_url": "https://docs.typesafe.ai/models",
+      "conferido_em": "2026-10-01"
+    },
+    {
+      "nome": "Custom / Enterprise",
+      "publico": "empresa",
+      "preco_mensal_usd": null,
+      "preco_anual_usd": null,
+      "inclui": "Limites de taxa maiores, sob contrato.",
+      "limites": "Negociado com sales@typesafe.ai; preço não publicado.",
+      "fonte_url": "https://docs.typesafe.ai/models",
+      "conferido_em": "2026-10-01"
+    }
+  ],
+  "modelos": [
+    {
+      "id": "typesafe/jev-1.13",
+      "nome": "Jev 1.13 (jev-1.13.0, alias jev-latest)",
+      "tipo": "texto",
+      "pesos_abertos": false,
+      "lancado_em": "2026-09-15",
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": 64000,
+      "preco": {
+        "entrada_usd_mtok": 0.042,
+        "saida_usd_mtok": 0,
+        "fonte_url": "https://docs.typesafe.ai/models",
+        "divergencia": "Mesmo preço em DigitalOcean (US$ 42 por bilhão de tokens de entrada), OpenRouter, Vercel AI Gateway e Cloudflare Workers AI. Contexto: a TypeSafe e a Vercel informam 64 mil tokens por requisição (32 mil para estado + a pergunta mais longa); a página da Cloudflare informa 32 mil."
+      },
+      "outros_precos": [],
+      "notas": []
+    }
+  ],
+  "capacidades": [
+    {
+      "capacidade": "texto",
+      "produto": "Jev — decisões tipadas (Choice, Score, Noul) sobre texto",
+      "como_acessar": [
+        "api",
+        "web"
+      ],
+      "plano_minimo": "API pré-paga",
+      "gratis": false,
+      "headless": true,
+      "comando": "POST https://api.typesafe.ai/v1/systemone com model=jev-latest (SDKs Python e JavaScript)",
+      "limites": "Não gera texto: só escolhe entre opções, pontua em níveis definidos ou estima probabilidade de sim/não. Fraco em precisão numérica e em tarefas com vários níveis de indireção (página de 'jaggedness' do Jev 1.13).",
+      "fonte_url": "https://docs.typesafe.ai/introduction/quickstart"
+    },
+    {
+      "capacidade": "rerank",
+      "produto": "Jev para re-ranking (cookbook)",
+      "como_acessar": [
+        "api"
+      ],
+      "plano_minimo": "API pré-paga",
+      "gratis": false,
+      "headless": true,
+      "comando": null,
+      "limites": "Padrão de uso documentado em cookbook, não um endpoint de rerank dedicado.",
+      "fonte_url": "https://docs.typesafe.ai/cookbooks/rerank_typesafe"
+    }
+  ],
+  "gratis": [
+    {
+      "titulo": "Crédito de US$ 5 no cadastro do console (suspenso)",
+      "resumo": "Segundo blogs e agregadores, ao abrir o cadastro em console.typesafe.ai (2026-09-20) a TypeSafe dava US$ 5 de crédito (~120 milhões de tokens); em 2026-09-22 pausou cadastros e depois retirou o crédito grátis citando abuso, dizendo que trabalha para trazê-lo de volta. O contrato oficial (MCA) prevê 'créditos promocionais' a critério da TypeSafe, sem valor.",
+      "limites": "Não disponível em 2026-10-01 segundo as fontes terceiras; valor e status não confirmados em página oficial.",
+      "chamavel_por_agente": true,
+      "url": "https://typesafe.ai/legal/mca",
+      "valido_ate": null,
+      "origem": "a_verificar"
+    },
+    {
+      "titulo": "Jev grátis no Vercel AI Gateway (promoção encerrada)",
+      "resumo": "Na estreia, o Jev ficou grátis no Vercel AI Gateway (slug typesafe-ai/jev); depois da promoção segue disponível com cobrança no preço padrão.",
+      "limites": "Promoção terminou em 2026-09-25 segundo a Vercel; posts da comunidade citam 2026-09-26 16:00 UTC.",
+      "chamavel_por_agente": true,
+      "url": "https://vercel.com/blog/ai-gateway-jev-model-launch",
+      "valido_ate": "2026-09-25",
+      "origem": "verificado"
+    }
+  ],
+  "programas": [],
+  "indicadores": [
+    {
+      "modelo_id": "typesafe/jev-1.13",
+      "nome": "custo para triar 1.000 tickets",
+      "valor": 0.025,
+      "unidade": "USD",
+      "descricao": "A OpenRouter diz que o Jev faz triagem de tickets com mediana de 194 ms e 'cerca de dois centavos e meio por 1.000 tickets'. O valor é aproximado na própria fonte, e a fonte é a OpenRouter, não a TypeSafe.",
+      "medido_em": "2026-10-01",
+      "fonte_url": "https://openrouter.ai/blog/insights/what-is-jev/"
+    }
+  ],
+  "observacoes": "Coleta feita só por WebSearch: WebFetch em docs.typesafe.ai foi bloqueado pelo proxy, então os valores vêm dos trechos atribuídos às páginas oficiais nos resultados de busca. ACESSO FORA DA DIGITALOCEAN: (1) direto na TypeSafe (api.typesafe.ai/v1/systemone, model jev-latest/jev-1.13.0, chave TYPESAFE_API_KEY, console.typesafe.ai). Lançado como early access com lista de espera; blogs dizem que o cadastro abriu em 2026-09-20 e foi pausado em 2026-09-22, e o status atual do cadastro não foi confirmado em página oficial; (2) OpenRouter: typesafe/jev-1.13 ou ~typesafe/jev-latest pelo endpoint de decisões (POST /api/alpha/decisions, não chat completions), sem conta TypeSafe nem lista de espera, mesmo preço; a OpenRouter também lista 'typesafe/jev-router' (roteador baseado no Jev, não registrado como modelo); (3) Vercel AI Gateway: typesafe-ai/jev, mesmo preço; a comunidade relata 429 de 'free tier' mesmo com créditos pagos; (4) Cloudflare Workers AI: modelo typesafe/jev, US$ 0,042/M de entrada, saída e entrada em cache a US$ 0. GRATUIDADE: hoje nenhuma confirmada em fonte oficial (ver 'gratis'). PROGRAMAS: nenhum programa oficial da TypeSafe para estudante ou pesquisador encontrado; um agregador de cupons (joinsecret.com) cita US$ 1.000 em créditos de Jev via OpenRouter para startups, por 6 meses (fonte terceira, a verificar; o Guilherme provavelmente não é elegível por não ser startup). NOTAS DE BENCHMARK: não se aplicam (o Jev não gera texto e não entra no índice da Artificial Analysis nem no LMArena), e nenhuma nota foi encontrada; a TypeSafe afirma ser de 40x a 200x mais rápido que LLMs de fronteira (alegação do fornecedor, não incluída como nota). Tipo 'texto' foi usado por falta de um tipo 'decisão/classificação' no enum. O país (EUA, São Francisco) vem de imprensa e perfis terceiros. Status em 2026-09-29: 99,823% de disponibilidade da API, segundo status.typesafe.ai. Usos sugeridos para o Guilherme: barreira de permissões e roteamento de tarefas na base de agentes PM/EXEC, triagem e classificação de trechos para a Mari (RAG) e verificação barata de saídas de LLM em cascata."
+}

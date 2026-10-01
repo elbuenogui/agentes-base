@@ -1,0 +1,109 @@
+{
+  "provedor": {
+    "id": "deepseek",
+    "nome": "DeepSeek",
+    "grupo": "laboratorio",
+    "site": "https://www.deepseek.com",
+    "pais": "China",
+    "resumo": "Laboratório chinês (Hangzhou) que publica modelos de linguagem de pesos abertos sob licença MIT e oferece uma API compatível com OpenAI e Anthropic entre as mais baratas do mercado. Destaca-se pelo custo muito baixo com cache de contexto em disco, pelo desconto de 50% fora do horário de pico e pelo app de chat gratuito.",
+    "fontes": [
+      "https://api-docs.deepseek.com/quick_start/pricing/",
+      "https://api-docs.deepseek.com/news/news260910/",
+      "https://api-docs.deepseek.com/news/news260813/",
+      "https://api-docs.deepseek.com/news/news260424/",
+      "https://api-docs.deepseek.com/updates/"
+    ]
+  },
+  "coletado_em": "2026-10-01",
+  "canais": [
+    {"tipo": "blog", "nome": "DeepSeek News", "url": "https://www.deepseek.com/en/news/", "handle": null, "observacao": "anúncios de modelos; espelhados em api-docs.deepseek.com/news"},
+    {"tipo": "docs", "nome": "DeepSeek API Docs", "url": "https://api-docs.deepseek.com/", "handle": null, "observacao": null},
+    {"tipo": "precos", "nome": "Models & Pricing", "url": "https://api-docs.deepseek.com/quick_start/pricing/", "handle": null, "observacao": null},
+    {"tipo": "changelog", "nome": "Change Log", "url": "https://api-docs.deepseek.com/updates/", "handle": null, "observacao": "desativações e trocas de versão por trás dos nomes da API"},
+    {"tipo": "status", "nome": "DeepSeek Status", "url": "https://status.deepseek.com/", "handle": null, "observacao": null},
+    {"tipo": "github", "nome": "deepseek-ai", "url": "https://github.com/deepseek-ai", "handle": "deepseek-ai", "observacao": null},
+    {"tipo": "outro", "nome": "Hugging Face deepseek-ai", "url": "https://huggingface.co/deepseek-ai", "handle": "deepseek-ai", "observacao": "pesos abertos"},
+    {"tipo": "x_oficial", "nome": "DeepSeek", "url": "https://x.com/deepseek_ai", "handle": "@deepseek_ai", "observacao": "a empresa declara que é sua única conta oficial no X; contas parecidas são imitação"},
+    {"tipo": "outro", "nome": "Plataforma da API", "url": "https://platform.deepseek.com/", "handle": null, "observacao": "chaves, saldo e recarga"}
+  ],
+  "planos": [
+    {"nome": "API pré-paga (pay-as-you-go)", "publico": "api", "preco_mensal_usd": null, "preco_anual_usd": null,
+     "inclui": "Cobrança por token sobre saldo recarregado; o saldo concedido (granted balance) é consumido antes do saldo recarregado.",
+     "limites": "Concorrência: 2500 para deepseek-flash e 500 para deepseek-v4-pro. Preço de pico 01:00–04:00 e 06:00–10:00 UTC, de segunda a sexta (exceto feriados chineses); fora disso, 50% do preço de pico.",
+     "fonte_url": "https://api-docs.deepseek.com/quick_start/pricing/", "conferido_em": "2026-10-01"},
+    {"nome": "App e chat web DeepSeek", "publico": "individual", "preco_mensal_usd": 0, "preco_anual_usd": null,
+     "inclui": "Chat gratuito em chat.deepseek.com e apps iOS/Android, com busca na web, modo de raciocínio e upload de arquivos.",
+     "limites": "Sem plano pago divulgado; limites de uso não publicados.",
+     "fonte_url": "https://api-docs.deepseek.com/news/news250115/", "conferido_em": "2026-10-01"}
+  ],
+  "modelos": [
+    {"id": "deepseek/deepseek-v4.1-flash", "nome": "DeepSeek-V4.1-Flash (API: deepseek-flash)", "tipo": "multimodal",
+     "pesos_abertos": true, "lancado_em": "2026-09-10", "status": "ativo", "desativa_em": null,
+     "contexto_tokens": 1000000,
+     "preco": {"entrada_usd_mtok": 0.3, "saida_usd_mtok": 1.2, "fonte_url": "https://api-docs.deepseek.com/quick_start/pricing/",
+               "divergencia": "Preço de pico. Fora do pico: entrada 0.15 e saída 0.6. Os nomes legados deepseek-v4-flash, deepseek-v4-flash-vision-exp e deepseek-v4-pro (desde 2026-09-14) também são servidos por este modelo ao preço Flash."},
+     "outros_precos": [
+       {"unidade": "mtok_cache", "valor_usd": 0.006, "condicao": "entrada com cache hit, horário de pico", "fonte_url": "https://api-docs.deepseek.com/quick_start/pricing/"},
+       {"unidade": "mtok_cache", "valor_usd": 0.003, "condicao": "entrada com cache hit, fora do pico", "fonte_url": "https://api-docs.deepseek.com/quick_start/pricing/"},
+       {"unidade": "outro", "valor_usd": 0.15, "condicao": "US$/MTok de entrada sem cache (cache miss), fora do pico", "fonte_url": "https://api-docs.deepseek.com/quick_start/pricing/"},
+       {"unidade": "outro", "valor_usd": 0.6, "condicao": "US$/MTok de saída, fora do pico", "fonte_url": "https://api-docs.deepseek.com/quick_start/pricing/"}
+     ],
+     "notas": [
+       {"benchmark": "aa_index", "valor": 39, "medido_em": "2026-10-01", "fonte_url": "https://artificialanalysis.ai/models/deepseek-v4-1-flash", "observacao": "variante Reasoning, Max Effort; a variante sem raciocínio marca 25"},
+       {"benchmark": "lmarena_elo", "valor": 1473, "medido_em": "2026-10-01", "fonte_url": "https://arena.ai/leaderboard/text", "observacao": "variante Max; ±7, 41º lugar no Text Arena geral"}
+     ]},
+    {"id": "deepseek/deepseek-v4-pro", "nome": "DeepSeek-V4-Pro-0813 (API: deepseek-v4-pro)", "tipo": "texto",
+     "pesos_abertos": true, "lancado_em": "2026-04-24", "status": "legado", "desativa_em": null,
+     "contexto_tokens": 1000000,
+     "preco": {"entrada_usd_mtok": 1.32, "saida_usd_mtok": 3.96, "fonte_url": "https://api-docs.deepseek.com/quick_start/pricing/",
+               "divergencia": "Preço de pico ainda listado na página de preços (fora do pico: 0.66 entrada, 1.98 saída). Porém, desde 04:00 UTC de 2026-09-14, todas as chamadas a deepseek-v4-pro são roteadas para o V4.1-Flash e cobradas ao preço Flash, até o lançamento do V4.1-Pro (news260910)."},
+     "outros_precos": [
+       {"unidade": "mtok_cache", "valor_usd": 0.044, "condicao": "entrada com cache hit, horário de pico (preço listado, não aplicado desde 2026-09-14)", "fonte_url": "https://api-docs.deepseek.com/quick_start/pricing/"},
+       {"unidade": "mtok_cache", "valor_usd": 0.022, "condicao": "entrada com cache hit, fora do pico (preço listado, não aplicado desde 2026-09-14)", "fonte_url": "https://api-docs.deepseek.com/quick_start/pricing/"}
+     ],
+     "notas": []},
+    {"id": "deepseek/deepseek-v4-flash", "nome": "DeepSeek-V4-Flash (API: deepseek-v4-flash)", "tipo": "texto",
+     "pesos_abertos": true, "lancado_em": "2026-04-24", "status": "desativado", "desativa_em": "2026-09-10",
+     "contexto_tokens": 1000000, "preco": null, "outros_precos": [], "notas": []},
+    {"id": "deepseek/deepseek-chat", "nome": "deepseek-chat (nome legado; modo sem raciocínio do V4-Flash)", "tipo": "texto",
+     "pesos_abertos": true, "lancado_em": null, "status": "desativado", "desativa_em": "2026-07-24",
+     "contexto_tokens": null, "preco": null, "outros_precos": [], "notas": []},
+    {"id": "deepseek/deepseek-reasoner", "nome": "deepseek-reasoner (nome legado; modo com raciocínio do V4-Flash)", "tipo": "texto",
+     "pesos_abertos": true, "lancado_em": "2025-01-20", "status": "desativado", "desativa_em": "2026-07-24",
+     "contexto_tokens": null, "preco": null, "outros_precos": [], "notas": []},
+    {"id": "deepseek/deepseek-ocr-2", "nome": "DeepSeek-OCR 2", "tipo": "multimodal",
+     "pesos_abertos": true, "lancado_em": "2026-01-27", "status": "ativo", "desativa_em": null,
+     "contexto_tokens": null, "preco": null, "outros_precos": [], "notas": []},
+    {"id": "deepseek/deepseek-ocr", "nome": "DeepSeek-OCR", "tipo": "multimodal",
+     "pesos_abertos": true, "lancado_em": null, "status": "legado", "desativa_em": null,
+     "contexto_tokens": null, "preco": null, "outros_precos": [], "notas": []}
+  ],
+  "capacidades": [
+    {"capacidade": "texto", "produto": "API DeepSeek (deepseek-flash)", "como_acessar": ["api"], "plano_minimo": "API pré-paga", "gratis": false, "headless": true,
+     "comando": "base_url https://api.deepseek.com, model=deepseek-flash (compatível com OpenAI Chat Completions, Responses e Anthropic Messages)",
+     "limites": "contexto 1M, saída máx. 384K; JSON Output, tool calls, prefix completion (beta) e FIM (beta) só no modo sem raciocínio",
+     "fonte_url": "https://api-docs.deepseek.com/quick_start/pricing/"},
+    {"capacidade": "codigo", "produto": "DeepSeek via Claude Code / Codex (API compatível)", "como_acessar": ["api", "cli"], "plano_minimo": "API pré-paga", "gratis": false, "headless": true,
+     "comando": "ANTHROPIC_BASE_URL apontando para a API Anthropic da DeepSeek e modelo deepseek-flash",
+     "limites": "cobrado por token da API",
+     "fonte_url": "https://api-docs.deepseek.com/quick_start/agent_integrations/claude_code/"},
+    {"capacidade": "texto", "produto": "Chat DeepSeek (web e app)", "como_acessar": ["web", "app"], "plano_minimo": "gratuito", "gratis": true, "headless": false,
+     "comando": null, "limites": "não publicados", "fonte_url": "https://api-docs.deepseek.com/news/news250115/"},
+    {"capacidade": "busca_web", "produto": "Chat DeepSeek (busca na web)", "como_acessar": ["web", "app"], "plano_minimo": "gratuito", "gratis": true, "headless": false,
+     "comando": null, "limites": "não publicados", "fonte_url": "https://api-docs.deepseek.com/news/news250115/"}
+  ],
+  "gratis": [
+    {"titulo": "App e chat web DeepSeek gratuitos", "resumo": "chat.deepseek.com e apps iOS/Android sem custo, sem anúncios nem compras no app, com busca na web e modo de raciocínio.", "limites": "limites de uso não publicados", "chamavel_por_agente": false, "url": "https://www.deepseek.com/en/download/", "valido_ate": null, "origem": "verificado"},
+    {"titulo": "Pesos abertos da família V4 (MIT)", "resumo": "DeepSeek-V4-Pro (1.6T total / 49B ativos) e V4-Flash (284B / 13B ativos) publicados como código aberto no Hugging Face; V4.1-Flash (552B MoE) também tem pesos no repositório deepseek-ai/DeepSeek-V4.1-Flash.", "limites": "exige hardware próprio de grande porte (checkpoint do V4.1-Flash com cerca de 510 GB)", "chamavel_por_agente": true, "url": "https://api-docs.deepseek.com/news/news260424/", "valido_ate": null, "origem": "a_verificar"},
+    {"titulo": "DeepSeek-OCR e DeepSeek-OCR 2 (pesos abertos)", "resumo": "Modelos de OCR / visão-linguagem que extraem texto de imagens e PDFs digitalizados em texto ou Markdown; suportados no vLLM.", "limites": "execução local, requer GPU", "chamavel_por_agente": true, "url": "https://github.com/deepseek-ai/DeepSeek-OCR-2", "valido_ate": null, "origem": "verificado"},
+    {"titulo": "Desconto de 50% fora do horário de pico", "resumo": "Fora de 01:00–04:00 e 06:00–10:00 UTC (dias úteis), todos os preços da API caem pela metade; fins de semana e feriados chineses são inteiros fora do pico.", "limites": "não é gratuidade, é desconto automático", "chamavel_por_agente": true, "url": "https://api-docs.deepseek.com/quick_start/pricing/", "valido_ate": null, "origem": "verificado"}
+  ],
+  "programas": [],
+  "indicadores": [
+    {"modelo_id": "deepseek/deepseek-v4.1-flash", "nome": "custo por tarefa no índice AA (Reasoning, Max Effort)", "valor": 0.27, "unidade": "USD por tarefa",
+     "descricao": "Custo publicado pela Artificial Analysis para avaliar o modelo, por tarefa do Intelligence Index (nota 39).", "medido_em": "2026-10-01", "fonte_url": "https://artificialanalysis.ai/models/deepseek-v4-1-flash"},
+    {"modelo_id": "deepseek/deepseek-v4.1-flash", "nome": "custo por tarefa no índice AA (sem raciocínio)", "valor": 0.15, "unidade": "USD por tarefa",
+     "descricao": "Custo publicado pela Artificial Analysis por tarefa do Intelligence Index, variante sem raciocínio (nota 25).", "medido_em": "2026-10-01", "fonte_url": "https://artificialanalysis.ai/models/deepseek-v4-1-flash-non-reasoning"}
+  ],
+  "observacoes": "Coleta feita só por WebSearch restrito a domínios oficiais (WebFetch bloqueado em api-docs.deepseek.com). Mapa de nomes: deepseek-chat e deepseek-reasoner apontavam para os modos sem/com raciocínio do deepseek-v4-flash e tinham desativação marcada para 2026-07-24 15:59 UTC (changelog); a busca não mostrou anúncio de adiamento, então ficaram como 'desativado' — conferir se ainda respondem. Hoje o único modelo servido de fato é DeepSeek-V4.1-Flash (nome de API deepseek-flash, lançado em 2026-09-10, 552B MoE, 8B ativos na entrada e 16B na saída, visão nativa); deepseek-v4-flash e deepseek-v4-flash-vision-exp foram aposentados e roteiam para ele; deepseek-v4-pro (V4-Pro-0813, GA em 2026-08-13) roteia para o V4.1-Flash ao preço Flash desde 2026-09-14, até o V4.1-Pro sair — por isso status 'legado', sem data de desativação anunciada. Data exata de aposentadoria do V4-Flash usada como 2026-09-10 (data do anúncio do V4.1-Flash). Saída máxima de 384K tokens. Preços: pico entrada 0.3 / saída 1.2 / cache hit 0.006; fora do pico 0.15 / 0.6 / 0.003 (US$/MTok), confirmados em duas buscas; a página de preços também mostrou valores antigos em outra busca (V4-Flash 0.14/0.28 e cache hit 0.0028; V4-Pro cache hit 0.003625, miss 0.435, saída 0.87; R1 0.14/0.55/2.19) — tratados como desatualizados. Pesos do V4.1-Flash: licença MIT e repo oficial deepseek-ai/DeepSeek-V4.1-Flash citados só em páginas de terceiros no Hugging Face/GitHub, por isso 'a_verificar'. Saldo concedido a novos usuários existe no esquema da API, mas valor não publicado. Nenhum programa de crédito para estudantes ou pesquisadores encontrado nos domínios oficiais. CEO Liang Wenfeng não tem conta pública no X conhecida; a empresa declara @deepseek_ai como única conta oficial. Sem nota AA/LMArena coletada para o V4-Pro (redirecionado). DeepSeek-OCR (out/2025) sem data exata confirmada. Modelos de pesos abertos antigos (R1, V3.x, Janus, Coder) não listados individualmente."
+}

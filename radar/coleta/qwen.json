@@ -1,0 +1,1400 @@
+{
+  "provedor": {
+    "id": "qwen",
+    "nome": "Alibaba (Qwen)",
+    "grupo": "laboratorio",
+    "site": "https://qwen.ai",
+    "pais": "China",
+    "resumo": "Laboratório de IA do Alibaba, dono da família Qwen (texto, visão, omni, código, voz, imagem) e do Wan (vídeo), servidos pelo Alibaba Cloud Model Studio (DashScope internacional). Destaca-se pela maior família de pesos abertos do mercado — inclusive o flagship Qwen3.8-Max (2,4T) — e por preços baixos, com cota grátis por modelo para novos usuários.",
+    "fontes": [
+      "https://qwen.ai",
+      "https://www.alibabacloud.com/help/en/model-studio/model-pricing",
+      "https://github.com/QwenLM"
+    ]
+  },
+  "coletado_em": "2026-10-01",
+  "canais": [
+    {
+      "tipo": "blog",
+      "nome": "Blog do Qwen",
+      "url": "https://qwen.ai/research",
+      "handle": null,
+      "observacao": "Posts em https://qwen.ai/blog?id=...; blog antigo em qwenlm.github.io"
+    },
+    {
+      "tipo": "blog",
+      "nome": "Blog antigo Qwen",
+      "url": "https://qwenlm.github.io/blog/",
+      "handle": null,
+      "observacao": "Arquivo até a era Qwen3"
+    },
+    {
+      "tipo": "blog",
+      "nome": "Alibaba Cloud Community",
+      "url": "https://www.alibabacloud.com/blog",
+      "handle": null,
+      "observacao": "Anúncios de lançamento e preço"
+    },
+    {
+      "tipo": "docs",
+      "nome": "Model Studio docs",
+      "url": "https://www.alibabacloud.com/help/en/model-studio/models",
+      "handle": null,
+      "observacao": null
+    },
+    {
+      "tipo": "precos",
+      "nome": "Model Studio pricing",
+      "url": "https://www.alibabacloud.com/help/en/model-studio/model-pricing",
+      "handle": null,
+      "observacao": "Use o escopo Internacional (Singapura)"
+    },
+    {
+      "tipo": "changelog",
+      "nome": "Avisos do Model Studio",
+      "url": "https://www.alibabacloud.com/en/notice",
+      "handle": null,
+      "observacao": "Avisos de preço e desativação"
+    },
+    {
+      "tipo": "github",
+      "nome": "QwenLM",
+      "url": "https://github.com/QwenLM",
+      "handle": null,
+      "observacao": null
+    },
+    {
+      "tipo": "github",
+      "nome": "Qwen Code",
+      "url": "https://github.com/QwenLM/qwen-code",
+      "handle": null,
+      "observacao": "CLI de agente de código"
+    },
+    {
+      "tipo": "outro",
+      "nome": "Hugging Face Qwen",
+      "url": "https://huggingface.co/Qwen",
+      "handle": null,
+      "observacao": "Pesos abertos"
+    },
+    {
+      "tipo": "outro",
+      "nome": "Wan",
+      "url": "https://wan.video/",
+      "handle": null,
+      "observacao": "Site do modelo de vídeo"
+    },
+    {
+      "tipo": "x_oficial",
+      "nome": "Qwen",
+      "url": "https://x.com/Alibaba_Qwen",
+      "handle": "@Alibaba_Qwen",
+      "observacao": null
+    },
+    {
+      "tipo": "x_oficial",
+      "nome": "Alibaba Cloud",
+      "url": "https://x.com/alibaba_cloud",
+      "handle": "@alibaba_cloud",
+      "observacao": null
+    }
+  ],
+  "planos": [
+    {
+      "nome": "Model Studio pay-as-you-go",
+      "publico": "api",
+      "preco_mensal_usd": null,
+      "preco_anual_usd": null,
+      "inclui": "API de todos os modelos Qwen/Wan (compatível com OpenAI) + modelos de terceiros",
+      "limites": "Cobrança por token/imagem/segundo; cota grátis inicial por modelo",
+      "fonte_url": "https://www.alibabacloud.com/help/en/model-studio/model-pricing",
+      "conferido_em": "2026-10-01"
+    },
+    {
+      "nome": "Token Plan Pessoal Lite",
+      "publico": "individual",
+      "preco_mensal_usd": 8,
+      "preco_anual_usd": null,
+      "inclui": "11.500 Credits/mês; modelos de texto, multimodais e ferramentas; funciona com Claude Code, Cursor, Qwen Code, Codex, Qoder, OpenClaw",
+      "limites": "Preço promocional por tempo limitado: US$ 6/mês",
+      "fonte_url": "https://www.alibabacloud.com/help/en/model-studio/token-plan-personal-overview",
+      "conferido_em": "2026-10-01"
+    },
+    {
+      "nome": "Token Plan Pessoal Essential",
+      "publico": "individual",
+      "preco_mensal_usd": 16,
+      "preco_anual_usd": null,
+      "inclui": "25.500 Credits/mês",
+      "limites": "Promoção: US$ 10/mês",
+      "fonte_url": "https://www.alibabacloud.com/help/en/model-studio/token-plan-personal-overview",
+      "conferido_em": "2026-10-01"
+    },
+    {
+      "nome": "Token Plan Pessoal Standard",
+      "publico": "individual",
+      "preco_mensal_usd": 25,
+      "preco_anual_usd": null,
+      "inclui": "45.000 Credits/mês",
+      "limites": "Promoção: US$ 18/mês",
+      "fonte_url": "https://www.alibabacloud.com/help/en/model-studio/token-plan-personal-overview",
+      "conferido_em": "2026-10-01"
+    },
+    {
+      "nome": "Token Plan Pessoal Pro",
+      "publico": "individual",
+      "preco_mensal_usd": 80,
+      "preco_anual_usd": null,
+      "inclui": "180.000 Credits/mês",
+      "limites": "Promoção: US$ 68/mês. Pacote extra: US$ 15/mês por 20.000 Credits (até 5)",
+      "fonte_url": "https://www.alibabacloud.com/help/en/model-studio/token-plan-personal-overview",
+      "conferido_em": "2026-10-01"
+    },
+    {
+      "nome": "Coding Plan Pro",
+      "publico": "individual",
+      "preco_mensal_usd": 50,
+      "preco_anual_usd": null,
+      "inclui": "Até 90.000 requisições/mês em ferramentas de código; modelos qwen3.7-plus, qwen3.6-plus, qwen3-coder-plus, qwen3-coder-next, kimi-k2.5, glm-5, MiniMax-M2.5 etc.",
+      "limites": "Oferta em quantidade limitada, indisponível quando esgota; Coding Plan Lite fechado para novas assinaturas desde 2026-03-20",
+      "fonte_url": "https://www.alibabacloud.com/help/en/model-studio/coding-plan",
+      "conferido_em": "2026-10-01"
+    }
+  ],
+  "modelos": [
+    {
+      "id": "qwen/qwen3.8-max",
+      "nome": "Qwen3.8-Max",
+      "tipo": "multimodal",
+      "pesos_abertos": false,
+      "lancado_em": "2026-08-03",
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": 1000000,
+      "preco": {
+        "entrada_usd_mtok": 2,
+        "saida_usd_mtok": 6,
+        "fonte_url": "https://www.alibabacloud.com/help/en/model-studio/qwen3-8-max",
+        "divergencia": "Preço Singapura (internacional). Em China (Pequim) e EUA (Virgínia) a página oficial indica US$ 1,65 entrada / US$ 4,951 saída; a Arena lista US$ 1,69/5,07."
+      },
+      "outros_precos": [
+        {
+          "unidade": "mtok_cache",
+          "valor_usd": 0.25,
+          "condicao": "entrada com cache implícito (Singapura)",
+          "fonte_url": "https://www.alibabacloud.com/help/en/model-studio/qwen3-8-max"
+        },
+        {
+          "unidade": "mtok_cache",
+          "valor_usd": 2.5,
+          "condicao": "criação de cache explícito (Singapura)",
+          "fonte_url": "https://www.alibabacloud.com/help/en/model-studio/qwen3-8-max"
+        },
+        {
+          "unidade": "mtok_cache",
+          "valor_usd": 0.17,
+          "condicao": "leitura de cache explícito (Singapura)",
+          "fonte_url": "https://www.alibabacloud.com/help/en/model-studio/qwen3-8-max"
+        }
+      ],
+      "notas": [
+        {
+          "benchmark": "aa_index",
+          "valor": 45,
+          "medido_em": "2026-10-01",
+          "fonte_url": "https://artificialanalysis.ai/models/qwen3-8-max",
+          "observacao": "variante Qwen3.8 Max (0902); a versão 0803 tem 40"
+        },
+        {
+          "benchmark": "lmarena_elo",
+          "valor": 1481,
+          "medido_em": "2026-10-01",
+          "fonte_url": "https://arena.ai/leaderboard/text",
+          "observacao": "Text Arena, ±5, 22.809 votos"
+        }
+      ],
+      "observacao": "2,4 trilhões de parâmetros (95B ativos), entrada texto/imagem/vídeo, saída máx. 131.072 tokens. Existe a variante qwen3.8-max-prime (só preço China/EUA encontrado)."
+    },
+    {
+      "id": "qwen/qwen3.8-2.4t-a95b",
+      "nome": "Qwen3.8-2.4T-A95B (pesos abertos do Max)",
+      "tipo": "texto",
+      "pesos_abertos": true,
+      "lancado_em": "2026-08-17",
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": null,
+      "preco": {
+        "entrada_usd_mtok": null,
+        "saida_usd_mtok": null,
+        "fonte_url": null,
+        "divergencia": null
+      },
+      "outros_precos": [],
+      "notas": [],
+      "observacao": "Pesos abertos do Qwen3.8-Max no Hugging Face/ModelScope (anúncio 2026-08-17, blog 603463). Também servido no Model Studio; preço não confirmado. Segundo discussão no HF, os pesos abertos são só texto e sem 1M de contexto."
+    },
+    {
+      "id": "qwen/qwen3.8-flash",
+      "nome": "Qwen3.8-Flash",
+      "tipo": "multimodal",
+      "pesos_abertos": false,
+      "lancado_em": null,
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": 1000000,
+      "preco": {
+        "entrada_usd_mtok": 0.15,
+        "saida_usd_mtok": 0.47,
+        "fonte_url": "https://www.alibabacloud.com/help/en/model-studio/qwen3-8-flash",
+        "divergencia": "Hong Kong (escopo global): US$ 0,113 / 0,382. Blog anuncia 1 RMB/3 RMB por 1M (China)."
+      },
+      "outros_precos": [
+        {
+          "unidade": "mtok_cache",
+          "valor_usd": 0.016,
+          "condicao": "entrada com cache implícito (Singapura)",
+          "fonte_url": "https://www.alibabacloud.com/help/en/model-studio/qwen3-8-flash"
+        },
+        {
+          "unidade": "mtok_cache",
+          "valor_usd": 0.2,
+          "condicao": "criação de cache explícito (Singapura)",
+          "fonte_url": "https://www.alibabacloud.com/help/en/model-studio/qwen3-8-flash"
+        }
+      ],
+      "notas": [],
+      "observacao": "Versão de produção do Qwen3.8-Flash-Next (MoE 125B + 51B de embeddings N-gram, 6B ativos). Lançado em ago/2026 (data exata não confirmada)."
+    },
+    {
+      "id": "qwen/qwen3.8-flash-next",
+      "nome": "Qwen3.8-Flash-Next",
+      "tipo": "multimodal",
+      "pesos_abertos": true,
+      "lancado_em": null,
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": null,
+      "preco": {
+        "entrada_usd_mtok": null,
+        "saida_usd_mtok": null,
+        "fonte_url": null,
+        "divergencia": null
+      },
+      "outros_precos": [],
+      "notas": [
+        {
+          "benchmark": "aa_index",
+          "valor": 40,
+          "medido_em": "2026-10-01",
+          "fonte_url": "https://artificialanalysis.ai/models/comparisons/qwen3-8-flash-next-vs-qwen3-8-27b",
+          "observacao": "Qwen3.8-Flash-Next"
+        }
+      ],
+      "observacao": "Pesos abertos no Hugging Face e ModelScope; prévia da arquitetura do Qwen4. Blog: https://qwen.ai/blog?id=qwen3.8-flash-next"
+    },
+    {
+      "id": "qwen/qwen3.8-27b",
+      "nome": "Qwen3.8-27B",
+      "tipo": "multimodal",
+      "pesos_abertos": true,
+      "lancado_em": "2026-08-17",
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": null,
+      "preco": {
+        "entrada_usd_mtok": null,
+        "saida_usd_mtok": null,
+        "fonte_url": null,
+        "divergencia": null
+      },
+      "outros_precos": [],
+      "notas": [
+        {
+          "benchmark": "aa_index",
+          "valor": 44,
+          "medido_em": "2026-10-01",
+          "fonte_url": "https://artificialanalysis.ai/models/qwen3-8-27b-medium",
+          "observacao": "variante medium (maior nota; xhigh = 34, sem raciocínio = 20)"
+        }
+      ],
+      "observacao": "Denso, visão-linguagem nativo, roda em hardware de consumidor. Preço de API não confirmado."
+    },
+    {
+      "id": "qwen/qwen3.7-max",
+      "nome": "Qwen3.7-Max",
+      "tipo": "texto",
+      "pesos_abertos": false,
+      "lancado_em": "2026-05-20",
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": null,
+      "preco": {
+        "entrada_usd_mtok": 2.5,
+        "saida_usd_mtok": 7.5,
+        "fonte_url": "https://www.alibabacloud.com/help/en/model-studio/qwen3-7-max",
+        "divergencia": null
+      },
+      "outros_precos": [
+        {
+          "unidade": "mtok_cache",
+          "valor_usd": 0.5,
+          "condicao": "entrada com cache implícito (Singapura)",
+          "fonte_url": "https://www.alibabacloud.com/help/en/model-studio/qwen3-7-max"
+        },
+        {
+          "unidade": "mtok_cache",
+          "valor_usd": 0.25,
+          "condicao": "leitura de cache explícito (Singapura)",
+          "fonte_url": "https://www.alibabacloud.com/help/en/model-studio/qwen3-7-max"
+        }
+      ],
+      "notas": [
+        {
+          "benchmark": "aa_index",
+          "valor": 29,
+          "medido_em": "2026-10-01",
+          "fonte_url": "https://artificialanalysis.ai/models/qwen3-7-max",
+          "observacao": ""
+        }
+      ]
+    },
+    {
+      "id": "qwen/qwen3.7-plus",
+      "nome": "Qwen3.7-Plus",
+      "tipo": "multimodal",
+      "pesos_abertos": false,
+      "lancado_em": "2026-06-03",
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": 1000000,
+      "preco": {
+        "entrada_usd_mtok": 0.4,
+        "saida_usd_mtok": 1.6,
+        "fonte_url": "https://www.alibabacloud.com/help/en/model-studio/qwen3-7-plus",
+        "divergencia": "Faixa 0–256K. A página associava esses valores a um desconto de 20% válido até 2026-08-31; não ficou claro se é o preço cheio ou o promocional. Faixa 256K–1M: US$ 1,2 / 4,8."
+      },
+      "outros_precos": [],
+      "notas": [
+        {
+          "benchmark": "aa_index",
+          "valor": 32,
+          "medido_em": "2026-10-01",
+          "fonte_url": "https://artificialanalysis.ai/models/qwen3-7-plus",
+          "observacao": ""
+        }
+      ]
+    },
+    {
+      "id": "qwen/qwen3.7-flash",
+      "nome": "Qwen3.7-Flash",
+      "tipo": "texto",
+      "pesos_abertos": false,
+      "lancado_em": null,
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": null,
+      "preco": {
+        "entrada_usd_mtok": null,
+        "saida_usd_mtok": null,
+        "fonte_url": null,
+        "divergencia": null
+      },
+      "outros_precos": [],
+      "notas": [],
+      "observacao": "Página oficial existe (qwen3-7-flash); preço não confirmado."
+    },
+    {
+      "id": "qwen/qwen3-max",
+      "nome": "Qwen3-Max",
+      "tipo": "texto",
+      "pesos_abertos": false,
+      "lancado_em": null,
+      "status": "legado",
+      "desativa_em": null,
+      "contexto_tokens": null,
+      "preco": {
+        "entrada_usd_mtok": null,
+        "saida_usd_mtok": null,
+        "fonte_url": null,
+        "divergencia": null
+      },
+      "outros_precos": [],
+      "notas": [],
+      "observacao": "Faixas oficiais (Singapura) 32K–128K: US$ 2,4/12; 128K–256K: US$ 3/15. Preço da faixa 0–32K não confirmado, por isso preco = null."
+    },
+    {
+      "id": "qwen/qwen-plus",
+      "nome": "Qwen-Plus (alias)",
+      "tipo": "texto",
+      "pesos_abertos": false,
+      "lancado_em": null,
+      "status": "legado",
+      "desativa_em": null,
+      "contexto_tokens": 1000000,
+      "preco": {
+        "entrada_usd_mtok": 0.4,
+        "saida_usd_mtok": 1.2,
+        "fonte_url": "https://www.alibabacloud.com/help/en/model-studio/qwen-plus",
+        "divergencia": "Faixa até 256K; 256K–1M: US$ 1,2 / 3,6. Alias = qwen-plus-2025-12-01."
+      },
+      "outros_precos": [],
+      "notas": []
+    },
+    {
+      "id": "qwen/qwen-flash",
+      "nome": "Qwen-Flash (alias)",
+      "tipo": "texto",
+      "pesos_abertos": false,
+      "lancado_em": null,
+      "status": "legado",
+      "desativa_em": null,
+      "contexto_tokens": 1000000,
+      "preco": {
+        "entrada_usd_mtok": 0.05,
+        "saida_usd_mtok": 0.4,
+        "fonte_url": "https://www.alibabacloud.com/help/en/model-studio/qwen-flash",
+        "divergencia": "Faixa até 256K; 256K–1M: US$ 0,25 / 2. Alias = qwen-flash-2025-07-28."
+      },
+      "outros_precos": [],
+      "notas": []
+    },
+    {
+      "id": "qwen/qwen-turbo",
+      "nome": "Qwen-Turbo",
+      "tipo": "texto",
+      "pesos_abertos": false,
+      "lancado_em": null,
+      "status": "legado",
+      "desativa_em": null,
+      "contexto_tokens": null,
+      "preco": {
+        "entrada_usd_mtok": null,
+        "saida_usd_mtok": null,
+        "fonte_url": null,
+        "divergencia": null
+      },
+      "outros_precos": [],
+      "notas": [],
+      "observacao": "Não recebe mais atualizações; a Alibaba recomenda migrar para Qwen-Flash. Sem data de desativação publicada (snapshot 2024-09-19 saiu do ar em 2026-01-30)."
+    },
+    {
+      "id": "qwen/qwen3-coder-plus",
+      "nome": "Qwen3-Coder-Plus",
+      "tipo": "texto",
+      "pesos_abertos": false,
+      "lancado_em": null,
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": 1000000,
+      "preco": {
+        "entrada_usd_mtok": 1,
+        "saida_usd_mtok": 5,
+        "fonte_url": "https://www.alibabacloud.com/help/en/model-studio/qwen-coder",
+        "divergencia": "Faixa 0–32K. 32K–128K: 1,8/9; 128K–256K: 3/15; 256K–1M: 6/60 (Singapura)."
+      },
+      "outros_precos": [],
+      "notas": []
+    },
+    {
+      "id": "qwen/qwen3-coder-flash",
+      "nome": "Qwen3-Coder-Flash",
+      "tipo": "texto",
+      "pesos_abertos": false,
+      "lancado_em": null,
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": 1000000,
+      "preco": {
+        "entrada_usd_mtok": 0.3,
+        "saida_usd_mtok": 1.5,
+        "fonte_url": "https://www.alibabacloud.com/help/en/model-studio/qwen-coder",
+        "divergencia": "Faixa 0–32K. 32K–128K: 0,5/2,5; 128K–256K: 0,8/4; 256K–1M: 1,6/9,6 (Singapura)."
+      },
+      "outros_precos": [],
+      "notas": []
+    },
+    {
+      "id": "qwen/qwen3-coder-480b-a35b",
+      "nome": "Qwen3-Coder (pesos abertos)",
+      "tipo": "texto",
+      "pesos_abertos": true,
+      "lancado_em": null,
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": null,
+      "preco": {
+        "entrada_usd_mtok": null,
+        "saida_usd_mtok": null,
+        "fonte_url": null,
+        "divergencia": null
+      },
+      "outros_precos": [],
+      "notas": [],
+      "observacao": "Família aberta Qwen3-Coder no GitHub QwenLM/Hugging Face; preço de API não coletado (dado de memória do modelo, a verificar). Coding Plan inclui qwen3-coder-next e qwen3-coder-plus."
+    },
+    {
+      "id": "qwen/qwen3",
+      "nome": "Qwen3 (família aberta, 0.6B–235B)",
+      "tipo": "texto",
+      "pesos_abertos": true,
+      "lancado_em": null,
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": null,
+      "preco": {
+        "entrada_usd_mtok": null,
+        "saida_usd_mtok": null,
+        "fonte_url": null,
+        "divergencia": null
+      },
+      "outros_precos": [],
+      "notas": [],
+      "observacao": "Família aberta original (blog https://qwenlm.github.io/blog/qwen3/). Gerações abertas seguintes: Qwen3.5 (modelos pequenos para celular, mar/2026), Qwen3.6-27B e Qwen3.8 (acima)."
+    },
+    {
+      "id": "qwen/qwen3.8-omni-flash",
+      "nome": "Qwen3.8-Omni-Flash",
+      "tipo": "multimodal",
+      "pesos_abertos": false,
+      "lancado_em": null,
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": null,
+      "preco": {
+        "entrada_usd_mtok": null,
+        "saida_usd_mtok": null,
+        "fonte_url": null,
+        "divergencia": null
+      },
+      "outros_precos": [],
+      "notas": [],
+      "observacao": "Omni (texto/imagem/áudio/vídeo). A busca atribuiu US$ 0,15/0,47 por 1M, idênticos ao Qwen3.8-Flash; não confirmado como preço próprio, por isso null. Substitui a série Qwen-Omni-Turbo."
+    },
+    {
+      "id": "qwen/qwen3.8-omni-flash-realtime",
+      "nome": "Qwen3.8-Omni-Flash-Realtime",
+      "tipo": "audio",
+      "pesos_abertos": false,
+      "lancado_em": null,
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": null,
+      "preco": {
+        "entrada_usd_mtok": null,
+        "saida_usd_mtok": null,
+        "fonte_url": null,
+        "divergencia": null
+      },
+      "outros_precos": [
+        {
+          "unidade": "outro",
+          "valor_usd": 0.93,
+          "condicao": "por 1M tokens de entrada de áudio (Singapura)",
+          "fonte_url": "https://www.alibabacloud.com/help/en/model-studio/qwen3-8-omni-flash-realtime"
+        },
+        {
+          "unidade": "outro",
+          "valor_usd": 0.7,
+          "condicao": "por 1M tokens de saída de texto (Singapura)",
+          "fonte_url": "https://www.alibabacloud.com/help/en/model-studio/qwen3-8-omni-flash-realtime"
+        }
+      ],
+      "notas": [],
+      "observacao": "Conversa por voz em tempo real. Preço de saída em áudio não coletado."
+    },
+    {
+      "id": "qwen/qwen3-tts-flash",
+      "nome": "Qwen3-TTS-Flash",
+      "tipo": "audio_tts",
+      "pesos_abertos": false,
+      "lancado_em": null,
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": null,
+      "preco": {
+        "entrada_usd_mtok": null,
+        "saida_usd_mtok": null,
+        "fonte_url": null,
+        "divergencia": null
+      },
+      "outros_precos": [
+        {
+          "unidade": "outro",
+          "valor_usd": 0.1,
+          "condicao": "por 10.000 caracteres (Singapura, internacional)",
+          "fonte_url": "https://www.alibabacloud.com/help/en/model-studio/model-pricing"
+        }
+      ],
+      "notas": [],
+      "observacao": "Cota grátis de 110.000 caracteres em 90 dias. Família Qwen3-TTS também tem pesos abertos (blog qwen.ai qwen3tts-0115)."
+    },
+    {
+      "id": "qwen/qwen3-asr-flash",
+      "nome": "Qwen3-ASR-Flash",
+      "tipo": "audio_stt",
+      "pesos_abertos": false,
+      "lancado_em": null,
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": null,
+      "preco": {
+        "entrada_usd_mtok": null,
+        "saida_usd_mtok": null,
+        "fonte_url": null,
+        "divergencia": null
+      },
+      "outros_precos": [
+        {
+          "unidade": "outro",
+          "valor_usd": 3.5e-05,
+          "condicao": "por segundo de áudio (Singapura, internacional)",
+          "fonte_url": "https://www.alibabacloud.com/help/en/model-studio/model-pricing"
+        }
+      ],
+      "notas": [],
+      "observacao": "Cota grátis de 36.000 s (10 h) em 90 dias. Candidato direto para o transcritor do assistente."
+    },
+    {
+      "id": "qwen/qwen-audio-3.1-asr-flash",
+      "nome": "Qwen-Audio-3.1-ASR-Flash",
+      "tipo": "audio_stt",
+      "pesos_abertos": false,
+      "lancado_em": null,
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": null,
+      "preco": {
+        "entrada_usd_mtok": null,
+        "saida_usd_mtok": null,
+        "fonte_url": null,
+        "divergencia": null
+      },
+      "outros_precos": [],
+      "notas": [],
+      "observacao": "Lançado em set/2026 (data exata não confirmada). Busca atribuiu US$ 0,15/0,47 por 1M tokens (Singapura), valores idênticos ao Qwen3.8-Flash — não confirmado, null. Há variante streaming."
+    },
+    {
+      "id": "qwen/qwen-audio-3.1-tts-next",
+      "nome": "Qwen-Audio-3.1-TTS-Next",
+      "tipo": "audio_tts",
+      "pesos_abertos": false,
+      "lancado_em": null,
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": null,
+      "preco": {
+        "entrada_usd_mtok": null,
+        "saida_usd_mtok": null,
+        "fonte_url": null,
+        "divergencia": null
+      },
+      "outros_precos": [],
+      "notas": [],
+      "observacao": "Geração de áudio unificada (fala + efeitos + ambiente). Busca citou US$ 0,848/1,696 por 1M tokens sem região; não confirmado, null."
+    },
+    {
+      "id": "qwen/text-embedding-v4",
+      "nome": "Text Embedding v4",
+      "tipo": "embedding",
+      "pesos_abertos": false,
+      "lancado_em": null,
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": null,
+      "preco": {
+        "entrada_usd_mtok": 0.07,
+        "saida_usd_mtok": null,
+        "fonte_url": "https://www.alibabacloud.com/help/en/model-studio/embedding",
+        "divergencia": null
+      },
+      "outros_precos": [],
+      "notas": [],
+      "observacao": "Dimensões 64 a 2.048 (padrão 1.024), até 8.192 tokens por linha. Base Qwen3-Embedding."
+    },
+    {
+      "id": "qwen/qwen3-embedding",
+      "nome": "Qwen3-Embedding (pesos abertos)",
+      "tipo": "embedding",
+      "pesos_abertos": true,
+      "lancado_em": null,
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": null,
+      "preco": {
+        "entrada_usd_mtok": null,
+        "saida_usd_mtok": null,
+        "fonte_url": null,
+        "divergencia": null
+      },
+      "outros_precos": [],
+      "notas": [],
+      "observacao": "Família aberta de embeddings e rerankers Qwen3 (Hugging Face/GitHub QwenLM). Nota MTEB não coletada (busca esgotada)."
+    },
+    {
+      "id": "qwen/tongyi-embedding-vision-plus",
+      "nome": "Tongyi Embedding Vision Plus",
+      "tipo": "embedding",
+      "pesos_abertos": false,
+      "lancado_em": null,
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": null,
+      "preco": {
+        "entrada_usd_mtok": null,
+        "saida_usd_mtok": null,
+        "fonte_url": null,
+        "divergencia": null
+      },
+      "outros_precos": [],
+      "notas": [],
+      "observacao": "Embedding multimodal (texto+imagem) no Model Studio; preço não coletado."
+    },
+    {
+      "id": "qwen/qwen-image-3.0-pro",
+      "nome": "Qwen-Image-3.0-Pro",
+      "tipo": "imagem",
+      "pesos_abertos": false,
+      "lancado_em": null,
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": null,
+      "preco": {
+        "entrada_usd_mtok": null,
+        "saida_usd_mtok": null,
+        "fonte_url": null,
+        "divergencia": null
+      },
+      "outros_precos": [
+        {
+          "unidade": "imagem",
+          "valor_usd": 0.04,
+          "condicao": "saída 1K (Singapura); entrada US$ 0,003/imagem",
+          "fonte_url": "https://www.alibabacloud.com/help/en/model-studio/model-pricing"
+        },
+        {
+          "unidade": "imagem",
+          "valor_usd": 0.075,
+          "condicao": "saída 2K (Singapura)",
+          "fonte_url": "https://www.alibabacloud.com/help/en/model-studio/model-pricing"
+        }
+      ],
+      "notas": []
+    },
+    {
+      "id": "qwen/qwen-image-3.0",
+      "nome": "Qwen-Image-3.0",
+      "tipo": "imagem",
+      "pesos_abertos": false,
+      "lancado_em": null,
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": null,
+      "preco": {
+        "entrada_usd_mtok": null,
+        "saida_usd_mtok": null,
+        "fonte_url": null,
+        "divergencia": null
+      },
+      "outros_precos": [
+        {
+          "unidade": "imagem",
+          "valor_usd": 0.03,
+          "condicao": "saída 1K ou 2K (Singapura); entrada US$ 0,003/imagem",
+          "fonte_url": "https://www.alibabacloud.com/help/en/model-studio/model-pricing"
+        }
+      ],
+      "notas": []
+    },
+    {
+      "id": "qwen/qwen-image-2.0-pro",
+      "nome": "Qwen-Image-2.0-Pro",
+      "tipo": "imagem",
+      "pesos_abertos": false,
+      "lancado_em": null,
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": null,
+      "preco": {
+        "entrada_usd_mtok": null,
+        "saida_usd_mtok": null,
+        "fonte_url": null,
+        "divergencia": null
+      },
+      "outros_precos": [
+        {
+          "unidade": "imagem",
+          "valor_usd": 0.075,
+          "condicao": "por imagem (Singapura); 100 grátis",
+          "fonte_url": "https://www.alibabacloud.com/help/en/model-studio/model-pricing"
+        }
+      ],
+      "notas": []
+    },
+    {
+      "id": "qwen/qwen-image-2.0",
+      "nome": "Qwen-Image-2.0",
+      "tipo": "imagem",
+      "pesos_abertos": false,
+      "lancado_em": null,
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": null,
+      "preco": {
+        "entrada_usd_mtok": null,
+        "saida_usd_mtok": null,
+        "fonte_url": null,
+        "divergencia": null
+      },
+      "outros_precos": [
+        {
+          "unidade": "imagem",
+          "valor_usd": 0.035,
+          "condicao": "por imagem (Singapura); 100 grátis",
+          "fonte_url": "https://www.alibabacloud.com/help/en/model-studio/model-pricing"
+        }
+      ],
+      "notas": []
+    },
+    {
+      "id": "qwen/qwen-image-max",
+      "nome": "Qwen-Image-Max",
+      "tipo": "imagem",
+      "pesos_abertos": false,
+      "lancado_em": null,
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": null,
+      "preco": {
+        "entrada_usd_mtok": null,
+        "saida_usd_mtok": null,
+        "fonte_url": null,
+        "divergencia": null
+      },
+      "outros_precos": [
+        {
+          "unidade": "imagem",
+          "valor_usd": 0.075,
+          "condicao": "por imagem (Singapura); 100 grátis",
+          "fonte_url": "https://www.alibabacloud.com/help/en/model-studio/model-pricing"
+        }
+      ],
+      "notas": []
+    },
+    {
+      "id": "qwen/qwen-image-plus",
+      "nome": "Qwen-Image-Plus",
+      "tipo": "imagem",
+      "pesos_abertos": false,
+      "lancado_em": null,
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": null,
+      "preco": {
+        "entrada_usd_mtok": null,
+        "saida_usd_mtok": null,
+        "fonte_url": null,
+        "divergencia": null
+      },
+      "outros_precos": [
+        {
+          "unidade": "imagem",
+          "valor_usd": 0.03,
+          "condicao": "por imagem (Singapura); 100 grátis",
+          "fonte_url": "https://www.alibabacloud.com/help/en/model-studio/model-pricing"
+        }
+      ],
+      "notas": []
+    },
+    {
+      "id": "qwen/qwen-image",
+      "nome": "Qwen-Image",
+      "tipo": "imagem",
+      "pesos_abertos": false,
+      "lancado_em": null,
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": null,
+      "preco": {
+        "entrada_usd_mtok": null,
+        "saida_usd_mtok": null,
+        "fonte_url": null,
+        "divergencia": null
+      },
+      "outros_precos": [
+        {
+          "unidade": "imagem",
+          "valor_usd": 0.035,
+          "condicao": "por imagem (Singapura); 100 grátis",
+          "fonte_url": "https://www.alibabacloud.com/help/en/model-studio/model-pricing"
+        }
+      ],
+      "notas": []
+    },
+    {
+      "id": "qwen/qwen-image-edit-max",
+      "nome": "Qwen-Image-Edit-Max",
+      "tipo": "imagem",
+      "pesos_abertos": false,
+      "lancado_em": null,
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": null,
+      "preco": {
+        "entrada_usd_mtok": null,
+        "saida_usd_mtok": null,
+        "fonte_url": null,
+        "divergencia": null
+      },
+      "outros_precos": [
+        {
+          "unidade": "imagem",
+          "valor_usd": 0.075,
+          "condicao": "edição, só saída cobrada (Singapura); 100 grátis",
+          "fonte_url": "https://www.alibabacloud.com/help/en/model-studio/model-pricing"
+        }
+      ],
+      "notas": []
+    },
+    {
+      "id": "qwen/qwen-image-edit-plus",
+      "nome": "Qwen-Image-Edit-Plus",
+      "tipo": "imagem",
+      "pesos_abertos": false,
+      "lancado_em": null,
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": null,
+      "preco": {
+        "entrada_usd_mtok": null,
+        "saida_usd_mtok": null,
+        "fonte_url": null,
+        "divergencia": null
+      },
+      "outros_precos": [
+        {
+          "unidade": "imagem",
+          "valor_usd": 0.03,
+          "condicao": "edição, só saída cobrada (Singapura); 100 grátis",
+          "fonte_url": "https://www.alibabacloud.com/help/en/model-studio/model-pricing"
+        }
+      ],
+      "notas": []
+    },
+    {
+      "id": "qwen/qwen-image-edit",
+      "nome": "Qwen-Image-Edit",
+      "tipo": "imagem",
+      "pesos_abertos": false,
+      "lancado_em": null,
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": null,
+      "preco": {
+        "entrada_usd_mtok": null,
+        "saida_usd_mtok": null,
+        "fonte_url": null,
+        "divergencia": null
+      },
+      "outros_precos": [
+        {
+          "unidade": "imagem",
+          "valor_usd": 0.045,
+          "condicao": "edição, só saída cobrada (Singapura); 100 grátis",
+          "fonte_url": "https://www.alibabacloud.com/help/en/model-studio/model-pricing"
+        }
+      ],
+      "notas": []
+    },
+    {
+      "id": "qwen/qwen-image-2.1",
+      "nome": "Qwen-Image-2.1 (pesos abertos)",
+      "tipo": "imagem",
+      "pesos_abertos": true,
+      "lancado_em": null,
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": null,
+      "preco": {
+        "entrada_usd_mtok": null,
+        "saida_usd_mtok": null,
+        "fonte_url": null,
+        "divergencia": null
+      },
+      "outros_precos": [],
+      "notas": [
+        {
+          "benchmark": "aa_image_elo",
+          "valor": 1035,
+          "medido_em": "2026-10-01",
+          "fonte_url": "https://artificialanalysis.ai/image/leaderboard/text-to-image",
+          "observacao": "Text to Image Arena; líder entre pesos abertos (AA-Image-T2I v2.0 = 1034)"
+        }
+      ]
+    },
+    {
+      "id": "qwen/wan3.0-video",
+      "nome": "Wan3.0",
+      "tipo": "video",
+      "pesos_abertos": false,
+      "lancado_em": "2026-08-24",
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": null,
+      "preco": {
+        "entrada_usd_mtok": null,
+        "saida_usd_mtok": null,
+        "fonte_url": null,
+        "divergencia": null
+      },
+      "outros_precos": [
+        {
+          "unidade": "segundo_video",
+          "valor_usd": 0.05,
+          "condicao": "480P",
+          "fonte_url": "https://www.alibabacloud.com/blog/wan3-0-at-general-availability-capabilities-benchmarks-pricing-and-the-workflows-it-changes_603505"
+        },
+        {
+          "unidade": "segundo_video",
+          "valor_usd": 0.1,
+          "condicao": "720P",
+          "fonte_url": "https://www.alibabacloud.com/blog/wan3-0-at-general-availability-capabilities-benchmarks-pricing-and-the-workflows-it-changes_603505"
+        },
+        {
+          "unidade": "segundo_video",
+          "valor_usd": 0.2,
+          "condicao": "1080P",
+          "fonte_url": "https://www.alibabacloud.com/blog/wan3-0-at-general-availability-capabilities-benchmarks-pricing-and-the-workflows-it-changes_603505"
+        }
+      ],
+      "notas": [
+        {
+          "benchmark": "aa_video_elo",
+          "valor": 1157,
+          "medido_em": "2026-10-01",
+          "fonte_url": "https://artificialanalysis.ai/video/leaderboard/text-to-video",
+          "observacao": "AA-Video-T2V v2.0 (líder); imagem→vídeo = 1362, T2V com áudio = 1229"
+        }
+      ],
+      "observacao": "Data = disponibilidade geral internacional. Até 30 s por geração; entrada texto/imagem/áudio/vídeo/documentos. Preço vem do blog oficial da Alibaba Cloud. Há variante wan3.0-video-prime."
+    },
+    {
+      "id": "qwen/wan2.7-t2v",
+      "nome": "Wan2.7 texto→vídeo",
+      "tipo": "video",
+      "pesos_abertos": false,
+      "lancado_em": null,
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": null,
+      "preco": {
+        "entrada_usd_mtok": null,
+        "saida_usd_mtok": null,
+        "fonte_url": null,
+        "divergencia": null
+      },
+      "outros_precos": [
+        {
+          "unidade": "segundo_video",
+          "valor_usd": 0.1,
+          "condicao": "720P (Singapura)",
+          "fonte_url": "https://www.alibabacloud.com/help/en/model-studio/model-pricing"
+        },
+        {
+          "unidade": "segundo_video",
+          "valor_usd": 0.15,
+          "condicao": "1080P (Singapura)",
+          "fonte_url": "https://www.alibabacloud.com/help/en/model-studio/model-pricing"
+        }
+      ],
+      "notas": []
+    },
+    {
+      "id": "qwen/wan2.6-t2v",
+      "nome": "Wan2.6 texto→vídeo",
+      "tipo": "video",
+      "pesos_abertos": false,
+      "lancado_em": null,
+      "status": "legado",
+      "desativa_em": null,
+      "contexto_tokens": null,
+      "preco": {
+        "entrada_usd_mtok": null,
+        "saida_usd_mtok": null,
+        "fonte_url": null,
+        "divergencia": null
+      },
+      "outros_precos": [
+        {
+          "unidade": "segundo_video",
+          "valor_usd": 0.1,
+          "condicao": "720P (Singapura)",
+          "fonte_url": "https://www.alibabacloud.com/help/en/model-studio/model-pricing"
+        },
+        {
+          "unidade": "segundo_video",
+          "valor_usd": 0.15,
+          "condicao": "1080P (Singapura)",
+          "fonte_url": "https://www.alibabacloud.com/help/en/model-studio/model-pricing"
+        }
+      ],
+      "notas": [],
+      "observacao": "Documentação já em 'legacy'."
+    }
+  ],
+  "capacidades": [
+    {
+      "capacidade": "texto",
+      "produto": "Qwen Chat",
+      "como_acessar": [
+        "web",
+        "app"
+      ],
+      "plano_minimo": "grátis",
+      "gratis": true,
+      "headless": false,
+      "comando": null,
+      "limites": "Limites de uso não publicados",
+      "fonte_url": "https://qwen.ai/qwenchat"
+    },
+    {
+      "capacidade": "pesquisa_profunda",
+      "produto": "Qwen Chat — Deep Research",
+      "como_acessar": [
+        "web",
+        "app"
+      ],
+      "plano_minimo": "grátis",
+      "gratis": true,
+      "headless": false,
+      "comando": null,
+      "limites": null,
+      "fonte_url": "https://qwen.ai/qwenchat"
+    },
+    {
+      "capacidade": "busca_web",
+      "produto": "Qwen Chat — busca web",
+      "como_acessar": [
+        "web",
+        "app"
+      ],
+      "plano_minimo": "grátis",
+      "gratis": true,
+      "headless": false,
+      "comando": null,
+      "limites": null,
+      "fonte_url": "https://qwen.ai/qwenchat"
+    },
+    {
+      "capacidade": "imagem_gerar",
+      "produto": "Qwen-Image (Qwen Chat e API)",
+      "como_acessar": [
+        "web",
+        "app",
+        "api"
+      ],
+      "plano_minimo": "grátis (chat) / pay-as-you-go (API)",
+      "gratis": true,
+      "headless": true,
+      "comando": null,
+      "limites": "100 imagens grátis por modelo na API (Singapura)",
+      "fonte_url": "https://www.alibabacloud.com/help/en/model-studio/model-pricing"
+    },
+    {
+      "capacidade": "imagem_editar",
+      "produto": "Qwen-Image-Edit",
+      "como_acessar": [
+        "web",
+        "api"
+      ],
+      "plano_minimo": "pay-as-you-go",
+      "gratis": true,
+      "headless": true,
+      "comando": null,
+      "limites": "100 imagens grátis por modelo",
+      "fonte_url": "https://www.alibabacloud.com/help/en/model-studio/qwen-image-edit-api"
+    },
+    {
+      "capacidade": "video_gerar",
+      "produto": "Wan3.0 / Wan2.7",
+      "como_acessar": [
+        "api",
+        "web"
+      ],
+      "plano_minimo": "pay-as-you-go",
+      "gratis": true,
+      "headless": true,
+      "comando": null,
+      "limites": "50 s grátis (wan2.6/2.7 t2v, Singapura)",
+      "fonte_url": "https://www.alibabacloud.com/help/en/model-studio/model-pricing"
+    },
+    {
+      "capacidade": "codigo",
+      "produto": "Qwen Code (CLI aberto)",
+      "como_acessar": [
+        "cli",
+        "ide"
+      ],
+      "plano_minimo": "API key, Token Plan ou Coding Plan",
+      "gratis": false,
+      "headless": true,
+      "comando": "qwen -p \"...\"",
+      "limites": "Login grátis Qwen OAuth encerrado em 2026-04-15; hoje exige chave do Model Studio, Token/Coding Plan, OpenRouter ou Fireworks. Comando headless -p a confirmar (herdado do Gemini CLI)",
+      "fonte_url": "https://github.com/QwenLM/qwen-code"
+    },
+    {
+      "capacidade": "cli_headless",
+      "produto": "Qwen Code",
+      "como_acessar": [
+        "cli"
+      ],
+      "plano_minimo": "API key",
+      "gratis": false,
+      "headless": true,
+      "comando": "qwen -p \"...\"",
+      "limites": "Ver item acima",
+      "fonte_url": "https://github.com/QwenLM/qwen-code"
+    },
+    {
+      "capacidade": "audio_stt",
+      "produto": "Qwen3-ASR-Flash",
+      "como_acessar": [
+        "api"
+      ],
+      "plano_minimo": "pay-as-you-go",
+      "gratis": true,
+      "headless": true,
+      "comando": null,
+      "limites": "10 h grátis em 90 dias",
+      "fonte_url": "https://www.alibabacloud.com/help/en/model-studio/model-pricing"
+    },
+    {
+      "capacidade": "audio_tts",
+      "produto": "Qwen3-TTS-Flash",
+      "como_acessar": [
+        "api"
+      ],
+      "plano_minimo": "pay-as-you-go",
+      "gratis": true,
+      "headless": true,
+      "comando": null,
+      "limites": "110.000 caracteres grátis em 90 dias",
+      "fonte_url": "https://www.alibabacloud.com/help/en/model-studio/model-pricing"
+    },
+    {
+      "capacidade": "audio_tempo_real",
+      "produto": "Qwen3.8-Omni-Flash-Realtime",
+      "como_acessar": [
+        "api"
+      ],
+      "plano_minimo": "pay-as-you-go",
+      "gratis": null,
+      "headless": true,
+      "comando": null,
+      "limites": null,
+      "fonte_url": "https://www.alibabacloud.com/help/en/model-studio/qwen3-8-omni-flash-realtime"
+    },
+    {
+      "capacidade": "embeddings",
+      "produto": "text-embedding-v4",
+      "como_acessar": [
+        "api"
+      ],
+      "plano_minimo": "pay-as-you-go",
+      "gratis": null,
+      "headless": true,
+      "comando": null,
+      "limites": "8.192 tokens por linha",
+      "fonte_url": "https://www.alibabacloud.com/help/en/model-studio/embedding"
+    }
+  ],
+  "gratis": [
+    {
+      "titulo": "Cota grátis do Model Studio para novos usuários",
+      "resumo": "Cada modelo tem cota própria (normalmente 1.000.000 de tokens; 100 imagens nos modelos de imagem; 50 s nos Wan t2v; 110.000 caracteres no TTS; 10 h no ASR).",
+      "limites": "90 dias a partir da ativação do Model Studio, do lançamento do modelo ou da aprovação (o que vier depois). Só região Singapura com escopo Internacional. Ativar 'Free Quota Only' para não ser cobrado depois.",
+      "chamavel_por_agente": true,
+      "url": "https://www.alibabacloud.com/help/en/model-studio/new-free-quota",
+      "valido_ate": null,
+      "origem": "verificado"
+    },
+    {
+      "titulo": "Qwen Chat grátis",
+      "resumo": "Chat web/app com modelos abertos e proprietários, pesquisa profunda, busca web, geração e edição de imagem e vídeo, voz e artifacts.",
+      "limites": "Limites não publicados",
+      "chamavel_por_agente": false,
+      "url": "https://chat.qwen.ai/",
+      "valido_ate": null,
+      "origem": "verificado"
+    },
+    {
+      "titulo": "Pesos abertos (Qwen3.8-27B, Qwen3.8-Flash-Next, Qwen3.8-2.4T-A95B, Qwen-Image-2.1, Qwen3-Embedding, Qwen3-TTS)",
+      "resumo": "Download livre no Hugging Face/ModelScope para rodar localmente ou em provedores de inferência.",
+      "limites": "Custo de hardware; o 27B roda em GPU de consumidor",
+      "chamavel_por_agente": true,
+      "url": "https://huggingface.co/Qwen",
+      "valido_ate": null,
+      "origem": "verificado"
+    }
+  ],
+  "programas": [
+    {
+      "nome": "Alibaba Cloud AI Catalyst Program",
+      "publico": "startup",
+      "beneficio": "Créditos de nuvem, mentoria 1:1 com especialistas de IA, Alibaba Cloud Academy",
+      "valor_usd": 120000,
+      "requisitos": "Startup de IA",
+      "elegivel": "nao",
+      "elegivel_motivo": "Guilherme é graduando/pesquisador, não startup",
+      "como_aplicar": "Formulário na página do programa",
+      "url": "https://www.alibabacloud.com/en/startup/ai",
+      "status": "continuo",
+      "prazo": null,
+      "verificado_em": "2026-10-01"
+    },
+    {
+      "nome": "Alibaba Cloud Academic Empowerment Program (AAEP)",
+      "publico": "educador",
+      "beneficio": "Recursos de nuvem, cursos e certificações para alunos, educadores e pesquisadores via instituição",
+      "valor_usd": null,
+      "requisitos": "Parceria com instituição de ensino credenciada",
+      "elegivel": "talvez",
+      "elegivel_motivo": "Depende de a USP ou o orientador firmarem parceria; não é inscrição individual",
+      "como_aplicar": "Instituição contata o programa",
+      "url": "https://edu.alibabacloud.com/campus/index",
+      "status": "continuo",
+      "prazo": null,
+      "verificado_em": "2026-10-01"
+    },
+    {
+      "nome": "Alibaba Cloud for Students",
+      "publico": "estudante",
+      "beneficio": "Servidores de nuvem e cursos grátis para estudantes elegíveis",
+      "valor_usd": null,
+      "requisitos": "Comprovação de estudante",
+      "elegivel": "talvez",
+      "elegivel_motivo": "Graduando com e-mail USP; não confirmado se cobre créditos do Model Studio",
+      "como_aplicar": "Página de estudantes da Alibaba Cloud",
+      "url": "https://www.alibabacloud.com/en/developer/students",
+      "status": "continuo",
+      "prazo": null,
+      "verificado_em": "2026-10-01"
+    },
+    {
+      "nome": "Créditos para cargas de IA (até US$ 150K)",
+      "publico": "todos",
+      "beneficio": "US$ 200 iniciais para novos usuários + créditos mensais conforme faixa de gasto",
+      "valor_usd": 200,
+      "requisitos": "Primeira conta Alibaba Cloud; créditos maiores dependem de gasto",
+      "elegivel": "talvez",
+      "elegivel_motivo": "Os US$ 200 iniciais devem valer para conta nova; regras de elegibilidade por país não confirmadas",
+      "como_aplicar": "Página da campanha",
+      "url": "https://www.alibabacloud.com/en/campaign/benefits",
+      "status": "aberto",
+      "prazo": null,
+      "verificado_em": "2026-10-01"
+    }
+  ],
+  "indicadores": [],
+  "observacoes": "Coleta via WebSearch com domínios oficiais (WebFetch bloqueado em alibabacloud.com). Preços em US$, escopo Internacional (Singapura) salvo indicação. Qwen Code CLI: a cota grátis via Qwen OAuth (já reduzida de 2.000 para 1.000 e 100 req/dia) foi ENCERRADA em 2026-04-15 (issue QwenLM/qwen-code#3203); não registrada em 'gratis'. Junyang Lin (líder técnico, @JustinLin610) deixou o Qwen em 2026-03-03; não foi identificado o novo líder que anuncia lançamentos (orçamento de busca esgotado), por isso não há x_lider/x_ceo. Sem preço confirmado: qwen3.8-max-prime (só China/EUA: US$ 3,301/9,902), qwen3.8-2.4t-a95b, qwen3.8-27b, qwen3.7-flash, faixa 0–32K do qwen3-max, qwen3.8-omni-flash, qwen-audio-3.1-*, modelos VL dedicados (qwen3-vl-*; os Qwen3.7-Plus/3.8 já são visão-linguagem nativos), rerank. Sem nota MTEB para embeddings e sem nota TTS/STT da Artificial Analysis. Datas de lançamento de Qwen3.8-Flash (ago/2026) e Qwen-Audio-3.1 (set/2026) não confirmadas no dia. Indicadores de custo-benefício não encontrados. Token Plan: preco_mensal_usd = preço cheio; promoções em 'limites'."
+}
