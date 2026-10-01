@@ -1,0 +1,1221 @@
+{
+  "provedor": {
+    "id": "cloudflare",
+    "nome": "Cloudflare Workers AI",
+    "grupo": "inferencia",
+    "site": "https://www.cloudflare.com/products/workers-ai/",
+    "pais": "EUA",
+    "resumo": "Inferência serverless em GPUs na rede global da Cloudflare, cobrada em neurons (US$ 0,011 por mil) com 10.000 neurons grátis por dia. Catálogo de modelos de pesos abertos (Llama, gpt-oss, Qwen, Gemma, GLM, Kimi) e de parceiros (Deepgram, Leonardo), integrado a AI Gateway, Vectorize, AI Search e Agents SDK — bom para colocar um agente ou RAG pequeno no ar sem servidor.",
+    "fontes": [
+      "https://developers.cloudflare.com/workers-ai/platform/pricing/",
+      "https://developers.cloudflare.com/workers/platform/pricing/",
+      "https://developers.cloudflare.com/workers-ai/platform/limits/"
+    ]
+  },
+  "coletado_em": "2026-10-01",
+  "canais": [
+    {
+      "tipo": "blog",
+      "nome": "Cloudflare Blog",
+      "url": "https://blog.cloudflare.com/",
+      "handle": null,
+      "observacao": null
+    },
+    {
+      "tipo": "docs",
+      "nome": "Docs do Workers AI",
+      "url": "https://developers.cloudflare.com/workers-ai/",
+      "handle": null,
+      "observacao": null
+    },
+    {
+      "tipo": "changelog",
+      "nome": "Changelog do Workers AI",
+      "url": "https://developers.cloudflare.com/changelog/product/workers-ai/",
+      "handle": null,
+      "observacao": null
+    },
+    {
+      "tipo": "precos",
+      "nome": "Preços do Workers AI",
+      "url": "https://developers.cloudflare.com/workers-ai/platform/pricing/",
+      "handle": null,
+      "observacao": null
+    },
+    {
+      "tipo": "status",
+      "nome": "Cloudflare Status",
+      "url": "https://www.cloudflarestatus.com/",
+      "handle": null,
+      "observacao": "endereço não conferido nesta coleta"
+    },
+    {
+      "tipo": "x_oficial",
+      "nome": "Cloudflare",
+      "url": "https://x.com/Cloudflare",
+      "handle": "@Cloudflare",
+      "observacao": null
+    },
+    {
+      "tipo": "x_oficial",
+      "nome": "Cloudflare Developers",
+      "url": "https://x.com/CloudflareDev",
+      "handle": "@CloudflareDev",
+      "observacao": null
+    },
+    {
+      "tipo": "x_ceo",
+      "nome": "Matthew Prince",
+      "url": "https://x.com/eastdakota",
+      "handle": "@eastdakota",
+      "observacao": "CEO e cofundador"
+    },
+    {
+      "tipo": "x_lider",
+      "nome": "Rita Kozlov",
+      "url": "https://x.com/ritakozlov",
+      "handle": "@ritakozlov",
+      "observacao": "VP de produto, Developer Platform & AI (ai.engineer/speakers/rita-kozlov); handle do X não confirmado por busca"
+    },
+    {
+      "tipo": "discord",
+      "nome": "Cloudflare Developers Discord",
+      "url": "https://discord.cloudflare.com/",
+      "handle": null,
+      "observacao": "endereço não conferido nesta coleta"
+    },
+    {
+      "tipo": "github",
+      "nome": "cloudflare",
+      "url": "https://github.com/cloudflare",
+      "handle": null,
+      "observacao": null
+    }
+  ],
+  "planos": [
+    {
+      "nome": "Workers Free",
+      "publico": "api",
+      "preco_mensal_usd": 0,
+      "preco_anual_usd": null,
+      "inclui": "Workers AI com 10.000 neurons grátis por dia; AI Gateway (100.000 logs no total); Vectorize; AI Search (beta); Browser Run (10 min/dia); Durable Objects com SQLite (base do Agents SDK).",
+      "limites": "Desde 2026-07-28, Kimi K2.6, Kimi K2.7 Code e GLM-5.2 não ficam disponíveis no Free (erro 403/5035).",
+      "fonte_url": "https://developers.cloudflare.com/changelog/post/2026-07-28-models-require-workers-paid/",
+      "conferido_em": "2026-10-01"
+    },
+    {
+      "nome": "Workers Paid",
+      "publico": "api",
+      "preco_mensal_usd": 5,
+      "preco_anual_usd": null,
+      "inclui": "Mínimo de US$ 5/mês por conta; mantém os 10.000 neurons grátis por dia e cobra US$ 0,011 por mil neurons acima disso; libera os modelos restritos ao plano pago; inclui Workers, Pages Functions, KV, Hyperdrive e Durable Objects.",
+      "limites": "Texto: 300 req/min por padrão; modelos que exigem o Paid: 20 req/min (cobrança Workers AI) ou 50 req/min com créditos pré-pagos do AI Gateway.",
+      "fonte_url": "https://developers.cloudflare.com/workers/platform/pricing/",
+      "conferido_em": "2026-10-01"
+    }
+  ],
+  "modelos": [
+    {
+      "id": "cloudflare/@cf/meta/llama-3.1-8b-instruct-fp8",
+      "nome": "Llama 3.1 8B Instruct (fp8)",
+      "tipo": "texto",
+      "pesos_abertos": true,
+      "lancado_em": null,
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": null,
+      "preco": {
+        "entrada_usd_mtok": 0.152,
+        "saida_usd_mtok": 0.287,
+        "fonte_url": "https://developers.cloudflare.com/workers-ai/platform/pricing/",
+        "divergencia": null
+      },
+      "outros_precos": [],
+      "notas": []
+    },
+    {
+      "id": "cloudflare/@cf/meta/llama-3.2-1b-instruct",
+      "nome": "Llama 3.2 1B Instruct",
+      "tipo": "texto",
+      "pesos_abertos": true,
+      "lancado_em": null,
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": null,
+      "preco": {
+        "entrada_usd_mtok": 0.027,
+        "saida_usd_mtok": 0.201,
+        "fonte_url": "https://developers.cloudflare.com/workers-ai/platform/pricing/",
+        "divergencia": null
+      },
+      "outros_precos": [],
+      "notas": []
+    },
+    {
+      "id": "cloudflare/@cf/meta/llama-3.2-3b-instruct",
+      "nome": "Llama 3.2 3B Instruct",
+      "tipo": "texto",
+      "pesos_abertos": true,
+      "lancado_em": null,
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": null,
+      "preco": {
+        "entrada_usd_mtok": 0.051,
+        "saida_usd_mtok": 0.335,
+        "fonte_url": "https://developers.cloudflare.com/workers-ai/platform/pricing/",
+        "divergencia": null
+      },
+      "outros_precos": [],
+      "notas": []
+    },
+    {
+      "id": "cloudflare/@cf/meta/llama-3.2-11b-vision-instruct",
+      "nome": "Llama 3.2 11B Vision Instruct",
+      "tipo": "multimodal",
+      "pesos_abertos": true,
+      "lancado_em": null,
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": null,
+      "preco": {
+        "entrada_usd_mtok": 0.049,
+        "saida_usd_mtok": 0.676,
+        "fonte_url": "https://developers.cloudflare.com/workers-ai/platform/pricing/",
+        "divergencia": null
+      },
+      "outros_precos": [],
+      "notas": []
+    },
+    {
+      "id": "cloudflare/@cf/meta/llama-3.3-70b-instruct-fp8-fast",
+      "nome": "Llama 3.3 70B Instruct (fp8, fast)",
+      "tipo": "texto",
+      "pesos_abertos": true,
+      "lancado_em": null,
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": null,
+      "preco": {
+        "entrada_usd_mtok": 0.293,
+        "saida_usd_mtok": 2.253,
+        "fonte_url": "https://developers.cloudflare.com/workers-ai/platform/pricing/",
+        "divergencia": null
+      },
+      "outros_precos": [],
+      "notas": []
+    },
+    {
+      "id": "cloudflare/@cf/meta/llama-4-scout-17b-16e-instruct",
+      "nome": "Llama 4 Scout 17B 16E Instruct",
+      "tipo": "multimodal",
+      "pesos_abertos": true,
+      "lancado_em": null,
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": null,
+      "preco": {
+        "entrada_usd_mtok": 0.27,
+        "saida_usd_mtok": 0.85,
+        "fonte_url": "https://developers.cloudflare.com/workers-ai/platform/pricing/",
+        "divergencia": null
+      },
+      "outros_precos": [],
+      "notas": []
+    },
+    {
+      "id": "cloudflare/@cf/meta/llama-guard-3-8b",
+      "nome": "Llama Guard 3 8B",
+      "tipo": "texto",
+      "pesos_abertos": true,
+      "lancado_em": null,
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": null,
+      "preco": {
+        "entrada_usd_mtok": 0.48,
+        "saida_usd_mtok": 0.03,
+        "fonte_url": "https://developers.cloudflare.com/workers-ai/platform/pricing/",
+        "divergencia": null
+      },
+      "outros_precos": [],
+      "notas": []
+    },
+    {
+      "id": "cloudflare/@cf/openai/gpt-oss-120b",
+      "nome": "gpt-oss-120b",
+      "tipo": "texto",
+      "pesos_abertos": true,
+      "lancado_em": null,
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": 128000,
+      "preco": {
+        "entrada_usd_mtok": 0.35,
+        "saida_usd_mtok": 0.75,
+        "fonte_url": "https://developers.cloudflare.com/workers-ai/models/gpt-oss-120b/",
+        "divergencia": null
+      },
+      "outros_precos": [],
+      "notas": []
+    },
+    {
+      "id": "cloudflare/@cf/openai/gpt-oss-20b",
+      "nome": "gpt-oss-20b",
+      "tipo": "texto",
+      "pesos_abertos": true,
+      "lancado_em": null,
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": null,
+      "preco": {
+        "entrada_usd_mtok": 0.2,
+        "saida_usd_mtok": 0.3,
+        "fonte_url": "https://developers.cloudflare.com/workers-ai/platform/pricing/",
+        "divergencia": null
+      },
+      "outros_precos": [],
+      "notas": []
+    },
+    {
+      "id": "cloudflare/@cf/mistralai/mistral-small-3.1-24b-instruct",
+      "nome": "Mistral Small 3.1 24B Instruct",
+      "tipo": "multimodal",
+      "pesos_abertos": true,
+      "lancado_em": null,
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": null,
+      "preco": {
+        "entrada_usd_mtok": 0.351,
+        "saida_usd_mtok": 0.555,
+        "fonte_url": "https://developers.cloudflare.com/workers-ai/platform/pricing/",
+        "divergencia": null
+      },
+      "outros_precos": [],
+      "notas": []
+    },
+    {
+      "id": "cloudflare/@cf/qwen/qwen3-30b-a3b-fp8",
+      "nome": "Qwen3 30B A3B (fp8)",
+      "tipo": "texto",
+      "pesos_abertos": true,
+      "lancado_em": null,
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": null,
+      "preco": {
+        "entrada_usd_mtok": 0.0509,
+        "saida_usd_mtok": 0.335,
+        "fonte_url": "https://developers.cloudflare.com/workers-ai/platform/pricing/",
+        "divergencia": null
+      },
+      "outros_precos": [],
+      "notas": []
+    },
+    {
+      "id": "cloudflare/@cf/qwen/qwq-32b",
+      "nome": "QwQ 32B",
+      "tipo": "texto",
+      "pesos_abertos": true,
+      "lancado_em": null,
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": null,
+      "preco": {
+        "entrada_usd_mtok": 0.66,
+        "saida_usd_mtok": 1.0,
+        "fonte_url": "https://developers.cloudflare.com/workers-ai/platform/pricing/",
+        "divergencia": null
+      },
+      "outros_precos": [],
+      "notas": []
+    },
+    {
+      "id": "cloudflare/@cf/qwen/qwen3.8-27b",
+      "nome": "Qwen3.8 27B",
+      "tipo": "texto",
+      "pesos_abertos": null,
+      "lancado_em": null,
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": null,
+      "preco": {
+        "entrada_usd_mtok": 0.45,
+        "saida_usd_mtok": 3.2,
+        "fonte_url": "https://developers.cloudflare.com/workers-ai/platform/pricing/",
+        "divergencia": null
+      },
+      "outros_precos": [
+        {
+          "unidade": "mtok_cache",
+          "valor_usd": 0.05,
+          "condicao": "entrada em cache",
+          "fonte_url": "https://developers.cloudflare.com/workers-ai/platform/pricing/"
+        }
+      ],
+      "notas": []
+    },
+    {
+      "id": "cloudflare/@cf/google/gemma-3-12b-it",
+      "nome": "Gemma 3 12B IT",
+      "tipo": "multimodal",
+      "pesos_abertos": true,
+      "lancado_em": null,
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": null,
+      "preco": {
+        "entrada_usd_mtok": 0.345,
+        "saida_usd_mtok": 0.556,
+        "fonte_url": "https://developers.cloudflare.com/workers-ai/platform/pricing/",
+        "divergencia": null
+      },
+      "outros_precos": [],
+      "notas": []
+    },
+    {
+      "id": "cloudflare/@cf/google/gemma-4-26b-a4b-it",
+      "nome": "Gemma 4 26B A4B IT",
+      "tipo": "multimodal",
+      "pesos_abertos": null,
+      "lancado_em": null,
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": null,
+      "preco": {
+        "entrada_usd_mtok": 0.1,
+        "saida_usd_mtok": 0.3,
+        "fonte_url": "https://developers.cloudflare.com/workers-ai/models/gemma-4-26b-a4b-it/",
+        "divergencia": null
+      },
+      "outros_precos": [],
+      "notas": []
+    },
+    {
+      "id": "cloudflare/@cf/deepseek-ai/deepseek-r1-distill-qwen-32b",
+      "nome": "DeepSeek R1 Distill Qwen 32B",
+      "tipo": "texto",
+      "pesos_abertos": true,
+      "lancado_em": null,
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": null,
+      "preco": {
+        "entrada_usd_mtok": 0.497,
+        "saida_usd_mtok": 4.881,
+        "fonte_url": "https://developers.cloudflare.com/workers-ai/platform/pricing/",
+        "divergencia": null
+      },
+      "outros_precos": [],
+      "notas": []
+    },
+    {
+      "id": "cloudflare/@cf/zai-org/glm-5.3",
+      "nome": "GLM-5.3",
+      "tipo": "texto",
+      "pesos_abertos": null,
+      "lancado_em": null,
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": null,
+      "preco": {
+        "entrada_usd_mtok": 1.4,
+        "saida_usd_mtok": 4.4,
+        "fonte_url": "https://developers.cloudflare.com/changelog/post/2026-08-28-glm-5.3-workers-ai/",
+        "divergencia": null
+      },
+      "outros_precos": [
+        {
+          "unidade": "mtok_cache",
+          "valor_usd": 0.26,
+          "condicao": "entrada em cache",
+          "fonte_url": "https://developers.cloudflare.com/changelog/post/2026-08-28-glm-5.3-workers-ai/"
+        }
+      ],
+      "notas": []
+    },
+    {
+      "id": "cloudflare/@cf/zai-org/glm-5.3-flash",
+      "nome": "GLM-5.3 Flash",
+      "tipo": "texto",
+      "pesos_abertos": null,
+      "lancado_em": null,
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": null,
+      "preco": {
+        "entrada_usd_mtok": 0.15,
+        "saida_usd_mtok": 0.5,
+        "fonte_url": "https://developers.cloudflare.com/workers-ai/platform/pricing/",
+        "divergencia": null
+      },
+      "outros_precos": [
+        {
+          "unidade": "mtok_cache",
+          "valor_usd": 0.03,
+          "condicao": "entrada em cache",
+          "fonte_url": "https://developers.cloudflare.com/workers-ai/platform/pricing/"
+        }
+      ],
+      "notas": []
+    },
+    {
+      "id": "cloudflare/@cf/moonshotai/kimi-k2.6",
+      "nome": "Kimi K2.6",
+      "tipo": "texto",
+      "pesos_abertos": null,
+      "lancado_em": null,
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": null,
+      "preco": {
+        "entrada_usd_mtok": 0.95,
+        "saida_usd_mtok": 4.0,
+        "fonte_url": "https://developers.cloudflare.com/workers-ai/platform/pricing/",
+        "divergencia": null
+      },
+      "outros_precos": [
+        {
+          "unidade": "mtok_cache",
+          "valor_usd": 0.16,
+          "condicao": "entrada em cache",
+          "fonte_url": "https://developers.cloudflare.com/workers-ai/platform/pricing/"
+        }
+      ],
+      "notas": []
+    },
+    {
+      "id": "cloudflare/@cf/moonshotai/kimi-k2.7-code",
+      "nome": "Kimi K2.7 Code",
+      "tipo": "texto",
+      "pesos_abertos": null,
+      "lancado_em": null,
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": null,
+      "preco": {
+        "entrada_usd_mtok": 0.95,
+        "saida_usd_mtok": 4.0,
+        "fonte_url": "https://developers.cloudflare.com/workers-ai/models/kimi-k2.7-code/",
+        "divergencia": null
+      },
+      "outros_precos": [
+        {
+          "unidade": "mtok_cache",
+          "valor_usd": 0.19,
+          "condicao": "entrada em cache",
+          "fonte_url": "https://developers.cloudflare.com/workers-ai/models/kimi-k2.7-code/"
+        }
+      ],
+      "notas": []
+    },
+    {
+      "id": "cloudflare/@cf/baai/bge-small-en-v1.5",
+      "nome": "BGE Small EN v1.5",
+      "tipo": "embedding",
+      "pesos_abertos": true,
+      "lancado_em": null,
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": null,
+      "preco": {
+        "entrada_usd_mtok": 0.02,
+        "saida_usd_mtok": null,
+        "fonte_url": "https://developers.cloudflare.com/workers-ai/platform/pricing/",
+        "divergencia": null
+      },
+      "outros_precos": [],
+      "notas": []
+    },
+    {
+      "id": "cloudflare/@cf/baai/bge-base-en-v1.5",
+      "nome": "BGE Base EN v1.5",
+      "tipo": "embedding",
+      "pesos_abertos": true,
+      "lancado_em": null,
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": null,
+      "preco": {
+        "entrada_usd_mtok": 0.067,
+        "saida_usd_mtok": null,
+        "fonte_url": "https://developers.cloudflare.com/workers-ai/platform/pricing/",
+        "divergencia": null
+      },
+      "outros_precos": [],
+      "notas": []
+    },
+    {
+      "id": "cloudflare/@cf/baai/bge-large-en-v1.5",
+      "nome": "BGE Large EN v1.5",
+      "tipo": "embedding",
+      "pesos_abertos": true,
+      "lancado_em": null,
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": null,
+      "preco": {
+        "entrada_usd_mtok": 0.204,
+        "saida_usd_mtok": null,
+        "fonte_url": "https://developers.cloudflare.com/workers-ai/platform/pricing/",
+        "divergencia": null
+      },
+      "outros_precos": [],
+      "notas": []
+    },
+    {
+      "id": "cloudflare/@cf/baai/bge-m3",
+      "nome": "BGE-M3",
+      "tipo": "embedding",
+      "pesos_abertos": true,
+      "lancado_em": null,
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": null,
+      "preco": {
+        "entrada_usd_mtok": 0.0118,
+        "saida_usd_mtok": null,
+        "fonte_url": "https://developers.cloudflare.com/workers-ai/platform/pricing/",
+        "divergencia": null
+      },
+      "outros_precos": [],
+      "notas": []
+    },
+    {
+      "id": "cloudflare/@cf/qwen/qwen3-embedding-0.6b",
+      "nome": "Qwen3 Embedding 0.6B",
+      "tipo": "embedding",
+      "pesos_abertos": true,
+      "lancado_em": null,
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": null,
+      "preco": {
+        "entrada_usd_mtok": 0.012,
+        "saida_usd_mtok": null,
+        "fonte_url": "https://developers.cloudflare.com/workers-ai/platform/pricing/",
+        "divergencia": null
+      },
+      "outros_precos": [],
+      "notas": []
+    },
+    {
+      "id": "cloudflare/@cf/google/embeddinggemma-300m",
+      "nome": "EmbeddingGemma 300M",
+      "tipo": "embedding",
+      "pesos_abertos": true,
+      "lancado_em": null,
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": null,
+      "preco": {
+        "entrada_usd_mtok": null,
+        "saida_usd_mtok": null,
+        "fonte_url": null,
+        "divergencia": null
+      },
+      "outros_precos": [],
+      "notas": []
+    },
+    {
+      "id": "cloudflare/@cf/baai/bge-reranker-base",
+      "nome": "BGE Reranker Base",
+      "tipo": "rerank",
+      "pesos_abertos": true,
+      "lancado_em": null,
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": null,
+      "preco": {
+        "entrada_usd_mtok": 0.0031,
+        "saida_usd_mtok": null,
+        "fonte_url": "https://developers.cloudflare.com/workers-ai/platform/pricing/",
+        "divergencia": null
+      },
+      "outros_precos": [],
+      "notas": []
+    },
+    {
+      "id": "cloudflare/@cf/openai/whisper",
+      "nome": "Whisper",
+      "tipo": "audio_stt",
+      "pesos_abertos": true,
+      "lancado_em": null,
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": null,
+      "preco": {
+        "entrada_usd_mtok": null,
+        "saida_usd_mtok": null,
+        "fonte_url": null,
+        "divergencia": null
+      },
+      "outros_precos": [
+        {
+          "unidade": "minuto_audio",
+          "valor_usd": 0.0005,
+          "condicao": "por minuto de áudio",
+          "fonte_url": "https://developers.cloudflare.com/workers-ai/platform/pricing/"
+        }
+      ],
+      "notas": []
+    },
+    {
+      "id": "cloudflare/@cf/openai/whisper-large-v3-turbo",
+      "nome": "Whisper Large v3 Turbo",
+      "tipo": "audio_stt",
+      "pesos_abertos": true,
+      "lancado_em": null,
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": null,
+      "preco": {
+        "entrada_usd_mtok": null,
+        "saida_usd_mtok": null,
+        "fonte_url": null,
+        "divergencia": null
+      },
+      "outros_precos": [
+        {
+          "unidade": "minuto_audio",
+          "valor_usd": 0.0005,
+          "condicao": "por minuto de áudio",
+          "fonte_url": "https://developers.cloudflare.com/workers-ai/platform/pricing/"
+        }
+      ],
+      "notas": []
+    },
+    {
+      "id": "cloudflare/@cf/deepgram/nova-3",
+      "nome": "Deepgram Nova-3",
+      "tipo": "audio_stt",
+      "pesos_abertos": false,
+      "lancado_em": null,
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": null,
+      "preco": {
+        "entrada_usd_mtok": null,
+        "saida_usd_mtok": null,
+        "fonte_url": null,
+        "divergencia": null
+      },
+      "outros_precos": [
+        {
+          "unidade": "minuto_audio",
+          "valor_usd": 0.0052,
+          "condicao": "por minuto de áudio de entrada (HTTP)",
+          "fonte_url": "https://developers.cloudflare.com/workers-ai/platform/pricing/"
+        },
+        {
+          "unidade": "minuto_audio",
+          "valor_usd": 0.0092,
+          "condicao": "por minuto de áudio de entrada (WebSocket)",
+          "fonte_url": "https://developers.cloudflare.com/workers-ai/platform/pricing/"
+        }
+      ],
+      "notas": []
+    },
+    {
+      "id": "cloudflare/@cf/deepgram/flux",
+      "nome": "Deepgram Flux",
+      "tipo": "audio_stt",
+      "pesos_abertos": false,
+      "lancado_em": null,
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": null,
+      "preco": {
+        "entrada_usd_mtok": null,
+        "saida_usd_mtok": null,
+        "fonte_url": null,
+        "divergencia": null
+      },
+      "outros_precos": [
+        {
+          "unidade": "minuto_audio",
+          "valor_usd": 0.0077,
+          "condicao": "por minuto de áudio (WebSocket)",
+          "fonte_url": "https://developers.cloudflare.com/workers-ai/platform/pricing/"
+        }
+      ],
+      "notas": []
+    },
+    {
+      "id": "cloudflare/@cf/myshell-ai/melotts",
+      "nome": "MeloTTS",
+      "tipo": "audio_tts",
+      "pesos_abertos": true,
+      "lancado_em": null,
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": null,
+      "preco": {
+        "entrada_usd_mtok": null,
+        "saida_usd_mtok": null,
+        "fonte_url": null,
+        "divergencia": null
+      },
+      "outros_precos": [
+        {
+          "unidade": "minuto_audio",
+          "valor_usd": 0.0002,
+          "condicao": "por minuto de áudio",
+          "fonte_url": "https://developers.cloudflare.com/workers-ai/platform/pricing/"
+        }
+      ],
+      "notas": []
+    },
+    {
+      "id": "cloudflare/@cf/deepgram/aura-1",
+      "nome": "Deepgram Aura-1",
+      "tipo": "audio_tts",
+      "pesos_abertos": false,
+      "lancado_em": null,
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": null,
+      "preco": {
+        "entrada_usd_mtok": null,
+        "saida_usd_mtok": null,
+        "fonte_url": null,
+        "divergencia": null
+      },
+      "outros_precos": [
+        {
+          "unidade": "mil_caracteres",
+          "valor_usd": 0.015,
+          "condicao": "por mil caracteres de entrada",
+          "fonte_url": "https://developers.cloudflare.com/workers-ai/platform/pricing/"
+        }
+      ],
+      "notas": []
+    },
+    {
+      "id": "cloudflare/@cf/deepgram/aura-2-en",
+      "nome": "Deepgram Aura-2 (inglês)",
+      "tipo": "audio_tts",
+      "pesos_abertos": false,
+      "lancado_em": null,
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": null,
+      "preco": {
+        "entrada_usd_mtok": null,
+        "saida_usd_mtok": null,
+        "fonte_url": null,
+        "divergencia": null
+      },
+      "outros_precos": [
+        {
+          "unidade": "mil_caracteres",
+          "valor_usd": 0.03,
+          "condicao": "por mil caracteres de entrada",
+          "fonte_url": "https://developers.cloudflare.com/workers-ai/platform/pricing/"
+        }
+      ],
+      "notas": []
+    },
+    {
+      "id": "cloudflare/@cf/deepgram/aura-2-es",
+      "nome": "Deepgram Aura-2 (espanhol)",
+      "tipo": "audio_tts",
+      "pesos_abertos": false,
+      "lancado_em": null,
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": null,
+      "preco": {
+        "entrada_usd_mtok": null,
+        "saida_usd_mtok": null,
+        "fonte_url": null,
+        "divergencia": null
+      },
+      "outros_precos": [
+        {
+          "unidade": "mil_caracteres",
+          "valor_usd": 0.03,
+          "condicao": "por mil caracteres de entrada",
+          "fonte_url": "https://developers.cloudflare.com/workers-ai/platform/pricing/"
+        }
+      ],
+      "notas": []
+    },
+    {
+      "id": "cloudflare/@cf/black-forest-labs/flux-1-schnell",
+      "nome": "FLUX.1 [schnell]",
+      "tipo": "imagem",
+      "pesos_abertos": true,
+      "lancado_em": null,
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": null,
+      "preco": {
+        "entrada_usd_mtok": null,
+        "saida_usd_mtok": null,
+        "fonte_url": null,
+        "divergencia": null
+      },
+      "outros_precos": [
+        {
+          "unidade": "outro",
+          "valor_usd": 5.28e-05,
+          "condicao": "por tile de 512x512",
+          "fonte_url": "https://developers.cloudflare.com/workers-ai/platform/pricing/"
+        },
+        {
+          "unidade": "outro",
+          "valor_usd": 0.0001056,
+          "condicao": "por step",
+          "fonte_url": "https://developers.cloudflare.com/workers-ai/platform/pricing/"
+        }
+      ],
+      "notas": []
+    },
+    {
+      "id": "cloudflare/@cf/black-forest-labs/flux-2-dev",
+      "nome": "FLUX.2 [dev]",
+      "tipo": "imagem",
+      "pesos_abertos": true,
+      "lancado_em": null,
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": null,
+      "preco": {
+        "entrada_usd_mtok": null,
+        "saida_usd_mtok": null,
+        "fonte_url": null,
+        "divergencia": null
+      },
+      "outros_precos": [
+        {
+          "unidade": "outro",
+          "valor_usd": 0.00021,
+          "condicao": "por tile 512x512 de entrada, por step",
+          "fonte_url": "https://developers.cloudflare.com/workers-ai/platform/pricing/"
+        },
+        {
+          "unidade": "outro",
+          "valor_usd": 0.00041,
+          "condicao": "por tile 512x512 de saída, por step",
+          "fonte_url": "https://developers.cloudflare.com/workers-ai/platform/pricing/"
+        }
+      ],
+      "notas": []
+    },
+    {
+      "id": "cloudflare/@cf/leonardo/lucid-origin",
+      "nome": "Leonardo Lucid Origin",
+      "tipo": "imagem",
+      "pesos_abertos": false,
+      "lancado_em": null,
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": null,
+      "preco": {
+        "entrada_usd_mtok": null,
+        "saida_usd_mtok": null,
+        "fonte_url": null,
+        "divergencia": null
+      },
+      "outros_precos": [
+        {
+          "unidade": "outro",
+          "valor_usd": 0.006996,
+          "condicao": "por tile de 512x512",
+          "fonte_url": "https://developers.cloudflare.com/workers-ai/platform/pricing/"
+        },
+        {
+          "unidade": "outro",
+          "valor_usd": 0.000132,
+          "condicao": "por step",
+          "fonte_url": "https://developers.cloudflare.com/workers-ai/platform/pricing/"
+        }
+      ],
+      "notas": []
+    },
+    {
+      "id": "cloudflare/@cf/leonardo/phoenix-1.0",
+      "nome": "Leonardo Phoenix 1.0",
+      "tipo": "imagem",
+      "pesos_abertos": false,
+      "lancado_em": null,
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": null,
+      "preco": {
+        "entrada_usd_mtok": null,
+        "saida_usd_mtok": null,
+        "fonte_url": null,
+        "divergencia": null
+      },
+      "outros_precos": [
+        {
+          "unidade": "outro",
+          "valor_usd": 0.00583,
+          "condicao": "por tile de 512x512",
+          "fonte_url": "https://developers.cloudflare.com/workers-ai/platform/pricing/"
+        },
+        {
+          "unidade": "outro",
+          "valor_usd": 0.00011,
+          "condicao": "por step",
+          "fonte_url": "https://developers.cloudflare.com/workers-ai/platform/pricing/"
+        }
+      ],
+      "notas": []
+    },
+    {
+      "id": "cloudflare/@cf/bytedance/stable-diffusion-xl-lightning",
+      "nome": "Stable Diffusion XL Lightning",
+      "tipo": "imagem",
+      "pesos_abertos": true,
+      "lancado_em": null,
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": null,
+      "preco": {
+        "entrada_usd_mtok": null,
+        "saida_usd_mtok": null,
+        "fonte_url": null,
+        "divergencia": null
+      },
+      "outros_precos": [
+        {
+          "unidade": "outro",
+          "valor_usd": 0.0,
+          "condicao": "por step (a página lista US$ 0,00 por step)",
+          "fonte_url": "https://developers.cloudflare.com/workers-ai/platform/pricing/"
+        }
+      ],
+      "notas": []
+    }
+  ],
+  "capacidades": [
+    {
+      "capacidade": "texto",
+      "produto": "Workers AI (LLMs)",
+      "como_acessar": [
+        "api",
+        "nuvem"
+      ],
+      "plano_minimo": "Workers Free",
+      "gratis": true,
+      "headless": true,
+      "comando": "env.AI.run('@cf/...') ou REST /ai/run",
+      "limites": "10.000 neurons/dia grátis; 300 req/min em texto",
+      "fonte_url": "https://developers.cloudflare.com/workers-ai/platform/limits/"
+    },
+    {
+      "capacidade": "codigo",
+      "produto": "GLM-5.3 / Kimi K2.7 Code no Workers AI",
+      "como_acessar": [
+        "api",
+        "nuvem"
+      ],
+      "plano_minimo": "Workers Paid ou créditos AI Gateway",
+      "gratis": false,
+      "headless": true,
+      "comando": null,
+      "limites": "20 req/min (Workers AI) ou 50 req/min (créditos AI Gateway)",
+      "fonte_url": "https://developers.cloudflare.com/changelog/post/2026-08-28-glm-5.3-workers-ai/"
+    },
+    {
+      "capacidade": "embeddings",
+      "produto": "Workers AI (BGE, Qwen3 Embedding, EmbeddingGemma)",
+      "como_acessar": [
+        "api",
+        "nuvem"
+      ],
+      "plano_minimo": "Workers Free",
+      "gratis": true,
+      "headless": true,
+      "comando": null,
+      "limites": "dentro dos 10.000 neurons/dia",
+      "fonte_url": "https://developers.cloudflare.com/workers-ai/platform/pricing/"
+    },
+    {
+      "capacidade": "rerank",
+      "produto": "Workers AI (bge-reranker-base)",
+      "como_acessar": [
+        "api",
+        "nuvem"
+      ],
+      "plano_minimo": "Workers Free",
+      "gratis": true,
+      "headless": true,
+      "comando": null,
+      "limites": "dentro dos 10.000 neurons/dia",
+      "fonte_url": "https://developers.cloudflare.com/workers-ai/platform/pricing/"
+    },
+    {
+      "capacidade": "audio_stt",
+      "produto": "Workers AI (Whisper, Deepgram Nova-3, Flux)",
+      "como_acessar": [
+        "api",
+        "nuvem"
+      ],
+      "plano_minimo": "Workers Free",
+      "gratis": true,
+      "headless": true,
+      "comando": null,
+      "limites": "dentro dos 10.000 neurons/dia",
+      "fonte_url": "https://developers.cloudflare.com/workers-ai/platform/pricing/"
+    },
+    {
+      "capacidade": "audio_tts",
+      "produto": "Workers AI (MeloTTS, Deepgram Aura)",
+      "como_acessar": [
+        "api",
+        "nuvem"
+      ],
+      "plano_minimo": "Workers Free",
+      "gratis": true,
+      "headless": true,
+      "comando": null,
+      "limites": "dentro dos 10.000 neurons/dia",
+      "fonte_url": "https://developers.cloudflare.com/workers-ai/platform/pricing/"
+    },
+    {
+      "capacidade": "imagem_gerar",
+      "produto": "Workers AI (FLUX, Leonardo, SDXL Lightning)",
+      "como_acessar": [
+        "api",
+        "nuvem"
+      ],
+      "plano_minimo": "Workers Free",
+      "gratis": true,
+      "headless": true,
+      "comando": null,
+      "limites": "dentro dos 10.000 neurons/dia",
+      "fonte_url": "https://developers.cloudflare.com/workers-ai/platform/pricing/"
+    },
+    {
+      "capacidade": "agente_nuvem",
+      "produto": "Agents SDK (sobre Durable Objects)",
+      "como_acessar": [
+        "api",
+        "nuvem"
+      ],
+      "plano_minimo": "Workers Free",
+      "gratis": true,
+      "headless": true,
+      "comando": null,
+      "limites": "Free: 100.000 req/dia e 13.000 GB-s/dia; SQLite: 5 M linhas lidas/dia, 100.000 escritas/dia, 5 GB",
+      "fonte_url": "https://developers.cloudflare.com/durable-objects/platform/pricing/"
+    }
+  ],
+  "gratis": [
+    {
+      "titulo": "Workers AI: 10.000 neurons por dia",
+      "resumo": "Cota diária grátis em qualquer plano; dá para testar transcrição (Whisper a US$ 0,0005/min) e embeddings para a Mari sem custo.",
+      "limites": "10.000 neurons/dia; acima disso, US$ 0,011 por mil neurons no Workers Paid",
+      "chamavel_por_agente": true,
+      "url": "https://developers.cloudflare.com/workers-ai/platform/pricing/",
+      "valido_ate": null,
+      "origem": "verificado"
+    },
+    {
+      "titulo": "AI Gateway: recursos centrais grátis",
+      "resumo": "Analytics, cache e rate limiting grátis em todos os planos; serve de proxy com log para OpenAI/Anthropic e Workers AI.",
+      "limites": "Logs persistentes: 100.000 no total (Free) e 10.000.000 por gateway (Paid)",
+      "chamavel_por_agente": true,
+      "url": "https://developers.cloudflare.com/ai-gateway/reference/pricing/",
+      "valido_ate": null,
+      "origem": "verificado"
+    },
+    {
+      "titulo": "Vectorize no Workers Free",
+      "resumo": "Banco vetorial gerenciado.",
+      "limites": "Free: 30 milhões de dimensões consultadas/mês e 5 milhões de dimensões armazenadas. Paid: 50 M consultadas/mês + US$ 0,01 por milhão; 10 M armazenadas + US$ 0,05 por 100 milhões",
+      "chamavel_por_agente": true,
+      "url": "https://developers.cloudflare.com/vectorize/platform/pricing/",
+      "valido_ate": null,
+      "origem": "verificado"
+    },
+    {
+      "titulo": "AI Search (ex-AutoRAG) grátis no beta aberto",
+      "resumo": "RAG gerenciado; armazenamento, indexação vetorial e crawling incluídos sem cobrança separada durante o beta.",
+      "limites": "Free: 100 instâncias, 100.000 arquivos por instância, 20.000 consultas/mês, 500 páginas rastreadas/dia, arquivo até 4 MB",
+      "chamavel_por_agente": true,
+      "url": "https://developers.cloudflare.com/ai-search/platform/limits-pricing/",
+      "valido_ate": null,
+      "origem": "verificado"
+    },
+    {
+      "titulo": "Browser Run (ex-Browser Rendering)",
+      "resumo": "Navegador headless na nuvem, útil para agentes que leem páginas.",
+      "limites": "Free: 10 min/dia e 3 navegadores simultâneos. Paid: 10 h/mês incluídas, depois US$ 0,09/h; 10 navegadores incluídos, depois US$ 2,00 cada",
+      "chamavel_por_agente": true,
+      "url": "https://developers.cloudflare.com/browser-run/pricing/",
+      "valido_ate": null,
+      "origem": "verificado"
+    },
+    {
+      "titulo": "Durable Objects / Agents SDK no Workers Free",
+      "resumo": "Agentes com estado (Agents SDK) rodam no Free com backend SQLite.",
+      "limites": "100.000 req/dia; 13.000 GB-s/dia; 5 GB armazenados",
+      "chamavel_por_agente": true,
+      "url": "https://developers.cloudflare.com/durable-objects/platform/pricing/",
+      "valido_ate": null,
+      "origem": "verificado"
+    }
+  ],
+  "programas": [
+    {
+      "nome": "Cloudflare for Startups",
+      "publico": "startup",
+      "beneficio": "Créditos para o Developer Platform (incluindo Workers AI) em 4 faixas: US$ 5.000, 25.000, 100.000 e 250.000; válidos por até 1 ano.",
+      "valor_usd": 250000,
+      "requisitos": "Produto de software, empresa fundada nos últimos 5 anos e captação entre US$ 50 mil e US$ 5 milhões; há código BOOTSTRAPPED para quem captou menos (valores menores, não confirmados).",
+      "elegivel": "nao",
+      "elegivel_motivo": "Guilherme é graduando/pesquisador, sem empresa nem captação.",
+      "como_aplicar": "Formulário em cloudflare.com/forstartups",
+      "url": "https://blog.cloudflare.com/startup-program-250k-credits/",
+      "status": "continuo",
+      "prazo": null,
+      "verificado_em": "2026-10-01"
+    },
+    {
+      "nome": "Workers Launchpad",
+      "publico": "startup",
+      "beneficio": "Programa de financiamento e aceleração para startups no Workers.",
+      "valor_usd": null,
+      "requisitos": "Startup construindo no Cloudflare Workers (detalhes não confirmados nesta coleta).",
+      "elegivel": "nao",
+      "elegivel_motivo": "Exige startup.",
+      "como_aplicar": "Página do programa",
+      "url": "https://www.cloudflare.com/startups/workers-launchpad/",
+      "status": "desconhecido",
+      "prazo": null,
+      "verificado_em": "2026-10-01"
+    },
+    {
+      "nome": "Project Galileo",
+      "publico": "ong",
+      "beneficio": "Serviços de segurança grátis (incluindo Bot Management e AI Crawl Control) para organizações de artes, direitos humanos, jornalismo e democracia. Não dá créditos de inferência.",
+      "valor_usd": null,
+      "requisitos": "Organização de interesse público com site ativo, aprovada por parceiro da sociedade civil.",
+      "elegivel": "nao",
+      "elegivel_motivo": "UrbVerde é projeto universitário e o benefício é segurança web, não IA.",
+      "como_aplicar": "Formulário em cloudflare.com/galileo",
+      "url": "https://www.cloudflare.com/galileo/",
+      "status": "continuo",
+      "prazo": null,
+      "verificado_em": "2026-10-01"
+    }
+  ],
+  "indicadores": [
+    {
+      "modelo_id": null,
+      "nome": "preço do neuron",
+      "valor": 0.011,
+      "unidade": "USD por mil neurons",
+      "descricao": "Unidade de cobrança de todo o Workers AI; preços por modelo são equivalentes em neurons (ex.: gpt-oss-120b = 31.818 neurons por M tokens de entrada).",
+      "medido_em": "2026-10-01",
+      "fonte_url": "https://developers.cloudflare.com/workers-ai/platform/pricing/"
+    }
+  ],
+  "observacoes": "Coleta feita SÓ via WebSearch (com allowed_domains em developers.cloudflare.com/cloudflare.com/blog.cloudflare.com): o WebFetch está bloqueado pela política de rede do container (EGRESS_BLOCKED em developers.cloudflare.com). Os valores vêm dos trechos que a busca extraiu das páginas oficiais e devem ser conferidos quando houver acesso direto. Conferidos em segunda busca: preço do neuron/cota diária, Llama 3.3 70B (0,293/2,253) e gpt-oss-120b (0,35/0,75, coerente com 31.818/68.182 neurons). Catálogo NÃO completo: 40 modelos com preço publicado, priorizando os relevantes; ficaram de fora variantes antigas (llama-2/3 awq, mistral-7b, etc.), modelos de classificação/tradução/visão (m2m100, resnet, detr) e outras famílias recentes. Sem preço encontrado: embeddinggemma-300m (beta, página não mostrou preço). stable-diffusion-xl-lightning aparece como US$ 0,00 por step. Preços de GLM-5.3 (1,40/4,40) e Gemma 4 26B (0,10/0,30) vêm do changelog/página do modelo e são redondos — conferir. Kimi K2.6, Kimi K2.7 Code e GLM-5.2 exigem Workers Paid ou créditos do AI Gateway desde 2026-07-28; status ficou 'ativo'. GLM-5.3 anuncia contexto de '1M tokens', deixado null por não ter o número literal. Contexto e data de lançamento dos demais modelos não coletados (null). pesos_abertos=null nos modelos mais novos (Qwen3.8, Gemma 4, GLM-5.3, Kimi) por falta de confirmação. Nenhuma nota de benchmark coletada (Artificial Analysis/LMArena medem os modelos base, não a hospedagem da Cloudflare; não acessíveis sem WebFetch). Handles do X de Matthew Prince (@eastdakota) e Rita Kozlov (@ritakozlov), status e Discord não foram confirmados por busca. Prepaid credits do AI Gateway (unificação de cobrança em 2026-08-07) permitem usar modelos restritos sem o Workers Paid, a 50 req/min por modelo: https://developers.cloudflare.com/changelog/post/2026-08-07-workers-ai-unified-billing/"
+}

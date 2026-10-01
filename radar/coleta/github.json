@@ -1,0 +1,1166 @@
+{
+  "provedor": {
+    "id": "github",
+    "nome": "GitHub (Models / Copilot)",
+    "grupo": "inferencia",
+    "site": "https://github.com/features/copilot",
+    "pais": "EUA",
+    "resumo": "O GitHub (Microsoft) oferece o Copilot, assistente de código multimodelo (OpenAI, Anthropic, Google, xAI, Microsoft, Moonshot) no IDE, no CLI e como agente na nuvem, cobrado desde junho de 2026 em AI Credits por token. Destaca-se pelo plano Student gratuito e pela integração nativa com repositórios, PRs e Actions. O GitHub Models foi aposentado em julho de 2026.",
+    "fontes": [
+      "https://github.com/features/copilot/plans",
+      "https://docs.github.com/en/copilot/get-started/plans",
+      "https://docs.github.com/en/copilot/reference/copilot-billing/models-and-pricing",
+      "https://docs.github.com/en/copilot/reference/ai-models/supported-models",
+      "https://github.blog/news-insights/company-news/github-copilot-is-moving-to-usage-based-billing/",
+      "https://github.blog/news-insights/company-news/github-copilot-individual-plans-introducing-flex-allotments-in-pro-and-pro-and-a-new-max-plan/",
+      "https://docs.github.com/en/copilot/concepts/billing-and-usage/individuals/billing"
+    ]
+  },
+  "coletado_em": "2026-10-01",
+  "canais": [
+    {
+      "tipo": "blog",
+      "nome": "The GitHub Blog",
+      "url": "https://github.blog/",
+      "handle": null,
+      "observacao": null
+    },
+    {
+      "tipo": "changelog",
+      "nome": "GitHub Changelog",
+      "url": "https://github.blog/changelog/",
+      "handle": null,
+      "observacao": "Rótulo Copilot: https://github.blog/changelog/label/copilot/"
+    },
+    {
+      "tipo": "docs",
+      "nome": "GitHub Docs: Copilot",
+      "url": "https://docs.github.com/en/copilot",
+      "handle": null,
+      "observacao": null
+    },
+    {
+      "tipo": "precos",
+      "nome": "Copilot: planos e preços",
+      "url": "https://github.com/features/copilot/plans",
+      "handle": null,
+      "observacao": null
+    },
+    {
+      "tipo": "status",
+      "nome": "GitHub Status",
+      "url": "https://www.githubstatus.com/",
+      "handle": null,
+      "observacao": null
+    },
+    {
+      "tipo": "x_oficial",
+      "nome": "GitHub",
+      "url": "https://x.com/github",
+      "handle": "@github",
+      "observacao": null
+    },
+    {
+      "tipo": "youtube",
+      "nome": "GitHub",
+      "url": "https://www.youtube.com/github",
+      "handle": null,
+      "observacao": null
+    }
+  ],
+  "planos": [
+    {
+      "nome": "Copilot Free",
+      "publico": "individual",
+      "preco_mensal_usd": 0,
+      "preco_anual_usd": null,
+      "inclui": "Até 2.000 completions de código por mês e uma cota de GitHub AI Credits; modelos só via seleção automática (auto) desde 2026-06-24.",
+      "limites": "Uso pessoal. Quantidade de AI Credits do Free não confirmada (um trecho cita 50 mensagens de chat por mês, possivelmente regra antiga). Sem compra de uso adicional.",
+      "fonte_url": "https://docs.github.com/en/copilot/get-started/plans",
+      "conferido_em": "2026-10-01"
+    },
+    {
+      "nome": "Copilot Student",
+      "publico": "estudante",
+      "preco_mensal_usd": 0,
+      "preco_anual_usd": null,
+      "inclui": "Completions ilimitadas e 200 AI Credits mensais incluídos (desde 2026-06-01); chat e agentes limitados, modelos só via seleção automática.",
+      "limites": "Exige estudante verificado no GitHub Education (Student Developer Pack). Plano criado em 2026-03-12.",
+      "fonte_url": "https://docs.github.com/copilot/how-tos/manage-your-account/free-access-with-copilot-student",
+      "conferido_em": "2026-10-01"
+    },
+    {
+      "nome": "Copilot Pro",
+      "publico": "individual",
+      "preco_mensal_usd": 10,
+      "preco_anual_usd": null,
+      "inclui": "1.000 AI Credits base (US$ 10) + 500 de flex (US$ 5) = 1.500 AI Credits/mês (US$ 15). Completions e Next Edit Suggestions ilimitadas, sem consumir créditos.",
+      "limites": "Uso adicional cobrado em AI Credits (1 crédito = US$ 0,01) às tarifas por token de cada modelo. Flex varia com o tempo. Plano anual aposentado (ver observações).",
+      "fonte_url": "https://github.blog/news-insights/company-news/github-copilot-individual-plans-introducing-flex-allotments-in-pro-and-pro-and-a-new-max-plan/",
+      "conferido_em": "2026-10-01"
+    },
+    {
+      "nome": "Copilot Pro+",
+      "publico": "individual",
+      "preco_mensal_usd": 39,
+      "preco_anual_usd": null,
+      "inclui": "3.900 AI Credits base (US$ 39) + 3.100 de flex (US$ 31) = 7.000 AI Credits/mês (US$ 70). Acesso aos modelos mais caros (ex.: Claude Opus 5).",
+      "limites": "Uso adicional a US$ 0,01 por AI Credit. Plano anual aposentado.",
+      "fonte_url": "https://github.blog/news-insights/company-news/github-copilot-individual-plans-introducing-flex-allotments-in-pro-and-pro-and-a-new-max-plan/",
+      "conferido_em": "2026-10-01"
+    },
+    {
+      "nome": "Copilot Max",
+      "publico": "individual",
+      "preco_mensal_usd": 100,
+      "preco_anual_usd": null,
+      "inclui": "10.000 AI Credits base (US$ 100) + 10.000 de flex (US$ 100) = 20.000 AI Credits/mês (US$ 200). Tudo do Pro+.",
+      "limites": "Uso adicional a US$ 0,01 por AI Credit.",
+      "fonte_url": "https://github.blog/news-insights/company-news/github-copilot-individual-plans-introducing-flex-allotments-in-pro-and-pro-and-a-new-max-plan/",
+      "conferido_em": "2026-10-01"
+    },
+    {
+      "nome": "Copilot Business",
+      "publico": "equipe",
+      "preco_mensal_usd": 19,
+      "preco_anual_usd": null,
+      "inclui": "Por usuário/mês: 1.900 AI Credits (US$ 19) incluídos.",
+      "limites": "Clientes existentes tiveram promoção de US$ 30/mês em créditos em jun–ago/2026.",
+      "fonte_url": "https://github.blog/news-insights/company-news/github-copilot-is-moving-to-usage-based-billing/",
+      "conferido_em": "2026-10-01"
+    },
+    {
+      "nome": "Copilot Enterprise",
+      "publico": "empresa",
+      "preco_mensal_usd": 39,
+      "preco_anual_usd": null,
+      "inclui": "Por usuário/mês: 3.900 AI Credits (US$ 39) incluídos. Exige GitHub Enterprise Cloud.",
+      "limites": "Clientes existentes tiveram promoção de US$ 70/mês em créditos em jun–ago/2026.",
+      "fonte_url": "https://github.blog/news-insights/company-news/github-copilot-is-moving-to-usage-based-billing/",
+      "conferido_em": "2026-10-01"
+    }
+  ],
+  "modelos": [
+    {
+      "id": "github/claude-haiku-4.5",
+      "nome": "Claude Haiku 4.5",
+      "tipo": "texto",
+      "pesos_abertos": false,
+      "lancado_em": null,
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": null,
+      "preco": {
+        "entrada_usd_mtok": 1.0,
+        "saida_usd_mtok": 5.0,
+        "fonte_url": "https://docs.github.com/en/copilot/reference/copilot-billing/models-and-pricing",
+        "divergencia": null
+      },
+      "outros_precos": [
+        {
+          "unidade": "mtok_cache",
+          "valor_usd": 0.1,
+          "condicao": "entrada em cache (cached input), por 1M tokens",
+          "fonte_url": "https://docs.github.com/en/copilot/reference/copilot-billing/models-and-pricing"
+        },
+        {
+          "unidade": "mtok_cache",
+          "valor_usd": 1.25,
+          "condicao": "escrita de cache (cache write), por 1M tokens",
+          "fonte_url": "https://docs.github.com/en/copilot/reference/copilot-billing/models-and-pricing"
+        }
+      ],
+      "notas": []
+    },
+    {
+      "id": "github/claude-sonnet-4.6",
+      "nome": "Claude Sonnet 4.6",
+      "tipo": "texto",
+      "pesos_abertos": false,
+      "lancado_em": null,
+      "status": "restrito",
+      "desativa_em": null,
+      "contexto_tokens": null,
+      "preco": {
+        "entrada_usd_mtok": 3.0,
+        "saida_usd_mtok": 15.0,
+        "fonte_url": "https://docs.github.com/en/copilot/reference/copilot-billing/models-and-pricing",
+        "divergencia": null
+      },
+      "outros_precos": [
+        {
+          "unidade": "mtok_cache",
+          "valor_usd": 0.3,
+          "condicao": "entrada em cache (cached input), por 1M tokens",
+          "fonte_url": "https://docs.github.com/en/copilot/reference/copilot-billing/models-and-pricing"
+        },
+        {
+          "unidade": "mtok_cache",
+          "valor_usd": 3.75,
+          "condicao": "escrita de cache (cache write), por 1M tokens",
+          "fonte_url": "https://docs.github.com/en/copilot/reference/copilot-billing/models-and-pricing"
+        }
+      ],
+      "notas": [],
+      "observacoes": "Desativado em 2026-09-01 (changelog 2026-08-31), mas segue disponível para assinantes individuais em planos anuais legados. Fonte da desativação: https://github.blog/changelog/2026-08-31-selected-github-copilot-models-deprecated/"
+    },
+    {
+      "id": "github/claude-sonnet-5",
+      "nome": "Claude Sonnet 5",
+      "tipo": "texto",
+      "pesos_abertos": false,
+      "lancado_em": null,
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": null,
+      "preco": {
+        "entrada_usd_mtok": 2.0,
+        "saida_usd_mtok": 10.0,
+        "fonte_url": "https://docs.github.com/en/copilot/reference/copilot-billing/models-and-pricing",
+        "divergencia": null
+      },
+      "outros_precos": [
+        {
+          "unidade": "mtok_cache",
+          "valor_usd": 0.2,
+          "condicao": "entrada em cache (cached input), por 1M tokens",
+          "fonte_url": "https://docs.github.com/en/copilot/reference/copilot-billing/models-and-pricing"
+        },
+        {
+          "unidade": "mtok_cache",
+          "valor_usd": 2.5,
+          "condicao": "escrita de cache (cache write), por 1M tokens",
+          "fonte_url": "https://docs.github.com/en/copilot/reference/copilot-billing/models-and-pricing"
+        }
+      ],
+      "notas": []
+    },
+    {
+      "id": "github/claude-sonnet-5.5",
+      "nome": "Claude Sonnet 5.5",
+      "tipo": "texto",
+      "pesos_abertos": false,
+      "lancado_em": null,
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": null,
+      "preco": {
+        "entrada_usd_mtok": 2.0,
+        "saida_usd_mtok": 10.0,
+        "fonte_url": "https://docs.github.com/en/copilot/reference/copilot-billing/models-and-pricing",
+        "divergencia": null
+      },
+      "outros_precos": [
+        {
+          "unidade": "mtok_cache",
+          "valor_usd": 0.2,
+          "condicao": "entrada em cache (cached input), por 1M tokens",
+          "fonte_url": "https://docs.github.com/en/copilot/reference/copilot-billing/models-and-pricing"
+        },
+        {
+          "unidade": "mtok_cache",
+          "valor_usd": 2.5,
+          "condicao": "escrita de cache (cache write), por 1M tokens",
+          "fonte_url": "https://docs.github.com/en/copilot/reference/copilot-billing/models-and-pricing"
+        }
+      ],
+      "notas": [],
+      "observacoes": "Apareceu na tabela de preços via trecho de busca, mas não na lista de modelos suportados obtida na mesma coleta; conferir."
+    },
+    {
+      "id": "github/claude-opus-4.7",
+      "nome": "Claude Opus 4.7",
+      "tipo": "texto",
+      "pesos_abertos": false,
+      "lancado_em": null,
+      "status": "desativacao_anunciada",
+      "desativa_em": "2026-10-02",
+      "contexto_tokens": null,
+      "preco": {
+        "entrada_usd_mtok": 5.0,
+        "saida_usd_mtok": 25.0,
+        "fonte_url": "https://docs.github.com/en/copilot/reference/copilot-billing/models-and-pricing",
+        "divergencia": null
+      },
+      "outros_precos": [
+        {
+          "unidade": "mtok_cache",
+          "valor_usd": 0.5,
+          "condicao": "entrada em cache (cached input), por 1M tokens",
+          "fonte_url": "https://docs.github.com/en/copilot/reference/copilot-billing/models-and-pricing"
+        },
+        {
+          "unidade": "mtok_cache",
+          "valor_usd": 6.25,
+          "condicao": "escrita de cache (cache write), por 1M tokens",
+          "fonte_url": "https://docs.github.com/en/copilot/reference/copilot-billing/models-and-pricing"
+        }
+      ],
+      "notas": [],
+      "observacoes": "Alternativa sugerida: Claude Opus 5. Fonte: https://github.blog/changelog/2026-09-03-upcoming-deprecation-of-selected-github-copilot-models/"
+    },
+    {
+      "id": "github/claude-opus-4.8",
+      "nome": "Claude Opus 4.8",
+      "tipo": "texto",
+      "pesos_abertos": false,
+      "lancado_em": null,
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": null,
+      "preco": {
+        "entrada_usd_mtok": 5.0,
+        "saida_usd_mtok": 25.0,
+        "fonte_url": "https://docs.github.com/en/copilot/reference/copilot-billing/models-and-pricing",
+        "divergencia": null
+      },
+      "outros_precos": [
+        {
+          "unidade": "mtok_cache",
+          "valor_usd": 0.5,
+          "condicao": "entrada em cache (cached input), por 1M tokens",
+          "fonte_url": "https://docs.github.com/en/copilot/reference/copilot-billing/models-and-pricing"
+        },
+        {
+          "unidade": "mtok_cache",
+          "valor_usd": 6.25,
+          "condicao": "escrita de cache (cache write), por 1M tokens",
+          "fonte_url": "https://docs.github.com/en/copilot/reference/copilot-billing/models-and-pricing"
+        }
+      ],
+      "notas": []
+    },
+    {
+      "id": "github/claude-opus-5",
+      "nome": "Claude Opus 5",
+      "tipo": "texto",
+      "pesos_abertos": false,
+      "lancado_em": "2026-07-24",
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": null,
+      "preco": {
+        "entrada_usd_mtok": 5.0,
+        "saida_usd_mtok": 25.0,
+        "fonte_url": "https://docs.github.com/en/copilot/reference/copilot-billing/models-and-pricing",
+        "divergencia": null
+      },
+      "outros_precos": [
+        {
+          "unidade": "mtok_cache",
+          "valor_usd": 0.5,
+          "condicao": "entrada em cache (cached input), por 1M tokens",
+          "fonte_url": "https://docs.github.com/en/copilot/reference/copilot-billing/models-and-pricing"
+        },
+        {
+          "unidade": "mtok_cache",
+          "valor_usd": 6.25,
+          "condicao": "escrita de cache (cache write), por 1M tokens",
+          "fonte_url": "https://docs.github.com/en/copilot/reference/copilot-billing/models-and-pricing"
+        }
+      ],
+      "notas": [],
+      "observacoes": "Disponível em Pro+, Max, Business e Enterprise (https://github.blog/changelog/2026-07-24-claude-opus-5-is-now-available-in-github-copilot/)."
+    },
+    {
+      "id": "github/claude-opus-5.5",
+      "nome": "Claude Opus 5.5",
+      "tipo": "texto",
+      "pesos_abertos": false,
+      "lancado_em": "2026-09-22",
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": null,
+      "preco": {
+        "entrada_usd_mtok": 4.0,
+        "saida_usd_mtok": 20.0,
+        "fonte_url": "https://docs.github.com/en/copilot/reference/copilot-billing/models-and-pricing",
+        "divergencia": null
+      },
+      "outros_precos": [
+        {
+          "unidade": "mtok_cache",
+          "valor_usd": 0.2,
+          "condicao": "entrada em cache (cached input), por 1M tokens",
+          "fonte_url": "https://docs.github.com/en/copilot/reference/copilot-billing/models-and-pricing"
+        },
+        {
+          "unidade": "mtok_cache",
+          "valor_usd": 5.0,
+          "condicao": "escrita de cache (cache write), por 1M tokens",
+          "fonte_url": "https://docs.github.com/en/copilot/reference/copilot-billing/models-and-pricing"
+        }
+      ],
+      "notas": [],
+      "observacoes": "Data do anúncio: https://github.blog/changelog/2026-09-22-claude-opus-5-5-is-now-available-in-github-copilot/"
+    },
+    {
+      "id": "github/claude-fable-5",
+      "nome": "Claude Fable 5",
+      "tipo": "texto",
+      "pesos_abertos": false,
+      "lancado_em": null,
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": null,
+      "preco": {
+        "entrada_usd_mtok": 10.0,
+        "saida_usd_mtok": 50.0,
+        "fonte_url": "https://docs.github.com/en/copilot/reference/copilot-billing/models-and-pricing",
+        "divergencia": null
+      },
+      "outros_precos": [
+        {
+          "unidade": "mtok_cache",
+          "valor_usd": 1.0,
+          "condicao": "entrada em cache (cached input), por 1M tokens",
+          "fonte_url": "https://docs.github.com/en/copilot/reference/copilot-billing/models-and-pricing"
+        },
+        {
+          "unidade": "mtok_cache",
+          "valor_usd": 12.5,
+          "condicao": "escrita de cache (cache write), por 1M tokens",
+          "fonte_url": "https://docs.github.com/en/copilot/reference/copilot-billing/models-and-pricing"
+        }
+      ],
+      "notas": []
+    },
+    {
+      "id": "github/claude-fable-5.1",
+      "nome": "Claude Fable 5.1",
+      "tipo": "texto",
+      "pesos_abertos": false,
+      "lancado_em": null,
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": null,
+      "preco": {
+        "entrada_usd_mtok": 10.0,
+        "saida_usd_mtok": 50.0,
+        "fonte_url": "https://docs.github.com/en/copilot/reference/copilot-billing/models-and-pricing",
+        "divergencia": null
+      },
+      "outros_precos": [
+        {
+          "unidade": "mtok_cache",
+          "valor_usd": 0.25,
+          "condicao": "entrada em cache (cached input), por 1M tokens",
+          "fonte_url": "https://docs.github.com/en/copilot/reference/copilot-billing/models-and-pricing"
+        },
+        {
+          "unidade": "mtok_cache",
+          "valor_usd": 12.5,
+          "condicao": "escrita de cache (cache write), por 1M tokens",
+          "fonte_url": "https://docs.github.com/en/copilot/reference/copilot-billing/models-and-pricing"
+        }
+      ],
+      "notas": [],
+      "observacoes": "Entrada em cache de US$ 0,25 (diferente do Fable 5) veio de trecho de busca; conferir."
+    },
+    {
+      "id": "github/gpt-5-mini",
+      "nome": "GPT-5 mini",
+      "tipo": "texto",
+      "pesos_abertos": false,
+      "lancado_em": null,
+      "status": "desativacao_anunciada",
+      "desativa_em": "2026-10-19",
+      "contexto_tokens": null,
+      "preco": {
+        "entrada_usd_mtok": 0.25,
+        "saida_usd_mtok": 2.0,
+        "fonte_url": "https://docs.github.com/en/copilot/reference/copilot-billing/models-and-pricing",
+        "divergencia": null
+      },
+      "outros_precos": [
+        {
+          "unidade": "mtok_cache",
+          "valor_usd": 0.025,
+          "condicao": "entrada em cache (cached input), por 1M tokens",
+          "fonte_url": "https://docs.github.com/en/copilot/reference/copilot-billing/models-and-pricing"
+        }
+      ],
+      "notas": [],
+      "observacoes": "Alternativa sugerida: GPT-5.6 Luna. Fonte: https://github.blog/changelog/2026-09-18-upcoming-deprecation-of-selected-github-copilot-models-in-mid-october/"
+    },
+    {
+      "id": "github/gpt-5.4",
+      "nome": "GPT-5.4",
+      "tipo": "texto",
+      "pesos_abertos": false,
+      "lancado_em": null,
+      "status": "desativacao_anunciada",
+      "desativa_em": "2026-10-19",
+      "contexto_tokens": null,
+      "preco": {
+        "entrada_usd_mtok": null,
+        "saida_usd_mtok": null,
+        "fonte_url": null,
+        "divergencia": null
+      },
+      "outros_precos": [],
+      "notas": [],
+      "observacoes": "Preço não obtido. Alternativa: GPT-5.6 Sol. Fonte: https://github.blog/changelog/2026-09-18-upcoming-deprecation-of-selected-github-copilot-models-in-mid-october/"
+    },
+    {
+      "id": "github/gpt-5.4-mini",
+      "nome": "GPT-5.4 mini",
+      "tipo": "texto",
+      "pesos_abertos": false,
+      "lancado_em": null,
+      "status": "desativacao_anunciada",
+      "desativa_em": "2026-10-19",
+      "contexto_tokens": null,
+      "preco": {
+        "entrada_usd_mtok": null,
+        "saida_usd_mtok": null,
+        "fonte_url": null,
+        "divergencia": null
+      },
+      "outros_precos": [],
+      "notas": [],
+      "observacoes": "Preço não obtido. Alternativa: GPT-5.6 Luna. Fonte: https://github.blog/changelog/2026-09-18-upcoming-deprecation-of-selected-github-copilot-models-in-mid-october/"
+    },
+    {
+      "id": "github/gpt-5.4-nano",
+      "nome": "GPT-5.4 nano",
+      "tipo": "texto",
+      "pesos_abertos": false,
+      "lancado_em": null,
+      "status": "restrito",
+      "desativa_em": null,
+      "contexto_tokens": null,
+      "preco": {
+        "entrada_usd_mtok": null,
+        "saida_usd_mtok": null,
+        "fonte_url": null,
+        "divergencia": null
+      },
+      "outros_precos": [],
+      "notas": [],
+      "observacoes": "Segundo a documentação, só disponível na extensão Codex do VS Code (Copilot Pro+), não no Copilot Chat. Preço não obtido."
+    },
+    {
+      "id": "github/gpt-5.5",
+      "nome": "GPT-5.5",
+      "tipo": "texto",
+      "pesos_abertos": false,
+      "lancado_em": null,
+      "status": "desativacao_anunciada",
+      "desativa_em": "2026-10-19",
+      "contexto_tokens": null,
+      "preco": {
+        "entrada_usd_mtok": 5.0,
+        "saida_usd_mtok": 30.0,
+        "fonte_url": "https://docs.github.com/en/copilot/reference/copilot-billing/models-and-pricing",
+        "divergencia": null
+      },
+      "outros_precos": [
+        {
+          "unidade": "mtok_cache",
+          "valor_usd": 0.5,
+          "condicao": "entrada em cache (cached input), por 1M tokens",
+          "fonte_url": "https://docs.github.com/en/copilot/reference/copilot-billing/models-and-pricing"
+        },
+        {
+          "unidade": "outro",
+          "valor_usd": 10.0,
+          "condicao": "entrada por 1M tokens no nível de contexto longo (> 272K tokens de entrada)",
+          "fonte_url": "https://docs.github.com/en/copilot/reference/copilot-billing/models-and-pricing"
+        },
+        {
+          "unidade": "outro",
+          "valor_usd": 45.0,
+          "condicao": "saída por 1M tokens no nível de contexto longo (> 272K tokens de entrada)",
+          "fonte_url": "https://docs.github.com/en/copilot/reference/copilot-billing/models-and-pricing"
+        },
+        {
+          "unidade": "mtok_cache",
+          "valor_usd": 1.0,
+          "condicao": "entrada em cache no nível de contexto longo (> 272K)",
+          "fonte_url": "https://docs.github.com/en/copilot/reference/copilot-billing/models-and-pricing"
+        }
+      ],
+      "notas": [],
+      "observacoes": "Preço padrão vale até 272K tokens de entrada. Alternativa: GPT-5.6 Sol. Fonte da desativação: https://github.blog/changelog/2026-09-18-upcoming-deprecation-of-selected-github-copilot-models-in-mid-october/"
+    },
+    {
+      "id": "github/gpt-5.3-codex",
+      "nome": "GPT-5.3-Codex",
+      "tipo": "texto",
+      "pesos_abertos": false,
+      "lancado_em": null,
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": null,
+      "preco": {
+        "entrada_usd_mtok": null,
+        "saida_usd_mtok": null,
+        "fonte_url": null,
+        "divergencia": null
+      },
+      "outros_precos": [],
+      "notas": [],
+      "observacoes": "Modelo de suporte de longo prazo (LTS), https://github.blog/changelog/2026-03-18-gpt-5-3-codex-long-term-support-in-github-copilot/. Preço não obtido na tabela."
+    },
+    {
+      "id": "github/gpt-5.6-luna",
+      "nome": "GPT-5.6 Luna",
+      "tipo": "texto",
+      "pesos_abertos": false,
+      "lancado_em": null,
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": null,
+      "preco": {
+        "entrada_usd_mtok": 0.2,
+        "saida_usd_mtok": 1.2,
+        "fonte_url": "https://docs.github.com/en/copilot/reference/copilot-billing/models-and-pricing",
+        "divergencia": null
+      },
+      "outros_precos": [
+        {
+          "unidade": "mtok_cache",
+          "valor_usd": 0.02,
+          "condicao": "entrada em cache (cached input), por 1M tokens",
+          "fonte_url": "https://docs.github.com/en/copilot/reference/copilot-billing/models-and-pricing"
+        },
+        {
+          "unidade": "mtok_cache",
+          "valor_usd": 0.25,
+          "condicao": "escrita de cache (cache write), por 1M tokens",
+          "fonte_url": "https://docs.github.com/en/copilot/reference/copilot-billing/models-and-pricing"
+        }
+      ],
+      "notas": [],
+      "observacoes": "Preço do nível padrão (default tier)."
+    },
+    {
+      "id": "github/gpt-5.6-sol",
+      "nome": "GPT-5.6 Sol",
+      "tipo": "texto",
+      "pesos_abertos": false,
+      "lancado_em": null,
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": null,
+      "preco": {
+        "entrada_usd_mtok": 4.0,
+        "saida_usd_mtok": 20.0,
+        "fonte_url": "https://docs.github.com/en/copilot/reference/copilot-billing/models-and-pricing",
+        "divergencia": null
+      },
+      "outros_precos": [
+        {
+          "unidade": "mtok_cache",
+          "valor_usd": 0.4,
+          "condicao": "entrada em cache (cached input), por 1M tokens",
+          "fonte_url": "https://docs.github.com/en/copilot/reference/copilot-billing/models-and-pricing"
+        },
+        {
+          "unidade": "mtok_cache",
+          "valor_usd": 5.0,
+          "condicao": "escrita de cache (cache write), por 1M tokens",
+          "fonte_url": "https://docs.github.com/en/copilot/reference/copilot-billing/models-and-pricing"
+        }
+      ],
+      "notas": [],
+      "observacoes": "Preço do nível padrão (default tier)."
+    },
+    {
+      "id": "github/gpt-5.6-terra",
+      "nome": "GPT-5.6 Terra",
+      "tipo": "texto",
+      "pesos_abertos": false,
+      "lancado_em": null,
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": null,
+      "preco": {
+        "entrada_usd_mtok": 2.0,
+        "saida_usd_mtok": 12.0,
+        "fonte_url": "https://docs.github.com/en/copilot/reference/copilot-billing/models-and-pricing",
+        "divergencia": null
+      },
+      "outros_precos": [
+        {
+          "unidade": "mtok_cache",
+          "valor_usd": 0.2,
+          "condicao": "entrada em cache (cached input), por 1M tokens",
+          "fonte_url": "https://docs.github.com/en/copilot/reference/copilot-billing/models-and-pricing"
+        },
+        {
+          "unidade": "mtok_cache",
+          "valor_usd": 2.5,
+          "condicao": "escrita de cache (cache write), por 1M tokens",
+          "fonte_url": "https://docs.github.com/en/copilot/reference/copilot-billing/models-and-pricing"
+        }
+      ],
+      "notas": [],
+      "observacoes": "Preço do nível padrão (default tier)."
+    },
+    {
+      "id": "github/gpt-6-astra",
+      "nome": "GPT-6 Astra",
+      "tipo": "texto",
+      "pesos_abertos": false,
+      "lancado_em": null,
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": null,
+      "preco": {
+        "entrada_usd_mtok": 10.0,
+        "saida_usd_mtok": 50.0,
+        "fonte_url": "https://docs.github.com/en/copilot/reference/copilot-billing/models-and-pricing",
+        "divergencia": null
+      },
+      "outros_precos": [
+        {
+          "unidade": "mtok_cache",
+          "valor_usd": 1.0,
+          "condicao": "entrada em cache (cached input), por 1M tokens",
+          "fonte_url": "https://docs.github.com/en/copilot/reference/copilot-billing/models-and-pricing"
+        },
+        {
+          "unidade": "mtok_cache",
+          "valor_usd": 12.5,
+          "condicao": "escrita de cache (cache write), por 1M tokens",
+          "fonte_url": "https://docs.github.com/en/copilot/reference/copilot-billing/models-and-pricing"
+        }
+      ],
+      "notas": [],
+      "observacoes": "Preço do nível padrão; outro trecho de busca citou faixa de US$ 10–20 de entrada e US$ 50–75 de saída conforme o nível. Conferir."
+    },
+    {
+      "id": "github/gpt-6-luna",
+      "nome": "GPT-6 Luna",
+      "tipo": "texto",
+      "pesos_abertos": false,
+      "lancado_em": null,
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": null,
+      "preco": {
+        "entrada_usd_mtok": 0.1,
+        "saida_usd_mtok": 0.5,
+        "fonte_url": "https://docs.github.com/en/copilot/reference/copilot-billing/models-and-pricing",
+        "divergencia": null
+      },
+      "outros_precos": [
+        {
+          "unidade": "mtok_cache",
+          "valor_usd": 0.01,
+          "condicao": "entrada em cache (cached input), por 1M tokens",
+          "fonte_url": "https://docs.github.com/en/copilot/reference/copilot-billing/models-and-pricing"
+        },
+        {
+          "unidade": "mtok_cache",
+          "valor_usd": 0.125,
+          "condicao": "escrita de cache (cache write), por 1M tokens",
+          "fonte_url": "https://docs.github.com/en/copilot/reference/copilot-billing/models-and-pricing"
+        }
+      ],
+      "notas": [],
+      "observacoes": "Preço do nível padrão (default tier)."
+    },
+    {
+      "id": "github/gpt-6-sol",
+      "nome": "GPT-6 Sol",
+      "tipo": "texto",
+      "pesos_abertos": false,
+      "lancado_em": null,
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": null,
+      "preco": {
+        "entrada_usd_mtok": 2.0,
+        "saida_usd_mtok": 10.0,
+        "fonte_url": "https://docs.github.com/en/copilot/reference/copilot-billing/models-and-pricing",
+        "divergencia": null
+      },
+      "outros_precos": [
+        {
+          "unidade": "mtok_cache",
+          "valor_usd": 0.2,
+          "condicao": "entrada em cache (cached input), por 1M tokens",
+          "fonte_url": "https://docs.github.com/en/copilot/reference/copilot-billing/models-and-pricing"
+        },
+        {
+          "unidade": "mtok_cache",
+          "valor_usd": 2.5,
+          "condicao": "escrita de cache (cache write), por 1M tokens",
+          "fonte_url": "https://docs.github.com/en/copilot/reference/copilot-billing/models-and-pricing"
+        }
+      ],
+      "notas": [],
+      "observacoes": "Preço do nível padrão (default tier)."
+    },
+    {
+      "id": "github/gpt-6.1-sol",
+      "nome": "GPT-6.1 Sol",
+      "tipo": "texto",
+      "pesos_abertos": false,
+      "lancado_em": null,
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": null,
+      "preco": {
+        "entrada_usd_mtok": null,
+        "saida_usd_mtok": null,
+        "fonte_url": null,
+        "divergencia": null
+      },
+      "outros_precos": [],
+      "notas": [],
+      "observacoes": "Citado na tabela de preços, mas os valores não foram obtidos."
+    },
+    {
+      "id": "github/gemini-3.5-flash",
+      "nome": "Gemini 3.5 Flash",
+      "tipo": "texto",
+      "pesos_abertos": false,
+      "lancado_em": null,
+      "status": "desativacao_anunciada",
+      "desativa_em": "2026-10-02",
+      "contexto_tokens": null,
+      "preco": {
+        "entrada_usd_mtok": 1.5,
+        "saida_usd_mtok": 9.0,
+        "fonte_url": "https://docs.github.com/en/copilot/reference/copilot-billing/models-and-pricing",
+        "divergencia": null
+      },
+      "outros_precos": [
+        {
+          "unidade": "mtok_cache",
+          "valor_usd": 0.15,
+          "condicao": "entrada em cache (cached input), por 1M tokens",
+          "fonte_url": "https://docs.github.com/en/copilot/reference/copilot-billing/models-and-pricing"
+        }
+      ],
+      "notas": [],
+      "observacoes": "Alternativa: Gemini 3.8 Flash. Fonte: https://github.blog/changelog/2026-09-03-upcoming-deprecation-of-selected-github-copilot-models/"
+    },
+    {
+      "id": "github/gemini-3.6-flash",
+      "nome": "Gemini 3.6 Flash",
+      "tipo": "texto",
+      "pesos_abertos": false,
+      "lancado_em": null,
+      "status": "desativacao_anunciada",
+      "desativa_em": "2026-10-02",
+      "contexto_tokens": null,
+      "preco": {
+        "entrada_usd_mtok": 0.75,
+        "saida_usd_mtok": 3.75,
+        "fonte_url": "https://docs.github.com/en/copilot/reference/copilot-billing/models-and-pricing",
+        "divergencia": null
+      },
+      "outros_precos": [
+        {
+          "unidade": "mtok_cache",
+          "valor_usd": 0.075,
+          "condicao": "entrada em cache (cached input), por 1M tokens",
+          "fonte_url": "https://docs.github.com/en/copilot/reference/copilot-billing/models-and-pricing"
+        }
+      ],
+      "notas": [],
+      "observacoes": "Preço promocional até 2026-12-31. Alternativa: Gemini 3.8 Flash. Fonte: https://github.blog/changelog/2026-09-03-upcoming-deprecation-of-selected-github-copilot-models/"
+    },
+    {
+      "id": "github/gemini-3.7-flash",
+      "nome": "Gemini 3.7 Flash",
+      "tipo": "texto",
+      "pesos_abertos": false,
+      "lancado_em": null,
+      "status": "desativacao_anunciada",
+      "desativa_em": "2026-10-19",
+      "contexto_tokens": null,
+      "preco": {
+        "entrada_usd_mtok": 0.75,
+        "saida_usd_mtok": 3.75,
+        "fonte_url": "https://docs.github.com/en/copilot/reference/copilot-billing/models-and-pricing",
+        "divergencia": null
+      },
+      "outros_precos": [
+        {
+          "unidade": "mtok_cache",
+          "valor_usd": 0.075,
+          "condicao": "entrada em cache (cached input), por 1M tokens",
+          "fonte_url": "https://docs.github.com/en/copilot/reference/copilot-billing/models-and-pricing"
+        }
+      ],
+      "notas": [],
+      "observacoes": "Preço promocional até 2026-12-31. Alternativa: Gemini 3.8 Flash. Fonte: https://github.blog/changelog/2026-09-18-upcoming-deprecation-of-selected-github-copilot-models-in-mid-october/"
+    },
+    {
+      "id": "github/gemini-3.8-flash",
+      "nome": "Gemini 3.8 Flash",
+      "tipo": "texto",
+      "pesos_abertos": false,
+      "lancado_em": "2026-09-03",
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": null,
+      "preco": {
+        "entrada_usd_mtok": 0.75,
+        "saida_usd_mtok": 3.75,
+        "fonte_url": "https://docs.github.com/en/copilot/reference/copilot-billing/models-and-pricing",
+        "divergencia": null
+      },
+      "outros_precos": [
+        {
+          "unidade": "mtok_cache",
+          "valor_usd": 0.075,
+          "condicao": "entrada em cache (cached input), por 1M tokens",
+          "fonte_url": "https://docs.github.com/en/copilot/reference/copilot-billing/models-and-pricing"
+        }
+      ],
+      "notas": [],
+      "observacoes": "Preço promocional até 2026-12-31. Lançamento: https://github.blog/changelog/2026-09-03-gemini-3-8-flash-is-now-available-in-github-copilot/ (Pro, Pro+, Max, Business, Enterprise)."
+    },
+    {
+      "id": "github/mai-code-1.1-flash",
+      "nome": "MAI-Code-1.1-Flash (Microsoft)",
+      "tipo": "texto",
+      "pesos_abertos": false,
+      "lancado_em": null,
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": null,
+      "preco": {
+        "entrada_usd_mtok": 0.2,
+        "saida_usd_mtok": 1.2,
+        "fonte_url": "https://docs.github.com/en/copilot/reference/copilot-billing/models-and-pricing",
+        "divergencia": null
+      },
+      "outros_precos": [
+        {
+          "unidade": "mtok_cache",
+          "valor_usd": 0.02,
+          "condicao": "entrada em cache (cached input), por 1M tokens",
+          "fonte_url": "https://docs.github.com/en/copilot/reference/copilot-billing/models-and-pricing"
+        }
+      ],
+      "notas": [],
+      "observacoes": "O antecessor MAI-Code-1-Flash foi desativado (https://github.blog/changelog/2026-09-10-mai-code-1-flash-deprecated/)."
+    },
+    {
+      "id": "github/kimi-k2.7-code",
+      "nome": "Kimi K2.7 Code (Moonshot AI)",
+      "tipo": "texto",
+      "pesos_abertos": false,
+      "lancado_em": null,
+      "status": "desativacao_anunciada",
+      "desativa_em": "2026-10-02",
+      "contexto_tokens": null,
+      "preco": {
+        "entrada_usd_mtok": 0.95,
+        "saida_usd_mtok": 4.0,
+        "fonte_url": "https://docs.github.com/en/copilot/reference/copilot-billing/models-and-pricing",
+        "divergencia": null
+      },
+      "outros_precos": [
+        {
+          "unidade": "mtok_cache",
+          "valor_usd": 0.19,
+          "condicao": "entrada em cache (cached input), por 1M tokens",
+          "fonte_url": "https://docs.github.com/en/copilot/reference/copilot-billing/models-and-pricing"
+        }
+      ],
+      "notas": [],
+      "observacoes": "Alternativa: Kimi K3. Fonte: https://github.blog/changelog/2026-09-03-upcoming-deprecation-of-selected-github-copilot-models/"
+    },
+    {
+      "id": "github/kimi-k3",
+      "nome": "Kimi K3 (Moonshot AI)",
+      "tipo": "texto",
+      "pesos_abertos": true,
+      "lancado_em": "2026-08-06",
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": null,
+      "preco": {
+        "entrada_usd_mtok": null,
+        "saida_usd_mtok": null,
+        "fonte_url": null,
+        "divergencia": null
+      },
+      "outros_precos": [],
+      "notas": [],
+      "observacoes": "Pesos abertos segundo o changelog https://github.blog/changelog/2026-08-06-kimi-k3-is-now-available-in-github-copilot/ (Pro, Pro+, Max, Business, Enterprise). Preço não obtido."
+    },
+    {
+      "id": "github/grok-4.5",
+      "nome": "Grok 4.5 (xAI)",
+      "tipo": "texto",
+      "pesos_abertos": false,
+      "lancado_em": null,
+      "status": "desativacao_anunciada",
+      "desativa_em": "2026-10-19",
+      "contexto_tokens": null,
+      "preco": {
+        "entrada_usd_mtok": null,
+        "saida_usd_mtok": null,
+        "fonte_url": null,
+        "divergencia": null
+      },
+      "outros_precos": [],
+      "notas": [],
+      "observacoes": "Preço não obtido. Alternativa: Grok 4.6. Fonte: https://github.blog/changelog/2026-09-18-upcoming-deprecation-of-selected-github-copilot-models-in-mid-october/"
+    },
+    {
+      "id": "github/grok-4.6",
+      "nome": "Grok 4.6 (xAI)",
+      "tipo": "texto",
+      "pesos_abertos": false,
+      "lancado_em": null,
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": null,
+      "preco": {
+        "entrada_usd_mtok": null,
+        "saida_usd_mtok": null,
+        "fonte_url": null,
+        "divergencia": null
+      },
+      "outros_precos": [],
+      "notas": [],
+      "observacoes": "Preço não obtido."
+    },
+    {
+      "id": "github/grok-4.7",
+      "nome": "Grok 4.7 (xAI)",
+      "tipo": "texto",
+      "pesos_abertos": false,
+      "lancado_em": null,
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": null,
+      "preco": {
+        "entrada_usd_mtok": 2.0,
+        "saida_usd_mtok": 6.0,
+        "fonte_url": "https://docs.github.com/en/copilot/reference/copilot-billing/models-and-pricing",
+        "divergencia": null
+      },
+      "outros_precos": [
+        {
+          "unidade": "mtok_cache",
+          "valor_usd": 0.5,
+          "condicao": "entrada em cache (cached input), por 1M tokens",
+          "fonte_url": "https://docs.github.com/en/copilot/reference/copilot-billing/models-and-pricing"
+        }
+      ],
+      "notas": [],
+      "observacoes": "Preço do nível padrão (até 200K tokens)."
+    }
+  ],
+  "capacidades": [
+    {
+      "capacidade": "codigo",
+      "produto": "GitHub Copilot no IDE (completions, Next Edit Suggestions, chat e agent mode)",
+      "como_acessar": [
+        "ide",
+        "web"
+      ],
+      "plano_minimo": "Free",
+      "gratis": true,
+      "headless": false,
+      "comando": null,
+      "limites": "Free: até 2.000 completions/mês; nos pagos e no Student, completions ilimitadas e sem consumir AI Credits. Chat e agent mode consomem AI Credits.",
+      "fonte_url": "https://docs.github.com/en/copilot/get-started/plans"
+    },
+    {
+      "capacidade": "cli_headless",
+      "produto": "GitHub Copilot CLI",
+      "como_acessar": [
+        "cli"
+      ],
+      "plano_minimo": "Pro",
+      "gratis": false,
+      "headless": true,
+      "comando": "npm install -g @github/copilot && copilot -p \"<prompt>\"",
+      "limites": "Modo programático (-p/--prompt) roda e sai; requer Node.js 22+. Docs listam Pro, Pro+, Business e Enterprise (o Max, posterior, não foi checado; o plano Student menciona uso do CLI consumindo créditos). Consome AI Credits.",
+      "fonte_url": "https://docs.github.com/en/copilot/how-tos/copilot-cli/automate-copilot-cli/run-cli-programmatically"
+    },
+    {
+      "capacidade": "agente_nuvem",
+      "produto": "Copilot cloud agent (antigo coding agent)",
+      "como_acessar": [
+        "nuvem",
+        "web"
+      ],
+      "plano_minimo": null,
+      "gratis": false,
+      "headless": true,
+      "comando": null,
+      "limites": "Consome AI Credits (confirmado na página de cobrança individual). Plano mínimo não confirmado nesta coleta.",
+      "fonte_url": "https://docs.github.com/en/copilot/concepts/billing-and-usage/individuals/billing"
+    }
+  ],
+  "gratis": [
+    {
+      "titulo": "Copilot Free",
+      "resumo": "Plano gratuito com até 2.000 completions/mês e uma cota de AI Credits para chat/agentes, com modelo escolhido automaticamente.",
+      "limites": "Só seleção automática de modelo desde 2026-06-24; cota de créditos não confirmada.",
+      "chamavel_por_agente": false,
+      "url": "https://docs.github.com/en/copilot/get-started/plans",
+      "valido_ate": null,
+      "origem": "verificado"
+    },
+    {
+      "titulo": "Copilot Student (200 AI Credits/mês)",
+      "resumo": "Copilot gratuito para estudantes verificados: completions ilimitadas e 200 AI Credits mensais, que cobrem chat, agentes, Copilot CLI e Spaces.",
+      "limites": "Só seleção automática de modelo desde 2026-06-24 (https://github.blog/changelog/2026-06-24-changes-to-model-selection-for-free-and-student-plans/).",
+      "chamavel_por_agente": true,
+      "url": "https://docs.github.com/copilot/how-tos/manage-your-account/free-access-with-copilot-student",
+      "valido_ate": null,
+      "origem": "verificado"
+    }
+  ],
+  "programas": [
+    {
+      "nome": "GitHub Copilot Student (via GitHub Education / Student Developer Pack)",
+      "publico": "estudante",
+      "beneficio": "Plano Copilot Student gratuito: completions ilimitadas + 200 AI Credits/mês (chat, agentes, Copilot CLI). Substituiu o antigo Copilot Pro grátis para estudantes a partir de 2026-03-12.",
+      "valor_usd": null,
+      "requisitos": "Estudante atualmente verificado no GitHub Education, com acesso ao Student Developer Pack (comprovação de matrícula; e-mail institucional ajuda).",
+      "elegivel": "sim",
+      "elegivel_motivo": "Guilherme é graduando da USP com e-mail institucional, perfil típico de verificação no GitHub Education. Uso sugerido: Copilot CLI em modo -p como executor barato na base de agentes PM/EXEC e revisão de código do assistente pessoal, sabendo que o modelo é automático.",
+      "como_aplicar": "Pedir o Student Developer Pack em education.github.com com o e-mail @usp.br e comprovante; depois ativar em Configurações do Copilot.",
+      "url": "https://education.github.com/pack/",
+      "status": "continuo",
+      "prazo": null,
+      "verificado_em": "2026-10-01"
+    },
+    {
+      "nome": "Copilot Pro gratuito para professores verificados",
+      "publico": "educador",
+      "beneficio": "Copilot Pro sem custo para professores verificados no GitHub Education.",
+      "valor_usd": null,
+      "requisitos": "Ser professor verificado no GitHub Education.",
+      "elegivel": "nao",
+      "elegivel_motivo": "Guilherme é aluno, não docente; o orientador dele poderia se qualificar.",
+      "como_aplicar": "Pedir verificação como professor no GitHub Education; ativar em Copilot settings.",
+      "url": "https://docs.github.com/copilot/managing-copilot/managing-copilot-as-an-individual-subscriber/managing-your-copilot-subscription/getting-free-access-to-copilot-as-a-student-teacher-or-maintainer",
+      "status": "continuo",
+      "prazo": null,
+      "verificado_em": "2026-10-01"
+    },
+    {
+      "nome": "Copilot Pro gratuito para mantenedores de open source popular",
+      "publico": "todos",
+      "beneficio": "Copilot Pro sem custo; o GitHub detecta automaticamente quem é elegível e reavalia todo mês.",
+      "valor_usd": null,
+      "requisitos": "Acesso de escrita ou admin a um repositório open source popular (critério de popularidade não divulgado).",
+      "elegivel": "nao",
+      "elegivel_motivo": "Não há indicação de que Guilherme mantenha um repositório popular.",
+      "como_aplicar": "Automático: se elegível, aparece a opção em Copilot settings.",
+      "url": "https://docs.github.com/copilot/managing-copilot/managing-copilot-as-an-individual-subscriber/managing-your-copilot-subscription/getting-free-access-to-copilot-as-a-student-teacher-or-maintainer",
+      "status": "continuo",
+      "prazo": null,
+      "verificado_em": "2026-10-01"
+    }
+  ],
+  "indicadores": [],
+  "observacoes": "Coleta feita SÓ via WebSearch: o WebFetch e o curl estão bloqueados pela política de rede do container (EGRESS_BLOCKED em docs.github.com). Todos os valores vieram dos trechos que a busca extraiu das páginas oficiais (docs.github.com, github.blog, github.com) e devem ser conferidos quando houver acesso direto. O orçamento de buscas da sessão acabou no meio da coleta, então alguns itens ficaram sem a segunda confirmação. MUDANÇAS GRANDES EM 2026: (1) desde 2026-06-01 todo o Copilot usa cobrança por uso em GitHub AI Credits (1 crédito = US$ 0,01), calculada por token às tarifas de cada modelo; as 'premium requests' e os multiplicadores por modelo viraram legado e só valem para planos anuais antigos até o vencimento (página 'Model multipliers for annual plans on request-based billing (legacy)', valores não coletados). Por isso não há preço por premium request adicional nem cotas de premium requests. (2) Planos anuais foram aposentados (preco_anual_usd = null); a informação veio de discussões da comunidade GitHub (github.com/orgs/community/discussions/192790 e 192963), origem a_verificar; antes eram US$ 100/ano (Pro) e US$ 390/ano (Pro+). (3) Novo plano Copilot Max (US$ 100/mês) e 'flex allotment' em Pro/Pro+, anunciados em maio/2026; o flex é variável. (4) GitHub Models (playground, catálogo, API de inferência e BYOK) foi fechado a novos clientes em 2026-06-16 e totalmente aposentado em 2026-07-30 (https://github.blog/changelog/2026-07-30-github-models-is-now-retired/); por isso não há modelos 'GitHub Models', limites grátis nem preço por token unit ativos. Registro histórico: era US$ 0,00001 por token unit, e os limites grátis eram 150 req/dia (modelos low) e 50 req/dia (high) no Free/Pro. A GitHub indica o Microsoft Foundry ou o próprio Copilot como alternativas. (5) Free e Student usam só a seleção automática de modelo desde 2026-06-24. SEM DADO: cota de AI Credits do Copilot Free; preços de GPT-5.4, GPT-5.4 mini, GPT-5.4 nano, GPT-5.3-Codex, GPT-6.1 Sol, Kimi K3, Grok 4.5 e Grok 4.6; contexto de todos os modelos; plano mínimo do Copilot cloud agent; suporte a MCP e a agentes agendados (as buscas acabaram antes); notas de benchmark (não buscadas, pois os modelos são de terceiros e as notas pertencem aos laboratórios). Os trechos de busca divergiram em alguns nomes (Claude Sonnet 5 x 5.5, Opus 4.8 x 5); os dois foram mantidos com observação. x_ceo e x_lider ficaram vazios: Thomas Dohmke saiu em 2025 e não foi possível confirmar por busca quem lidera o GitHub em 2026."
+}
