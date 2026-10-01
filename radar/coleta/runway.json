@@ -1,0 +1,583 @@
+{
+  "provedor": {
+    "id": "runway",
+    "nome": "Runway",
+    "grupo": "midia",
+    "site": "https://runwayml.com",
+    "pais": "EUA",
+    "resumo": "Empresa de Nova York (fundada em 2018) de IA generativa para vídeo e imagem, com app web por créditos e API (Runway Dev). Destaca-se nos modelos próprios de vídeo Gen-4.5 e Aleph 2.0 (edição vídeo-para-vídeo), na captura de performance Act-Two e nos modelos de mundo em tempo real GWM-1; a API também revende modelos de terceiros (Veo, Seedance, Wan, Gemini, GPT Image, ElevenLabs etc.).",
+    "fontes": [
+      "https://runwayml.com/pricing",
+      "https://help.runwayml.com/hc/en-us/articles/15124877443219-How-do-credits-work",
+      "https://docs.dev.runwayml.com/guides/pricing/",
+      "https://docs.dev.runwayml.com/guides/models/",
+      "https://docs.dev.runwayml.com/api-details/api_changelog/"
+    ]
+  },
+  "coletado_em": "2026-10-01",
+  "canais": [
+    {
+      "tipo": "outro",
+      "nome": "Site oficial",
+      "url": "https://runwayml.com",
+      "handle": null,
+      "observacao": "Notícias recentes aparecem também sob runway.com/news (possível migração de domínio) — a_verificar."
+    },
+    {
+      "tipo": "blog",
+      "nome": "Runway News",
+      "url": "https://runwayml.com/news",
+      "handle": null,
+      "observacao": null
+    },
+    {
+      "tipo": "outro",
+      "nome": "Runway Research",
+      "url": "https://runwayml.com/research",
+      "handle": null,
+      "observacao": "Anúncios de modelos (Gen-4.5, GWM-1)."
+    },
+    {
+      "tipo": "changelog",
+      "nome": "API Changelog",
+      "url": "https://docs.dev.runwayml.com/api-details/api_changelog/",
+      "handle": null,
+      "observacao": null
+    },
+    {
+      "tipo": "docs",
+      "nome": "Documentação da API (Runway Dev)",
+      "url": "https://docs.dev.runwayml.com/",
+      "handle": null,
+      "observacao": null
+    },
+    {
+      "tipo": "docs",
+      "nome": "Central de ajuda",
+      "url": "https://help.runwayml.com/hc/en-us",
+      "handle": null,
+      "observacao": null
+    },
+    {
+      "tipo": "precos",
+      "nome": "Preços dos planos (app)",
+      "url": "https://runwayml.com/pricing",
+      "handle": null,
+      "observacao": null
+    },
+    {
+      "tipo": "precos",
+      "nome": "Preços da API",
+      "url": "https://docs.dev.runwayml.com/guides/pricing/",
+      "handle": null,
+      "observacao": null
+    },
+    {
+      "tipo": "status",
+      "nome": "Status Page",
+      "url": "https://status.runwayml.com",
+      "handle": null,
+      "observacao": "A central de ajuda cita uma Status Page; o endereço exato não apareceu nas buscas — a_verificar."
+    },
+    {
+      "tipo": "x_oficial",
+      "nome": "Runway",
+      "url": "https://x.com/runwayml",
+      "handle": "@runwayml",
+      "observacao": "Handle identificado por busca, não lido."
+    },
+    {
+      "tipo": "x_ceo",
+      "nome": "Cristóbal Valenzuela (cofundador e CEO)",
+      "url": "https://x.com/c_valenzuelab",
+      "handle": "@c_valenzuelab",
+      "observacao": "Handle não confirmado em página oficial — a_verificar."
+    },
+    {
+      "tipo": "x_lider",
+      "nome": "Anastasis Germanidis (cofundador, CTO; anunciado como co-CEO)",
+      "url": "https://x.com/agermanidis",
+      "handle": "@agermanidis",
+      "observacao": "Handle não confirmado em página oficial — a_verificar."
+    },
+    {
+      "tipo": "discord",
+      "nome": "Discord oficial da Runway",
+      "url": "https://discord.gg/runwayml",
+      "handle": null,
+      "observacao": "Existência confirmada na central de ajuda (Runway Resources); URL de convite a_verificar."
+    },
+    {
+      "tipo": "youtube",
+      "nome": "Runway no YouTube",
+      "url": "https://www.youtube.com/@RunwayML",
+      "handle": "@RunwayML",
+      "observacao": "Presença citada na central de ajuda; URL a_verificar."
+    },
+    {
+      "tipo": "github",
+      "nome": "runwayml",
+      "url": "https://github.com/runwayml",
+      "handle": "runwayml",
+      "observacao": "Repositórios antigos arquivados; SDKs oficiais: npm @runwayml/sdk e pip runwayml."
+    }
+  ],
+  "planos": [
+    {
+      "nome": "Free",
+      "publico": "individual",
+      "preco_mensal_usd": 0,
+      "preco_anual_usd": null,
+      "inclui": "125 créditos de uma vez (não expiram e não renovam), conjunto limitado de ferramentas e modelos, 5 GB de armazenamento.",
+      "limites": "Não permite comprar créditos avulsos.",
+      "fonte_url": "https://help.runwayml.com/hc/en-us/articles/50404627334547-Free-plan-details",
+      "conferido_em": "2026-10-01"
+    },
+    {
+      "nome": "Standard",
+      "publico": "individual",
+      "preco_mensal_usd": 15,
+      "preco_anual_usd": 144,
+      "inclui": "625 créditos por mês; até 5 editores adicionais no workspace.",
+      "limites": "Créditos mensais expiram na data de cobrança (sem rollover).",
+      "fonte_url": "https://help.runwayml.com/hc/en-us/articles/49191105352339-Standard-plan-details",
+      "conferido_em": "2026-10-01"
+    },
+    {
+      "nome": "Pro",
+      "publico": "individual",
+      "preco_mensal_usd": 35,
+      "preco_anual_usd": null,
+      "inclui": "2.250 créditos por mês, 500 GB de armazenamento, Custom Voices e Text to Speech; acesso ao Unlimited Mode (gerações sem crédito em modelos suportados).",
+      "limites": "Créditos mensais expiram na data de cobrança. Anual anunciado como US$ 28/mês (economia de US$ 228/ano); total anual não lido literalmente, por isso null.",
+      "fonte_url": "https://help.runwayml.com/hc/en-us/articles/52070807060755-Pro-plan-details",
+      "conferido_em": "2026-10-01"
+    },
+    {
+      "nome": "Max",
+      "publico": "individual",
+      "preco_mensal_usd": 95,
+      "preco_anual_usd": null,
+      "inclui": "9.500 créditos por mês, todos os modelos da Runway inclusive de terceiros, rollover de até um mês de créditos não usados, Unlimited Mode.",
+      "limites": "Compra extra de créditos com mínimo de 1.000. Anual anunciado como US$ 76/mês (total anual não lido literalmente).",
+      "fonte_url": "https://help.runwayml.com/hc/en-us/articles/52067870667411-Max-plan-details",
+      "conferido_em": "2026-10-01"
+    },
+    {
+      "nome": "Unlimited (legado)",
+      "publico": "individual",
+      "preco_mensal_usd": 95,
+      "preco_anual_usd": null,
+      "inclui": "2.250 créditos por mês + Explore Mode (gerações ilimitadas sem crédito, em ritmo relaxado).",
+      "limites": "Em extinção: assinantes ficam no plano até 2026-11-30 e depois migram para o Max pelo mesmo preço mensal. Não é mais vendido a novos assinantes.",
+      "fonte_url": "https://help.runwayml.com/hc/en-us/articles/52068047744019-Unlimited-plan-is-switching-to-Max",
+      "conferido_em": "2026-10-01"
+    },
+    {
+      "nome": "Enterprise",
+      "publico": "empresa",
+      "preco_mensal_usd": null,
+      "preco_anual_usd": null,
+      "inclui": "SSO, cobrança centralizada, relatórios de uso, pool anual de créditos compartilhado personalizado.",
+      "limites": "Só anual; preço sob consulta.",
+      "fonte_url": "https://help.runwayml.com/hc/en-us/articles/37784857333011-When-to-choose-an-Enterprise-subscription",
+      "conferido_em": "2026-10-01"
+    },
+    {
+      "nome": "API (Runway Dev) — pré-pago por crédito",
+      "publico": "api",
+      "preco_mensal_usd": null,
+      "preco_anual_usd": null,
+      "inclui": "Créditos a US$ 0,01 cada, comprados por projeto no portal do desenvolvedor; compra mínima de US$ 10.",
+      "limites": "Tiers por projeto e por modelo: Tier 1 até 1-2 tarefas simultâneas, 50-200 gerações/dia, gasto máx. US$ 100/mês; Tier 2 após US$ 50 comprados (US$ 500/mês); Tier 3 após US$ 100 (US$ 2.000/mês); Tier 4 após US$ 1.000 (US$ 20.000/mês); Tier 5 após US$ 5.000 (US$ 100.000/mês).",
+      "fonte_url": "https://docs.dev.runwayml.com/usage/tiers/",
+      "conferido_em": "2026-10-01"
+    }
+  ],
+  "modelos": [
+    {
+      "id": "runway/gen-4.5",
+      "nome": "Gen-4.5",
+      "tipo": "video",
+      "pesos_abertos": false,
+      "lancado_em": "2025-12-01",
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": null,
+      "preco": null,
+      "outros_precos": [
+        {
+          "unidade": "segundo_video",
+          "valor_usd": 0.12,
+          "condicao": "API (id gen4.5): 12 créditos por segundo × US$ 0,01/crédito; texto-para-vídeo e imagem-para-vídeo, 2 a 10 s",
+          "fonte_url": "https://docs.dev.runwayml.com/guides/pricing/"
+        }
+      ],
+      "notas": []
+    },
+    {
+      "id": "runway/aleph-2.0",
+      "nome": "Aleph 2.0",
+      "tipo": "video",
+      "pesos_abertos": false,
+      "lancado_em": "2026-06-02",
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": null,
+      "preco": null,
+      "outros_precos": [
+        {
+          "unidade": "segundo_video",
+          "valor_usd": 0.28,
+          "condicao": "API (id aleph2, endpoint video_to_video): 28 créditos por segundo × US$ 0,01; mínimo de 56 créditos por geração; vídeo de entrada 2-30 s, até 5 keyframes",
+          "fonte_url": "https://docs.dev.runwayml.com/guides/pricing/"
+        }
+      ],
+      "notas": []
+    },
+    {
+      "id": "runway/gen-4-turbo",
+      "nome": "Gen-4 Turbo",
+      "tipo": "video",
+      "pesos_abertos": false,
+      "lancado_em": null,
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": null,
+      "preco": null,
+      "outros_precos": [
+        {
+          "unidade": "segundo_video",
+          "valor_usd": 0.05,
+          "condicao": "API (id gen4_turbo): 5 créditos por segundo × US$ 0,01",
+          "fonte_url": "https://docs.dev.runwayml.com/guides/pricing/"
+        }
+      ],
+      "notas": []
+    },
+    {
+      "id": "runway/act-two",
+      "nome": "Act-Two",
+      "tipo": "video",
+      "pesos_abertos": false,
+      "lancado_em": null,
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": null,
+      "preco": null,
+      "outros_precos": [
+        {
+          "unidade": "segundo_video",
+          "valor_usd": 0.05,
+          "condicao": "API (id act_two): 5 créditos por segundo × US$ 0,01; captura de performance (vídeo de atuação → personagem)",
+          "fonte_url": "https://docs.dev.runwayml.com/guides/pricing/"
+        }
+      ],
+      "notas": []
+    },
+    {
+      "id": "runway/gen-4-image",
+      "nome": "Gen-4 Image (References)",
+      "tipo": "imagem",
+      "pesos_abertos": false,
+      "lancado_em": null,
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": null,
+      "preco": null,
+      "outros_precos": [
+        {
+          "unidade": "imagem",
+          "valor_usd": 0.05,
+          "condicao": "API (id gen4_image): 5 créditos por imagem 720p × US$ 0,01",
+          "fonte_url": "https://docs.dev.runwayml.com/guides/pricing/"
+        },
+        {
+          "unidade": "imagem",
+          "valor_usd": 0.08,
+          "condicao": "API (id gen4_image): 8 créditos por imagem 1080p × US$ 0,01",
+          "fonte_url": "https://docs.dev.runwayml.com/guides/pricing/"
+        }
+      ],
+      "notas": [
+        {
+          "benchmark": "aa_image_elo",
+          "valor": 991,
+          "medido_em": "2026-10-01",
+          "fonte_url": "https://artificialanalysis.ai/image/model-families/runway",
+          "observacao": "Artificial Analysis Text to Image Arena, IC 95% -9/+9, 4.045 amostras; valor lido via resumo de busca, não na página."
+        }
+      ]
+    },
+    {
+      "id": "runway/gen-4-image-turbo",
+      "nome": "Gen-4 Image Turbo",
+      "tipo": "imagem",
+      "pesos_abertos": false,
+      "lancado_em": null,
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": null,
+      "preco": null,
+      "outros_precos": [
+        {
+          "unidade": "imagem",
+          "valor_usd": 0.02,
+          "condicao": "API (id gen4_image_turbo): 2 créditos por imagem, qualquer resolução, × US$ 0,01",
+          "fonte_url": "https://docs.dev.runwayml.com/guides/pricing/"
+        }
+      ],
+      "notas": []
+    },
+    {
+      "id": "runway/gwm-1-avatars",
+      "nome": "GWM-1 Avatars (Runway Characters)",
+      "tipo": "multimodal",
+      "pesos_abertos": false,
+      "lancado_em": "2025-12-11",
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": null,
+      "preco": null,
+      "outros_precos": [
+        {
+          "unidade": "outro",
+          "valor_usd": 0.02,
+          "condicao": "API (id gwm1_avatars): 2 créditos de abertura da sessão × US$ 0,01",
+          "fonte_url": "https://docs.dev.runwayml.com/guides/pricing/"
+        },
+        {
+          "unidade": "outro",
+          "valor_usd": 0.02,
+          "condicao": "API (id gwm1_avatars): 2 créditos a cada 6 segundos de conversa em tempo real × US$ 0,01",
+          "fonte_url": "https://docs.dev.runwayml.com/guides/pricing/"
+        }
+      ],
+      "notas": []
+    },
+    {
+      "id": "runway/gen-4-aleph",
+      "nome": "Gen-4 Aleph",
+      "tipo": "video",
+      "pesos_abertos": false,
+      "lancado_em": null,
+      "status": "desativado",
+      "desativa_em": "2026-07-30",
+      "contexto_tokens": null,
+      "preco": null,
+      "outros_precos": [],
+      "notas": []
+    },
+    {
+      "id": "runway/gen-3-alpha-turbo",
+      "nome": "Gen-3 Alpha Turbo",
+      "tipo": "video",
+      "pesos_abertos": false,
+      "lancado_em": null,
+      "status": "desativado",
+      "desativa_em": "2026-07-30",
+      "contexto_tokens": null,
+      "preco": null,
+      "outros_precos": [],
+      "notas": []
+    }
+  ],
+  "capacidades": [
+    {
+      "capacidade": "video_gerar",
+      "produto": "Runway app (Gen-4.5, Aleph 2.0, Gen-4 Turbo, Act-Two e modelos de terceiros)",
+      "como_acessar": [
+        "web",
+        "app"
+      ],
+      "plano_minimo": "Free",
+      "gratis": true,
+      "headless": false,
+      "comando": null,
+      "limites": "Free: 125 créditos únicos e modelos limitados; Pro e Max têm Unlimited Mode.",
+      "fonte_url": "https://help.runwayml.com/hc/en-us/articles/15124877443219-How-do-credits-work"
+    },
+    {
+      "capacidade": "video_gerar",
+      "produto": "Runway API (Runway Dev)",
+      "como_acessar": [
+        "api"
+      ],
+      "plano_minimo": "API pré-paga (mín. US$ 10)",
+      "gratis": false,
+      "headless": true,
+      "comando": "pip install runwayml  |  npm install --save @runwayml/sdk",
+      "limites": "Tiers 1-5 de concorrência e gerações/dia por modelo.",
+      "fonte_url": "https://docs.dev.runwayml.com/api-details/sdks/"
+    },
+    {
+      "capacidade": "imagem_gerar",
+      "produto": "Gen-4 Image / Gen-4 Image Turbo (app e API)",
+      "como_acessar": [
+        "web",
+        "api"
+      ],
+      "plano_minimo": null,
+      "gratis": false,
+      "headless": true,
+      "comando": null,
+      "limites": null,
+      "fonte_url": "https://docs.dev.runwayml.com/guides/pricing/"
+    },
+    {
+      "capacidade": "audio_tts",
+      "produto": "Text to Speech / Custom Voices (modelos ElevenLabs via Runway)",
+      "como_acessar": [
+        "web",
+        "api"
+      ],
+      "plano_minimo": "Pro (no app)",
+      "gratis": false,
+      "headless": true,
+      "comando": null,
+      "limites": "API: eleven_multilingual_v2 e eleven_v3 a 1 crédito por 50 caracteres; eleven_v4 2,2 créditos/1.000 caracteres até 2026-10-12 e depois 5 créditos/1.000.",
+      "fonte_url": "https://docs.dev.runwayml.com/guides/pricing/"
+    },
+    {
+      "capacidade": "audio_tempo_real",
+      "produto": "Runway Characters (GWM-1 Avatars)",
+      "como_acessar": [
+        "api"
+      ],
+      "plano_minimo": null,
+      "gratis": false,
+      "headless": true,
+      "comando": null,
+      "limites": "Avatares conversacionais em tempo real; integração com LiveKit Agents.",
+      "fonte_url": "https://docs.dev.runwayml.com/characters/"
+    },
+    {
+      "capacidade": "mcp",
+      "produto": "Runway MCP (geração de mídia no chat) — mcp.runwayml.com",
+      "como_acessar": [
+        "app",
+        "cli",
+        "ide"
+      ],
+      "plano_minimo": null,
+      "gratis": false,
+      "headless": false,
+      "comando": null,
+      "limites": null,
+      "fonte_url": "https://help.runwayml.com/hc/en-us/articles/51931843164691-Connecting-to-Runway-MCP"
+    },
+    {
+      "capacidade": "mcp",
+      "produto": "Runway Dev MCP (conta do portal: tarefas, model routers, docs) — https://dev.runwayml.com/mcp",
+      "como_acessar": [
+        "ide",
+        "cli"
+      ],
+      "plano_minimo": null,
+      "gratis": false,
+      "headless": true,
+      "comando": null,
+      "limites": "Funciona com Cursor, Claude Desktop, Claude Code e Codex; não gera mídia.",
+      "fonte_url": "https://docs.dev.runwayml.com/guides/mcp/"
+    }
+  ],
+  "gratis": [
+    {
+      "titulo": "Plano Free da Runway",
+      "resumo": "125 créditos únicos que não expiram, acesso a parte das ferramentas e 5 GB de armazenamento.",
+      "limites": "Não renova; não permite compra de créditos; modelos limitados.",
+      "chamavel_por_agente": false,
+      "url": "https://help.runwayml.com/hc/en-us/articles/50404627334547-Free-plan-details",
+      "valido_ate": null,
+      "origem": "verificado"
+    }
+  ],
+  "programas": [
+    {
+      "nome": "Desconto para estudantes (Runway for Education)",
+      "publico": "estudante",
+      "beneficio": "25% de desconto em qualquer plano pago, após verificação pela SheerID.",
+      "valor_usd": null,
+      "requisitos": "Matrícula ativa em faculdade/pós-graduação credenciada; ensino médio não é elegível.",
+      "elegivel": "sim",
+      "elegivel_motivo": "Graduando da USP com e-mail institucional se encaixa; depende só da SheerID reconhecer a USP.",
+      "como_aplicar": "Verificar status de estudante pela SheerID no checkout/página de educação.",
+      "url": "https://help.runwayml.com/hc/en-us/articles/48154114602259-Student-and-Educator-Discounts",
+      "status": "continuo",
+      "prazo": null,
+      "verificado_em": "2026-10-01"
+    },
+    {
+      "nome": "Desconto para educadores e turmas",
+      "publico": "educador",
+      "beneficio": "25% de desconto para educadores verificados; até 25% para turmas com 3+ licenças.",
+      "valor_usd": null,
+      "requisitos": "Educador verificado pela SheerID.",
+      "elegivel": "nao",
+      "elegivel_motivo": "Guilherme é estudante; só o orientador poderia usar.",
+      "como_aplicar": "https://runwayml.com/educators",
+      "url": "https://runwayml.com/educators",
+      "status": "continuo",
+      "prazo": null,
+      "verificado_em": "2026-10-01"
+    },
+    {
+      "nome": "Student Ambassador Program",
+      "publico": "estudante",
+      "beneficio": "100 mil créditos de cortesia, plano Pro de cortesia, networking e acesso ao time da Runway.",
+      "valor_usd": null,
+      "requisitos": "Estudante interessado em arte e tecnologia (arte, cinema, arquitetura, computação, design etc.).",
+      "elegivel": "talvez",
+      "elegivel_motivo": "É estudante, mas o programa é seletivo e voltado a embaixadores/divulgação; não há confirmação de que segue aberto em 2026.",
+      "como_aplicar": "Contato via https://runwayml.com/educators",
+      "url": "https://runwayml.com/news/runway-launches-student-ambassador-program",
+      "status": "desconhecido",
+      "prazo": null,
+      "verificado_em": "2026-10-01"
+    },
+    {
+      "nome": "Creative Partners Program (CPP)",
+      "publico": "todos",
+      "beneficio": "Plano Max de cortesia, acesso antecipado a ferramentas e modelos, colaborações e eventos.",
+      "valor_usd": null,
+      "requisitos": "Seleção de artistas, equipes e criadores.",
+      "elegivel": "nao",
+      "elegivel_motivo": "Voltado a artistas/criadores de mídia, não a pesquisa de dados urbanos.",
+      "como_aplicar": "Inscrição em https://cpp.runwayml.com/",
+      "url": "https://cpp.runwayml.com/",
+      "status": "desconhecido",
+      "prazo": null,
+      "verificado_em": "2026-10-01"
+    },
+    {
+      "nome": "Hundred Film Fund",
+      "publico": "todos",
+      "beneficio": "Fundo de US$ 5M (potencial de US$ 10M) com bolsas de US$ 5 mil a mais de US$ 1M por filme, mais US$ 2M em créditos Runway.",
+      "valor_usd": null,
+      "requisitos": "Projeto de filme com IA em pré ou pós-produção.",
+      "elegivel": "nao",
+      "elegivel_motivo": "Exige projeto audiovisual; não se aplica à pesquisa UrbVerde.",
+      "como_aplicar": "Inscrição pela página do fundo.",
+      "url": "https://runwayml.com/news/hundred-film-fund",
+      "status": "desconhecido",
+      "prazo": null,
+      "verificado_em": "2026-10-01"
+    },
+    {
+      "nome": "Runway Fund",
+      "publico": "startup",
+      "beneficio": "Investimento em empresas na fronteira da IA.",
+      "valor_usd": null,
+      "requisitos": "Startup de IA.",
+      "elegivel": "nao",
+      "elegivel_motivo": "É fundo de investimento, não programa de créditos para pesquisa.",
+      "como_aplicar": "https://fund.runwayml.com/",
+      "url": "https://fund.runwayml.com/",
+      "status": "continuo",
+      "prazo": null,
+      "verificado_em": "2026-10-01"
+    }
+  ],
+  "indicadores": [],
+  "observacoes": "Coleta feita só com WebSearch (WebFetch bloqueado pelo proxy do ambiente em 2026-10-01); valores não foram lidos diretamente na página — conferir antes de usar. Preços em USD por unidade derivados de créditos da API a US$ 0,01/crédito (conta exata, não estimativa). Confirmados por duas buscas: Free 125 créditos, Standard US$ 15/mês ou US$ 144/ano com 625 créditos, Pro US$ 35/mês com 2.250 créditos, Max US$ 95/mês com 9.500 créditos, gen4.5 12 créd/s, gen4_turbo 5 créd/s, act_two 5 créd/s, aleph2 28 créd/s (mín. 56), gen4_image 5/8 créd. Uma só busca: gen4_image_turbo 2 créd, gwm1_avatars 2+2/6 s, tiers da API. Totais anuais de Pro e Max deixados null: as buscas citaram US$ 28/mês e US$ 76/mês no anual, sem o total literal. Enterprise sem preço público. Não incluídos como modelos (são de terceiros revendidos pela API da Runway, devem estar nos arquivos dos donos): wan3, wan3_prime, seedance2_5, seedance2, seedance2_fast, seedance2_mini, grok_imagine_1_5, h3_max, hailuo3, veo3.1 (20 créd/s sem áudio, 40 com áudio), veo3.1_fast, happyhorse_1_0, gemini_omni_flash(_1.1), gpt_image_2_5_flare/sunburst, muse_image (Meta, 1 créd/imagem), grok_imagine_image_2, seedream5_pro/lite, gemini_image3_pro, gemini_image3.1_flash, gpt_image_2, gemini_2.5_flash (Nano Banana), modelos ElevenLabs (TTS, efeitos sonoros eleven_text_to_sound_v2 1 créd/s, voice isolation 1 créd/6 s) e magnific_video_upscaler_creative (por quadro). Gen-4 (vídeo, não-Turbo) e o upscaler próprio não apareceram na lista atual da API; se ainda existem no app, não foi confirmado. Gen-4 Aleph e Gen-3 Alpha Turbo saíram da API em 2026-07-30 (status no app não confirmado). GWM Worlds, GWM Robotics e Solaris (modelo de interface) foram anunciados, mas não se achou preço nem disponibilidade na API. Datas de lançamento: Gen-4.5 anunciado em 2025-12-01 (na API em 2026-02-10); Act-Two chegou à API em 2025-07-21 (lançamento no app sem data confirmada, por isso null); Gen-4 Turbo e Gen-4 Image sem data oficial nas buscas. Notas: aa_video_elo do Gen-4.5 não apareceu no AA nas buscas — a Runway disse no lançamento que ele tinha 1.247 de Elo no AA Text-to-Video (dado do próprio provedor, de 2025-12, fora das notas); o AA mostrava Runway Gen 4 com Elo 1.119 em imagem-para-vídeo (modelo fora da lista atual). lmarena_image_elo não buscado com sucesso. Canais: handles do X, convite do Discord, URL do YouTube e da status page são a_verificar. Créditos do app têm custo por modelo diferente da API; não coletado. Nenhum programa específico de créditos para pesquisa acadêmica ou startups foi encontrado. Usos sugeridos para o Guilherme: Para o Guilherme: plano Free para testar vídeos de divulgação da UrbVerde; com desconto de estudante (25%), o Standard sai mais barato. Pela API, Gen-4 Image Turbo (US$ 0,02/imagem) e Gen-4 Turbo (US$ 0,05/s) são as opções baratas para gerar ilustrações e vídeos curtos por agente; o MCP oficial permite gerar mídia a partir do Claude."
+}

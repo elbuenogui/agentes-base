@@ -1,0 +1,110 @@
+{
+  "provedor": {
+    "id": "suno",
+    "nome": "Suno",
+    "grupo": "midia",
+    "site": "https://suno.com",
+    "pais": "EUA",
+    "resumo": "Gerador de músicas completas (voz, letra e instrumental) a partir de texto, com app web e móvel e o Suno Studio, uma estação de áudio generativa para stems e edição multipista. Desde 2026-09-09 opera só a família v6 (v6, v6-wild, v6-mini), treinada com catálogo licenciado de Warner Music Group, BMG e Believe. Não tem API pública oficial: existe apenas um programa de parceiros/acesso antecipado.",
+    "fontes": [
+      "https://suno.com/pricing",
+      "https://help.suno.com/en/articles/2410049",
+      "https://help.suno.com/en/articles/13924481",
+      "https://help.suno.com/en/articles/13614785",
+      "https://suno.com/blog/introducing-v6"
+    ]
+  },
+  "coletado_em": "2026-10-01",
+  "canais": [
+    {"tipo": "outro", "nome": "Site", "url": "https://suno.com", "handle": null, "observacao": null},
+    {"tipo": "blog", "nome": "Blog da Suno", "url": "https://suno.com/blog", "handle": null, "observacao": null},
+    {"tipo": "changelog", "nome": "Release notes", "url": "https://suno.com/release-notes", "handle": null, "observacao": null},
+    {"tipo": "docs", "nome": "Central de ajuda (Knowledge Base)", "url": "https://help.suno.com", "handle": null, "observacao": "Não há documentação de API pública."},
+    {"tipo": "precos", "nome": "Preços", "url": "https://suno.com/pricing", "handle": null, "observacao": null},
+    {"tipo": "x_oficial", "nome": "Suno", "url": "https://x.com/suno", "handle": "@suno", "observacao": "Também existe @sunomusic (https://x.com/sunomusic) com bio apontando para suno.com; @suno é o principal."},
+    {"tipo": "x_ceo", "nome": "Mikey Shulman (CEO e cofundador)", "url": "https://x.com/MikeyShulman", "handle": "@MikeyShulman", "observacao": null},
+    {"tipo": "discord", "nome": "Discord oficial da Suno", "url": "https://discord.com/invite/suno", "handle": null, "observacao": null}
+  ],
+  "planos": [
+    {"nome": "Free", "publico": "individual", "preco_mensal_usd": 0, "preco_anual_usd": null,
+     "inclui": "50 créditos que renovam por dia (cerca de 10 músicas/dia); só o modelo v6-mini; recursos padrão; upload de até 8 min de áudio; fila de criação compartilhada.",
+     "limites": "Uso pessoal e não comercial; a Suno retém a propriedade das músicas. Até 7 downloads de teste vitalícios (contas criadas antes de 2026-09-03; quem entrou depois recebe downloads de teste só ocasionalmente), com possibilidade de comprar downloads. Sem compra de créditos avulsos e sem separação de stems.",
+     "fonte_url": "https://help.suno.com/en/articles/2410049", "conferido_em": "2026-10-01"},
+    {"nome": "Pro", "publico": "individual", "preco_mensal_usd": 10, "preco_anual_usd": null,
+     "inclui": "2.500 créditos por mês; modelos v6 e v6-wild (além do v6-mini); direitos comerciais e cessão da titularidade das músicas baixadas; compra de créditos avulsos (top-up, não expiram mas exigem assinatura ativa); após esgotar os créditos mensais, até 50 créditos por dia.",
+     "limites": "20 downloads por mês (renovam na data de cobrança, não acumulam). Uso comercial só de músicas com download permitido. Anual: US$ 8/mês (20% de desconto); o total anual não aparece literalmente nas fontes, por isso preco_anual_usd = null.",
+     "fonte_url": "https://suno.com/pricing", "conferido_em": "2026-10-01"},
+    {"nome": "Premier", "publico": "individual", "preco_mensal_usd": 30, "preco_anual_usd": null,
+     "inclui": "10.000 créditos por mês; v6 e v6-wild; direitos comerciais; Suno Studio (estação de áudio generativa: stems, MIDI, efeitos, automação, plugins criados por chat); separação de stems; acesso antecipado a recursos; até 50 créditos/dia após esgotar os mensais.",
+     "limites": "60 downloads por mês (não acumulam); exportações feitas dentro do Suno Studio não sofrem o limite de downloads. Anual: US$ 24/mês (20% de desconto); total anual não citado literalmente, por isso null.",
+     "fonte_url": "https://suno.com/pricing", "conferido_em": "2026-10-01"}
+  ],
+  "modelos": [
+    {"id": "suno/v6", "nome": "Suno v6", "tipo": "musica", "pesos_abertos": false, "lancado_em": "2026-09-09",
+     "status": "ativo", "desativa_em": null, "contexto_tokens": null, "preco": null,
+     "outros_precos": [],
+     "notas": [
+       {"benchmark": "aa_music_instrumental_elo", "valor": 1140, "medido_em": "2026-10-01",
+        "fonte_url": "https://artificialanalysis.ai/music/leaderboard/instrumental",
+        "observacao": "AA-Music-Instrumental v1.1, 1º lugar; IC 95% 1125–1155, 2.118 amostras. Chave de benchmark nova (o roteiro não tem chave para música)."}
+     ],
+     "observacao": "Modelo principal; só Pro e Premier. Cada geração produz duas músicas por 10 créditos no total (mesmo custo dos modelos anteriores). Treinado com parceiros da indústria (Warner Music Group, BMG, Believe). Permite editar parte de uma música em linguagem natural e criar mashups."},
+    {"id": "suno/v6-wild", "nome": "Suno v6-wild", "tipo": "musica", "pesos_abertos": false, "lancado_em": "2026-09-09",
+     "status": "ativo", "desativa_em": null, "contexto_tokens": null, "preco": null,
+     "outros_precos": [], "notas": [],
+     "observacao": "Variante exploratória, menos previsível; só Pro e Premier. Não aparece nos placares da Artificial Analysis encontrados."},
+    {"id": "suno/v6-mini", "nome": "Suno v6-mini", "tipo": "musica", "pesos_abertos": false, "lancado_em": "2026-09-09",
+     "status": "ativo", "desativa_em": null, "contexto_tokens": null, "preco": null,
+     "outros_precos": [],
+     "notas": [
+       {"benchmark": "aa_music_instrumental_elo", "valor": 1109, "medido_em": "2026-10-01",
+        "fonte_url": "https://artificialanalysis.ai/music/leaderboard/instrumental",
+        "observacao": "AA-Music-Instrumental v1.1, 2º lugar."}
+     ],
+     "observacao": "Versão mais rápida e eficiente; único modelo disponível no plano Free."},
+    {"id": "suno/v5.5", "nome": "Suno v5.5", "tipo": "musica", "pesos_abertos": false, "lancado_em": "2026-03-26",
+     "status": "desativado", "desativa_em": null, "contexto_tokens": null, "preco": null,
+     "outros_precos": [],
+     "notas": [
+       {"benchmark": "aa_music_vocals_elo", "valor": 1169, "medido_em": "2026-10-01",
+        "fonte_url": "https://artificialanalysis.ai/music/leaderboard/vocals",
+        "observacao": "Placar de música com vocais da Artificial Analysis, 1º lugar; o v6 ainda não aparecia nesse placar. Valor visto em uma só busca."}
+     ],
+     "observacao": "Aposentado com o lançamento da família v6 (2026-09-09; data exata da retirada não confirmada). Trouxe Voices, Custom Models e My Taste. Músicas antigas continuam na biblioteca."},
+    {"id": "suno/v5", "nome": "Suno v5", "tipo": "musica", "pesos_abertos": false, "lancado_em": "2025-09-23",
+     "status": "desativado", "desativa_em": null, "contexto_tokens": null, "preco": null,
+     "outros_precos": [], "notas": [],
+     "observacao": "Aposentado com a chegada da v6."},
+    {"id": "suno/v4.5", "nome": "Suno v4.5 (e v4.5+)", "tipo": "musica", "pesos_abertos": false, "lancado_em": "2025-05-01",
+     "status": "desativado", "desativa_em": null, "contexto_tokens": null, "preco": null,
+     "outros_precos": [], "notas": [],
+     "observacao": "Aposentado com a chegada da v6, como todos os modelos anteriores (v4.5+, v4 e mais antigos). Data de lançamento da v4.5+ não encontrada."}
+  ],
+  "capacidades": [
+    {"capacidade": "musica", "produto": "Suno (criação de músicas, web e app iOS/Android)", "como_acessar": ["web", "app"],
+     "plano_minimo": "Free", "gratis": true, "headless": false, "comando": null,
+     "limites": "Free: 50 créditos/dia, só v6-mini, uso não comercial. 10 créditos por geração (2 músicas).",
+     "fonte_url": "https://help.suno.com/en/articles/2410049"},
+    {"capacidade": "musica", "produto": "Suno Studio (estação de áudio generativa)", "como_acessar": ["web"],
+     "plano_minimo": "Premier", "gratis": false, "headless": false, "comando": null,
+     "limites": "Só no Premier. Geração de stems, separação em até 12 stems, exportação em áudio e MIDI, efeitos e plugins próprios. Exportações sem limite de downloads.",
+     "fonte_url": "https://suno.com/blog/suno-studio"},
+    {"capacidade": "musica", "produto": "API de desenvolvedor (programa de parceiros)", "como_acessar": ["api"],
+     "plano_minimo": null, "gratis": false, "headless": true, "comando": null,
+     "limites": "NÃO há API pública oficial: sem chaves públicas, sem documentação pública e sem data de disponibilidade geral. Em 2026-07 o CPO Jack Brody abriu formulário de acesso antecipado para um grupo pequeno e curado de parceiros (fonte de terceiros: a_verificar). APIs 'Suno' de terceiros não são oficiais.",
+     "fonte_url": "https://www.musicbusinessworldwide.com/suno-explores-developer-api-seeking-apps-that-unlock-experiences-generative-music-makes-possible-for-the-first-time/"}
+  ],
+  "gratis": [
+    {"titulo": "Plano Free da Suno", "resumo": "50 créditos que renovam por dia (cerca de 10 músicas/dia) com o modelo v6-mini.",
+     "limites": "Uso pessoal e não comercial; a Suno retém a propriedade; até 7 downloads de teste vitalícios (contas anteriores a 2026-09-03).",
+     "chamavel_por_agente": false, "url": "https://help.suno.com/en/articles/2410049", "valido_ate": null, "origem": "verificado"}
+  ],
+  "programas": [
+    {"nome": "Suno Spark", "publico": "todos", "beneficio": "Para artistas independentes selecionados: bolsas (grants), apoio de marketing, acesso antecipado a ferramentas, Premier gratuito e créditos.",
+     "valor_usd": null, "requisitos": "18 anos ou mais; cantor, compositor ou produtor que lança música com nome artístico próprio; artista independente, sem gravadora.",
+     "elegivel": "nao", "elegivel_motivo": "Programa para artistas musicais independentes que lançam música própria; não cobre estudantes nem pesquisa. O Guilherme só seria elegível se tivesse carreira musical própria.",
+     "como_aplicar": "Inscrição pela página suno.com/spark.", "url": "https://suno.com/spark", "status": "desconhecido", "prazo": null, "verificado_em": "2026-10-01"}
+  ],
+  "indicadores": [],
+  "observacoes": "Coleta feita só com WebSearch (WebFetch bloqueado pelo proxy do ambiente em 2026-10-01); valores não foram lidos diretamente na página — conferir antes de usar. Preços (Pro US$ 10/mês ou US$ 8/mês no anual; Premier US$ 30/mês ou US$ 24/mês no anual), créditos (50/dia, 2.500/mês, 10.000/mês) e downloads (7 vitalícios, 20/mês, 60/mês) foram conferidos em duas buscas restritas a suno.com/help.suno.com. Mudanças grandes em 2026: novos Termos de Serviço e limites de download em 2026-09-03; família v6 lançada em 2026-09-09 e todos os modelos anteriores (v5.5, v5, v4.5+, v4.5, v4…) aposentados, com as músicas mantidas na biblioteca. Direitos: no Free a Suno retém a propriedade e o uso é só pessoal e não comercial; no Pro e no Premier a Suno cede a titularidade, e o uso comercial vale só para músicas com download permitido dentro da cota (de forma perpétua, mesmo após cancelar). Assinar depois não dá direitos retroativos sobre músicas feitas no Free. O Termo de Serviço cita 'free or basic tier'; não achamos um plano pago chamado Basic, e Basic parece ser o nome antigo do Free. API: NÃO há API pública oficial; existe só um programa de parceiros e acesso antecipado anunciado em 2026-07, conhecido por imprensa de terceiros (a_verificar). platform.suno.com apareceu nas buscas sem detalhe confirmado. Sem preço por unidade (sem API), por isso não há outros_precos. Ficaram sem dado: preço dos pacotes de créditos avulsos e dos downloads extras (só aparecem dentro da conta), total anual em US$ dos planos, data exata da retirada dos modelos antigos, data de lançamento da v4.5+, canal oficial no YouTube, página de status e @ no X de líderes técnicos (Jack Brody, CPO, foi citado sem handle confirmado). Notas: usamos chaves novas aa_music_instrumental_elo e aa_music_vocals_elo, porque o roteiro não prevê benchmark de música; o v6-wild não aparece nos placares e o v6 ainda não estava no placar de vocais. Não há programa para estudante ou pesquisador: o plano estudantil Pro antigo foi descontinuado, segundo resumo de busca (a_verificar)."
+}

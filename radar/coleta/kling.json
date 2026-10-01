@@ -1,0 +1,820 @@
+{
+  "provedor": {
+    "id": "kling",
+    "nome": "Kling (Kuaishou)",
+    "grupo": "midia",
+    "site": "https://klingai.com",
+    "pais": "China",
+    "resumo": "Plataforma de geração de vídeo e imagem do Kuaishou. Destaca-se em vídeo com áudio nativo (2.6 e 3.0), com modelos unificados 'Omni' (O1, 3.0 Omni) e preço de API por segundo relativamente baixo; tem MCP oficial hospedado.",
+    "fontes": [
+      "https://klingai.com/global/dev/pricing",
+      "https://kling.ai/dev/pricing",
+      "https://app.klingai.com/global/membership/membership-plan",
+      "https://app.klingai.com/global/dev/document-api/productBilling/prePaidResourcePackage",
+      "https://www.klingai.com/document-api/updates/api",
+      "https://ir.kuaishou.com/news-releases/news-release-details/kling-ai-launches-30-model-ushering-era-where-everyone-can-be",
+      "https://kling.ai/app/mcp/guide",
+      "https://artificialanalysis.ai/video/models/kling-3-0-pro"
+    ]
+  },
+  "coletado_em": "2026-10-01",
+  "canais": [
+    {
+      "tipo": "outro",
+      "nome": "Site (internacional)",
+      "url": "https://klingai.com/global/",
+      "handle": null,
+      "observacao": "também kling.ai, que aparece como domínio novo do mesmo serviço"
+    },
+    {
+      "tipo": "docs",
+      "nome": "Documentação da API",
+      "url": "https://app.klingai.com/global/dev/document-api/quickStart/userManual",
+      "handle": null,
+      "observacao": null
+    },
+    {
+      "tipo": "changelog",
+      "nome": "Atualizações da API",
+      "url": "https://www.klingai.com/document-api/updates/api",
+      "handle": null,
+      "observacao": "inclui o aviso de desativação de 15/09/2026"
+    },
+    {
+      "tipo": "precos",
+      "nome": "Preços da API",
+      "url": "https://klingai.com/global/dev/pricing",
+      "handle": null,
+      "observacao": null
+    },
+    {
+      "tipo": "precos",
+      "nome": "Planos de assinatura",
+      "url": "https://app.klingai.com/global/membership/membership-plan",
+      "handle": null,
+      "observacao": null
+    },
+    {
+      "tipo": "blog",
+      "nome": "Blog Kling",
+      "url": "https://www.klingai.com/blog/kling-4-ai-video-model",
+      "handle": null,
+      "observacao": "URL de um post; raiz /blog"
+    },
+    {
+      "tipo": "outro",
+      "nome": "Kuaishou IR (comunicados de lançamento)",
+      "url": "https://ir.kuaishou.com/news-releases",
+      "handle": null,
+      "observacao": null
+    },
+    {
+      "tipo": "x_oficial",
+      "nome": "Kling AI",
+      "url": "https://x.com/Kling_ai",
+      "handle": "@Kling_ai",
+      "observacao": null
+    },
+    {
+      "tipo": "discord",
+      "nome": "Kling AI Official",
+      "url": "https://discord.com/servers/kling-ai-1280747274280112160",
+      "handle": null,
+      "observacao": null
+    },
+    {
+      "tipo": "youtube",
+      "nome": "Kling AI",
+      "url": "https://www.youtube.com/@Kling_ai",
+      "handle": "@Kling_ai",
+      "observacao": null
+    },
+    {
+      "tipo": "github",
+      "nome": "Kwai-Kolors (pesos do Kolors)",
+      "url": "https://github.com/Kwai-Kolors/Kolors",
+      "handle": null,
+      "observacao": "o repositório citado na model card do Hugging Face"
+    },
+    {
+      "tipo": "outro",
+      "nome": "MCP oficial",
+      "url": "https://kling.ai/app/mcp/guide",
+      "handle": null,
+      "observacao": "endpoint https://kling.ai/mcp"
+    }
+  ],
+  "planos": [
+    {
+      "nome": "Basic (grátis)",
+      "publico": "individual",
+      "preco_mensal_usd": 0,
+      "preco_anual_usd": null,
+      "inclui": "Uso gratuito do app web/mobile; sem créditos mensais",
+      "limites": "3 usos grátis por dia (a_verificar); o tweet de lançamento internacional (jul/2024) falava em 66 créditos grátis por login diário — regra atual não confirmada",
+      "fonte_url": "https://app.klingai.com/global/membership/membership-plan",
+      "conferido_em": "2026-10-01"
+    },
+    {
+      "nome": "Standard",
+      "publico": "individual",
+      "preco_mensal_usd": 10,
+      "preco_anual_usd": null,
+      "inclui": "660 créditos/mês (≈ US$ 1,06 por 100 créditos)",
+      "limites": "Preço de tabela US$ 10/mês; buscas citam primeiro mês a US$ 6,99 e US$ 8,8/mês na renovação/plano anual (não ficou claro qual) — conferir",
+      "fonte_url": "https://app.klingai.com/global/membership/membership-plan",
+      "conferido_em": "2026-10-01"
+    },
+    {
+      "nome": "Pro",
+      "publico": "individual",
+      "preco_mensal_usd": 37,
+      "preco_anual_usd": null,
+      "inclui": "3.000 créditos/mês (≈ US$ 0,87 por 100 créditos)",
+      "limites": "Tabela US$ 37/mês; primeiro mês US$ 25,99; US$ 32,56/mês citado como renovação/anual — conferir",
+      "fonte_url": "https://app.klingai.com/global/membership/membership-plan",
+      "conferido_em": "2026-10-01"
+    },
+    {
+      "nome": "Premier",
+      "publico": "individual",
+      "preco_mensal_usd": 92,
+      "preco_anual_usd": null,
+      "inclui": "8.000 créditos/mês (≈ US$ 0,81 por 100 créditos)",
+      "limites": "Tabela US$ 92/mês; primeiro mês US$ 64,99; US$ 80,96/mês citado como renovação/anual — conferir",
+      "fonte_url": "https://app.klingai.com/global/membership/membership-plan",
+      "conferido_em": "2026-10-01"
+    },
+    {
+      "nome": "Ultra",
+      "publico": "individual",
+      "preco_mensal_usd": 180,
+      "preco_anual_usd": null,
+      "inclui": "26.000 créditos/mês (≈ US$ 0,49 por 100 créditos); assinantes anuais têm acesso antecipado (Kling 4.0 Flash)",
+      "limites": "Tabela US$ 180/mês; primeiro mês US$ 127,99; US$ 159,99/mês citado como renovação/anual — conferir",
+      "fonte_url": "https://app.klingai.com/global/membership/membership-plan",
+      "conferido_em": "2026-10-01"
+    },
+    {
+      "nome": "API — pacote de teste de vídeo",
+      "publico": "api",
+      "preco_mensal_usd": null,
+      "preco_anual_usd": null,
+      "inclui": "100 Units de vídeo por US$ 9,80 (30% off de US$ 14) ou 1.000 Units por US$ 98; validade 30 dias; 5 requisições simultâneas",
+      "limites": "Pagamento único, não mensal; 1 Unit de vídeo = US$ 0,14 (tabela)",
+      "fonte_url": "https://app.klingai.com/global/dev/document-api/productBilling/prePaidResourcePackage",
+      "conferido_em": "2026-10-01"
+    },
+    {
+      "nome": "API — pacote de teste de imagem",
+      "publico": "api",
+      "preco_mensal_usd": null,
+      "preco_anual_usd": null,
+      "inclui": "1.000 Units de imagem por US$ 2,45 (30% off de US$ 3,50) ou 10.000 por US$ 24,50; validade 30 dias; 9 simultâneas",
+      "limites": "Pagamento único; 1 Unit de imagem = US$ 0,0035",
+      "fonte_url": "https://app.klingai.com/global/dev/document-api/productBilling/prePaidResourcePackage",
+      "conferido_em": "2026-10-01"
+    },
+    {
+      "nome": "API — pacotes padrão",
+      "publico": "api",
+      "preco_mensal_usd": null,
+      "preco_anual_usd": null,
+      "inclui": "Vídeo: de US$ 350 a US$ 7.560 (US$ 0,14 a 0,126 por Unit), validade 180 dias, 20 simultâneas. Imagem: de US$ 350 (100.000 Units) a US$ 5.670 (1.800.000 Units)",
+      "limites": "Pré-pago, sem mensalidade",
+      "fonte_url": "https://app.klingai.com/global/dev/document-api/productBilling/prePaidResourcePackage",
+      "conferido_em": "2026-10-01"
+    }
+  ],
+  "modelos": [
+    {
+      "id": "kling/kling-v3",
+      "nome": "Kling VIDEO 3.0",
+      "tipo": "video",
+      "pesos_abertos": false,
+      "lancado_em": "2026-02-05",
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": null,
+      "preco": null,
+      "outros_precos": [
+        {
+          "unidade": "segundo_video",
+          "valor_usd": 0.084,
+          "condicao": "API, 720p, sem áudio nativo (0,6 Unit/s)",
+          "fonte_url": "https://klingai.com/global/dev/pricing"
+        },
+        {
+          "unidade": "segundo_video",
+          "valor_usd": 0.112,
+          "condicao": "API, 1080p, sem áudio nativo (0,8 Unit/s)",
+          "fonte_url": "https://klingai.com/global/dev/pricing"
+        },
+        {
+          "unidade": "segundo_video",
+          "valor_usd": 0.42,
+          "condicao": "API, 4K, sem áudio nativo (3,0 Units/s)",
+          "fonte_url": "https://klingai.com/global/dev/pricing"
+        },
+        {
+          "unidade": "segundo_video",
+          "valor_usd": 0.126,
+          "condicao": "API, 720p, com áudio nativo, sem controle de voz",
+          "fonte_url": "https://klingai.com/global/dev/pricing"
+        },
+        {
+          "unidade": "segundo_video",
+          "valor_usd": 0.168,
+          "condicao": "API, 1080p, com áudio nativo, sem controle de voz",
+          "fonte_url": "https://klingai.com/global/dev/pricing"
+        },
+        {
+          "unidade": "segundo_video",
+          "valor_usd": 0.42,
+          "condicao": "API, 4K, com áudio nativo, sem controle de voz",
+          "fonte_url": "https://klingai.com/global/dev/pricing"
+        }
+      ],
+      "notas": [
+        {
+          "benchmark": "aa_video_elo",
+          "valor": 1095,
+          "medido_em": "2026-10-01",
+          "fonte_url": "https://artificialanalysis.ai/video/models/kling-3-0-pro",
+          "observacao": "variante Kling 3.0 1080p (Pro), Text to Video Arena (com áudio). Divergência: o AA-Video-T2V v2.0 mostra 1000 e outra busca citou 1240.34 — metodologias/placares diferentes; valor lido só via WebSearch, conferir. Variante 720p (Standard): 1089."
+        }
+      ]
+    },
+    {
+      "id": "kling/kling-v3-turbo",
+      "nome": "Kling VIDEO 3.0 Turbo",
+      "tipo": "video",
+      "pesos_abertos": false,
+      "lancado_em": null,
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": null,
+      "preco": null,
+      "outros_precos": [
+        {
+          "unidade": "segundo_video",
+          "valor_usd": 0.112,
+          "condicao": "API, 720p, com áudio nativo (0,8 Unit/s)",
+          "fonte_url": "https://klingai.com/global/dev/pricing"
+        },
+        {
+          "unidade": "segundo_video",
+          "valor_usd": 0.14,
+          "condicao": "API, 1080p, com áudio nativo (1,0 Unit/s)",
+          "fonte_url": "https://klingai.com/global/dev/pricing"
+        }
+      ],
+      "notas": []
+    },
+    {
+      "id": "kling/kling-v3-omni",
+      "nome": "Kling VIDEO 3.0 Omni",
+      "tipo": "video",
+      "pesos_abertos": false,
+      "lancado_em": "2026-02-05",
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": null,
+      "preco": null,
+      "outros_precos": [
+        {
+          "unidade": "segundo_video",
+          "valor_usd": 0.112,
+          "condicao": "API, 720p, sem vídeo de entrada, com áudio nativo (0,8 Unit/s) — valor visto em uma só busca",
+          "fonte_url": "https://klingai.com/global/dev/pricing"
+        },
+        {
+          "unidade": "segundo_video",
+          "valor_usd": 0.14,
+          "condicao": "API, 1080p, sem vídeo de entrada, com áudio nativo (1,0 Unit/s) — uma só busca",
+          "fonte_url": "https://klingai.com/global/dev/pricing"
+        },
+        {
+          "unidade": "segundo_video",
+          "valor_usd": 0.42,
+          "condicao": "API, 4K, sem vídeo de entrada (3,0 Units/s) — uma só busca",
+          "fonte_url": "https://klingai.com/global/dev/pricing"
+        },
+        {
+          "unidade": "segundo_video",
+          "valor_usd": 0.126,
+          "condicao": "API, 720p, com vídeo de entrada, sem áudio nativo (0,9 Unit/s) — uma só busca",
+          "fonte_url": "https://klingai.com/global/dev/pricing"
+        },
+        {
+          "unidade": "segundo_video",
+          "valor_usd": 0.168,
+          "condicao": "API, 1080p, com vídeo de entrada, sem áudio nativo (1,2 Units/s) — uma só busca",
+          "fonte_url": "https://klingai.com/global/dev/pricing"
+        }
+      ],
+      "notas": []
+    },
+    {
+      "id": "kling/kling-video-o1",
+      "nome": "Kling VIDEO O1",
+      "tipo": "video",
+      "pesos_abertos": false,
+      "lancado_em": null,
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": null,
+      "preco": null,
+      "outros_precos": [
+        {
+          "unidade": "segundo_video",
+          "valor_usd": 0.084,
+          "condicao": "API, 720p, sem vídeo de entrada (0,6 Unit/s)",
+          "fonte_url": "https://klingai.com/global/dev/pricing"
+        },
+        {
+          "unidade": "segundo_video",
+          "valor_usd": 0.112,
+          "condicao": "API, 1080p, sem vídeo de entrada (0,8 Unit/s)",
+          "fonte_url": "https://klingai.com/global/dev/pricing"
+        },
+        {
+          "unidade": "segundo_video",
+          "valor_usd": 0.126,
+          "condicao": "API, 720p, com vídeo de entrada (0,9 Unit/s)",
+          "fonte_url": "https://klingai.com/global/dev/pricing"
+        },
+        {
+          "unidade": "segundo_video",
+          "valor_usd": 0.168,
+          "condicao": "API, 1080p, com vídeo de entrada (1,2 Units/s)",
+          "fonte_url": "https://klingai.com/global/dev/pricing"
+        }
+      ],
+      "notas": []
+    },
+    {
+      "id": "kling/kling-v2-6",
+      "nome": "Kling VIDEO 2.6",
+      "tipo": "video",
+      "pesos_abertos": false,
+      "lancado_em": "2025-12-03",
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": null,
+      "preco": null,
+      "outros_precos": [
+        {
+          "unidade": "segundo_video",
+          "valor_usd": 0.042,
+          "condicao": "API, 720p, sem áudio nativo",
+          "fonte_url": "https://klingai.com/global/dev/pricing"
+        },
+        {
+          "unidade": "segundo_video",
+          "valor_usd": 0.07,
+          "condicao": "API, 1080p, sem áudio nativo",
+          "fonte_url": "https://klingai.com/global/dev/pricing"
+        },
+        {
+          "unidade": "segundo_video",
+          "valor_usd": 0.14,
+          "condicao": "API, 1080p, com áudio nativo, sem controle de voz (1,0 Unit/s)",
+          "fonte_url": "https://klingai.com/global/dev/pricing"
+        },
+        {
+          "unidade": "segundo_video",
+          "valor_usd": 0.168,
+          "condicao": "API, 1080p, com áudio nativo e controle de voz (1,2 Units/s)",
+          "fonte_url": "https://klingai.com/global/dev/pricing"
+        }
+      ],
+      "notas": []
+    },
+    {
+      "id": "kling/kling-v2-5-turbo",
+      "nome": "Kling VIDEO 2.5 Turbo",
+      "tipo": "video",
+      "pesos_abertos": false,
+      "lancado_em": "2025-09-23",
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": null,
+      "preco": null,
+      "outros_precos": [
+        {
+          "unidade": "segundo_video",
+          "valor_usd": 0.042,
+          "condicao": "API, 720p (0,3 Unit/s)",
+          "fonte_url": "https://klingai.com/global/dev/pricing"
+        },
+        {
+          "unidade": "segundo_video",
+          "valor_usd": 0.07,
+          "condicao": "API, 1080p (0,5 Unit/s)",
+          "fonte_url": "https://klingai.com/global/dev/pricing"
+        }
+      ],
+      "notas": []
+    },
+    {
+      "id": "kling/kling-4-0-flash",
+      "nome": "Kling 4.0 Flash (acesso antecipado)",
+      "tipo": "video",
+      "pesos_abertos": false,
+      "lancado_em": null,
+      "status": "restrito",
+      "desativa_em": null,
+      "contexto_tokens": null,
+      "preco": null,
+      "outros_precos": [],
+      "notas": []
+    },
+    {
+      "id": "kling/kling-v2-1-master",
+      "nome": "Kling VIDEO 2.1 Master",
+      "tipo": "video",
+      "pesos_abertos": false,
+      "lancado_em": null,
+      "status": "desativado",
+      "desativa_em": "2026-09-15",
+      "contexto_tokens": null,
+      "preco": null,
+      "outros_precos": [],
+      "notas": []
+    },
+    {
+      "id": "kling/kling-v2-1",
+      "nome": "Kling VIDEO 2.1",
+      "tipo": "video",
+      "pesos_abertos": false,
+      "lancado_em": null,
+      "status": "desativado",
+      "desativa_em": "2026-09-15",
+      "contexto_tokens": null,
+      "preco": null,
+      "outros_precos": [],
+      "notas": []
+    },
+    {
+      "id": "kling/kling-v2-master",
+      "nome": "Kling VIDEO 2.0 Master",
+      "tipo": "video",
+      "pesos_abertos": false,
+      "lancado_em": null,
+      "status": "desativado",
+      "desativa_em": "2026-09-15",
+      "contexto_tokens": null,
+      "preco": null,
+      "outros_precos": [],
+      "notas": []
+    },
+    {
+      "id": "kling/kling-v1-6",
+      "nome": "Kling VIDEO 1.6",
+      "tipo": "video",
+      "pesos_abertos": false,
+      "lancado_em": null,
+      "status": "desativado",
+      "desativa_em": "2026-09-15",
+      "contexto_tokens": null,
+      "preco": null,
+      "outros_precos": [],
+      "notas": []
+    },
+    {
+      "id": "kling/kling-v1-5",
+      "nome": "Kling VIDEO 1.5",
+      "tipo": "video",
+      "pesos_abertos": false,
+      "lancado_em": null,
+      "status": "desativado",
+      "desativa_em": "2026-09-15",
+      "contexto_tokens": null,
+      "preco": null,
+      "outros_precos": [],
+      "notas": []
+    },
+    {
+      "id": "kling/kling-v1",
+      "nome": "Kling VIDEO 1.0",
+      "tipo": "video",
+      "pesos_abertos": false,
+      "lancado_em": null,
+      "status": "desativado",
+      "desativa_em": "2026-09-15",
+      "contexto_tokens": null,
+      "preco": null,
+      "outros_precos": [],
+      "notas": []
+    },
+    {
+      "id": "kling/kling-image-v3",
+      "nome": "Kling IMAGE 3.0",
+      "tipo": "imagem",
+      "pesos_abertos": false,
+      "lancado_em": "2026-02-05",
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": null,
+      "preco": null,
+      "outros_precos": [
+        {
+          "unidade": "imagem",
+          "valor_usd": 0.028,
+          "condicao": "API, texto→imagem ou imagem→imagem, 1K/2K (8 Units; Unit de imagem = US$ 0,0035)",
+          "fonte_url": "https://klingai.com/global/dev/pricing"
+        }
+      ],
+      "notas": []
+    },
+    {
+      "id": "kling/kling-image-v3-omni",
+      "nome": "Kling IMAGE 3.0 Omni",
+      "tipo": "imagem",
+      "pesos_abertos": false,
+      "lancado_em": "2026-02-05",
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": null,
+      "preco": null,
+      "outros_precos": [
+        {
+          "unidade": "imagem",
+          "valor_usd": 0.028,
+          "condicao": "API, 1K/2K (8 Units)",
+          "fonte_url": "https://klingai.com/global/dev/pricing"
+        },
+        {
+          "unidade": "imagem",
+          "valor_usd": 0.056,
+          "condicao": "API, 4K (16 Units) — uma só busca",
+          "fonte_url": "https://klingai.com/global/dev/pricing"
+        }
+      ],
+      "notas": []
+    },
+    {
+      "id": "kling/kling-image-o1",
+      "nome": "Kling IMAGE O1",
+      "tipo": "imagem",
+      "pesos_abertos": false,
+      "lancado_em": null,
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": null,
+      "preco": null,
+      "outros_precos": [
+        {
+          "unidade": "imagem",
+          "valor_usd": 0.028,
+          "condicao": "API, texto→imagem ou imagem→imagem, 1K/2K (8 Units)",
+          "fonte_url": "https://klingai.com/global/dev/pricing"
+        }
+      ],
+      "notas": []
+    },
+    {
+      "id": "kling/kling-image-v2-1",
+      "nome": "Kling IMAGE 2.1",
+      "tipo": "imagem",
+      "pesos_abertos": false,
+      "lancado_em": null,
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": null,
+      "preco": null,
+      "outros_precos": [
+        {
+          "unidade": "imagem",
+          "valor_usd": 0.014,
+          "condicao": "API, texto→imagem, 1K/2K (4 Units)",
+          "fonte_url": "https://klingai.com/global/dev/pricing"
+        },
+        {
+          "unidade": "imagem",
+          "valor_usd": 0.028,
+          "condicao": "API, imagem→imagem, 1K/2K (8 Units)",
+          "fonte_url": "https://klingai.com/global/dev/pricing"
+        }
+      ],
+      "notas": []
+    },
+    {
+      "id": "kling/kling-image-v2-new",
+      "nome": "Kling IMAGE 2.0 New",
+      "tipo": "imagem",
+      "pesos_abertos": false,
+      "lancado_em": null,
+      "status": "desativado",
+      "desativa_em": "2026-09-15",
+      "contexto_tokens": null,
+      "preco": null,
+      "outros_precos": [],
+      "notas": []
+    },
+    {
+      "id": "kling/kling-image-v2",
+      "nome": "Kling IMAGE 2.0",
+      "tipo": "imagem",
+      "pesos_abertos": false,
+      "lancado_em": null,
+      "status": "desativado",
+      "desativa_em": "2026-09-15",
+      "contexto_tokens": null,
+      "preco": null,
+      "outros_precos": [],
+      "notas": []
+    },
+    {
+      "id": "kling/kling-image-v1-5",
+      "nome": "Kling IMAGE 1.5",
+      "tipo": "imagem",
+      "pesos_abertos": false,
+      "lancado_em": null,
+      "status": "desativado",
+      "desativa_em": "2026-09-15",
+      "contexto_tokens": null,
+      "preco": null,
+      "outros_precos": [],
+      "notas": []
+    },
+    {
+      "id": "kling/kling-image-v1",
+      "nome": "Kling IMAGE 1.0",
+      "tipo": "imagem",
+      "pesos_abertos": false,
+      "lancado_em": null,
+      "status": "desativado",
+      "desativa_em": "2026-09-15",
+      "contexto_tokens": null,
+      "preco": null,
+      "outros_precos": [],
+      "notas": []
+    },
+    {
+      "id": "kling/kolors",
+      "nome": "Kolors (pesos abertos)",
+      "tipo": "imagem",
+      "pesos_abertos": true,
+      "lancado_em": null,
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": null,
+      "preco": null,
+      "outros_precos": [],
+      "notas": []
+    }
+  ],
+  "capacidades": [
+    {
+      "capacidade": "video_gerar",
+      "produto": "Kling AI (app web/mobile)",
+      "como_acessar": [
+        "web",
+        "app"
+      ],
+      "plano_minimo": "Basic (grátis)",
+      "gratis": true,
+      "headless": false,
+      "comando": null,
+      "limites": "por créditos",
+      "fonte_url": "https://app.klingai.com/global/membership/membership-plan"
+    },
+    {
+      "capacidade": "video_gerar",
+      "produto": "Kling API (vídeo)",
+      "como_acessar": [
+        "api"
+      ],
+      "plano_minimo": "pacote pré-pago de API",
+      "gratis": false,
+      "headless": true,
+      "comando": null,
+      "limites": "cobrança por segundo; 5 simultâneas no pacote de teste",
+      "fonte_url": "https://klingai.com/global/dev/pricing"
+    },
+    {
+      "capacidade": "imagem_gerar",
+      "produto": "Kling API (imagem)",
+      "como_acessar": [
+        "api",
+        "web",
+        "app"
+      ],
+      "plano_minimo": "pacote pré-pago de API",
+      "gratis": false,
+      "headless": true,
+      "comando": null,
+      "limites": "cobrança por imagem",
+      "fonte_url": "https://klingai.com/global/dev/pricing"
+    },
+    {
+      "capacidade": "imagem_editar",
+      "produto": "Kling IMAGE O1 / 3.0 (imagem→imagem)",
+      "como_acessar": [
+        "api",
+        "web"
+      ],
+      "plano_minimo": null,
+      "gratis": false,
+      "headless": true,
+      "comando": null,
+      "limites": null,
+      "fonte_url": "https://kling.ai/quickstart/klingai-image-o1-user-guide"
+    },
+    {
+      "capacidade": "mcp",
+      "produto": "Kling MCP (hospedado)",
+      "como_acessar": [
+        "nuvem",
+        "ide"
+      ],
+      "plano_minimo": "conta Kling",
+      "gratis": null,
+      "headless": false,
+      "comando": "conector personalizado no Claude: https://kling.ai/mcp (login OAuth com a conta Kling)",
+      "limites": "consome créditos da conta",
+      "fonte_url": "https://kling.ai/app/mcp/guide"
+    },
+    {
+      "capacidade": "cli_headless",
+      "produto": "Kling CLI",
+      "como_acessar": [
+        "cli"
+      ],
+      "plano_minimo": "conta Kling",
+      "gratis": null,
+      "headless": true,
+      "comando": "kling login",
+      "limites": "a_verificar: só vimos o comando de login no guia do MCP",
+      "fonte_url": "https://kling.ai/app/mcp/guide"
+    }
+  ],
+  "gratis": [
+    {
+      "titulo": "Plano Basic grátis do Kling AI",
+      "resumo": "Uso gratuito do app com usos/créditos diários limitados",
+      "limites": "3 usos grátis por dia segundo a página de planos (via busca); créditos diários não confirmados",
+      "chamavel_por_agente": false,
+      "url": "https://app.klingai.com/global/membership/membership-plan",
+      "valido_ate": null,
+      "origem": "a_verificar"
+    },
+    {
+      "titulo": "Kolors com pesos abertos",
+      "resumo": "Modelo de imagem do Kuaishou, código Apache-2.0; pesos livres para pesquisa acadêmica, uso comercial exige registro",
+      "limites": "roda localmente (GPU própria)",
+      "chamavel_por_agente": true,
+      "url": "https://huggingface.co/Kwai-Kolors/Kolors",
+      "valido_ate": null,
+      "origem": "verificado"
+    }
+  ],
+  "programas": [
+    {
+      "nome": "Kling AI NextGen Initiative",
+      "publico": "todos",
+      "beneficio": "Financiamento integral de até US$ 1M por projeto de filme com IA, parcial de até US$ 300K (até 50%), ou 'Technology Partner' com até 1M de créditos Kling, divulgação e workshops",
+      "valor_usd": null,
+      "requisitos": "Projeto de cinema/audiovisual com IA; avaliado por visão criativa, inovação técnica e excelência",
+      "elegivel": "talvez",
+      "elegivel_motivo": "Aberto a cineastas em geral; só faz sentido se o Guilherme tiver um projeto audiovisual (ex.: filme de divulgação da UrbVerde) — não é crédito de pesquisa nem de estudante",
+      "como_aplicar": "Formulário em kling.ai/nextgen",
+      "url": "https://kling.ai/nextgen",
+      "status": "desconhecido",
+      "prazo": null,
+      "verificado_em": "2026-10-01"
+    },
+    {
+      "nome": "Kling AI Creative Partner Program",
+      "publico": "todos",
+      "beneficio": "Parceria com criadores (benefícios não detalhados nas buscas)",
+      "valor_usd": null,
+      "requisitos": "Criadores de conteúdo",
+      "elegivel": "nao",
+      "elegivel_motivo": "Voltado a criadores de conteúdo, não a estudante/pesquisa",
+      "como_aplicar": "Página do programa",
+      "url": "https://app.klingai.com/global/future-partner/creator",
+      "status": "desconhecido",
+      "prazo": null,
+      "verificado_em": "2026-10-01"
+    },
+    {
+      "nome": "Kling AI Affiliate Program",
+      "publico": "todos",
+      "beneficio": "Comissão por indicação de assinaturas",
+      "valor_usd": null,
+      "requisitos": "Produzir conteúdo/tutoriais e divulgar link",
+      "elegivel": "nao",
+      "elegivel_motivo": "Programa comercial de afiliados, sem créditos para pesquisa",
+      "como_aplicar": "Página de comissão",
+      "url": "https://app.klingai.com/global/commission-share",
+      "status": "continuo",
+      "prazo": null,
+      "verificado_em": "2026-10-01"
+    }
+  ],
+  "indicadores": [],
+  "observacoes": "Coleta feita só com WebSearch (WebFetch bloqueado pelo proxy do ambiente em 2026-10-01; testado em klingai.com/global/dev/pricing → EGRESS_BLOCKED); valores não foram lidos diretamente na página — conferir antes de usar. Preços da API: vídeo cobrado em Units por segundo (1 Unit de vídeo = US$ 0,14 de tabela); imagem em Units por imagem (1 Unit de imagem = US$ 0,0035) — as duas 'Units' são escalas distintas. Kling 3.0, 3.0 Turbo, 2.6 e 2.5 Turbo foram conferidos em duas buscas; 3.0 Omni, Video O1, Image 3.0 Omni 4K e Image 2.1 imagem→imagem apareceram numa só busca (fonte oficial). Sem preço em USD encontrado para: Kling 4.0 Flash (acesso antecipado só para Ultra anual; Kling 4.0 completo previsto para outubro/2026, liberação gradual desde 28/09), e Kolors (pesos abertos; sem API própria localizada). Desativados em 15/09/2026 (aviso oficial da API): vídeo 1.0, 1.5, 1.6, 2.0 Master, 2.1, 2.1 Master; imagem 1.0, 1.5, 2.0, 2.0 New; também templates de efeitos e o Virtual Try-On (Kolors Virtual Try-On) — por isso não incluído como modelo, embora a página de pacotes ainda cite trial de Try-On (US$ 4,90/100 Units). Datas de lançamento: 2.5 Turbo 23/09/2025, 2.6 03/12/2025 e série 3.0 05/02/2026 vêm do IR do Kuaishou; Video O1 foi lançado na 'Omni Launch Week' do início de dez/2025 (dia exato não confirmado, por isso null). Planos: preços de tabela US$ 10/37/92/180 por mês; as buscas também citaram US$ 8,8/32,56/80,96/159,99 por mês ora como renovação com desconto, ora como cobrança anual — divergência não resolvida, preco_anual_usd ficou null. Preço em CNY (plataforma chinesa) não coletado. Notas: só Kling 3.0 1080p (Pro) entrou (1095 no Text to Video Arena com áudio, visto em duas buscas), com divergência registrada; Kling 2.5 Turbo 1080p (1180 T2V / 1120 I2V), Kling 2.6 Pro (974 T2V / 988 I2V), Kling 3.0 Omni (1082/1075) e Kling Image 3.0 Omni (915 na Image Arena) apareceram uma vez e/ou em placares de versões diferentes — omitidos. X do CEO/líderes: Cheng Yixiao (CEO do Kuaishou) e Gai Kun (SVP, líder técnico do Kling desde ago/2025, após a saída de Zhang Di) não têm conta no X identificada. MCP oficial (kling.ai/mcp) e o comando 'kling login' vistos em kling.ai; servidores MCP de terceiros (AceDataCloud, runapi, 199-mcp) existem mas não são oficiais. Sem programa de créditos para estudante/pesquisador/educador encontrado."
+}

@@ -1,0 +1,879 @@
+{
+  "provedor": {
+    "id": "bfl",
+    "nome": "Black Forest Labs (FLUX)",
+    "grupo": "midia",
+    "site": "https://bfl.ai",
+    "pais": "Alemanha",
+    "resumo": "Laboratório alemão (Freiburg, com escritório em San Francisco) fundado em 2024 por ex-pesquisadores da Stability AI, criador da família FLUX de geração e edição de imagens. Destaca-se por combinar modelos de API de topo (FLUX.2 [max]/[pro], Kontext) com pesos abertos para rodar local ([dev], [schnell], [klein] 4B em Apache 2.0) e, desde 2026, vídeo com áudio (FLUX 3).",
+    "fontes": [
+      "https://bfl.ai/pricing",
+      "https://docs.bfl.ai/quick_start/pricing",
+      "https://docs.bfl.ai/release-notes",
+      "https://help.bfl.ai/articles/7655484417-what-flux-models-are-available",
+      "https://bfl.ai/licensing"
+    ]
+  },
+  "coletado_em": "2026-10-01",
+  "canais": [
+    {
+      "tipo": "outro",
+      "nome": "Site oficial",
+      "url": "https://bfl.ai",
+      "handle": null,
+      "observacao": "site"
+    },
+    {
+      "tipo": "blog",
+      "nome": "Blog BFL",
+      "url": "https://bfl.ai/blog",
+      "handle": null,
+      "observacao": "também https://bfl.ai/announcements"
+    },
+    {
+      "tipo": "changelog",
+      "nome": "Release Notes",
+      "url": "https://docs.bfl.ai/release-notes",
+      "handle": null,
+      "observacao": null
+    },
+    {
+      "tipo": "docs",
+      "nome": "Documentação da API",
+      "url": "https://docs.bfl.ai",
+      "handle": null,
+      "observacao": "central de ajuda em https://help.bfl.ai"
+    },
+    {
+      "tipo": "precos",
+      "nome": "Preços da API",
+      "url": "https://bfl.ai/pricing",
+      "handle": null,
+      "observacao": "licenças de pesos abertos em https://bfl.ai/pricing/licensing"
+    },
+    {
+      "tipo": "x_oficial",
+      "nome": "Black Forest Labs",
+      "url": "https://x.com/bfl_ai",
+      "handle": "@bfl_ai",
+      "observacao": "links antigos usam @bfl_ml (x.com/bfl_ml), aparentemente renomeado"
+    },
+    {
+      "tipo": "x_ceo",
+      "nome": "Robin Rombach",
+      "url": "https://x.com/robrombach",
+      "handle": "@robrombach",
+      "observacao": "cofundador e CEO"
+    },
+    {
+      "tipo": "x_lider",
+      "nome": "Andreas Blattmann",
+      "url": "https://x.com/andi_blatt",
+      "handle": "@andi_blatt",
+      "observacao": "cofundador"
+    },
+    {
+      "tipo": "x_lider",
+      "nome": "Patrick Esser",
+      "url": "https://x.com/pess_r",
+      "handle": "@pess_r",
+      "observacao": "cofundador"
+    },
+    {
+      "tipo": "github",
+      "nome": "black-forest-labs",
+      "url": "https://github.com/black-forest-labs",
+      "handle": null,
+      "observacao": "inclui flux-mcp"
+    },
+    {
+      "tipo": "outro",
+      "nome": "Hugging Face black-forest-labs",
+      "url": "https://huggingface.co/black-forest-labs",
+      "handle": null,
+      "observacao": "pesos abertos"
+    }
+  ],
+  "planos": [
+    {
+      "nome": "API pré-paga (créditos)",
+      "publico": "api",
+      "preco_mensal_usd": null,
+      "preco_anual_usd": null,
+      "inclui": "Pagamento por uso; 1 crédito = US$ 0,01; créditos comprados no dashboard (dashboard.bfl.ai) via Stripe.",
+      "limites": "Sem assinatura; preço por imagem/megapixel/segundo de vídeo conforme o modelo.",
+      "fonte_url": "https://docs.bfl.ai/quick_start/pricing",
+      "conferido_em": "2026-10-01"
+    },
+    {
+      "nome": "Licença self-serve Builder (pesos [dev])",
+      "publico": "empresa",
+      "preco_mensal_usd": null,
+      "preco_anual_usd": null,
+      "inclui": "Direito comercial de uso self-hosted dos modelos [dev], fine-tuning e LoRA, 10K imagens/mês, um domínio.",
+      "limites": "Preço mensal não apareceu nas buscas (conferir em https://bfl.ai/pricing/licensing).",
+      "fonte_url": "https://help.bfl.ai/articles/9272590838-self-serve-dev-license-overview-pricing",
+      "conferido_em": "2026-10-01"
+    },
+    {
+      "nome": "Licença Platform / Professional / Enterprise",
+      "publico": "empresa",
+      "preco_mensal_usd": null,
+      "preco_anual_usd": null,
+      "inclui": "Platform: FLUX.2 [klein] Base 9B e FLUX.2 [dev], 100K imagens/mês. Professional: FLUX.2 [dev], 100K imagens/mês, 3 clientes inclusos.",
+      "limites": "Venda via contato comercial; preços não publicados nas buscas.",
+      "fonte_url": "https://help.bfl.ai/articles/9272590838-self-serve-dev-license-overview-pricing",
+      "conferido_em": "2026-10-01"
+    }
+  ],
+  "modelos": [
+    {
+      "id": "bfl/flux-3",
+      "nome": "FLUX 3 (vídeo com áudio)",
+      "tipo": "video",
+      "pesos_abertos": false,
+      "lancado_em": "2026-07-23",
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": null,
+      "preco": null,
+      "outros_precos": [
+        {
+          "unidade": "segundo_video",
+          "valor_usd": 0.17,
+          "condicao": "texto→vídeo ou imagem→vídeo, render completo HD",
+          "fonte_url": "https://bfl.ai/pricing"
+        },
+        {
+          "unidade": "segundo_video",
+          "valor_usd": 0.29,
+          "condicao": "texto→vídeo ou imagem→vídeo, render completo FHD",
+          "fonte_url": "https://bfl.ai/pricing"
+        },
+        {
+          "unidade": "segundo_video",
+          "valor_usd": 0.4,
+          "condicao": "texto→vídeo ou imagem→vídeo, render completo QHD",
+          "fonte_url": "https://bfl.ai/pricing"
+        },
+        {
+          "unidade": "segundo_video",
+          "valor_usd": 0.8,
+          "condicao": "texto→vídeo ou imagem→vídeo, render completo UHD",
+          "fonte_url": "https://bfl.ai/pricing"
+        },
+        {
+          "unidade": "segundo_video",
+          "valor_usd": 0.41,
+          "condicao": "continuação de vídeo (v2v), HD",
+          "fonte_url": "https://bfl.ai/pricing"
+        },
+        {
+          "unidade": "segundo_video",
+          "valor_usd": 0.53,
+          "condicao": "continuação de vídeo (v2v), FHD",
+          "fonte_url": "https://bfl.ai/pricing"
+        },
+        {
+          "unidade": "segundo_video",
+          "valor_usd": 0.65,
+          "condicao": "continuação de vídeo (v2v), QHD",
+          "fonte_url": "https://bfl.ai/pricing"
+        },
+        {
+          "unidade": "segundo_video",
+          "valor_usd": 0.95,
+          "condicao": "continuação de vídeo (v2v), UHD",
+          "fonte_url": "https://bfl.ai/pricing"
+        },
+        {
+          "unidade": "segundo_video",
+          "valor_usd": 0.06,
+          "condicao": "modo rascunho (draft) HD, texto/imagem→vídeo",
+          "fonte_url": "https://bfl.ai/pricing"
+        },
+        {
+          "unidade": "segundo_video",
+          "valor_usd": 0.12,
+          "condicao": "modo rascunho (draft) HD, vídeo→vídeo",
+          "fonte_url": "https://bfl.ai/pricing"
+        }
+      ],
+      "notas": []
+    },
+    {
+      "id": "bfl/flux-video-edit-fast",
+      "nome": "FLUX Video Edit [fast]",
+      "tipo": "video",
+      "pesos_abertos": false,
+      "lancado_em": null,
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": null,
+      "preco": null,
+      "outros_precos": [
+        {
+          "unidade": "segundo_video",
+          "valor_usd": 0.03,
+          "condicao": "por segundo de vídeo de saída (mesma duração do clipe de origem)",
+          "fonte_url": "https://bfl.ai/video-edit"
+        }
+      ],
+      "notas": []
+    },
+    {
+      "id": "bfl/flux-video-upscale",
+      "nome": "FLUX Video Upscale",
+      "tipo": "video",
+      "pesos_abertos": false,
+      "lancado_em": "2026-08-20",
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": null,
+      "preco": null,
+      "outros_precos": [
+        {
+          "unidade": "outro",
+          "valor_usd": 0.07,
+          "condicao": "por megapixel-segundo de saída, modo Precise",
+          "fonte_url": "https://docs.bfl.ai/flux_tools/flux_video_upscale"
+        },
+        {
+          "unidade": "outro",
+          "valor_usd": 0.1,
+          "condicao": "por megapixel-segundo de saída, modo Creative",
+          "fonte_url": "https://docs.bfl.ai/flux_tools/flux_video_upscale"
+        }
+      ],
+      "notas": []
+    },
+    {
+      "id": "bfl/flux-2-max",
+      "nome": "FLUX.2 [max]",
+      "tipo": "imagem",
+      "pesos_abertos": false,
+      "lancado_em": null,
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": null,
+      "preco": null,
+      "outros_precos": [
+        {
+          "unidade": "imagem",
+          "valor_usd": 0.07,
+          "condicao": "primeiro megapixel, texto→imagem",
+          "fonte_url": "https://bfl.ai/pricing"
+        },
+        {
+          "unidade": "outro",
+          "valor_usd": 0.03,
+          "condicao": "por megapixel adicional (fonte única na busca)",
+          "fonte_url": "https://bfl.ai/pricing"
+        }
+      ],
+      "notas": [
+        {
+          "benchmark": "lmarena_image_elo",
+          "valor": 1162,
+          "medido_em": "2026-10-01",
+          "fonte_url": "https://arena.ai/leaderboard/text-to-image",
+          "observacao": "text-to-image, ±3, posição 27; arena.ai"
+        }
+      ]
+    },
+    {
+      "id": "bfl/flux-2-pro",
+      "nome": "FLUX.2 [pro]",
+      "tipo": "imagem",
+      "pesos_abertos": false,
+      "lancado_em": "2025-11-25",
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": null,
+      "preco": null,
+      "outros_precos": [
+        {
+          "unidade": "imagem",
+          "valor_usd": 0.03,
+          "condicao": "a partir de; primeiro megapixel, texto→imagem",
+          "fonte_url": "https://bfl.ai/pricing"
+        },
+        {
+          "unidade": "imagem",
+          "valor_usd": 0.045,
+          "condicao": "a partir de; edição de imagem",
+          "fonte_url": "https://bfl.ai/pricing"
+        },
+        {
+          "unidade": "outro",
+          "valor_usd": 0.015,
+          "condicao": "por megapixel adicional (fonte única na busca)",
+          "fonte_url": "https://bfl.ai/pricing"
+        }
+      ],
+      "notas": [
+        {
+          "benchmark": "lmarena_image_elo",
+          "valor": 1154,
+          "medido_em": "2026-10-01",
+          "fonte_url": "https://arena.ai/leaderboard/text-to-image",
+          "observacao": "text-to-image, ±3, posição 30; arena.ai"
+        }
+      ]
+    },
+    {
+      "id": "bfl/flux-2-flex",
+      "nome": "FLUX.2 [flex]",
+      "tipo": "imagem",
+      "pesos_abertos": false,
+      "lancado_em": "2025-11-25",
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": null,
+      "preco": null,
+      "outros_precos": [
+        {
+          "unidade": "imagem",
+          "valor_usd": 0.05,
+          "condicao": "a partir de; por megapixel, texto→imagem e edição",
+          "fonte_url": "https://bfl.ai/pricing"
+        }
+      ],
+      "notas": [
+        {
+          "benchmark": "lmarena_image_elo",
+          "valor": 1157,
+          "medido_em": "2026-10-01",
+          "fonte_url": "https://arena.ai/leaderboard/text-to-image",
+          "observacao": "text-to-image, ±3, posição 28; uma busca só — conferir"
+        }
+      ]
+    },
+    {
+      "id": "bfl/flux-2-dev",
+      "nome": "FLUX.2 [dev] (32B, pesos abertos)",
+      "tipo": "imagem",
+      "pesos_abertos": true,
+      "lancado_em": "2025-11-25",
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": null,
+      "preco": null,
+      "outros_precos": [],
+      "notas": [
+        {
+          "benchmark": "lmarena_image_elo",
+          "valor": 1146,
+          "medido_em": "2026-10-01",
+          "fonte_url": "https://arena.ai/leaderboard/text-to-image",
+          "observacao": "text-to-image, ±4, posição 36; uma busca só — conferir"
+        }
+      ]
+    },
+    {
+      "id": "bfl/flux-2-klein-4b",
+      "nome": "FLUX.2 [klein] 4B",
+      "tipo": "imagem",
+      "pesos_abertos": true,
+      "lancado_em": null,
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": null,
+      "preco": null,
+      "outros_precos": [
+        {
+          "unidade": "imagem",
+          "valor_usd": 0.014,
+          "condicao": "a partir de; primeiro megapixel, geração ou edição",
+          "fonte_url": "https://bfl.ai/pricing"
+        },
+        {
+          "unidade": "outro",
+          "valor_usd": 0.001,
+          "condicao": "por megapixel adicional (ex.: imagem de 2 MP = US$ 0,015)",
+          "fonte_url": "https://bfl.ai/pricing"
+        }
+      ],
+      "notas": [
+        {
+          "benchmark": "lmarena_image_elo",
+          "valor": 1030,
+          "medido_em": "2026-10-01",
+          "fonte_url": "https://arena.ai/leaderboard/text-to-image",
+          "observacao": "text-to-image, ±3, posição 68; uma busca só — conferir"
+        }
+      ]
+    },
+    {
+      "id": "bfl/flux-2-klein-9b",
+      "nome": "FLUX.2 [klein] 9B",
+      "tipo": "imagem",
+      "pesos_abertos": true,
+      "lancado_em": null,
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": null,
+      "preco": null,
+      "outros_precos": [
+        {
+          "unidade": "imagem",
+          "valor_usd": 0.015,
+          "condicao": "a partir de; primeiro megapixel, geração ou edição",
+          "fonte_url": "https://bfl.ai/pricing"
+        }
+      ],
+      "notas": [
+        {
+          "benchmark": "lmarena_image_elo",
+          "valor": 1070,
+          "medido_em": "2026-10-01",
+          "fonte_url": "https://arena.ai/leaderboard/text-to-image",
+          "observacao": "text-to-image, ±3, posição 60; uma busca só — conferir"
+        }
+      ]
+    },
+    {
+      "id": "bfl/flux-2-klein-9b-kv",
+      "nome": "FLUX.2 [klein] 9B KV",
+      "tipo": "imagem",
+      "pesos_abertos": false,
+      "lancado_em": null,
+      "status": "restrito",
+      "desativa_em": null,
+      "contexto_tokens": null,
+      "preco": null,
+      "outros_precos": [
+        {
+          "unidade": "imagem",
+          "valor_usd": 0.015,
+          "condicao": "a partir de; beta público, mesmo preço do flux-2-klein-9b na mesma resolução",
+          "fonte_url": "https://docs.bfl.ai/quick_start/pricing"
+        }
+      ],
+      "notas": []
+    },
+    {
+      "id": "bfl/flux-2-klein-base-4b",
+      "nome": "FLUX.2 [klein] Base 4B",
+      "tipo": "imagem",
+      "pesos_abertos": true,
+      "lancado_em": null,
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": null,
+      "preco": null,
+      "outros_precos": [],
+      "notas": []
+    },
+    {
+      "id": "bfl/flux-2-klein-base-9b",
+      "nome": "FLUX.2 [klein] Base 9B",
+      "tipo": "imagem",
+      "pesos_abertos": true,
+      "lancado_em": null,
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": null,
+      "preco": null,
+      "outros_precos": [],
+      "notas": []
+    },
+    {
+      "id": "bfl/flux-1-kontext-max",
+      "nome": "FLUX.1 Kontext [max]",
+      "tipo": "imagem",
+      "pesos_abertos": false,
+      "lancado_em": "2025-05-29",
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": null,
+      "preco": null,
+      "outros_precos": [
+        {
+          "unidade": "imagem",
+          "valor_usd": 0.08,
+          "condicao": "8 créditos por imagem",
+          "fonte_url": "https://bfl.ai/pricing"
+        }
+      ],
+      "notas": []
+    },
+    {
+      "id": "bfl/flux-1-kontext-pro",
+      "nome": "FLUX.1 Kontext [pro]",
+      "tipo": "imagem",
+      "pesos_abertos": false,
+      "lancado_em": "2025-05-29",
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": null,
+      "preco": null,
+      "outros_precos": [
+        {
+          "unidade": "imagem",
+          "valor_usd": 0.04,
+          "condicao": "4 créditos por imagem",
+          "fonte_url": "https://bfl.ai/pricing"
+        }
+      ],
+      "notas": []
+    },
+    {
+      "id": "bfl/flux-1-kontext-dev",
+      "nome": "FLUX.1 Kontext [dev] (12B, pesos abertos)",
+      "tipo": "imagem",
+      "pesos_abertos": true,
+      "lancado_em": null,
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": null,
+      "preco": null,
+      "outros_precos": [],
+      "notas": []
+    },
+    {
+      "id": "bfl/flux-1.1-pro-ultra",
+      "nome": "FLUX1.1 [pro] Ultra/Raw",
+      "tipo": "imagem",
+      "pesos_abertos": false,
+      "lancado_em": null,
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": null,
+      "preco": null,
+      "outros_precos": [
+        {
+          "unidade": "imagem",
+          "valor_usd": 0.06,
+          "condicao": "6 créditos por imagem",
+          "fonte_url": "https://bfl.ai/pricing"
+        }
+      ],
+      "notas": []
+    },
+    {
+      "id": "bfl/flux-1.1-pro",
+      "nome": "FLUX1.1 [pro]",
+      "tipo": "imagem",
+      "pesos_abertos": false,
+      "lancado_em": "2024-10-02",
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": null,
+      "preco": null,
+      "outros_precos": [
+        {
+          "unidade": "imagem",
+          "valor_usd": 0.04,
+          "condicao": "4 créditos por imagem",
+          "fonte_url": "https://bfl.ai/pricing"
+        }
+      ],
+      "notas": []
+    },
+    {
+      "id": "bfl/flux-1-dev",
+      "nome": "FLUX.1 [dev]",
+      "tipo": "imagem",
+      "pesos_abertos": true,
+      "lancado_em": "2024-08-01",
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": null,
+      "preco": null,
+      "outros_precos": [
+        {
+          "unidade": "imagem",
+          "valor_usd": 0.025,
+          "condicao": "2,5 créditos por imagem na API BFL",
+          "fonte_url": "https://bfl.ai/pricing"
+        }
+      ],
+      "notas": []
+    },
+    {
+      "id": "bfl/flux-1-schnell",
+      "nome": "FLUX.1 [schnell]",
+      "tipo": "imagem",
+      "pesos_abertos": true,
+      "lancado_em": "2024-08-01",
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": null,
+      "preco": null,
+      "outros_precos": [],
+      "notas": []
+    },
+    {
+      "id": "bfl/flux-1-fill-pro",
+      "nome": "FLUX.1 Fill [pro]",
+      "tipo": "imagem",
+      "pesos_abertos": false,
+      "lancado_em": "2024-11-21",
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": null,
+      "preco": null,
+      "outros_precos": [
+        {
+          "unidade": "imagem",
+          "valor_usd": 0.05,
+          "condicao": "5 créditos por imagem",
+          "fonte_url": "https://bfl.ai/pricing"
+        }
+      ],
+      "notas": []
+    },
+    {
+      "id": "bfl/flux-outpainting-fast",
+      "nome": "FLUX Outpainting [fast]",
+      "tipo": "imagem",
+      "pesos_abertos": false,
+      "lancado_em": null,
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": null,
+      "preco": null,
+      "outros_precos": [
+        {
+          "unidade": "imagem",
+          "valor_usd": 0.045,
+          "condicao": "primeiro megapixel (fonte única na busca)",
+          "fonte_url": "https://bfl.ai/pricing"
+        },
+        {
+          "unidade": "outro",
+          "valor_usd": 0.006,
+          "condicao": "por megapixel adicional (fonte única na busca)",
+          "fonte_url": "https://bfl.ai/pricing"
+        }
+      ],
+      "notas": []
+    },
+    {
+      "id": "bfl/flux-1-fill-dev",
+      "nome": "FLUX.1 Fill [dev]",
+      "tipo": "imagem",
+      "pesos_abertos": true,
+      "lancado_em": "2024-11-21",
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": null,
+      "preco": null,
+      "outros_precos": [],
+      "notas": []
+    },
+    {
+      "id": "bfl/flux-1-canny-dev",
+      "nome": "FLUX.1 Canny [dev]",
+      "tipo": "imagem",
+      "pesos_abertos": true,
+      "lancado_em": "2024-11-21",
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": null,
+      "preco": null,
+      "outros_precos": [],
+      "notas": []
+    },
+    {
+      "id": "bfl/flux-1-depth-dev",
+      "nome": "FLUX.1 Depth [dev]",
+      "tipo": "imagem",
+      "pesos_abertos": true,
+      "lancado_em": "2024-11-21",
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": null,
+      "preco": null,
+      "outros_precos": [],
+      "notas": []
+    },
+    {
+      "id": "bfl/flux-1-redux-dev",
+      "nome": "FLUX.1 Redux [dev]",
+      "tipo": "imagem",
+      "pesos_abertos": true,
+      "lancado_em": "2024-11-21",
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": null,
+      "preco": null,
+      "outros_precos": [],
+      "notas": []
+    },
+    {
+      "id": "bfl/flux-pro-1.0",
+      "nome": "FLUX.1 [pro] (flux-pro-1.0)",
+      "tipo": "imagem",
+      "pesos_abertos": false,
+      "lancado_em": "2024-08-01",
+      "status": "desativado",
+      "desativa_em": "2025-10-31",
+      "contexto_tokens": null,
+      "preco": null,
+      "outros_precos": [],
+      "notas": []
+    },
+    {
+      "id": "bfl/flux-pro-1.0-canny",
+      "nome": "FLUX.1 Canny [pro]",
+      "tipo": "imagem",
+      "pesos_abertos": false,
+      "lancado_em": "2024-11-21",
+      "status": "desativado",
+      "desativa_em": "2025-10-31",
+      "contexto_tokens": null,
+      "preco": null,
+      "outros_precos": [],
+      "notas": []
+    },
+    {
+      "id": "bfl/flux-pro-1.0-depth",
+      "nome": "FLUX.1 Depth [pro]",
+      "tipo": "imagem",
+      "pesos_abertos": false,
+      "lancado_em": "2024-11-21",
+      "status": "desativado",
+      "desativa_em": "2025-10-31",
+      "contexto_tokens": null,
+      "preco": null,
+      "outros_precos": [],
+      "notas": []
+    }
+  ],
+  "capacidades": [
+    {
+      "capacidade": "imagem_gerar",
+      "produto": "BFL API (FLUX.2, FLUX.1 Kontext, FLUX1.1)",
+      "como_acessar": [
+        "api",
+        "web"
+      ],
+      "plano_minimo": "créditos pré-pagos",
+      "gratis": false,
+      "headless": true,
+      "comando": "POST https://api.bfl.ai/v1/<modelo> (assíncrono, consulta por polling)",
+      "limites": "FLUX.2 até 4 MP",
+      "fonte_url": "https://docs.bfl.ai/quick_start/get_started"
+    },
+    {
+      "capacidade": "imagem_editar",
+      "produto": "FLUX.2 / FLUX.1 Kontext / Fill (edição multirreferência, inpainting, outpainting)",
+      "como_acessar": [
+        "api",
+        "web"
+      ],
+      "plano_minimo": "créditos pré-pagos",
+      "gratis": false,
+      "headless": true,
+      "comando": null,
+      "limites": null,
+      "fonte_url": "https://docs.bfl.ai/flux_2/flux2_image_editing"
+    },
+    {
+      "capacidade": "video_gerar",
+      "produto": "FLUX 3 (vídeo com áudio sincronizado, 5–20 s, até UHD), Video Edit, Video Upscale",
+      "como_acessar": [
+        "api",
+        "web"
+      ],
+      "plano_minimo": "créditos pré-pagos",
+      "gratis": false,
+      "headless": true,
+      "comando": null,
+      "limites": "clipes de até 20 s, 24 fps",
+      "fonte_url": "https://docs.bfl.ai/flux_3/flux3_overview"
+    },
+    {
+      "capacidade": "busca_web",
+      "produto": "FLUX.2 [max] grounding search",
+      "como_acessar": [
+        "api",
+        "web"
+      ],
+      "plano_minimo": "créditos pré-pagos",
+      "gratis": false,
+      "headless": true,
+      "comando": null,
+      "limites": "o modelo busca na web quando o prompt pede informação atual",
+      "fonte_url": "https://bfl.ai/models/flux-2-max"
+    },
+    {
+      "capacidade": "mcp",
+      "produto": "FLUX MCP server oficial (remoto, OAuth)",
+      "como_acessar": [
+        "api",
+        "cli",
+        "ide",
+        "app"
+      ],
+      "plano_minimo": "conta BFL com créditos",
+      "gratis": false,
+      "headless": true,
+      "comando": "claude mcp add --transport http FLUX https://mcp.bfl.ai",
+      "limites": "geração, edição, try-on, vídeo FLUX 3, variações e histórico",
+      "fonte_url": "https://docs.bfl.ai/api_integration/mcp_integration"
+    },
+    {
+      "capacidade": "imagem_gerar",
+      "produto": "Pesos abertos (FLUX.2 [dev]/[klein], FLUX.1 [dev]/[schnell]/Kontext [dev]) no Hugging Face",
+      "como_acessar": [
+        "cli"
+      ],
+      "plano_minimo": null,
+      "gratis": true,
+      "headless": true,
+      "comando": "diffusers / ComfyUI local",
+      "limites": "klein 4B ~13 GB VRAM; klein 9B ~29 GB; licenças não comerciais exceto Apache 2.0 (schnell, klein 4B)",
+      "fonte_url": "https://huggingface.co/black-forest-labs"
+    }
+  ],
+  "gratis": [
+    {
+      "titulo": "Créditos iniciais no FLUX Playground",
+      "resumo": "Créditos grátis para testar no playground, sem cartão.",
+      "limites": "Buscas divergem: 50 créditos (help/docs) vs. 200 em outras menções.",
+      "chamavel_por_agente": false,
+      "url": "https://playground.bfl.ai",
+      "valido_ate": null,
+      "origem": "a_verificar"
+    },
+    {
+      "titulo": "FLUX.2 [klein] 4B e FLUX.1 [schnell] em Apache 2.0",
+      "resumo": "Pesos abertos com uso comercial liberado, rodando em GPU de consumo.",
+      "limites": "Custo é o hardware próprio; klein 4B ~13 GB VRAM.",
+      "chamavel_por_agente": true,
+      "url": "https://huggingface.co/black-forest-labs/FLUX.2-klein-4B",
+      "valido_ate": null,
+      "origem": "verificado"
+    },
+    {
+      "titulo": "Pesos [dev] para uso não comercial",
+      "resumo": "FLUX.2 [dev], FLUX.2 [klein] 9B, FLUX.1 [dev], Kontext [dev] e Tools [dev] gratuitos para pesquisa e uso não comercial (FLUX Non-Commercial License).",
+      "limites": "Uso comercial exige licença paga.",
+      "chamavel_por_agente": true,
+      "url": "https://bfl.ai/licensing",
+      "valido_ate": null,
+      "origem": "verificado"
+    }
+  ],
+  "programas": [
+    {
+      "nome": "FLUX Creator Program",
+      "publico": "todos",
+      "beneficio": "Créditos de API (onboarding, periódicos, por projeto), acesso antecipado a modelos, divulgação e contato com o time.",
+      "valor_usd": null,
+      "requisitos": "Já criar com FLUX e ter audiência; inscrição com portfólio e redes, seguida de call.",
+      "elegivel": "nao",
+      "elegivel_motivo": "Voltado a criadores de conteúdo com audiência, não a pesquisa acadêmica; Guilherme não se encaixa no perfil.",
+      "como_aplicar": "Formulário em https://bfl.ai/creator-program",
+      "url": "https://bfl.ai/creator-program",
+      "status": "continuo",
+      "prazo": null,
+      "verificado_em": "2026-10-01"
+    }
+  ],
+  "indicadores": [],
+  "observacoes": "Coleta feita só com WebSearch (WebFetch bloqueado pelo proxy do ambiente em 2026-10-01; bfl.ai retornou EGRESS_BLOCKED); valores não foram lidos diretamente na página — conferir antes de usar. Preços: Kontext [pro]/[max], FLUX1.1 [pro]/Ultra, FLUX.2 [pro]/[flex], klein e FLUX 3 confirmados em duas buscas; preços por megapixel adicional de FLUX.2 [max]/[pro], Outpainting [fast] e Video Upscale vieram de uma só busca. FLUX.2 [dev] não tem endpoint hospedado na BFL (só local). Sem programa para estudante/pesquisador/startup encontrado nas buscas em domínios oficiais; preços das licenças comerciais self-hosted (Builder etc.) não apareceram. Datas: FLUX.2 em 2025-11-25 (Wikipedia/MarkTechPost, a_verificar (fonte de terceiros)); klein ficou null porque as buscas divergiram (2026-01-15 em terceiros vs. 'fev/mar 2026'); Kontext [dev] null (jun vs. 31/07/2025); FLUX.2 [max], Ultra e Video Edit sem data confirmada. FLUX 3 em 2026-07-23 (blog) e descrito como preview/early access. Klein 9B KV marcado 'restrito' por estar em beta público. Notas: LMArena text-to-image de max (1162) e pro (1154) confirmadas em duas buscas; flex/dev/klein de uma busca. Artificial Analysis omitida: valores divergiram entre buscas (FLUX.2 [max] 1193,16 vs. 1192,88; FLUX.2 [pro] 1183,83 vs. 1207,58). Sem nota de vídeo para FLUX 3. Canais: Discord, YouTube e página de status não identificados. Handle oficial do X aparece como @bfl_ai e, em links antigos, @bfl_ml."
+}

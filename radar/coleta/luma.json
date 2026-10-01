@@ -1,0 +1,126 @@
+{
+  "provedor": {
+    "id": "luma",
+    "nome": "Luma AI",
+    "grupo": "midia",
+    "site": "https://lumalabs.ai",
+    "pais": "EUA",
+    "resumo": "Laboratório de modelos multimodais (Palo Alto) conhecido pelo Dream Machine e pela família de vídeo Ray; hoje o produto principal é o app Luma Agents (agentes criativos em quadros) e a API com Ray3.2 (vídeo) e UNI-1.1 (imagem). Destaca-se em vídeo com HDR, edição/reframe de vídeo e geração de imagem com várias referências.",
+    "fontes": [
+      "https://lumalabs.ai/llm-info",
+      "https://lumalabs.ai/pricing",
+      "https://docs.agents.lumalabs.ai/guides/pricing/",
+      "https://docs.agents.lumalabs.ai/guides/model"
+    ]
+  },
+  "coletado_em": "2026-10-01",
+  "canais": [
+    {"tipo": "outro", "nome": "Site oficial", "url": "https://lumalabs.ai", "handle": null, "observacao": "inclui https://lumalabs.ai/llm-info, página oficial de informações para assistentes de IA"},
+    {"tipo": "blog", "nome": "Luma News", "url": "https://lumalabs.ai/news", "handle": null, "observacao": "anúncios de modelos (Ray3.2, UNI-1.1 API, Ray3.14)"},
+    {"tipo": "changelog", "nome": "Changelog", "url": "https://lumalabs.ai/changelog", "handle": null, "observacao": null},
+    {"tipo": "docs", "nome": "Luma Agents API (docs atuais)", "url": "https://docs.agents.lumalabs.ai/", "handle": null, "observacao": "API atual: uni-1, uni-1-max, ray-3.2"},
+    {"tipo": "docs", "nome": "Dream Machine API (docs legados)", "url": "https://docs.lumalabs.ai/", "handle": null, "observacao": "API antiga com ray-2, ray-flash-2 e Photon"},
+    {"tipo": "precos", "nome": "Planos e preços", "url": "https://lumalabs.ai/pricing", "handle": null, "observacao": null},
+    {"tipo": "precos", "nome": "Preços da API", "url": "https://docs.agents.lumalabs.ai/guides/pricing/", "handle": null, "observacao": null},
+    {"tipo": "status", "nome": "Status", "url": "https://status.lumalabs.ai", "handle": null, "observacao": null},
+    {"tipo": "x_oficial", "nome": "Luma", "url": "https://x.com/LumaLabsAI", "handle": "@LumaLabsAI", "observacao": null},
+    {"tipo": "x_ceo", "nome": "Amit Jain (CEO e cofundador)", "url": "https://x.com/gravicle", "handle": "@gravicle", "observacao": null},
+    {"tipo": "discord", "nome": "Luma AI Discord", "url": "https://discord.com/invite/8m5ZqKMCyS", "handle": null, "observacao": null},
+    {"tipo": "github", "nome": "lumalabs", "url": "https://github.com/lumalabs", "handle": null, "observacao": "SDKs Python (Dream Machine e Luma Agents), nós para ComfyUI"}
+  ],
+  "planos": [
+    {"nome": "Plus", "publico": "individual", "preco_mensal_usd": 30, "preco_anual_usd": null,
+     "inclui": "10.000 créditos por mês; uso comercial; modelos da Luma e de terceiros (imagem e vídeo) no app Luma Agents; convidados com edição",
+     "limites": "créditos expiram no fim do ciclo; anual 'economiza até 20%' (valor anual não conferido em duas fontes)",
+     "fonte_url": "https://lumalabs.ai/pricing", "conferido_em": "2026-10-01"},
+    {"nome": "Pro", "publico": "individual", "preco_mensal_usd": 90, "preco_anual_usd": null,
+     "inclui": "40.000 créditos por mês; 4x de uso nos Luma Agents; uso comercial",
+     "limites": "créditos expiram no fim do ciclo",
+     "fonte_url": "https://lumalabs.ai/pricing", "conferido_em": "2026-10-01"},
+    {"nome": "Ultra", "publico": "individual", "preco_mensal_usd": 300, "preco_anual_usd": null,
+     "inclui": "150.000 créditos por mês; 15x de uso nos Luma Agents; uso comercial",
+     "limites": "créditos expiram no fim do ciclo",
+     "fonte_url": "https://lumalabs.ai/pricing", "conferido_em": "2026-10-01"},
+    {"nome": "API pay-as-you-go", "publico": "api", "preco_mensal_usd": null, "preco_anual_usd": null,
+     "inclui": "cobrança por geração (imagem por imagem; vídeo por tipo, resolução, faixa dinâmica e duração), sem mínimo nem contrato",
+     "limites": "capacidade compartilhada, sem SLA de latência; limites de RPM e de jobs concorrentes por plano (ver dashboard / header X-RateLimit-Limit)",
+     "fonte_url": "https://docs.agents.lumalabs.ai/guides/pricing/", "conferido_em": "2026-10-01"},
+    {"nome": "API Provisioned Throughput", "publico": "empresa", "preco_mensal_usd": null, "preco_anual_usd": null,
+     "inclui": "capacidade garantida e SLA de latência, cobrança mensal por unidade (1 unidade = 1 RPM em uni-1; 0,4 RPM em uni-1-max)",
+     "limites": "compromisso mínimo de 8 unidades; preço da unidade não publicado nas buscas",
+     "fonte_url": "https://docs.agents.lumalabs.ai/guides/pricing/", "conferido_em": "2026-10-01"},
+    {"nome": "Enterprise", "publico": "empresa", "preco_mensal_usd": null, "preco_anual_usd": null,
+     "inclui": "implantação customizada, 'Forward Deployed Creatives' para onboarding",
+     "limites": "sob consulta",
+     "fonte_url": "https://lumalabs.ai/enterprise", "conferido_em": "2026-10-01"}
+  ],
+  "modelos": [
+    {"id": "luma/ray-3.2", "nome": "Ray3.2", "tipo": "video", "pesos_abertos": false, "lancado_em": "2026-06-09",
+     "status": "ativo", "desativa_em": null, "contexto_tokens": null, "preco": null,
+     "outros_precos": [
+       {"unidade": "outro", "valor_usd": 0.15, "condicao": "por clipe de 5 s, 540p (API pay-as-you-go)", "fonte_url": "https://docs.agents.lumalabs.ai/guides/pricing/"},
+       {"unidade": "outro", "valor_usd": 0.45, "condicao": "por clipe de 10 s, 540p", "fonte_url": "https://docs.agents.lumalabs.ai/guides/pricing/"},
+       {"unidade": "outro", "valor_usd": 0.30, "condicao": "por clipe de 5 s, 720p", "fonte_url": "https://docs.agents.lumalabs.ai/guides/pricing/"},
+       {"unidade": "outro", "valor_usd": 0.90, "condicao": "por clipe de 10 s, 720p", "fonte_url": "https://docs.agents.lumalabs.ai/guides/pricing/"},
+       {"unidade": "outro", "valor_usd": 1.20, "condicao": "por clipe de 5 s, 1080p", "fonte_url": "https://docs.agents.lumalabs.ai/guides/pricing/"},
+       {"unidade": "outro", "valor_usd": 3.60, "condicao": "por clipe de 10 s, 1080p", "fonte_url": "https://docs.agents.lumalabs.ai/guides/pricing/"},
+       {"unidade": "outro", "valor_usd": 0.60, "condicao": "por clipe de 5 s, 720p HDR (HDR só 720p/1080p e 5 s)", "fonte_url": "https://docs.agents.lumalabs.ai/guides/pricing/"},
+       {"unidade": "outro", "valor_usd": 2.40, "condicao": "por clipe de 5 s, 1080p HDR", "fonte_url": "https://docs.agents.lumalabs.ai/guides/pricing/"}
+     ],
+     "notas": []},
+    {"id": "luma/ray-3.14", "nome": "Ray3.14", "tipo": "video", "pesos_abertos": false, "lancado_em": "2026-01-26",
+     "status": "legado", "desativa_em": null, "contexto_tokens": null, "preco": null, "outros_precos": [], "notas": []},
+    {"id": "luma/ray-3", "nome": "Ray3 (e Ray3 Modify)", "tipo": "video", "pesos_abertos": false, "lancado_em": null,
+     "status": "legado", "desativa_em": null, "contexto_tokens": null, "preco": null, "outros_precos": [], "notas": []},
+    {"id": "luma/uni-1.1", "nome": "UNI-1.1 (API: uni-1)", "tipo": "imagem", "pesos_abertos": false, "lancado_em": "2026-05-05",
+     "status": "ativo", "desativa_em": null, "contexto_tokens": null, "preco": null,
+     "outros_precos": [
+       {"unidade": "imagem", "valor_usd": 0.0404, "condicao": "texto para imagem", "fonte_url": "https://docs.agents.lumalabs.ai/guides/pricing/"},
+       {"unidade": "imagem", "valor_usd": 0.0434, "condicao": "edição (imagem para imagem) ou 1 imagem de referência; +US$ 0,0030 por referência extra (até 9)", "fonte_url": "https://docs.agents.lumalabs.ai/guides/pricing/"}
+     ],
+     "notas": [
+       {"benchmark": "lmarena_image_elo", "valor": 1183, "medido_em": "2026-10-01", "fonte_url": "https://arena.ai/leaderboard/text-to-image", "observacao": "uni-1.1, ±4, 41.412 votos; no Image Edit Arena 1315 ±3"}
+     ]},
+    {"id": "luma/uni-1.1-max", "nome": "UNI-1.1 Max (API: uni-1-max)", "tipo": "imagem", "pesos_abertos": false, "lancado_em": "2026-05-05",
+     "status": "ativo", "desativa_em": null, "contexto_tokens": null, "preco": null,
+     "outros_precos": [
+       {"unidade": "imagem", "valor_usd": 0.1, "condicao": "texto para imagem", "fonte_url": "https://docs.agents.lumalabs.ai/guides/pricing/"},
+       {"unidade": "imagem", "valor_usd": 0.103, "condicao": "edição (imagem para imagem) ou 1 imagem de referência; +US$ 0,0030 por referência extra (até 9)", "fonte_url": "https://docs.agents.lumalabs.ai/guides/pricing/"}
+     ],
+     "notas": [
+       {"benchmark": "lmarena_image_elo", "valor": 1189, "medido_em": "2026-10-01", "fonte_url": "https://arena.ai/leaderboard/text-to-image", "observacao": "variante max, ±6, 14.083 votos (maior nota da família)"}
+     ]},
+    {"id": "luma/ray-2", "nome": "Ray2", "tipo": "video", "pesos_abertos": false, "lancado_em": null,
+     "status": "legado", "desativa_em": null, "contexto_tokens": null, "preco": null, "outros_precos": [], "notas": []},
+    {"id": "luma/ray-flash-2", "nome": "Ray2 Flash", "tipo": "video", "pesos_abertos": false, "lancado_em": null,
+     "status": "legado", "desativa_em": null, "contexto_tokens": null, "preco": null, "outros_precos": [], "notas": []},
+    {"id": "luma/photon-1", "nome": "Photon", "tipo": "imagem", "pesos_abertos": false, "lancado_em": null,
+     "status": "legado", "desativa_em": null, "contexto_tokens": null, "preco": null,
+     "outros_precos": [
+       {"unidade": "imagem", "valor_usd": 0.015, "condicao": "por imagem 1080p (Dream Machine API legada)", "fonte_url": "https://lumalabs.ai/api/pricing"}
+     ], "notas": []},
+    {"id": "luma/photon-flash-1", "nome": "Photon Flash", "tipo": "imagem", "pesos_abertos": false, "lancado_em": null,
+     "status": "legado", "desativa_em": null, "contexto_tokens": null, "preco": null,
+     "outros_precos": [
+       {"unidade": "imagem", "valor_usd": 0.002, "condicao": "por imagem 1080p (Dream Machine API legada)", "fonte_url": "https://lumalabs.ai/api/pricing"}
+     ], "notas": []}
+  ],
+  "capacidades": [
+    {"capacidade": "video_gerar", "produto": "Ray3.2 (app Luma Agents e Luma API)", "como_acessar": ["web", "app", "api"], "plano_minimo": "teste grátis (com marca d'água) / pay-as-you-go na API", "gratis": true, "headless": true, "comando": "POST /v1/generations (type video, video_edit, video_reframe)", "limites": "HDR só 720p/1080p e 5 s; RPM e jobs concorrentes por plano", "fonte_url": "https://docs.agents.lumalabs.ai/guides/videos/generation"},
+    {"capacidade": "imagem_gerar", "produto": "UNI-1.1 (uni-1, uni-1-max)", "como_acessar": ["web", "app", "api"], "plano_minimo": "pay-as-you-go na API", "gratis": false, "headless": true, "comando": "POST /v1/generations (type image)", "limites": "até 9 imagens de referência", "fonte_url": "https://docs.agents.lumalabs.ai/guides/model"},
+    {"capacidade": "imagem_editar", "produto": "UNI-1.1 image_edit", "como_acessar": ["web", "api"], "plano_minimo": "pay-as-you-go na API", "gratis": false, "headless": true, "comando": "POST /v1/generations (type image_edit)", "limites": "até 8 referências além da imagem-fonte", "fonte_url": "https://docs.agents.lumalabs.ai/guides/images/editing/"},
+    {"capacidade": "cli_headless", "produto": "Luma CLI", "como_acessar": ["cli", "api"], "plano_minimo": "chave de API", "gratis": false, "headless": true, "comando": "luma --auth-token ... (CLI oficial da REST API; SDKs Python, TypeScript e Go)", "limites": null, "fonte_url": "https://docs.agents.lumalabs.ai/api/cli/"},
+    {"capacidade": "agente_nuvem", "produto": "Luma Agents (app)", "como_acessar": ["web", "app"], "plano_minimo": "Plus", "gratis": false, "headless": false, "comando": null, "limites": "uso nos agentes: padrão no plano de US$ 30, 4x no de US$ 90, 15x no Ultra", "fonte_url": "https://lumalabs.ai/learning-hub/frequently-asked-questions-about-the-new-luma-agents-app"},
+    {"capacidade": "mcp", "produto": "Integração MCP da Luma", "como_acessar": ["api"], "plano_minimo": null, "gratis": false, "headless": true, "comando": null, "limites": "a_verificar: citada só no resumo da busca (uso via Claude, Cursor, Codex); nenhuma página oficial do servidor MCP foi localizada", "fonte_url": "https://lumalabs.ai/news/higgsfield-review"}
+  ],
+  "gratis": [
+    {"titulo": "Teste grátis do app Luma", "resumo": "Créditos de teste incluídos para experimentar o Ray3.2 antes de assinar.", "limites": "número limitado de créditos (quantidade não encontrada); vídeos com marca d'água e só para uso pessoal não comercial", "chamavel_por_agente": false, "url": "https://lumalabs.ai/pricing", "valido_ate": null, "origem": "verificado"}
+  ],
+  "programas": [
+    {"nome": "Luma AI Student Ambassador (Luma for Education)", "publico": "estudante", "beneficio": "programa de embaixadores estudantis para promover IA generativa na escola; benefícios concretos não publicados nas buscas", "valor_usd": null, "requisitos": "estudante, envio de manifestação de interesse", "elegivel": "talvez", "elegivel_motivo": "Guilherme é graduando da USP, mas o programa é de embaixador (contrapartida de divulgação) e não ficou claro se aceita estudantes fora dos EUA nem se dá créditos", "como_aplicar": "formulário em lumalabs.ai/education/student", "url": "https://lumalabs.ai/education/student", "status": "desconhecido", "prazo": null, "verificado_em": "2026-10-01"},
+    {"nome": "Luma for Education (educadores e instituições)", "publico": "educador", "beneficio": "apoio a cursos, recursos e colaboração para levar IA generativa à sala de aula", "valor_usd": null, "requisitos": "educador ou instituição elegível", "elegivel": "talvez", "elegivel_motivo": "não se aplica ao Guilherme diretamente; o orientador docente poderia pedir para uma disciplina", "como_aplicar": "formulário em lumalabs.ai/education/educator", "url": "https://lumalabs.ai/education/educator", "status": "desconhecido", "prazo": null, "verificado_em": "2026-10-01"},
+    {"nome": "Creative Partner Program", "publico": "todos", "beneficio": "créditos mensais, reuniões quinzenais com a equipe, acesso antecipado, divulgação", "valor_usd": null, "requisitos": "artistas, cineastas e criadores com produção em IA", "elegivel": "nao", "elegivel_motivo": "voltado a criadores audiovisuais com portfólio; não combina com pesquisa de dados urbanos", "como_aplicar": "inscrição em lumalabs.ai/creative-partner-program", "url": "https://lumalabs.ai/creative-partner-program", "status": "desconhecido", "prazo": null, "verificado_em": "2026-10-01"}
+  ],
+  "indicadores": [],
+  "observacoes": "Coleta feita só com WebSearch (WebFetch bloqueado pelo proxy do ambiente em 2026-10-01); valores não foram lidos diretamente na página — conferir antes de usar. (1) Nomes dos planos divergem entre páginas oficiais: lumalabs.ai/pricing aparece como Plus US$ 30 / Pro US$ 90 / Ultra US$ 300, e o FAQ do app Luma Agents como Pro US$ 30 / Plus US$ 90; mantido Plus/Pro/Ultra conforme a página de preços. Preços anuais (US$ 300 / 900 / 3.000 por ano) vieram de uma só busca e ficaram null. Os planos antigos do Dream Machine (Lite US$ 9,99, Plus US$ 29,99, Unlimited US$ 94,99 na web) ainda aparecem no learning hub mas parecem substituídos pelo app Luma Agents; não registrados. (2) lumalabs.ai/llm-info diz que Dream Machine e Ray2 estão descontinuados e que o Photon 'não existe mais como produto separado'; ray-2, ray-flash-2, photon-1 e photon-flash-1 ficaram como 'legado' (docs.lumalabs.ai ainda lista ray-2/ray-flash-2) sem data de desativação publicada. Preço do Ray2 por milhão de pixels (US$ 0,01582; Flash US$ 0,00544) veio de uma busca só: não registrado. Datas de lançamento de Ray2, Photon e Ray3 não confirmadas. (3) Ray3.14 e Ray3 ficam como legado (llm-info cita como versões anteriores; Ray3.14 só existia no app web). A API atual expõe uni-1 e uni-1-max: assumido que correspondem a UNI-1.1 (API do UNI-1.1 lançada em 2026-05-05) — conferir. Ray3.2 não tem preço por segundo publicado, só por clipe; registrado com unidade 'outro'. Preço da unidade de Provisioned Throughput e quantidade de créditos do teste grátis não encontrados. (4) Notas: aa_video_elo de Ray3.2/Ray3.14 e aa_image_elo de UNI-1.1 não apareceram com valor literal nas buscas em artificialanalysis.ai; omitidos. LMArena text-to-image conferida em duas buscas (uni-1.1-max 1189; uni-1.1 1183). (5) MCP oficial não confirmado em página oficial (só menção em artigo do próprio blog/resumo da busca) — a_verificar. (6) Canal do YouTube oficial não identificado. Sem programas de créditos para pesquisa/startup encontrados."
+}
