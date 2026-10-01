@@ -24,7 +24,9 @@ canais oficiais), os recursos do Guilherme com previsão de esgotamento, e o que
 - **Banco:** esquema `radar` no Supabase `rag-compartilhado`, já com as tabelas da biblioteca
   (`provedores`, `canais`, `planos`, `capacidades`, `programas`, `indicadores`, `precos_unidade`,
   `leituras`). A primeira carga tem 21 modelos, 7 análises e 43 novidades.
-- **Coleta pesada:** roteiro pronto em `radar/`, ainda não rodada.
+- **Coleta pesada:** rodando desde 2026-10-01 em 5 sessões do Claude Code na nuvem, que gravam no
+  branch `radar-coleta` (criado a partir de `input-de-audio`, onde está a pasta `radar/`).
+  A sessão 2 grava o relatório em `RELATORIO_laboratorio_2.md`, porque divide o grupo com a 1.
 
 ## Decisões já tomadas
 
@@ -33,20 +35,23 @@ canais oficiais), os recursos do Guilherme com previsão de esgotamento, e o que
 - Entram todos os modelos ativos de cada provedor, não só o topo de linha.
 - Números só com fonte e data. Indicadores de custo-benefício só quando encontrados numa fonte.
 - Extras da versão 2: teste próprio em português e histórico de preços.
+- **A coleta completa não se repete** (2026-10-01): saiu cara (5 sessões em paralelo, um subagente
+  por provedor, modelo caro herdado). A manutenção é incremental e barata: preços diários por script
+  sem IA, notas semanais e planos/programas mensais só do que mudou, sempre numa sessão só e com
+  modelo pequeno declarado. Detalhe em `radar/ROTEIRO_COLETA.md`, seção "Manutenção".
 - A tarefa agendada fica por último, depois de calibrar o ritmo: diário leve, semanal para as notas,
   análises por gatilho e mensal para o gasto.
 
 ## Próximos passos
 
-1. **Guilherme:** commit e push de `radar/` e deste arquivo.
-2. **Guilherme:** abrir 5 sessões do Claude Code na nuvem (uma por sessão do `provedores.json`) com
-   o prompt do fim do `ROTEIRO_COLETA.md`.
+1. ~~Commit e push de `radar/` e deste arquivo.~~ Feito.
+2. ~~Abrir as 5 sessões de coleta.~~ Abertas em 2026-10-01; aguardar o push de todas no `radar-coleta`.
 3. **Chat com o banco** (Cowork, no Project agentes-base): ler o branch `radar-coleta`, rodar
    `radar/validar.py`, importar no esquema `radar`, atualizar `painel_json()` e publicar a página
    versão 2 no mesmo endereço.
 4. Medir o consumo de cada recurso (ccusage, `/status` do Codex, `/usage` do Antigravity, API de
    custos da OpenAI), gravar em `radar.leituras` e montar a previsão de esgotamento.
-5. Escrever a skill do radar e só então a tarefa agendada.
+5. Escrever a skill do radar e só então a tarefa agendada, seguindo a seção "Manutenção" do roteiro.
 
 ## Pendências
 

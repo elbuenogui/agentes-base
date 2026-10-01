@@ -6,6 +6,11 @@
 > `radar` do Supabase `rag-compartilhado` e republica o Painel de Benchmark de IA.
 >
 > Trabalho todo em português do Brasil. Não faça commit em `main`: use o branch `radar-coleta`.
+>
+> **A coleta completa rodou uma vez (2026-10-01) e não se repete.** Saiu cara: 5 sessões em paralelo,
+> um subagente por provedor e o modelo mais caro herdado. Para manter a biblioteca em dia, siga a
+> seção [Manutenção](#manutenção) no fim deste arquivo. As regras duras e o formato continuam
+> valendo para ela.
 
 ## Para quem é
 
@@ -124,3 +129,23 @@ Abra uma sessão do Claude Code na nuvem para cada grupo, no repositório agente
 
 Sessões: `1` laboratórios A, `2` laboratórios B, `3` mídia, `4` inferência e agregadores,
 `5` busca e embeddings.
+
+## Manutenção
+
+A base completa já existe. Daqui em diante só se atualiza o que mudou, com teto de custo explícito.
+
+| o quê | como | frequência |
+|---|---|---|
+| preços | script sem IA lendo a API pública de modelos do OpenRouter (`https://openrouter.ai/api/v1/models`); grava a diferença | diário |
+| notas e benchmarks | uma sessão, modelo pequeno, lê só os rankings da tabela "Benchmarks por tipo" e grava as diferenças | semanal |
+| planos, programas, grátis, capacidades | uma sessão, modelo pequeno, só para provedores cujo changelog ou página de preços mudou desde a última leitura | mensal |
+| provedor novo ou lançamento grande | coleta pontual daquele provedor, no formato acima | por gatilho |
+
+Regras da manutenção:
+
+1. **Nunca mais rodar a coleta completa** dos 32 provedores. Se a base parecer velha demais, o
+   Guilherme decide e autoriza; não é decisão de sessão.
+2. **Nada de sessões em paralelo nem de um subagente por provedor.** Uma sessão por rodada.
+3. **Toda sessão declara o modelo explicitamente** (o menor que dê conta), em vez de herdar o da
+   sessão que a abriu.
+4. Grave só o que mudou, com fonte e data, no mesmo formato de `radar/coleta/<id>.json`.
