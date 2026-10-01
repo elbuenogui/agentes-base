@@ -172,3 +172,50 @@ anterior: coleta/2026-09-30_nucleo-remoto-supabase.md
   US$ 1 aprovado nos Limites. Fixar 1 no segredo daria dois lugares para o mesmo número.
 - [ARTEFATO] `PROXIMA_TAREFA.md` da Etapa 3 — contrato do serviço, 12 pontos, com os riscos aceitos
   da Etapa 2 (teto não atômico, custo 0 no prazo esgotado, drenagem do corpo, falha fechada).
+
+## 13. Etapa 3 concluída — contrato do serviço
+
+- [ARTEFATO] `spec/contrato/SERVICO_TRANSCRICAO.md` — 12 seções; 13 códigos de erro na ordem da
+  função; 17 afirmações **[medido]** (log de 17:53 e as 3 linhas do banco), o resto **[código]**,
+  **[código + teste local]** ou **[documentação]**. Conferência código × documento sem divergência.
+- [DECISÃO] (do PM) Regra de versão do `X-Servico-Contrato`: sobe quando uma requisição que
+  funcionava passa a falhar ou muda de forma — o mesmo critério já praticado no `NUCLEO.md`
+  (`D-36`). `detail`, preço, valor do teto e projeto novo não mudam a versão.
+- [PENDÊNCIA] Formato do navegador (WebM/Opus) não medido — só WAV. Fica provado ou não na Etapa 5,
+  com a chamada real da Mari. O contrato manda o cliente enviar o nome com a extensão.
+- [PENDÊNCIA] `SERVICO_TETO_DIARIO_USD` é um valor só para todos os projetos (o gasto é contado por
+  projeto). Com um cliente só não importa; um segundo projeto herdaria o mesmo teto — condição de
+  reabertura junto com a da `D-37`.
+
+## 14. Etapa 4 concluída — prompts de integração
+
+- [DECISÃO] (do usuário) A transcrição **preenche a caixa de mensagem** para a pessoa revisar; nunca
+  vira pergunta sozinha. Protege contra a alucinação em silêncio e contra erro de transcrição.
+- [DECISÃO] (do usuário) O silêncio é descartado **no navegador**, medindo o volume durante a
+  gravação — gravação vazia não chega a virar chamada paga.
+- [DECISÃO] (do usuário) Os prompts são para o **Codex**, que está tocando a Mari.
+- [ARTEFATO] `spec/contrato/PROMPTS_INTEGRACAO_MARI.md` — três prompts (rota do servidor; gravação no
+  navegador; verificação ponta a ponta, que é a Etapa 5), mais os passos do usuário antes (copiar o
+  contrato para o repositório da Mari; criar `SERVICO_TRANSCRICAO_CHAVE` no ambiente do servidor).
+- [DECISÃO] (do PM) Nenhuma repetição automática no servidor da Mari: quem decide tentar de novo é a
+  pessoa — repetir `TEMPO_ESGOTADO` pode cobrar duas vezes.
+- [PENDÊNCIA] Números **propostos pelo PM, não medidos**, em constantes ajustáveis: limite de 10
+  transcrições a cada 10 min por sessão (ou IP); silêncio = menos de 0,5 s acima de −45 dBFS.
+  Calibrar na Etapa 5.
+- [ACHADO] Usuário respondeu "pronto" depois do pedido de apagar `SERVICO_TETO_DIARIO_USD`; o PM
+  toma como apagado (não consegue ler segredos).
+
+## 15. Artefatos postos no repositório da Mari, com retomada para o Codex
+
+- [DIRECIONAMENTO] (do usuário) Faltava pôr os artefatos nos lugares certos e gerar o prompt de
+  retomada para o Codex executar.
+- [ACHADO] Lido o repositório da Mari (`Desktop/Mari`, acesso concedido nesta sessão): lá o Codex roda
+  PM/EXEC próprio, com retomadas `_RETOMADA_*-codex.md` na raiz, contratos em `chatbot-api/docs/`, API
+  FastAPI com `urllib` e `session_id`; o chat fica no `urbverde-ui-novo`, outro repositório.
+- [ARTEFATO] No repositório da Mari: `chatbot-api/docs/CONTRATO_SERVICO_TRANSCRICAO.md` (cópia do
+  contrato, com aviso), `_RETOMADA_transcricao-servico-codex.md` (quatro passos, com a especificação
+  da rota), `_PROMPT_urbverde-ui-gravacao-voz.md` (front) e
+  `coleta/2026-09-30_transcricao-servico-encaminhamento.md`. Nada commitado lá.
+- [PENDÊNCIA] O PLANO da Mari deixava funções novas para depois da migração ao servidor da UrbVerde.
+  A retomada pede essa decisão ao usuário; recomendação do PM: implementar e testar localmente agora,
+  publicar só no servidor novo, para a chave não entrar no Google que vai ser desligado.

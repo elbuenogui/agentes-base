@@ -111,3 +111,29 @@ Não.
 
 - O usuário abriu o menu ⋮ e clicou: a página de Planejamento e Execução abre. Fecha o que ficou
   em aberto na entrada de 2026-09-25 (hoje em `historico/PROGRESSO_fase2-desktop_2026-08-25_a_2026-09-21.md`).
+
+## [2026-09-30 18:07] — Serviço de transcrição para a Mari (D-37), Etapa 3: Contrato do serviço
+Status: concluído (um ponto pede decisão do PM: a regra de versão, abaixo)
+
+### Feito
+- `spec/contrato/SERVICO_TRANSCRICAO.md` (novo, 288 linhas): cabeçalho YAML como o do `NUCLEO.md`, legenda de marcas e as 12 seções na ordem da tarefa. A tabela de erros (seção 6) tem status, `codigo`, quando, se registra, se custa, o que o cliente faz e a marca de cada linha. L6, `D-16` e `D-37` só apontadas.
+- `nucleo-remoto/README.md`: uma linha na tabela, logo abaixo das linhas da Etapa 2.
+- Fontes de [medido]: o log de 17:53 e as 3 linhas de `servicos.transcricao_uso`, relidas por `execute_sql` só de leitura (20:53:19Z `413`, 20:53:22Z sucesso 320/82 tokens 2182 ms, 20:57:05Z `429`). O custo do sucesso está gravado como `0.0016200000000000001` (ponto flutuante do JS no `numeric`); o documento registra isso como resíduo desprezível.
+- Conferência código × documento: comparei cada afirmação [código] com o `index.ts` v6 e o `servicos_base.sql`. Três pontos que eu mesmo tinha escrito errado foram corrigidos antes de fechar: o custo por minuto (fallback de `calcularCusto`) faltava na coluna `custo_usd`; o `OPTIONS → 405` estava como [código + teste local], mas só o `GET` foi testado localmente (virou [código]); e a Correção 1 estava escrita como causa provada (virou "antes travou, depois voltou em 0,8–1,2 s [medido]; a causa não foi reproduzida"). **Nenhum ponto restante em que o documento afirme algo que o código não faz.**
+- Não testado: nada novo. Não chamei a função real e não implantei nada. O `NUCLEO.md` não foi tocado (`git diff` vazio nele).
+
+### Critério de pronto
+- [x] `spec/contrato/SERVICO_TRANSCRICAO.md` cobre os 12 pontos, com cada afirmação marcada — com uma marca a mais na legenda, **[proposta]**, usada uma vez (ver abaixo)
+- [x] nada no documento contradiz o `index.ts` v6 (o Executor confere código × documento item a item, e lista no PROGRESSO os pontos em que o documento diz algo que o código não faz) — nenhum restante; os três corrigidos estão acima
+- [x] nenhum valor de segredo, nenhum texto transcrito (só nomes de segredos; `grep` por `sk-`/`Bearer ey` vazio)
+- [x] o `NUCLEO.md` não foi tocado
+
+### Novas demandas / riscos
+- **Pede decisão do PM — "o que muda a versão" (seção 4):** nenhuma fonte lida define isso para o `X-Servico-Contrato` (a seção Versionamento do `NUCLEO.md` estava fora da lista de fontes). Escrevi uma regra e marquei **[proposta]**: muda a versão o que quebra cliente (forma dos corpos, nome ou significado de `codigo`, autenticação, campo `audio`, limite que passe a recusar o que hoje passa); não muda `detail`, preço, valor do teto ou projeto novo. O PM confirma ou troca, e aí a marca sai.
+- **Achado de código, sem mudança:** `SERVICO_TETO_DIARIO_USD` é **um valor só para todos os projetos**; o gasto é que é contado por projeto. Hoje só há `mari`, mas um segundo projeto herdaria o mesmo teto. O documento diz isso (seção 5).
+- **Não respondido por falta de medição:** (a) se formato de navegador (WebM/Opus) funciona — só WAV foi medido; (b) quanto tempo a troca de um segredo leva para valer (o teto `0` valeu na 1ª tentativa, numa rodada só); (c) o teto de tempo da Edge Function, citado como [documentação]. Os três estão no documento como tal.
+- Marca **[documentação]** usada sem ler a documentação: o `OPTIONS` de pré-requisição do navegador, o nome de arquivo como pista de formato para a OpenAI, a propagação de segredo e o teto de tempo da Edge Function. Todos escritos como "não verificado aqui".
+
+### Ajuste no plano necessário?
+Não.
+- Ajuste [18:15]: o PM confirmou a regra de versão. Em `SERVICO_TRANSCRICAO.md`, **[proposta]** virou o ponteiro para a seção Versionamento do `NUCLEO.md` (`NUCLEO.md#versionamento`), com o texto da regra igual; saíram da legenda a linha da marca e o "mais uma" do título dela.

@@ -57,14 +57,14 @@ consumo aparece no banco como projeto `mari`, sem texto.**
    no banco com projeto e custo, sem texto; a `transcrever` pessoal com o mesmo `ezbr_sha256` de
    antes; chaves só nos segredos do Supabase, digitadas pelo usuário.
 
-3. **[Contrato do serviço]** — critério de pronto: `spec/contrato/SERVICO_TRANSCRICAO.md` com
+3. **[Contrato do serviço]** — **CONCLUÍDA em 2026-09-30**: `spec/contrato/SERVICO_TRANSCRICAO.md`, 12 seções, cada afirmação marcada (17 medidas, as demais lidas no código ou na documentação); regra de versão confirmada pelo PM pelo critério do `NUCLEO.md`. Critério de pronto: `spec/contrato/SERVICO_TRANSCRICAO.md` com
    endereço, autenticação, limites, códigos de erro e as **obrigações do cliente** (chamar só do
    servidor; limitar por pessoa; parar a gravação em 2 min; descartar silêncio antes de enviar,
    porque a API alucina texto em silêncio — L6 do `NUCLEO.md`, `D-16`; não guardar o áudio),
    apontando para o `NUCLEO.md` no que for igual; cada afirmação marcada como medida ou lida no
    código, como no contrato 2.
 
-4. **[Prompts de integração]** — feita pelo **PM**, a pedido do usuário (2026-09-30). Critério de
+4. **[Prompts de integração]** — **CONCLUÍDA em 2026-09-30**: `spec/contrato/PROMPTS_INTEGRACAO_MARI.md`, três prompts para o Codex (rota do servidor, gravação no navegador, verificação ponta a ponta). Feita pelo **PM**, a pedido do usuário (2026-09-30). Critério de
    pronto: prompts autocontidos para o projeto do servidor da Mari, um por tarefa do lado de lá,
    cada um citando o contrato da Etapa 3 e dizendo o que o agente de lá **não** faz (guardar
    texto, chamar do navegador, guardar a chave no front); entregues ao usuário e guardados em

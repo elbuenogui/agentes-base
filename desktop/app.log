@@ -1357,3 +1357,31 @@
 2026-09-30 16:17:45,209 compacto alvo=80x80 mascara=84x84+182+19 janela=448x366 dpr=1.25
 2026-09-30 16:17:45,285 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+Ç
 2026-09-30 16:18:01,484 compacto alvo=80x80 mascara=84x84+182+19 janela=448x366 dpr=1.0
+2026-09-30 16:48:14,760 sessao: renovada
+2026-09-30 18:24:47,353 sessao: renovada
+2026-09-30 19:50:26,199 sessao: renovada
+2026-09-30 20:06:38,616 compacto alvo=80x80 mascara=84x84+182+19 janela=448x366 dpr=1.25
+2026-09-30 20:59:22,127 sessao: renovada
+2026-09-30 20:59:27,847 compacto alvo=80x80 mascara=84x84+182+19 janela=448x366 dpr=1.0
+2026-09-30 22:21:40,286 sessao: renovada
+2026-09-30 23:22:23,029 sessao: renovada
+2026-09-30 23:27:30,259 tamanho_fora_do_modo expandido=True alvo=448x366 real=286x234
+2026-09-30 23:46:19,863 compacto alvo=80x80 mascara=84x84+182+19 janela=448x366 dpr=1.25
+2026-10-01 00:24:57,446 sessao: renovada
+2026-10-01 00:53:01,065 compacto alvo=80x80 mascara=84x84+182+19 janela=448x366 dpr=1.0
+2026-10-01 00:53:19,749 compacto alvo=80x80 mascara=84x84+182+19 janela=448x366 dpr=1.25
+2026-10-01 00:53:20,034 abertura dispositivo=padrão do sistema taxa_amostragem=16000 atalho=shift+Ç
+2026-10-01 00:53:28,147 tamanho_fora_do_modo expandido=True alvo=448x366 real=358x293
+2026-10-01 01:00:38,338 compacto alvo=80x80 mascara=84x84+182+19 janela=448x366 dpr=1.0
+2026-10-01 01:09:29,866 tamanho_fora_do_modo expandido=True alvo=448x366 real=358x293
+2026-10-01 01:16:38,868 tamanho_fora_do_modo expandido=True alvo=448x366 real=286x234
+2026-10-01 01:16:40,111 compacto alvo=80x80 mascara=84x84+182+19 janela=448x366 dpr=1.25
+2026-10-01 01:24:49,103 tamanho_fora_do_modo expandido=True alvo=448x366 real=358x293
+2026-10-01 01:25:17,793 sessao: renovada
+2026-10-01 01:25:49,395 tamanho_fora_do_modo expandido=True alvo=448x366 real=286x234
+2026-10-01 02:23:49,543 sessao: renovada
+2026-10-01 02:28:26,704 tamanho_fora_do_modo expandido=True alvo=448x366 real=358x293
+2026-10-01 02:29:30,360 compacto alvo=80x80 mascara=84x84+182+19 janela=448x366 dpr=1.0
+2026-10-01 02:34:29,719 compacto alvo=80x80 mascara=84x84+182+19 janela=448x366 dpr=1.25
+2026-10-01 02:37:42,334 tamanho_fora_do_modo expandido=True alvo=448x366 real=286x234
+2026-10-01 03:27:59,285 sessao: renovada

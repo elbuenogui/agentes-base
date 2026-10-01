@@ -16,6 +16,7 @@ divide o mesmo banco e não é tocado daqui.
 | `testes/testar_consumo_e_imagem.py` e `.cmd` | Teste real da Etapa 4, no Windows: `/consumo` remoto e a imagem do núcleo local registrando no banco (sobe um segundo núcleo na porta 8001). Resultado em `testes/testar_consumo_e_imagem.log`. |
 | `funcoes/transcrever-servico/index.ts` | A Edge Function `transcrever-servico` — o serviço de transcrição para projetos clientes (D-37), começando pela Mari: chave por projeto no cabeçalho `x-servico-chave`, teto de gasto por dia, e só consumo em `servicos.transcricao_uso` (nunca o texto). É exatamente o código implantado (`verify_jwt: false`). |
 | `testes/testar_servico.py` e `.cmd` | Teste real do serviço, no Windows: cinco casos (o quinto pede para criar o segredo do teto e, no fim, apagá-lo). Resultado em `testes/testar_servico.log`. |
+| `../spec/contrato/SERVICO_TRANSCRICAO.md` | O contrato do serviço `transcrever-servico`: o que um projeto cliente precisa saber para integrar sem abrir o código (endereço, chave, limites, erros, registro, obrigações do cliente). |
 
 Cada linha do banco pertence a um usuário do Auth; só ele lê e insere as próprias linhas. Não há
 update nem delete pela API, e o papel `anon` não enxerga o schema.
