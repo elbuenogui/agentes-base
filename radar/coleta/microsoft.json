@@ -1,0 +1,1006 @@
+{
+  "provedor": {
+    "id": "microsoft",
+    "nome": "Microsoft (Azure AI Foundry / MAI)",
+    "grupo": "laboratorio",
+    "site": "https://microsoft.ai",
+    "pais": "EUA",
+    "resumo": "A Microsoft treina a família própria MAI (texto com raciocínio, imagem, voz e transcrição, feita do zero pela Microsoft AI de Mustafa Suleyman) e a família Phi de modelos pequenos com pesos abertos (MIT). Vende tudo pela plataforma Microsoft Foundry (antigo Azure AI Foundry), que também hospeda modelos de OpenAI, Anthropic, DeepSeek e outros, e embute IA no Copilot e no Microsoft 365. Destaca-se em transcrição barata (MAI-Transcribe-2 a US$ 0,10/h promocional) e geração de imagem (MAI-Image-2.6 em #2 no Arena).",
+    "fontes": [
+      "https://github.com/MicrosoftDocs/azure-ai-docs",
+      "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
+      "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-from-partners",
+      "https://learn.microsoft.com/en-us/azure/foundry/openai/concepts/model-retirement-schedule",
+      "https://learn.microsoft.com/en-us/azure/ai-services/speech-service/mai-transcribe",
+      "https://learn.microsoft.com/en-us/azure/ai-services/speech-service/mai-voices",
+      "https://techcommunity.microsoft.com/blog/azure-ai-foundry-blog/new-mai-models-in-microsoft-foundry-across-text-image-voice-and-speech/4524632",
+      "https://www.microsoft.com/en-us/microsoft-365-copilot/pricing/individuals",
+      "https://www.microsoft.com/en-us/microsoft-365-copilot/pricing/enterprise"
+    ]
+  },
+  "coletado_em": "2026-10-01",
+  "canais": [
+    {
+      "tipo": "blog",
+      "nome": "Microsoft AI — notícias (MAI)",
+      "url": "https://microsoft.ai/news/",
+      "handle": null,
+      "observacao": "anúncios dos modelos MAI"
+    },
+    {
+      "tipo": "blog",
+      "nome": "Microsoft Foundry Blog (Tech Community)",
+      "url": "https://techcommunity.microsoft.com/category/ai/blog/azure-ai-foundry-blog",
+      "handle": null,
+      "observacao": "preços de lançamento dos modelos no Foundry"
+    },
+    {
+      "tipo": "docs",
+      "nome": "Foundry Models sold by Azure",
+      "url": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
+      "handle": null,
+      "observacao": "lista oficial de modelos MAI e capacidades"
+    },
+    {
+      "tipo": "changelog",
+      "nome": "Ciclo de vida e desativação de modelos do Foundry",
+      "url": "https://learn.microsoft.com/en-us/azure/foundry/openai/concepts/model-retirement-schedule",
+      "handle": null,
+      "observacao": "datas de desativação"
+    },
+    {
+      "tipo": "github",
+      "nome": "MicrosoftDocs/azure-ai-docs",
+      "url": "https://github.com/MicrosoftDocs/azure-ai-docs",
+      "handle": null,
+      "observacao": "fonte aberta da documentação do Foundry; dá para acompanhar mudanças por commit"
+    },
+    {
+      "tipo": "precos",
+      "nome": "Foundry Models pricing — Microsoft",
+      "url": "https://azure.microsoft.com/en-us/pricing/details/ai-foundry-models/microsoft/",
+      "handle": null,
+      "observacao": null
+    },
+    {
+      "tipo": "precos",
+      "nome": "Azure Speech pricing",
+      "url": "https://azure.microsoft.com/en-us/pricing/details/speech/",
+      "handle": null,
+      "observacao": "MAI-Transcribe e MAI-Voice são cobrados via Azure Speech"
+    },
+    {
+      "tipo": "status",
+      "nome": "Azure Status",
+      "url": "https://azure.status.microsoft/",
+      "handle": null,
+      "observacao": null
+    },
+    {
+      "tipo": "github",
+      "nome": "Microsoft no GitHub",
+      "url": "https://github.com/microsoft",
+      "handle": null,
+      "observacao": null
+    },
+    {
+      "tipo": "x_oficial",
+      "nome": "Microsoft",
+      "url": "https://x.com/Microsoft",
+      "handle": "@Microsoft",
+      "observacao": null
+    },
+    {
+      "tipo": "x_oficial",
+      "nome": "Microsoft AI",
+      "url": "https://x.com/MicrosoftAI",
+      "handle": "@MicrosoftAI",
+      "observacao": "anuncia os modelos MAI"
+    },
+    {
+      "tipo": "x_oficial",
+      "nome": "Microsoft Azure",
+      "url": "https://x.com/Azure",
+      "handle": "@Azure",
+      "observacao": null
+    },
+    {
+      "tipo": "x_oficial",
+      "nome": "Microsoft Copilot",
+      "url": "https://x.com/Copilot",
+      "handle": "@Copilot",
+      "observacao": null
+    },
+    {
+      "tipo": "x_oficial",
+      "nome": "Microsoft Research",
+      "url": "https://x.com/MSFTResearch",
+      "handle": "@MSFTResearch",
+      "observacao": "Phi, programas acadêmicos (AARI)"
+    },
+    {
+      "tipo": "x_ceo",
+      "nome": "Satya Nadella",
+      "url": "https://x.com/satyanadella",
+      "handle": "@satyanadella",
+      "observacao": "CEO da Microsoft"
+    },
+    {
+      "tipo": "x_lider",
+      "nome": "Mustafa Suleyman",
+      "url": "https://x.com/mustafasuleyman",
+      "handle": "@mustafasuleyman",
+      "observacao": "CEO da Microsoft AI (MAI, Copilot)"
+    },
+    {
+      "tipo": "x_lider",
+      "nome": "Kevin Scott",
+      "url": "https://x.com/kevin_scott",
+      "handle": "@kevin_scott",
+      "observacao": "CTO da Microsoft"
+    }
+  ],
+  "planos": [
+    {
+      "nome": "Copilot (gratuito)",
+      "publico": "individual",
+      "preco_mensal_usd": 0,
+      "preco_anual_usd": null,
+      "inclui": "App/web Copilot com chat, criação de imagem, upload de arquivos, Think Deeper e voz",
+      "limites": "'Versão gratuita limitada, sujeita a capacidade e limites'; assinantes têm prioridade nos picos",
+      "fonte_url": "https://www.microsoft.com/en-us/microsoft-365-copilot/pricing/individuals",
+      "conferido_em": "2026-10-01"
+    },
+    {
+      "nome": "Microsoft 365 Personal",
+      "publico": "individual",
+      "preco_mensal_usd": 9.99,
+      "preco_anual_usd": 99.99,
+      "inclui": "Apps do Office com Copilot, chat Copilot avançado com uso maior que o grátis, visão, áudio gerado (só inglês), imagem; 1 TB OneDrive",
+      "limites": "Limites de uso não numerados ('higher usage than free')",
+      "fonte_url": "https://www.microsoft.com/en-us/microsoft-365-copilot/pricing/individuals",
+      "conferido_em": "2026-10-01"
+    },
+    {
+      "nome": "Microsoft 365 Family",
+      "publico": "individual",
+      "preco_mensal_usd": 12.99,
+      "preco_anual_usd": 129.99,
+      "inclui": "Mesmo Copilot do Personal; até 6 pessoas, 6 TB (1 TB por pessoa)",
+      "limites": "IA só para o titular da assinatura",
+      "fonte_url": "https://www.microsoft.com/en-us/microsoft-365-copilot/pricing/individuals",
+      "conferido_em": "2026-10-01"
+    },
+    {
+      "nome": "Microsoft 365 Premium",
+      "publico": "individual",
+      "preco_mensal_usd": 19.99,
+      "preco_anual_usd": 199.99,
+      "inclui": "Uso 'extenso' do Copilot, IA agêntica para pesquisa e análise avançada (uso limitado), recursos antes exclusivos do Copilot Pro; 6 TB",
+      "limites": "IA só para o titular; IA agêntica com 'limited usage'",
+      "fonte_url": "https://www.microsoft.com/en-us/microsoft-365-copilot/pricing/individuals",
+      "conferido_em": "2026-10-01"
+    },
+    {
+      "nome": "Microsoft 365 Pro",
+      "publico": "individual",
+      "preco_mensal_usd": 99.99,
+      "preco_anual_usd": null,
+      "inclui": "Uso mais alto de chat e IA agêntica, acesso preferencial a modelos nos picos, tudo do Premium",
+      "limites": "Só cobrança mensal",
+      "fonte_url": "https://www.microsoft.com/en-us/microsoft-365-copilot/pricing/individuals",
+      "conferido_em": "2026-10-01"
+    },
+    {
+      "nome": "Copilot Pro (descontinuado)",
+      "publico": "individual",
+      "preco_mensal_usd": null,
+      "preco_anual_usd": null,
+      "inclui": "Substituído pelo Microsoft 365 Premium",
+      "limites": "Não é vendido desde outubro/2025; suporte a assinantes existentes terminou em 2026-08-01",
+      "fonte_url": "https://support.microsoft.com/en-us/microsoft-365-copilot/about-microsoft-copilot-pro",
+      "conferido_em": "2026-10-01"
+    },
+    {
+      "nome": "Copilot Chat (contas de trabalho/escola)",
+      "publico": "empresa",
+      "preco_mensal_usd": 0,
+      "preco_anual_usd": null,
+      "inclui": "Chat com IA ancorado na web com proteção de dados corporativa, Copilot em apps selecionados, agentes com cobrança medida",
+      "limites": "Exige assinatura elegível do Microsoft 365 com conta Entra",
+      "fonte_url": "https://www.microsoft.com/en-us/microsoft-365-copilot/pricing/enterprise",
+      "conferido_em": "2026-10-01"
+    },
+    {
+      "nome": "Microsoft 365 Copilot",
+      "publico": "empresa",
+      "preco_mensal_usd": 30,
+      "preco_anual_usd": null,
+      "inclui": "Copilot no Word, Excel, PowerPoint, Outlook e Teams ancorado nos dados da empresa, Work IQ, criação de agentes no Copilot Studio (internos), analytics",
+      "limites": "Add-on: exige licença base qualificada do Microsoft 365; assinatura anual (há opção mensal)",
+      "fonte_url": "https://www.microsoft.com/en-us/microsoft-365-copilot/pricing/enterprise",
+      "conferido_em": "2026-10-01"
+    },
+    {
+      "nome": "Microsoft 365 Copilot Business",
+      "publico": "equipe",
+      "preco_mensal_usd": 21,
+      "preco_anual_usd": null,
+      "inclui": "Mesmas capacidades do Microsoft 365 Copilot para pequenas e médias empresas",
+      "limites": "Para organizações de até 300 usuários (segundo terceiros); disponível desde 2025-12-01",
+      "fonte_url": "https://techcommunity.microsoft.com/blog/microsoft-copilot-blog/introducing-microsoft-365-copilot-business-empowering-small-and-medium-businesse/4469700",
+      "conferido_em": "2026-10-01"
+    },
+    {
+      "nome": "Copilot Studio — pacote de créditos",
+      "publico": "empresa",
+      "preco_mensal_usd": 200,
+      "preco_anual_usd": null,
+      "inclui": "25.000 Copilot Credits por pacote/mês para agentes",
+      "limites": "Pagamento antecipado; também há pay-as-you-go por crédito e pré-compra com até 20% de desconto",
+      "fonte_url": "https://www.microsoft.com/en-us/microsoft-365-copilot/pricing/copilot-studio",
+      "conferido_em": "2026-10-01"
+    },
+    {
+      "nome": "Microsoft Foundry (pay-as-you-go)",
+      "publico": "api",
+      "preco_mensal_usd": null,
+      "preco_anual_usd": null,
+      "inclui": "Modelos MAI, Phi e de parceiros por uso (tokens, horas de áudio, caracteres)",
+      "limites": "Cota por assinatura; MAI-Thinking-1 tem cota padrão 0 TPM/0 RPM no tier Low (é preciso pedir aumento: Medium 100.000 TPM/100 RPM, High 250.000 TPM/250 RPM)",
+      "fonte_url": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/how-to/use-foundry-models-mai-thinking",
+      "conferido_em": "2026-10-01"
+    }
+  ],
+  "modelos": [
+    {
+      "id": "microsoft/mai-thinking-1",
+      "nome": "MAI-Thinking-1 (preview)",
+      "tipo": "texto",
+      "pesos_abertos": false,
+      "lancado_em": "2026-06-01",
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": 256000,
+      "preco": {
+        "entrada_usd_mtok": 2,
+        "saida_usd_mtok": 8,
+        "fonte_url": "https://techcommunity.microsoft.com/blog/azure-ai-foundry-blog/new-mai-models-in-microsoft-foundry-across-text-image-voice-and-speech/4524632",
+        "divergencia": "Agregador futureagi.com lista US$ 1,35/US$ 5,40 por 1M (mesmos valores do MAI-DS-R1; provável confusão). Registrado o valor do blog oficial."
+      },
+      "outros_precos": [],
+      "notas": []
+    },
+    {
+      "id": "microsoft/mai-image-2.6",
+      "nome": "MAI-Image-2.6 (preview)",
+      "tipo": "imagem",
+      "pesos_abertos": false,
+      "lancado_em": "2026-07-31",
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": 32000,
+      "preco": {
+        "entrada_usd_mtok": 5,
+        "saida_usd_mtok": 38,
+        "fonte_url": "https://techcommunity.microsoft.com/blog/azure-ai-foundry-blog/mai-image-2-6-and-mai-image-2-6-flash-quality-and-speed-at-production-scale/4550970",
+        "divergencia": null
+      },
+      "outros_precos": [
+        {
+          "unidade": "outro",
+          "valor_usd": 8,
+          "condicao": "por 1M tokens de entrada de imagem (edição); 'entrada' = texto, 'saída' = tokens de imagem gerada",
+          "fonte_url": "https://techcommunity.microsoft.com/blog/azure-ai-foundry-blog/mai-image-2-6-and-mai-image-2-6-flash-quality-and-speed-at-production-scale/4550970"
+        }
+      ],
+      "notas": [
+        {
+          "benchmark": "lmarena_image_elo",
+          "valor": 1331,
+          "medido_em": "2026-10-01",
+          "fonte_url": "https://www.neowin.net/news/microsofts-new-maiimage26-outperforms-all-rivals-except-gptimage2-on-arena-leaderboard/",
+          "observacao": "Arena text-to-image, 1331 ±7 (#2 atrás de GPT-Image-2), valor citado por terceiro (Neowin); arena.ai não foi lido diretamente"
+        }
+      ]
+    },
+    {
+      "id": "microsoft/mai-image-2.6-flash",
+      "nome": "MAI-Image-2.6-Flash (preview)",
+      "tipo": "imagem",
+      "pesos_abertos": false,
+      "lancado_em": "2026-07-31",
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": 32000,
+      "preco": {
+        "entrada_usd_mtok": 1.75,
+        "saida_usd_mtok": 19,
+        "fonte_url": "https://techcommunity.microsoft.com/blog/azure-ai-foundry-blog/mai-image-2-6-and-mai-image-2-6-flash-quality-and-speed-at-production-scale/4550970",
+        "divergencia": null
+      },
+      "outros_precos": [
+        {
+          "unidade": "outro",
+          "valor_usd": 2.5,
+          "condicao": "por 1M tokens de entrada de imagem; 'saída' = tokens de imagem gerada",
+          "fonte_url": "https://techcommunity.microsoft.com/blog/azure-ai-foundry-blog/mai-image-2-6-and-mai-image-2-6-flash-quality-and-speed-at-production-scale/4550970"
+        }
+      ],
+      "notas": []
+    },
+    {
+      "id": "microsoft/mai-image-2.5-pro",
+      "nome": "MAI-Image-2.5-Pro (preview)",
+      "tipo": "imagem",
+      "pesos_abertos": false,
+      "lancado_em": "2026-06-19",
+      "status": "desativacao_anunciada",
+      "desativa_em": "2026-10-01",
+      "contexto_tokens": 32000,
+      "preco": {
+        "entrada_usd_mtok": 5,
+        "saida_usd_mtok": 106,
+        "fonte_url": "https://techcommunity.microsoft.com/blog/azure-ai-foundry-blog/introducing-mai-image-2-5-pro-and-mai-voice-2-flash-in-microsoft-foundry/4539446",
+        "divergencia": null
+      },
+      "outros_precos": [
+        {
+          "unidade": "outro",
+          "valor_usd": 8,
+          "condicao": "por 1M tokens de entrada de imagem; 'saída' = tokens de imagem gerada",
+          "fonte_url": "https://techcommunity.microsoft.com/blog/azure-ai-foundry-blog/introducing-mai-image-2-5-pro-and-mai-voice-2-flash-in-microsoft-foundry/4539446"
+        }
+      ],
+      "notas": []
+    },
+    {
+      "id": "microsoft/mai-image-2.5",
+      "nome": "MAI-Image-2.5 (preview)",
+      "tipo": "imagem",
+      "pesos_abertos": false,
+      "lancado_em": "2026-06-02",
+      "status": "desativacao_anunciada",
+      "desativa_em": "2026-10-01",
+      "contexto_tokens": 32000,
+      "preco": {
+        "entrada_usd_mtok": 5,
+        "saida_usd_mtok": 47,
+        "fonte_url": "https://techcommunity.microsoft.com/blog/azure-ai-foundry-blog/new-mai-models-in-microsoft-foundry-across-text-image-voice-and-speech/4524632",
+        "divergencia": null
+      },
+      "outros_precos": [
+        {
+          "unidade": "outro",
+          "valor_usd": 8,
+          "condicao": "por 1M tokens de entrada de imagem; 'saída' = tokens de imagem gerada",
+          "fonte_url": "https://techcommunity.microsoft.com/blog/azure-ai-foundry-blog/new-mai-models-in-microsoft-foundry-across-text-image-voice-and-speech/4524632"
+        }
+      ],
+      "notas": []
+    },
+    {
+      "id": "microsoft/mai-image-2.5-flash",
+      "nome": "MAI-Image-2.5-Flash (preview)",
+      "tipo": "imagem",
+      "pesos_abertos": false,
+      "lancado_em": "2026-06-02",
+      "status": "desativacao_anunciada",
+      "desativa_em": "2026-10-01",
+      "contexto_tokens": 32000,
+      "preco": {
+        "entrada_usd_mtok": 1.75,
+        "saida_usd_mtok": 33,
+        "fonte_url": "https://techcommunity.microsoft.com/blog/azure-ai-foundry-blog/new-mai-models-in-microsoft-foundry-across-text-image-voice-and-speech/4524632",
+        "divergencia": "Blog oficial: US$ 1,75 por 1M tokens de entrada de texto e de imagem (mesmo valor)."
+      },
+      "outros_precos": [],
+      "notas": []
+    },
+    {
+      "id": "microsoft/mai-image-2",
+      "nome": "MAI-Image-2",
+      "tipo": "imagem",
+      "pesos_abertos": false,
+      "lancado_em": "2026-02-20",
+      "status": "desativado",
+      "desativa_em": "2026-08-15",
+      "contexto_tokens": null,
+      "preco": null,
+      "outros_precos": [],
+      "notas": []
+    },
+    {
+      "id": "microsoft/mai-image-2e",
+      "nome": "MAI-Image-2e (Efficient)",
+      "tipo": "imagem",
+      "pesos_abertos": false,
+      "lancado_em": "2026-04-09",
+      "status": "desativado",
+      "desativa_em": "2026-08-15",
+      "contexto_tokens": null,
+      "preco": null,
+      "outros_precos": [],
+      "notas": []
+    },
+    {
+      "id": "microsoft/mai-transcribe-2",
+      "nome": "MAI-Transcribe-2 (preview)",
+      "tipo": "audio_stt",
+      "pesos_abertos": false,
+      "lancado_em": "2026-09-03",
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": null,
+      "preco": null,
+      "outros_precos": [
+        {
+          "unidade": "hora_audio",
+          "valor_usd": 0.1,
+          "condicao": "preço promocional de lançamento, válido até 2026-12-31; preço permanente não publicado",
+          "fonte_url": "https://techcommunity.microsoft.com/blog/azure-ai-foundry-blog/mai-transcribe-2-highest-quality-transcription-at-the-fastest-speed-and-lowest-c/4550972"
+        }
+      ],
+      "notas": [
+        {
+          "benchmark": "aa_stt_wer",
+          "valor": 2.0,
+          "medido_em": "2026-10-01",
+          "fonte_url": "https://x.com/ArtificialAnlys/status/2095521214777442546",
+          "observacao": "AA-WER 2,0% (#2 no ranking não-streaming), anúncio da Artificial Analysis no X lido via busca; artificialanalysis.ai bloqueado"
+        }
+      ]
+    },
+    {
+      "id": "microsoft/mai-transcribe-2-streaming",
+      "nome": "MAI-Transcribe-2-Streaming (preview)",
+      "tipo": "audio_stt",
+      "pesos_abertos": false,
+      "lancado_em": null,
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": null,
+      "preco": null,
+      "outros_precos": [],
+      "notas": []
+    },
+    {
+      "id": "microsoft/mai-transcribe-1.5",
+      "nome": "MAI-Transcribe-1.5 (preview)",
+      "tipo": "audio_stt",
+      "pesos_abertos": false,
+      "lancado_em": "2026-06-02",
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": null,
+      "preco": null,
+      "outros_precos": [
+        {
+          "unidade": "hora_audio",
+          "valor_usd": 0.36,
+          "condicao": "preço inicial ('starts at') por hora de áudio",
+          "fonte_url": "https://microsoft.ai/news/mai-transcribe-1-5more-accurate-context-aware-and-built-for-production/"
+        }
+      ],
+      "notas": []
+    },
+    {
+      "id": "microsoft/mai-transcribe-1",
+      "nome": "MAI-Transcribe-1",
+      "tipo": "audio_stt",
+      "pesos_abertos": false,
+      "lancado_em": "2026-01-23",
+      "status": "desativado",
+      "desativa_em": "2026-09-15",
+      "contexto_tokens": null,
+      "preco": null,
+      "outros_precos": [],
+      "notas": []
+    },
+    {
+      "id": "microsoft/mai-voice-2.1",
+      "nome": "MAI-Voice-2.1 (preview)",
+      "tipo": "audio_tts",
+      "pesos_abertos": false,
+      "lancado_em": null,
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": null,
+      "preco": null,
+      "outros_precos": [],
+      "notas": []
+    },
+    {
+      "id": "microsoft/mai-voice-2.1-flash",
+      "nome": "MAI-Voice-2.1-Flash (preview)",
+      "tipo": "audio_tts",
+      "pesos_abertos": false,
+      "lancado_em": null,
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": null,
+      "preco": null,
+      "outros_precos": [],
+      "notas": []
+    },
+    {
+      "id": "microsoft/mai-voice-2",
+      "nome": "MAI-Voice-2",
+      "tipo": "audio_tts",
+      "pesos_abertos": false,
+      "lancado_em": "2026-06-02",
+      "status": "legado",
+      "desativa_em": null,
+      "contexto_tokens": null,
+      "preco": null,
+      "outros_precos": [
+        {
+          "unidade": "outro",
+          "valor_usd": 22,
+          "condicao": "por 1M de caracteres sintetizados",
+          "fonte_url": "https://techcommunity.microsoft.com/blog/azure-ai-foundry-blog/new-mai-models-in-microsoft-foundry-across-text-image-voice-and-speech/4524632"
+        }
+      ],
+      "notas": [
+        {
+          "benchmark": "aa_tts_elo",
+          "valor": 1187,
+          "medido_em": "2026-10-01",
+          "fonte_url": "https://openrouter.ai/microsoft/mai-voice-2",
+          "observacao": "Artificial Analysis Text-to-Speech Arena Elo, citado pela página do OpenRouter (lida só via busca; openrouter.ai e artificialanalysis.ai bloqueados)"
+        }
+      ]
+    },
+    {
+      "id": "microsoft/mai-voice-2-flash",
+      "nome": "MAI-Voice-2-Flash",
+      "tipo": "audio_tts",
+      "pesos_abertos": false,
+      "lancado_em": "2026-07-23",
+      "status": "legado",
+      "desativa_em": null,
+      "contexto_tokens": null,
+      "preco": null,
+      "outros_precos": [
+        {
+          "unidade": "outro",
+          "valor_usd": 15,
+          "condicao": "por 1M de caracteres sintetizados",
+          "fonte_url": "https://techcommunity.microsoft.com/blog/azure-ai-foundry-blog/introducing-mai-image-2-5-pro-and-mai-voice-2-flash-in-microsoft-foundry/4539446"
+        }
+      ],
+      "notas": []
+    },
+    {
+      "id": "microsoft/mai-ds-r1",
+      "nome": "MAI-DS-R1",
+      "tipo": "texto",
+      "pesos_abertos": false,
+      "lancado_em": null,
+      "status": "desativado",
+      "desativa_em": "2026-02-27",
+      "contexto_tokens": 128000,
+      "preco": null,
+      "outros_precos": [],
+      "notas": []
+    },
+    {
+      "id": "microsoft/phi-4",
+      "nome": "Phi-4",
+      "tipo": "texto",
+      "pesos_abertos": true,
+      "lancado_em": null,
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": 16384,
+      "preco": {
+        "entrada_usd_mtok": 0.125,
+        "saida_usd_mtok": 0.5,
+        "fonte_url": "https://techcommunity.microsoft.com/blog/azure-ai-foundry-blog/announcing-new-phi-pricing-empowering-your-business-with-small-language-models/4395112",
+        "divergencia": "Preço do anúncio oficial de março/2025 (US$ 0,000125/0,0005 por 1K); a página de preços atual não pôde ser lida (azure.microsoft.com bloqueado). Agregadores citam US$ 0,13/0,50."
+      },
+      "outros_precos": [],
+      "notas": []
+    },
+    {
+      "id": "microsoft/phi-4-mini-instruct",
+      "nome": "Phi-4-mini-instruct",
+      "tipo": "texto",
+      "pesos_abertos": true,
+      "lancado_em": null,
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": 131072,
+      "preco": {
+        "entrada_usd_mtok": 0.075,
+        "saida_usd_mtok": 0.3,
+        "fonte_url": "https://techcommunity.microsoft.com/blog/azure-ai-foundry-blog/announcing-new-phi-pricing-empowering-your-business-with-small-language-models/4395112",
+        "divergencia": "Preço do anúncio oficial de março/2025 para 'Phi-4-mini'; agregadores citam US$ 0,07/0,30."
+      },
+      "outros_precos": [],
+      "notas": []
+    },
+    {
+      "id": "microsoft/phi-4-multimodal-instruct",
+      "nome": "Phi-4-multimodal-instruct",
+      "tipo": "multimodal",
+      "pesos_abertos": true,
+      "lancado_em": null,
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": 131072,
+      "preco": {
+        "entrada_usd_mtok": 0.08,
+        "saida_usd_mtok": 0.32,
+        "fonte_url": "https://techcommunity.microsoft.com/blog/azure-ai-foundry-blog/announcing-new-phi-pricing-empowering-your-business-with-small-language-models/4395112",
+        "divergencia": "Entrada de texto/imagem. Agregadores (pricepertoken) citam US$ 0,05/0,10 — divergente; registrado o oficial de março/2025."
+      },
+      "outros_precos": [
+        {
+          "unidade": "outro",
+          "valor_usd": 4.0,
+          "condicao": "por 1M tokens de entrada de áudio (US$ 0,004 por 1K)",
+          "fonte_url": "https://techcommunity.microsoft.com/blog/azure-ai-foundry-blog/announcing-new-phi-pricing-empowering-your-business-with-small-language-models/4395112"
+        }
+      ],
+      "notas": []
+    },
+    {
+      "id": "microsoft/phi-4-reasoning",
+      "nome": "Phi-4-reasoning",
+      "tipo": "texto",
+      "pesos_abertos": true,
+      "lancado_em": null,
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": 32768,
+      "preco": null,
+      "outros_precos": [],
+      "notas": []
+    },
+    {
+      "id": "microsoft/phi-4-mini-reasoning",
+      "nome": "Phi-4-mini-reasoning",
+      "tipo": "texto",
+      "pesos_abertos": true,
+      "lancado_em": null,
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": 128000,
+      "preco": null,
+      "outros_precos": [],
+      "notas": []
+    },
+    {
+      "id": "microsoft/phi-4-reasoning-vision-15b",
+      "nome": "Phi-4-reasoning-vision-15B",
+      "tipo": "multimodal",
+      "pesos_abertos": true,
+      "lancado_em": "2026-03-04",
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": null,
+      "preco": null,
+      "outros_precos": [],
+      "notas": []
+    }
+  ],
+  "capacidades": [
+    {
+      "capacidade": "texto",
+      "produto": "Microsoft Copilot (app gratuito)",
+      "como_acessar": [
+        "app",
+        "web"
+      ],
+      "plano_minimo": "Gratuito",
+      "gratis": true,
+      "headless": false,
+      "comando": null,
+      "limites": "Sujeito a capacidade; Think Deeper sem limite fixo, com prioridade para assinantes",
+      "fonte_url": "https://www.microsoft.com/en-us/microsoft-365-copilot/pricing/individuals"
+    },
+    {
+      "capacidade": "pesquisa_profunda",
+      "produto": "IA agêntica de pesquisa no Microsoft 365 Premium/Pro",
+      "como_acessar": [
+        "app",
+        "web"
+      ],
+      "plano_minimo": "Microsoft 365 Premium",
+      "gratis": false,
+      "headless": false,
+      "comando": null,
+      "limites": "Uso limitado no Premium, maior no Pro; o modo Deep Research do app Copilot para consumidor começou a ser retirado em 2026-08-18",
+      "fonte_url": "https://www.microsoft.com/en-us/microsoft-365-copilot/pricing/individuals"
+    },
+    {
+      "capacidade": "agente_nuvem",
+      "produto": "Foundry Agent Service",
+      "como_acessar": [
+        "api",
+        "nuvem"
+      ],
+      "plano_minimo": "Azure pay-as-you-go",
+      "gratis": false,
+      "headless": true,
+      "comando": "SDK azure-ai-projects / REST",
+      "limites": "Cobra a inferência do modelo base de cada agente, Code Interpreter por sessão (1 h) e File Search pelo armazenamento vetorial; sem taxa extra do serviço",
+      "fonte_url": "https://learn.microsoft.com/en-us/azure/foundry/agents/faq"
+    },
+    {
+      "capacidade": "mcp",
+      "produto": "Foundry Agent Service — ferramenta MCP",
+      "como_acessar": [
+        "api",
+        "nuvem"
+      ],
+      "plano_minimo": "Azure pay-as-you-go",
+      "gratis": false,
+      "headless": true,
+      "comando": null,
+      "limites": "Conecta agentes a servidores MCP remotos",
+      "fonte_url": "https://learn.microsoft.com/en-us/azure/foundry/agents/how-to/tools/model-context-protocol"
+    },
+    {
+      "capacidade": "busca_web",
+      "produto": "Foundry Agent Service — Web Search / Grounding com Bing",
+      "como_acessar": [
+        "api",
+        "nuvem"
+      ],
+      "plano_minimo": "Azure pay-as-you-go",
+      "gratis": false,
+      "headless": true,
+      "comando": null,
+      "limites": null,
+      "fonte_url": "https://learn.microsoft.com/en-us/azure/foundry/agents/how-to/tools/web-search"
+    },
+    {
+      "capacidade": "computer_use",
+      "produto": "Foundry Agent Service — Computer Use / Browser Automation",
+      "como_acessar": [
+        "api",
+        "nuvem"
+      ],
+      "plano_minimo": "Azure pay-as-you-go",
+      "gratis": false,
+      "headless": true,
+      "comando": null,
+      "limites": null,
+      "fonte_url": "https://learn.microsoft.com/en-us/azure/foundry/agents/how-to/tools/computer-use"
+    },
+    {
+      "capacidade": "agente_nuvem",
+      "produto": "Copilot Studio",
+      "como_acessar": [
+        "web"
+      ],
+      "plano_minimo": "Copilot Studio (créditos) ou Microsoft 365 Copilot (agentes internos)",
+      "gratis": false,
+      "headless": true,
+      "comando": null,
+      "limites": "25.000 créditos por pacote de US$ 200/mês; publicação externa exige Copilot Studio avulso",
+      "fonte_url": "https://www.microsoft.com/en-us/microsoft-365-copilot/pricing/copilot-studio"
+    },
+    {
+      "capacidade": "audio_stt",
+      "produto": "MAI-Transcribe no Azure Speech",
+      "como_acessar": [
+        "api"
+      ],
+      "plano_minimo": "Azure pay-as-you-go",
+      "gratis": false,
+      "headless": true,
+      "comando": "POST /speechtotext/transcriptions:transcribe?api-version=2025-10-15 com enhancedMode.model='MAI-Transcribe-2'",
+      "limites": "60 idiomas (MAI-Transcribe-2), diarização, timestamps por palavra, viés de palavras-chave; WAV/MP3/FLAC",
+      "fonte_url": "https://learn.microsoft.com/en-us/azure/ai-services/speech-service/mai-transcribe"
+    },
+    {
+      "capacidade": "audio_tempo_real",
+      "produto": "MAI-Transcribe-2-Streaming (Realtime API / Speech SDK) e Voice Live",
+      "como_acessar": [
+        "api"
+      ],
+      "plano_minimo": "Azure pay-as-you-go",
+      "gratis": false,
+      "headless": true,
+      "comando": null,
+      "limites": "Transcrição incremental por WebSocket compatível com OpenAI Realtime; MAI-Voice-2.1-Flash integrado ao Voice Live",
+      "fonte_url": "https://learn.microsoft.com/en-us/azure/ai-services/speech-service/mai-transcribe-2-streaming"
+    },
+    {
+      "capacidade": "audio_tts",
+      "produto": "MAI-Voice no Azure Speech",
+      "como_acessar": [
+        "api"
+      ],
+      "plano_minimo": "Azure pay-as-you-go",
+      "gratis": false,
+      "headless": true,
+      "comando": "SSML via Speech SDK ou REST",
+      "limites": "23 idiomas (2.1), clonagem instantânea de voz restrita (gated)",
+      "fonte_url": "https://learn.microsoft.com/en-us/azure/ai-services/speech-service/mai-voices"
+    },
+    {
+      "capacidade": "imagem_gerar",
+      "produto": "MAI-Image no Microsoft Foundry",
+      "como_acessar": [
+        "api"
+      ],
+      "plano_minimo": "Azure pay-as-you-go",
+      "gratis": false,
+      "headless": true,
+      "comando": null,
+      "limites": "Implantação Global Standard; mín. 768×768, máx. 2.359.296 pixels (2.6)",
+      "fonte_url": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/how-to/use-foundry-models-mai-image"
+    },
+    {
+      "capacidade": "imagem_editar",
+      "produto": "MAI-Image no Microsoft Foundry",
+      "como_acessar": [
+        "api"
+      ],
+      "plano_minimo": "Azure pay-as-you-go",
+      "gratis": false,
+      "headless": true,
+      "comando": null,
+      "limites": "Até 5 imagens de referência (JPEG/PNG)",
+      "fonte_url": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure"
+    },
+    {
+      "capacidade": "texto",
+      "produto": "Microsoft Foundry — modelos de terceiros",
+      "como_acessar": [
+        "api",
+        "nuvem"
+      ],
+      "plano_minimo": "Azure pay-as-you-go",
+      "gratis": false,
+      "headless": true,
+      "comando": null,
+      "limites": "Hospeda também OpenAI (GPT), Anthropic (Claude), DeepSeek, Meta, Mistral, Moonshot, xAI, FLUX etc. — não replicados aqui; model-router (versão 2025-11-18, GA) roteia entre modelos",
+      "fonte_url": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure"
+    }
+  ],
+  "gratis": [
+    {
+      "titulo": "Azure for Students",
+      "resumo": "US$ 100 de crédito por 12 meses, sem cartão de crédito, renovável a cada ano como estudante ativo, mais serviços gratuitos",
+      "limites": "18+ anos, estudante em tempo integral de instituição que concede diploma, verificado pelo e-mail institucional; crédito não transferível",
+      "chamavel_por_agente": true,
+      "url": "https://azure.microsoft.com/en-us/free/students",
+      "valido_ate": null,
+      "origem": "verificado"
+    },
+    {
+      "titulo": "Conta gratuita do Azure",
+      "resumo": "US$ 200 de crédito nos primeiros 30 dias, 20+ serviços grátis por 12 meses e 65+ sempre grátis",
+      "limites": "Crédito expira em 30 dias; exige cartão; não vale para Marketplace de terceiros",
+      "chamavel_por_agente": true,
+      "url": "https://azure.microsoft.com/en-us/pricing/purchase-options/azure-account",
+      "valido_ate": null,
+      "origem": "verificado"
+    },
+    {
+      "titulo": "Azure Speech — camada F0 gratuita",
+      "resumo": "5 horas de áudio/mês de fala-para-texto padrão em tempo real e 0,5 milhão de caracteres/mês de TTS neural",
+      "limites": "Sem transcrição em lote no F0; não confirmado se cobre os modelos MAI-Transcribe/MAI-Voice",
+      "chamavel_por_agente": true,
+      "url": "https://azure.microsoft.com/en-us/pricing/details/speech/",
+      "valido_ate": null,
+      "origem": "verificado"
+    },
+    {
+      "titulo": "Copilot gratuito",
+      "resumo": "Chat, Think Deeper, voz, criação de imagem e upload de arquivos no app/web Copilot",
+      "limites": "Sujeito a capacidade e limites não numerados",
+      "chamavel_por_agente": false,
+      "url": "https://www.microsoft.com/en-us/microsoft-365-copilot/pricing/individuals",
+      "valido_ate": null,
+      "origem": "verificado"
+    },
+    {
+      "titulo": "Phi com pesos abertos",
+      "resumo": "Modelos Phi-4 (licença MIT) podem ser baixados e rodados localmente (Transformers, vLLM, llama.cpp, Ollama)",
+      "limites": "Custo só do hardware próprio",
+      "chamavel_por_agente": true,
+      "url": "https://azure.microsoft.com/en-us/products/phi",
+      "valido_ate": null,
+      "origem": "verificado"
+    },
+    {
+      "titulo": "MAI-Transcribe-2 a preço promocional",
+      "resumo": "US$ 0,10 por hora de áudio até 2026-12-31",
+      "limites": "Não é grátis; preço depois de 2026 não publicado",
+      "chamavel_por_agente": true,
+      "url": "https://techcommunity.microsoft.com/blog/azure-ai-foundry-blog/mai-transcribe-2-highest-quality-transcription-at-the-fastest-speed-and-lowest-c/4550972",
+      "valido_ate": "2026-12-31",
+      "origem": "verificado"
+    }
+  ],
+  "programas": [
+    {
+      "nome": "Azure for Students",
+      "publico": "estudante",
+      "beneficio": "US$ 100 em créditos Azure por 12 meses, sem cartão, renovável anualmente; dá para usar MAI-Transcribe, MAI-Voice, Phi e Foundry",
+      "valor_usd": 100,
+      "requisitos": "18+ anos, estudante em tempo integral, verificação por e-mail institucional",
+      "elegivel": "sim",
+      "elegivel_motivo": "Guilherme é graduando da USP com e-mail institucional. Atenção: créditos não valem para Marketplace e modelos MAI em preview podem ter cota 0 por padrão (MAI-Thinking-1)",
+      "como_aplicar": "Entrar em azure.microsoft.com/free/students com o e-mail da USP",
+      "url": "https://azure.microsoft.com/en-us/free/students",
+      "status": "continuo",
+      "prazo": null,
+      "verificado_em": "2026-10-01"
+    },
+    {
+      "nome": "Microsoft for Startups (Founders Hub)",
+      "publico": "startup",
+      "beneficio": "Até US$ 150.000 em créditos Azure, ferramentas e orientação técnica",
+      "valor_usd": 150000,
+      "requisitos": "Startup de software privada, com fins lucrativos, pré-Série C (segundo terceiros); patamares maiores via rede de investidores",
+      "elegivel": "nao",
+      "elegivel_motivo": "Exige empresa constituída; Guilherme é estudante/pesquisador sem startup",
+      "como_aplicar": "Portal Microsoft for Startups ('Get started')",
+      "url": "https://www.microsoft.com/en-us/startups",
+      "status": "aberto",
+      "prazo": null,
+      "verificado_em": "2026-10-01"
+    },
+    {
+      "nome": "Accelerating Foundation Models Research (AFMR)",
+      "publico": "pesquisador",
+      "beneficio": "Acesso a modelos via Azure AI e créditos para pesquisa acadêmica",
+      "valor_usd": null,
+      "requisitos": "Pesquisadores acadêmicos (programa encerrado)",
+      "elegivel": "nao",
+      "elegivel_motivo": "Programa encerrado; páginas mantidas só como arquivo",
+      "como_aplicar": "Não há chamada; ver o sucessor AARI",
+      "url": "https://www.microsoft.com/en-us/research/collaboration/accelerating-foundation-models-research/",
+      "status": "fechado",
+      "prazo": null,
+      "verificado_em": "2026-10-01"
+    },
+    {
+      "nome": "Agentic AI Research and Innovation (AARI)",
+      "publico": "pesquisador",
+      "beneficio": "Colaboração com a Microsoft Research em 'Grand Challenges' de IA agêntica, com créditos Azure e ferramentas",
+      "valor_usd": null,
+      "requisitos": "Grupos de pesquisa acadêmicos; a página não publica chamada aberta, prazos nem critérios",
+      "elegivel": "talvez",
+      "elegivel_motivo": "Só via grupo de pesquisa do orientador e se houver nova chamada; hoje são 12 projetos selecionados",
+      "como_aplicar": "Acompanhar a página do programa e @MSFTResearch",
+      "url": "https://www.microsoft.com/en-us/research/academic-program/agentic-ai-research-and-innovation/",
+      "status": "desconhecido",
+      "prazo": null,
+      "verificado_em": "2026-10-01"
+    },
+    {
+      "nome": "AI for Good Lab Open Call",
+      "publico": "todos",
+      "beneficio": "Total de US$ 5 milhões em créditos Azure e colaboração com o AI for Good Lab por 2 anos",
+      "valor_usd": 5000000,
+      "requisitos": "Projetos baseados no estado de Washington (EUA) ou que beneficiem seus residentes; sustentabilidade, saúde pública, direitos humanos",
+      "elegivel": "nao",
+      "elegivel_motivo": "Restrito ao estado de Washington; chamada encerrada",
+      "como_aplicar": "Chamada fechada",
+      "url": "https://www.microsoft.com/en-us/research/academic-program/ai-for-good-lab-open-call/",
+      "status": "fechado",
+      "prazo": null,
+      "verificado_em": "2026-10-01"
+    }
+  ],
+  "indicadores": [
+    {
+      "modelo_id": "microsoft/mai-transcribe-2",
+      "nome": "custo por 1.000 minutos (Artificial Analysis)",
+      "valor": 1.67,
+      "unidade": "USD por 1.000 minutos",
+      "descricao": "Artificial Analysis: 2,0% AA-WER (#2), ~411x tempo real, US$ 1,67 por 1.000 minutos — na fronteira de Pareto precisão-velocidade com um dos menores preços entre os modelos de alta precisão",
+      "medido_em": "2026-10-01",
+      "fonte_url": "https://x.com/ArtificialAnlys/status/2095521214777442546"
+    }
+  ],
+  "observacoes": "Rede: azure.microsoft.com, learn.microsoft.com, techcommunity.microsoft.com, microsoft.ai, prices.azure.com, huggingface.co, openrouter.ai e artificialanalysis.ai deram EGRESS_BLOCKED. A lista de modelos, contextos, status e datas de desativação foi lida da fonte oficial da documentação no GitHub (MicrosoftDocs/azure-ai-docs, commit de 2026-10-01) e citada pela URL canônica do learn.microsoft.com. Os preços dos modelos MAI vieram de trechos de busca das páginas oficiais (blogs do Foundry/microsoft.ai), não da página de preços lida diretamente — conferir quando o domínio abrir. Sem preço oficial encontrado: MAI-Voice-2.1 e MAI-Voice-2.1-Flash (a doc atual lista só as versões 2.1; os preços encontrados — US$ 22 e US$ 15 por 1M caracteres — são do MAI-Voice-2 e -Flash, marcados como legado por não constarem mais na doc; status real não confirmado), MAI-Transcribe-2-Streaming, Phi-4-reasoning, Phi-4-mini-reasoning, Phi-4-reasoning-vision-15B (data 2026-03-04 vem da Neowin). Preços dos Phi são do anúncio oficial de março/2025 e podem estar desatualizados. MAI-Image-2.5/2.5-Flash/2.5-Pro têm desativação marcada para 2026-10-01 (hoje), substituídos pela família 2.6. MAI-Transcribe-1 aparece como 'deprecated on Aug 20, 2026' na página de Speech e com desativação em 2026-09-15 no cronograma. Datas de lançamento de MAI-Transcribe-2 (2026-09-03) e MAI-Voice-2-Flash (2026-07-23) vêm de terceiros. MAI Playground é só para os EUA. Preços padrão do Azure Speech (STT/TTS não-MAI) não puderam ser lidos. Sem nota aa_index nem lmarena_elo para MAI-Thinking-1 (não encontrada em fonte pública; AA e Arena bloqueados). Copilot Business US$ 21: preço de lançamento (dez/2025); terceiros citam promoção de US$ 18 entre jul e dez/2026 para clientes existentes, não confirmada em fonte oficial."
+}

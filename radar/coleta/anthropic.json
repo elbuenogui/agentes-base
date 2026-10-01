@@ -1,0 +1,1559 @@
+{
+  "provedor": {
+    "id": "anthropic",
+    "nome": "Anthropic",
+    "grupo": "laboratorio",
+    "site": "https://www.anthropic.com",
+    "pais": "EUA",
+    "resumo": "Laboratório de IA criador da família Claude (Fable, Opus, Sonnet, Haiku; Mythos restrito a cibersegurança). Destaca-se em programação agêntica (Claude Code), uso de ferramentas e contexto longo de 1M tokens; em set/2026 o Opus 5.5 e o Sonnet 5.5 lideram o Artificial Analysis Intelligence Index. Só modelos de texto (entrada texto+imagem); não oferece geração de imagem, vídeo, voz ou embeddings próprios.",
+    "fontes": [
+      "https://platform.claude.com/docs/en/about-claude/pricing",
+      "https://platform.claude.com/docs/en/about-claude/models/overview",
+      "https://platform.claude.com/docs/en/about-claude/model-deprecations",
+      "https://claude.com/pricing",
+      "https://www.anthropic.com/news"
+    ]
+  },
+  "coletado_em": "2026-10-01",
+  "canais": [
+    {
+      "tipo": "x_oficial",
+      "nome": "Anthropic",
+      "url": "https://x.com/AnthropicAI",
+      "handle": "@AnthropicAI",
+      "observacao": null
+    },
+    {
+      "tipo": "x_oficial",
+      "nome": "Claude",
+      "url": "https://x.com/claudeai",
+      "handle": "@claudeai",
+      "observacao": "conta do produto Claude"
+    },
+    {
+      "tipo": "x_ceo",
+      "nome": "Dario Amodei",
+      "url": "https://x.com/DarioAmodei",
+      "handle": "@DarioAmodei",
+      "observacao": "CEO; posta pouco"
+    },
+    {
+      "tipo": "x_lider",
+      "nome": "Boris Cherny",
+      "url": "https://x.com/bcherny",
+      "handle": "@bcherny",
+      "observacao": "criador/líder do Claude Code"
+    },
+    {
+      "tipo": "x_lider",
+      "nome": "Cat Wu",
+      "url": "https://x.com/_catwu",
+      "handle": "@_catwu",
+      "observacao": "produto do Claude Code"
+    },
+    {
+      "tipo": "x_lider",
+      "nome": "Alex Albert",
+      "url": "https://x.com/alexalbert__",
+      "handle": "@alexalbert__",
+      "observacao": "relações com devs / Claude"
+    },
+    {
+      "tipo": "x_lider",
+      "nome": "Mike Krieger",
+      "url": "https://x.com/mikeyk",
+      "handle": "@mikeyk",
+      "observacao": "liderança de produto (Labs)"
+    },
+    {
+      "tipo": "blog",
+      "nome": "Anthropic Newsroom",
+      "url": "https://www.anthropic.com/news",
+      "handle": null,
+      "observacao": "lançamentos de modelos e programas"
+    },
+    {
+      "tipo": "blog",
+      "nome": "Claude Blog",
+      "url": "https://claude.com/blog",
+      "handle": null,
+      "observacao": null
+    },
+    {
+      "tipo": "changelog",
+      "nome": "Claude Platform release notes",
+      "url": "https://platform.claude.com/docs/en/release-notes/api",
+      "handle": null,
+      "observacao": null
+    },
+    {
+      "tipo": "changelog",
+      "nome": "Claude Code changelog",
+      "url": "https://github.com/anthropics/claude-code/blob/main/CHANGELOG.md",
+      "handle": null,
+      "observacao": null
+    },
+    {
+      "tipo": "docs",
+      "nome": "Claude Platform Docs",
+      "url": "https://platform.claude.com/docs",
+      "handle": null,
+      "observacao": null
+    },
+    {
+      "tipo": "docs",
+      "nome": "Claude Code Docs",
+      "url": "https://code.claude.com/docs",
+      "handle": null,
+      "observacao": null
+    },
+    {
+      "tipo": "precos",
+      "nome": "Preços da API",
+      "url": "https://platform.claude.com/docs/en/about-claude/pricing",
+      "handle": null,
+      "observacao": null
+    },
+    {
+      "tipo": "precos",
+      "nome": "Planos Claude",
+      "url": "https://claude.com/pricing",
+      "handle": null,
+      "observacao": null
+    },
+    {
+      "tipo": "status",
+      "nome": "Claude Status",
+      "url": "https://status.claude.com",
+      "handle": null,
+      "observacao": null
+    },
+    {
+      "tipo": "discord",
+      "nome": "Anthropic Discord",
+      "url": "https://www.anthropic.com/discord",
+      "handle": null,
+      "observacao": null
+    },
+    {
+      "tipo": "github",
+      "nome": "anthropics",
+      "url": "https://github.com/anthropics",
+      "handle": null,
+      "observacao": null
+    },
+    {
+      "tipo": "youtube",
+      "nome": "Anthropic",
+      "url": "https://www.youtube.com/@anthropic-ai",
+      "handle": "@anthropic-ai",
+      "observacao": null
+    }
+  ],
+  "planos": [
+    {
+      "nome": "Free",
+      "publico": "individual",
+      "preco_mensal_usd": 0,
+      "preco_anual_usd": null,
+      "inclui": "Chat na web, desktop e celular; busca na web, criação de arquivos, execução de código, memória, conectores, artifacts.",
+      "limites": "Uso limitado (não quantificado na página). Não inclui Claude Code.",
+      "fonte_url": "https://claude.com/pricing",
+      "conferido_em": "2026-10-01"
+    },
+    {
+      "nome": "Pro",
+      "publico": "individual",
+      "preco_mensal_usd": 20,
+      "preco_anual_usd": 200,
+      "inclui": "Tudo do Free + mais uso, delegar e agendar tarefas, Claude Code incluído, Claude Design/Slides/Docs, Claude Science, Projects, mais modelos, extensões Chrome/Microsoft 365.",
+      "limites": "Anual = US$ 17/mês (US$ 200 cobrados de uma vez). Ao atingir o limite, pode ligar 'usage credits' a preço de API. Routines: disponíveis.",
+      "fonte_url": "https://claude.com/pricing",
+      "conferido_em": "2026-10-01"
+    },
+    {
+      "nome": "Max 5x",
+      "publico": "individual",
+      "preco_mensal_usd": 100,
+      "preco_anual_usd": null,
+      "inclui": "Tudo do Pro + 5x o uso do Pro, limites de saída maiores, acesso antecipado a recursos, prioridade em horário de pico, Claude Code.",
+      "limites": "Só assinatura mensal. Limite de sessão reinicia a cada 5 h e há teto semanal.",
+      "fonte_url": "https://support.claude.com/en/articles/11049741-what-is-the-max-plan",
+      "conferido_em": "2026-10-01"
+    },
+    {
+      "nome": "Max 20x",
+      "publico": "individual",
+      "preco_mensal_usd": 200,
+      "preco_anual_usd": null,
+      "inclui": "Tudo do Pro + 20x o uso do Pro, limites de saída maiores, acesso antecipado, prioridade em horário de pico, Claude Code.",
+      "limites": "Só assinatura mensal. Limite de sessão reinicia a cada 5 h e há teto semanal. (A página de preços mostra apenas 'From $100'; o valor de US$ 200 vem da central de ajuda oficial.)",
+      "fonte_url": "https://support.claude.com/en/articles/11049741-what-is-the-max-plan",
+      "conferido_em": "2026-10-01"
+    },
+    {
+      "nome": "Team (assento Standard)",
+      "publico": "equipe",
+      "preco_mensal_usd": 25,
+      "preco_anual_usd": null,
+      "inclui": "2 a 150 pessoas. Claude Code, Design/Slides/Docs, Science, Microsoft 365, busca corporativa, SSO, cobrança central, controle de conectores, sem treino com o conteúdo.",
+      "limites": "Mais uso que o Pro. Anual = US$ 20/assento/mês.",
+      "fonte_url": "https://claude.com/pricing",
+      "conferido_em": "2026-10-01"
+    },
+    {
+      "nome": "Team (assento Premium)",
+      "publico": "equipe",
+      "preco_mensal_usd": 125,
+      "preco_anual_usd": null,
+      "inclui": "Mesmos recursos do Standard.",
+      "limites": "5x o uso do assento Standard. Anual = US$ 100/assento/mês.",
+      "fonte_url": "https://claude.com/pricing",
+      "conferido_em": "2026-10-01"
+    },
+    {
+      "nome": "Enterprise",
+      "publico": "empresa",
+      "preco_mensal_usd": null,
+      "preco_anual_usd": null,
+      "inclui": "Tudo do Team + limites de gasto, RBAC, SCIM, logs de auditoria, API de compliance, retenção de dados, IP allowlist, opção HIPAA, Claude Security.",
+      "limites": "US$ 20/assento/mês no anual + custo de uso a preço de API.",
+      "fonte_url": "https://claude.com/pricing",
+      "conferido_em": "2026-10-01"
+    },
+    {
+      "nome": "Claude for Education",
+      "publico": "estudante",
+      "preco_mensal_usd": null,
+      "preco_anual_usd": null,
+      "inclui": "Plano para a universidade inteira (alunos, docentes, funcionários), learning mode, Claude Code, créditos de API para pesquisa acadêmica e material de formação.",
+      "limites": "Contrato institucional com preço com desconto, negociado pela universidade; não há assinatura individual de estudante.",
+      "fonte_url": "https://claude.com/solutions/education",
+      "conferido_em": "2026-10-01"
+    },
+    {
+      "nome": "Team plan for scientists",
+      "publico": "pesquisa",
+      "preco_mensal_usd": 0,
+      "preco_anual_usd": null,
+      "inclui": "Plano Team para grupos de pesquisa: assento Standard grátis (normalmente US$ 20/mês) e Premium a US$ 15/mês (normalmente US$ 100/mês).",
+      "limites": "Só um PI (ou equivalente) de universidade/instituto sem fins lucrativos abre a conta; alunos de pós e pós-docs entram como membros. 1 a 25 assentos por grupo. Preço promocional por 12 meses.",
+      "fonte_url": "https://claude.com/programs/team-plan-for-scientists",
+      "conferido_em": "2026-10-01"
+    },
+    {
+      "nome": "API (Claude Platform, pré-pago por uso)",
+      "publico": "api",
+      "preco_mensal_usd": null,
+      "preco_anual_usd": null,
+      "inclui": "Cobrança por token conforme a tabela de modelos; Batch API com 50% de desconto; cache de prompt; busca web US$ 10 por 1.000 buscas; web fetch sem custo extra; execução de código 1.550 h grátis/mês por organização e depois US$ 0,05/h por contêiner (grátis quando usado com web search/fetch); Managed Agents US$ 0,08 por hora de sessão.",
+      "limites": "Tiers Start/Build/Scale de rate limit. Inferência só nos EUA (inference_geo=us) custa 1,1x nos modelos 4.6+. Novos usuários recebem 'uma pequena quantia' de créditos grátis.",
+      "fonte_url": "https://platform.claude.com/docs/en/about-claude/pricing",
+      "conferido_em": "2026-10-01"
+    }
+  ],
+  "modelos": [
+    {
+      "id": "anthropic/claude-fable-5.1",
+      "nome": "Claude Fable 5.1",
+      "tipo": "texto",
+      "pesos_abertos": false,
+      "lancado_em": "2026-09-01",
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": 1000000,
+      "preco": {
+        "entrada_usd_mtok": 10,
+        "saida_usd_mtok": 50,
+        "fonte_url": "https://platform.claude.com/docs/en/about-claude/pricing",
+        "divergencia": null
+      },
+      "outros_precos": [
+        {
+          "unidade": "mtok_cache",
+          "valor_usd": 12.5,
+          "condicao": "escrita de cache 5 min",
+          "fonte_url": "https://platform.claude.com/docs/en/about-claude/pricing"
+        },
+        {
+          "unidade": "mtok_cache",
+          "valor_usd": 20,
+          "condicao": "escrita de cache 1 h",
+          "fonte_url": "https://platform.claude.com/docs/en/about-claude/pricing"
+        },
+        {
+          "unidade": "mtok_cache",
+          "valor_usd": 0.25,
+          "condicao": "leitura de cache (hit/refresh)",
+          "fonte_url": "https://platform.claude.com/docs/en/about-claude/pricing"
+        },
+        {
+          "unidade": "outro",
+          "valor_usd": 5,
+          "condicao": "Batch API, entrada por MTok (50% de desconto)",
+          "fonte_url": "https://platform.claude.com/docs/en/about-claude/pricing"
+        },
+        {
+          "unidade": "outro",
+          "valor_usd": 25,
+          "condicao": "Batch API, saída por MTok (50% de desconto)",
+          "fonte_url": "https://platform.claude.com/docs/en/about-claude/pricing"
+        }
+      ],
+      "notas": []
+    },
+    {
+      "id": "anthropic/claude-mythos-5.1",
+      "nome": "Claude Mythos 5.1",
+      "tipo": "texto",
+      "pesos_abertos": false,
+      "lancado_em": "2026-09-01",
+      "status": "restrito",
+      "desativa_em": null,
+      "contexto_tokens": null,
+      "preco": {
+        "entrada_usd_mtok": 10,
+        "saida_usd_mtok": 50,
+        "fonte_url": "https://platform.claude.com/docs/en/about-claude/pricing",
+        "divergencia": "Acesso só por convite (Project Glasswing, cibersegurança defensiva); mesmo preço do Fable correspondente."
+      },
+      "outros_precos": [
+        {
+          "unidade": "mtok_cache",
+          "valor_usd": 12.5,
+          "condicao": "escrita de cache 5 min",
+          "fonte_url": "https://platform.claude.com/docs/en/about-claude/pricing"
+        },
+        {
+          "unidade": "mtok_cache",
+          "valor_usd": 20,
+          "condicao": "escrita de cache 1 h",
+          "fonte_url": "https://platform.claude.com/docs/en/about-claude/pricing"
+        },
+        {
+          "unidade": "mtok_cache",
+          "valor_usd": 0.25,
+          "condicao": "leitura de cache (hit/refresh)",
+          "fonte_url": "https://platform.claude.com/docs/en/about-claude/pricing"
+        },
+        {
+          "unidade": "outro",
+          "valor_usd": 5,
+          "condicao": "Batch API, entrada por MTok (50% de desconto)",
+          "fonte_url": "https://platform.claude.com/docs/en/about-claude/pricing"
+        },
+        {
+          "unidade": "outro",
+          "valor_usd": 25,
+          "condicao": "Batch API, saída por MTok (50% de desconto)",
+          "fonte_url": "https://platform.claude.com/docs/en/about-claude/pricing"
+        }
+      ],
+      "notas": []
+    },
+    {
+      "id": "anthropic/claude-opus-5.5",
+      "nome": "Claude Opus 5.5",
+      "tipo": "texto",
+      "pesos_abertos": false,
+      "lancado_em": "2026-09-22",
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": 1000000,
+      "preco": {
+        "entrada_usd_mtok": 4,
+        "saida_usd_mtok": 20,
+        "fonte_url": "https://platform.claude.com/docs/en/about-claude/pricing",
+        "divergencia": null
+      },
+      "outros_precos": [
+        {
+          "unidade": "mtok_cache",
+          "valor_usd": 5,
+          "condicao": "escrita de cache 5 min",
+          "fonte_url": "https://platform.claude.com/docs/en/about-claude/pricing"
+        },
+        {
+          "unidade": "mtok_cache",
+          "valor_usd": 8,
+          "condicao": "escrita de cache 1 h",
+          "fonte_url": "https://platform.claude.com/docs/en/about-claude/pricing"
+        },
+        {
+          "unidade": "mtok_cache",
+          "valor_usd": 0.2,
+          "condicao": "leitura de cache (hit/refresh)",
+          "fonte_url": "https://platform.claude.com/docs/en/about-claude/pricing"
+        },
+        {
+          "unidade": "outro",
+          "valor_usd": 2,
+          "condicao": "Batch API, entrada por MTok (50% de desconto)",
+          "fonte_url": "https://platform.claude.com/docs/en/about-claude/pricing"
+        },
+        {
+          "unidade": "outro",
+          "valor_usd": 10,
+          "condicao": "Batch API, saída por MTok (50% de desconto)",
+          "fonte_url": "https://platform.claude.com/docs/en/about-claude/pricing"
+        },
+        {
+          "unidade": "outro",
+          "valor_usd": 8,
+          "condicao": "fast mode (research preview, só API 1st-party), entrada por MTok",
+          "fonte_url": "https://platform.claude.com/docs/en/about-claude/pricing"
+        },
+        {
+          "unidade": "outro",
+          "valor_usd": 40,
+          "condicao": "fast mode (research preview, só API 1st-party), saída por MTok",
+          "fonte_url": "https://platform.claude.com/docs/en/about-claude/pricing"
+        }
+      ],
+      "notas": [
+        {
+          "benchmark": "aa_index",
+          "valor": 58,
+          "medido_em": "2026-09-22",
+          "fonte_url": "https://artificialanalysis.ai/articles/claude-opus-5-5",
+          "observacao": "variante max effort (com fallback). Valor obtido via busca (artificialanalysis.ai bloqueado pelo proxy); citado no artigo da AA e repercutido por agregadores. Data = lançamento do modelo."
+        }
+      ]
+    },
+    {
+      "id": "anthropic/claude-sonnet-5.5",
+      "nome": "Claude Sonnet 5.5",
+      "tipo": "texto",
+      "pesos_abertos": false,
+      "lancado_em": "2026-09-28",
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": 1000000,
+      "preco": {
+        "entrada_usd_mtok": 2,
+        "saida_usd_mtok": 10,
+        "fonte_url": "https://platform.claude.com/docs/en/about-claude/pricing",
+        "divergencia": null
+      },
+      "outros_precos": [
+        {
+          "unidade": "mtok_cache",
+          "valor_usd": 2.5,
+          "condicao": "escrita de cache 5 min",
+          "fonte_url": "https://platform.claude.com/docs/en/about-claude/pricing"
+        },
+        {
+          "unidade": "mtok_cache",
+          "valor_usd": 4,
+          "condicao": "escrita de cache 1 h",
+          "fonte_url": "https://platform.claude.com/docs/en/about-claude/pricing"
+        },
+        {
+          "unidade": "mtok_cache",
+          "valor_usd": 0.2,
+          "condicao": "leitura de cache (hit/refresh)",
+          "fonte_url": "https://platform.claude.com/docs/en/about-claude/pricing"
+        },
+        {
+          "unidade": "outro",
+          "valor_usd": 1,
+          "condicao": "Batch API, entrada por MTok (50% de desconto)",
+          "fonte_url": "https://platform.claude.com/docs/en/about-claude/pricing"
+        },
+        {
+          "unidade": "outro",
+          "valor_usd": 5,
+          "condicao": "Batch API, saída por MTok (50% de desconto)",
+          "fonte_url": "https://platform.claude.com/docs/en/about-claude/pricing"
+        }
+      ],
+      "notas": [
+        {
+          "benchmark": "aa_index",
+          "valor": 56,
+          "medido_em": "2026-09-28",
+          "fonte_url": "https://artificialanalysis.ai/articles/claude-sonnet-5-5",
+          "observacao": "variante max effort. Valor obtido via busca (artificialanalysis.ai bloqueado pelo proxy); post da AA: 'scores 56 ... just 2 points behind Opus 5.5 (max)'. Data = lançamento do modelo."
+        }
+      ]
+    },
+    {
+      "id": "anthropic/claude-haiku-4.5",
+      "nome": "Claude Haiku 4.5",
+      "tipo": "texto",
+      "pesos_abertos": false,
+      "lancado_em": "2025-10-15",
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": 200000,
+      "preco": {
+        "entrada_usd_mtok": 1,
+        "saida_usd_mtok": 5,
+        "fonte_url": "https://platform.claude.com/docs/en/about-claude/pricing",
+        "divergencia": null
+      },
+      "outros_precos": [
+        {
+          "unidade": "mtok_cache",
+          "valor_usd": 1.25,
+          "condicao": "escrita de cache 5 min",
+          "fonte_url": "https://platform.claude.com/docs/en/about-claude/pricing"
+        },
+        {
+          "unidade": "mtok_cache",
+          "valor_usd": 2,
+          "condicao": "escrita de cache 1 h",
+          "fonte_url": "https://platform.claude.com/docs/en/about-claude/pricing"
+        },
+        {
+          "unidade": "mtok_cache",
+          "valor_usd": 0.1,
+          "condicao": "leitura de cache (hit/refresh)",
+          "fonte_url": "https://platform.claude.com/docs/en/about-claude/pricing"
+        },
+        {
+          "unidade": "outro",
+          "valor_usd": 0.5,
+          "condicao": "Batch API, entrada por MTok (50% de desconto)",
+          "fonte_url": "https://platform.claude.com/docs/en/about-claude/pricing"
+        },
+        {
+          "unidade": "outro",
+          "valor_usd": 2.5,
+          "condicao": "Batch API, saída por MTok (50% de desconto)",
+          "fonte_url": "https://platform.claude.com/docs/en/about-claude/pricing"
+        }
+      ],
+      "notas": []
+    },
+    {
+      "id": "anthropic/claude-fable-5",
+      "nome": "Claude Fable 5",
+      "tipo": "texto",
+      "pesos_abertos": false,
+      "lancado_em": "2026-06-09",
+      "status": "legado",
+      "desativa_em": null,
+      "contexto_tokens": 1000000,
+      "preco": {
+        "entrada_usd_mtok": 10,
+        "saida_usd_mtok": 50,
+        "fonte_url": "https://platform.claude.com/docs/en/about-claude/pricing",
+        "divergencia": null
+      },
+      "outros_precos": [
+        {
+          "unidade": "mtok_cache",
+          "valor_usd": 12.5,
+          "condicao": "escrita de cache 5 min",
+          "fonte_url": "https://platform.claude.com/docs/en/about-claude/pricing"
+        },
+        {
+          "unidade": "mtok_cache",
+          "valor_usd": 20,
+          "condicao": "escrita de cache 1 h",
+          "fonte_url": "https://platform.claude.com/docs/en/about-claude/pricing"
+        },
+        {
+          "unidade": "mtok_cache",
+          "valor_usd": 1,
+          "condicao": "leitura de cache (hit/refresh)",
+          "fonte_url": "https://platform.claude.com/docs/en/about-claude/pricing"
+        },
+        {
+          "unidade": "outro",
+          "valor_usd": 5,
+          "condicao": "Batch API, entrada por MTok (50% de desconto)",
+          "fonte_url": "https://platform.claude.com/docs/en/about-claude/pricing"
+        },
+        {
+          "unidade": "outro",
+          "valor_usd": 25,
+          "condicao": "Batch API, saída por MTok (50% de desconto)",
+          "fonte_url": "https://platform.claude.com/docs/en/about-claude/pricing"
+        }
+      ],
+      "notas": []
+    },
+    {
+      "id": "anthropic/claude-mythos-5",
+      "nome": "Claude Mythos 5",
+      "tipo": "texto",
+      "pesos_abertos": false,
+      "lancado_em": "2026-06-09",
+      "status": "restrito",
+      "desativa_em": null,
+      "contexto_tokens": null,
+      "preco": {
+        "entrada_usd_mtok": 10,
+        "saida_usd_mtok": 50,
+        "fonte_url": "https://platform.claude.com/docs/en/about-claude/pricing",
+        "divergencia": "Acesso só por convite (Project Glasswing, cibersegurança defensiva); mesmo preço do Fable correspondente."
+      },
+      "outros_precos": [
+        {
+          "unidade": "mtok_cache",
+          "valor_usd": 12.5,
+          "condicao": "escrita de cache 5 min",
+          "fonte_url": "https://platform.claude.com/docs/en/about-claude/pricing"
+        },
+        {
+          "unidade": "mtok_cache",
+          "valor_usd": 20,
+          "condicao": "escrita de cache 1 h",
+          "fonte_url": "https://platform.claude.com/docs/en/about-claude/pricing"
+        },
+        {
+          "unidade": "mtok_cache",
+          "valor_usd": 1,
+          "condicao": "leitura de cache (hit/refresh)",
+          "fonte_url": "https://platform.claude.com/docs/en/about-claude/pricing"
+        },
+        {
+          "unidade": "outro",
+          "valor_usd": 5,
+          "condicao": "Batch API, entrada por MTok (50% de desconto)",
+          "fonte_url": "https://platform.claude.com/docs/en/about-claude/pricing"
+        },
+        {
+          "unidade": "outro",
+          "valor_usd": 25,
+          "condicao": "Batch API, saída por MTok (50% de desconto)",
+          "fonte_url": "https://platform.claude.com/docs/en/about-claude/pricing"
+        }
+      ],
+      "notas": []
+    },
+    {
+      "id": "anthropic/claude-opus-5",
+      "nome": "Claude Opus 5",
+      "tipo": "texto",
+      "pesos_abertos": false,
+      "lancado_em": "2026-07-24",
+      "status": "legado",
+      "desativa_em": null,
+      "contexto_tokens": 1000000,
+      "preco": {
+        "entrada_usd_mtok": 5,
+        "saida_usd_mtok": 25,
+        "fonte_url": "https://platform.claude.com/docs/en/about-claude/pricing",
+        "divergencia": null
+      },
+      "outros_precos": [
+        {
+          "unidade": "mtok_cache",
+          "valor_usd": 6.25,
+          "condicao": "escrita de cache 5 min",
+          "fonte_url": "https://platform.claude.com/docs/en/about-claude/pricing"
+        },
+        {
+          "unidade": "mtok_cache",
+          "valor_usd": 10,
+          "condicao": "escrita de cache 1 h",
+          "fonte_url": "https://platform.claude.com/docs/en/about-claude/pricing"
+        },
+        {
+          "unidade": "mtok_cache",
+          "valor_usd": 0.5,
+          "condicao": "leitura de cache (hit/refresh)",
+          "fonte_url": "https://platform.claude.com/docs/en/about-claude/pricing"
+        },
+        {
+          "unidade": "outro",
+          "valor_usd": 2.5,
+          "condicao": "Batch API, entrada por MTok (50% de desconto)",
+          "fonte_url": "https://platform.claude.com/docs/en/about-claude/pricing"
+        },
+        {
+          "unidade": "outro",
+          "valor_usd": 12.5,
+          "condicao": "Batch API, saída por MTok (50% de desconto)",
+          "fonte_url": "https://platform.claude.com/docs/en/about-claude/pricing"
+        },
+        {
+          "unidade": "outro",
+          "valor_usd": 10,
+          "condicao": "fast mode (research preview, só API 1st-party), entrada por MTok",
+          "fonte_url": "https://platform.claude.com/docs/en/about-claude/pricing"
+        },
+        {
+          "unidade": "outro",
+          "valor_usd": 50,
+          "condicao": "fast mode (research preview, só API 1st-party), saída por MTok",
+          "fonte_url": "https://platform.claude.com/docs/en/about-claude/pricing"
+        }
+      ],
+      "notas": []
+    },
+    {
+      "id": "anthropic/claude-opus-4.8",
+      "nome": "Claude Opus 4.8",
+      "tipo": "texto",
+      "pesos_abertos": false,
+      "lancado_em": "2026-05-28",
+      "status": "legado",
+      "desativa_em": null,
+      "contexto_tokens": 1000000,
+      "preco": {
+        "entrada_usd_mtok": 5,
+        "saida_usd_mtok": 25,
+        "fonte_url": "https://platform.claude.com/docs/en/about-claude/pricing",
+        "divergencia": null
+      },
+      "outros_precos": [
+        {
+          "unidade": "mtok_cache",
+          "valor_usd": 6.25,
+          "condicao": "escrita de cache 5 min",
+          "fonte_url": "https://platform.claude.com/docs/en/about-claude/pricing"
+        },
+        {
+          "unidade": "mtok_cache",
+          "valor_usd": 10,
+          "condicao": "escrita de cache 1 h",
+          "fonte_url": "https://platform.claude.com/docs/en/about-claude/pricing"
+        },
+        {
+          "unidade": "mtok_cache",
+          "valor_usd": 0.5,
+          "condicao": "leitura de cache (hit/refresh)",
+          "fonte_url": "https://platform.claude.com/docs/en/about-claude/pricing"
+        },
+        {
+          "unidade": "outro",
+          "valor_usd": 2.5,
+          "condicao": "Batch API, entrada por MTok (50% de desconto)",
+          "fonte_url": "https://platform.claude.com/docs/en/about-claude/pricing"
+        },
+        {
+          "unidade": "outro",
+          "valor_usd": 12.5,
+          "condicao": "Batch API, saída por MTok (50% de desconto)",
+          "fonte_url": "https://platform.claude.com/docs/en/about-claude/pricing"
+        },
+        {
+          "unidade": "outro",
+          "valor_usd": 10,
+          "condicao": "fast mode (research preview, só API 1st-party), entrada por MTok",
+          "fonte_url": "https://platform.claude.com/docs/en/about-claude/pricing"
+        },
+        {
+          "unidade": "outro",
+          "valor_usd": 50,
+          "condicao": "fast mode (research preview, só API 1st-party), saída por MTok",
+          "fonte_url": "https://platform.claude.com/docs/en/about-claude/pricing"
+        }
+      ],
+      "notas": []
+    },
+    {
+      "id": "anthropic/claude-opus-4.7",
+      "nome": "Claude Opus 4.7",
+      "tipo": "texto",
+      "pesos_abertos": false,
+      "lancado_em": "2026-04-16",
+      "status": "legado",
+      "desativa_em": null,
+      "contexto_tokens": 1000000,
+      "preco": {
+        "entrada_usd_mtok": 5,
+        "saida_usd_mtok": 25,
+        "fonte_url": "https://platform.claude.com/docs/en/about-claude/pricing",
+        "divergencia": null
+      },
+      "outros_precos": [
+        {
+          "unidade": "mtok_cache",
+          "valor_usd": 6.25,
+          "condicao": "escrita de cache 5 min",
+          "fonte_url": "https://platform.claude.com/docs/en/about-claude/pricing"
+        },
+        {
+          "unidade": "mtok_cache",
+          "valor_usd": 10,
+          "condicao": "escrita de cache 1 h",
+          "fonte_url": "https://platform.claude.com/docs/en/about-claude/pricing"
+        },
+        {
+          "unidade": "mtok_cache",
+          "valor_usd": 0.5,
+          "condicao": "leitura de cache (hit/refresh)",
+          "fonte_url": "https://platform.claude.com/docs/en/about-claude/pricing"
+        },
+        {
+          "unidade": "outro",
+          "valor_usd": 2.5,
+          "condicao": "Batch API, entrada por MTok (50% de desconto)",
+          "fonte_url": "https://platform.claude.com/docs/en/about-claude/pricing"
+        },
+        {
+          "unidade": "outro",
+          "valor_usd": 12.5,
+          "condicao": "Batch API, saída por MTok (50% de desconto)",
+          "fonte_url": "https://platform.claude.com/docs/en/about-claude/pricing"
+        }
+      ],
+      "notas": []
+    },
+    {
+      "id": "anthropic/claude-opus-4.6",
+      "nome": "Claude Opus 4.6",
+      "tipo": "texto",
+      "pesos_abertos": false,
+      "lancado_em": "2026-02-05",
+      "status": "legado",
+      "desativa_em": null,
+      "contexto_tokens": 1000000,
+      "preco": {
+        "entrada_usd_mtok": 5,
+        "saida_usd_mtok": 25,
+        "fonte_url": "https://platform.claude.com/docs/en/about-claude/pricing",
+        "divergencia": null
+      },
+      "outros_precos": [
+        {
+          "unidade": "mtok_cache",
+          "valor_usd": 6.25,
+          "condicao": "escrita de cache 5 min",
+          "fonte_url": "https://platform.claude.com/docs/en/about-claude/pricing"
+        },
+        {
+          "unidade": "mtok_cache",
+          "valor_usd": 10,
+          "condicao": "escrita de cache 1 h",
+          "fonte_url": "https://platform.claude.com/docs/en/about-claude/pricing"
+        },
+        {
+          "unidade": "mtok_cache",
+          "valor_usd": 0.5,
+          "condicao": "leitura de cache (hit/refresh)",
+          "fonte_url": "https://platform.claude.com/docs/en/about-claude/pricing"
+        },
+        {
+          "unidade": "outro",
+          "valor_usd": 2.5,
+          "condicao": "Batch API, entrada por MTok (50% de desconto)",
+          "fonte_url": "https://platform.claude.com/docs/en/about-claude/pricing"
+        },
+        {
+          "unidade": "outro",
+          "valor_usd": 12.5,
+          "condicao": "Batch API, saída por MTok (50% de desconto)",
+          "fonte_url": "https://platform.claude.com/docs/en/about-claude/pricing"
+        }
+      ],
+      "notas": []
+    },
+    {
+      "id": "anthropic/claude-opus-4.5",
+      "nome": "Claude Opus 4.5",
+      "tipo": "texto",
+      "pesos_abertos": false,
+      "lancado_em": "2025-11-24",
+      "status": "legado",
+      "desativa_em": null,
+      "contexto_tokens": 200000,
+      "preco": {
+        "entrada_usd_mtok": 5,
+        "saida_usd_mtok": 25,
+        "fonte_url": "https://platform.claude.com/docs/en/about-claude/pricing",
+        "divergencia": null
+      },
+      "outros_precos": [
+        {
+          "unidade": "mtok_cache",
+          "valor_usd": 6.25,
+          "condicao": "escrita de cache 5 min",
+          "fonte_url": "https://platform.claude.com/docs/en/about-claude/pricing"
+        },
+        {
+          "unidade": "mtok_cache",
+          "valor_usd": 10,
+          "condicao": "escrita de cache 1 h",
+          "fonte_url": "https://platform.claude.com/docs/en/about-claude/pricing"
+        },
+        {
+          "unidade": "mtok_cache",
+          "valor_usd": 0.5,
+          "condicao": "leitura de cache (hit/refresh)",
+          "fonte_url": "https://platform.claude.com/docs/en/about-claude/pricing"
+        },
+        {
+          "unidade": "outro",
+          "valor_usd": 2.5,
+          "condicao": "Batch API, entrada por MTok (50% de desconto)",
+          "fonte_url": "https://platform.claude.com/docs/en/about-claude/pricing"
+        },
+        {
+          "unidade": "outro",
+          "valor_usd": 12.5,
+          "condicao": "Batch API, saída por MTok (50% de desconto)",
+          "fonte_url": "https://platform.claude.com/docs/en/about-claude/pricing"
+        }
+      ],
+      "notas": []
+    },
+    {
+      "id": "anthropic/claude-sonnet-5",
+      "nome": "Claude Sonnet 5",
+      "tipo": "texto",
+      "pesos_abertos": false,
+      "lancado_em": "2026-06-30",
+      "status": "legado",
+      "desativa_em": null,
+      "contexto_tokens": 1000000,
+      "preco": {
+        "entrada_usd_mtok": 2,
+        "saida_usd_mtok": 10,
+        "fonte_url": "https://platform.claude.com/docs/en/about-claude/pricing",
+        "divergencia": "Preço $2/$10 era promocional até 2026-08-31; a página oficial diz que virou o preço padrão e o aumento para $3/$15 em 2026-09-01 não ocorrerá."
+      },
+      "outros_precos": [
+        {
+          "unidade": "mtok_cache",
+          "valor_usd": 2.5,
+          "condicao": "escrita de cache 5 min",
+          "fonte_url": "https://platform.claude.com/docs/en/about-claude/pricing"
+        },
+        {
+          "unidade": "mtok_cache",
+          "valor_usd": 4,
+          "condicao": "escrita de cache 1 h",
+          "fonte_url": "https://platform.claude.com/docs/en/about-claude/pricing"
+        },
+        {
+          "unidade": "mtok_cache",
+          "valor_usd": 0.2,
+          "condicao": "leitura de cache (hit/refresh)",
+          "fonte_url": "https://platform.claude.com/docs/en/about-claude/pricing"
+        },
+        {
+          "unidade": "outro",
+          "valor_usd": 1,
+          "condicao": "Batch API, entrada por MTok (50% de desconto)",
+          "fonte_url": "https://platform.claude.com/docs/en/about-claude/pricing"
+        },
+        {
+          "unidade": "outro",
+          "valor_usd": 5,
+          "condicao": "Batch API, saída por MTok (50% de desconto)",
+          "fonte_url": "https://platform.claude.com/docs/en/about-claude/pricing"
+        }
+      ],
+      "notas": []
+    },
+    {
+      "id": "anthropic/claude-sonnet-4.6",
+      "nome": "Claude Sonnet 4.6",
+      "tipo": "texto",
+      "pesos_abertos": false,
+      "lancado_em": "2026-02-17",
+      "status": "legado",
+      "desativa_em": null,
+      "contexto_tokens": 1000000,
+      "preco": {
+        "entrada_usd_mtok": 3,
+        "saida_usd_mtok": 15,
+        "fonte_url": "https://platform.claude.com/docs/en/about-claude/pricing",
+        "divergencia": null
+      },
+      "outros_precos": [
+        {
+          "unidade": "mtok_cache",
+          "valor_usd": 3.75,
+          "condicao": "escrita de cache 5 min",
+          "fonte_url": "https://platform.claude.com/docs/en/about-claude/pricing"
+        },
+        {
+          "unidade": "mtok_cache",
+          "valor_usd": 6,
+          "condicao": "escrita de cache 1 h",
+          "fonte_url": "https://platform.claude.com/docs/en/about-claude/pricing"
+        },
+        {
+          "unidade": "mtok_cache",
+          "valor_usd": 0.3,
+          "condicao": "leitura de cache (hit/refresh)",
+          "fonte_url": "https://platform.claude.com/docs/en/about-claude/pricing"
+        },
+        {
+          "unidade": "outro",
+          "valor_usd": 1.5,
+          "condicao": "Batch API, entrada por MTok (50% de desconto)",
+          "fonte_url": "https://platform.claude.com/docs/en/about-claude/pricing"
+        },
+        {
+          "unidade": "outro",
+          "valor_usd": 7.5,
+          "condicao": "Batch API, saída por MTok (50% de desconto)",
+          "fonte_url": "https://platform.claude.com/docs/en/about-claude/pricing"
+        }
+      ],
+      "notas": []
+    },
+    {
+      "id": "anthropic/claude-sonnet-4.5",
+      "nome": "Claude Sonnet 4.5",
+      "tipo": "texto",
+      "pesos_abertos": false,
+      "lancado_em": "2025-09-29",
+      "status": "desativacao_anunciada",
+      "desativa_em": "2026-11-30",
+      "contexto_tokens": 200000,
+      "preco": {
+        "entrada_usd_mtok": 3,
+        "saida_usd_mtok": 15,
+        "fonte_url": "https://platform.claude.com/docs/en/about-claude/pricing",
+        "divergencia": null
+      },
+      "outros_precos": [
+        {
+          "unidade": "mtok_cache",
+          "valor_usd": 3.75,
+          "condicao": "escrita de cache 5 min",
+          "fonte_url": "https://platform.claude.com/docs/en/about-claude/pricing"
+        },
+        {
+          "unidade": "mtok_cache",
+          "valor_usd": 6,
+          "condicao": "escrita de cache 1 h",
+          "fonte_url": "https://platform.claude.com/docs/en/about-claude/pricing"
+        },
+        {
+          "unidade": "mtok_cache",
+          "valor_usd": 0.3,
+          "condicao": "leitura de cache (hit/refresh)",
+          "fonte_url": "https://platform.claude.com/docs/en/about-claude/pricing"
+        },
+        {
+          "unidade": "outro",
+          "valor_usd": 1.5,
+          "condicao": "Batch API, entrada por MTok (50% de desconto)",
+          "fonte_url": "https://platform.claude.com/docs/en/about-claude/pricing"
+        },
+        {
+          "unidade": "outro",
+          "valor_usd": 7.5,
+          "condicao": "Batch API, saída por MTok (50% de desconto)",
+          "fonte_url": "https://platform.claude.com/docs/en/about-claude/pricing"
+        }
+      ],
+      "notas": []
+    },
+    {
+      "id": "anthropic/claude-opus-4.1",
+      "nome": "Claude Opus 4.1",
+      "tipo": "texto",
+      "pesos_abertos": false,
+      "lancado_em": null,
+      "status": "desativado",
+      "desativa_em": "2026-08-05",
+      "contexto_tokens": null,
+      "preco": {
+        "entrada_usd_mtok": 15,
+        "saida_usd_mtok": 75,
+        "fonte_url": "https://platform.claude.com/docs/en/about-claude/pricing",
+        "divergencia": "Retirado da API da Anthropic; ainda disponível em Bedrock e/ou Google Cloud, que têm preço próprio. Preço listado é o da tabela oficial."
+      },
+      "outros_precos": [
+        {
+          "unidade": "mtok_cache",
+          "valor_usd": 18.75,
+          "condicao": "escrita de cache 5 min",
+          "fonte_url": "https://platform.claude.com/docs/en/about-claude/pricing"
+        },
+        {
+          "unidade": "mtok_cache",
+          "valor_usd": 30,
+          "condicao": "escrita de cache 1 h",
+          "fonte_url": "https://platform.claude.com/docs/en/about-claude/pricing"
+        },
+        {
+          "unidade": "mtok_cache",
+          "valor_usd": 1.5,
+          "condicao": "leitura de cache (hit/refresh)",
+          "fonte_url": "https://platform.claude.com/docs/en/about-claude/pricing"
+        },
+        {
+          "unidade": "outro",
+          "valor_usd": 7.5,
+          "condicao": "Batch API, entrada por MTok (50% de desconto)",
+          "fonte_url": "https://platform.claude.com/docs/en/about-claude/pricing"
+        },
+        {
+          "unidade": "outro",
+          "valor_usd": 37.5,
+          "condicao": "Batch API, saída por MTok (50% de desconto)",
+          "fonte_url": "https://platform.claude.com/docs/en/about-claude/pricing"
+        }
+      ],
+      "notas": []
+    },
+    {
+      "id": "anthropic/claude-opus-4",
+      "nome": "Claude Opus 4",
+      "tipo": "texto",
+      "pesos_abertos": false,
+      "lancado_em": null,
+      "status": "desativado",
+      "desativa_em": "2026-06-15",
+      "contexto_tokens": null,
+      "preco": {
+        "entrada_usd_mtok": 15,
+        "saida_usd_mtok": 75,
+        "fonte_url": "https://platform.claude.com/docs/en/about-claude/pricing",
+        "divergencia": "Retirado da API da Anthropic; ainda disponível em Bedrock e/ou Google Cloud, que têm preço próprio. Preço listado é o da tabela oficial."
+      },
+      "outros_precos": [
+        {
+          "unidade": "mtok_cache",
+          "valor_usd": 18.75,
+          "condicao": "escrita de cache 5 min",
+          "fonte_url": "https://platform.claude.com/docs/en/about-claude/pricing"
+        },
+        {
+          "unidade": "mtok_cache",
+          "valor_usd": 30,
+          "condicao": "escrita de cache 1 h",
+          "fonte_url": "https://platform.claude.com/docs/en/about-claude/pricing"
+        },
+        {
+          "unidade": "mtok_cache",
+          "valor_usd": 1.5,
+          "condicao": "leitura de cache (hit/refresh)",
+          "fonte_url": "https://platform.claude.com/docs/en/about-claude/pricing"
+        },
+        {
+          "unidade": "outro",
+          "valor_usd": 7.5,
+          "condicao": "Batch API, entrada por MTok (50% de desconto)",
+          "fonte_url": "https://platform.claude.com/docs/en/about-claude/pricing"
+        },
+        {
+          "unidade": "outro",
+          "valor_usd": 37.5,
+          "condicao": "Batch API, saída por MTok (50% de desconto)",
+          "fonte_url": "https://platform.claude.com/docs/en/about-claude/pricing"
+        }
+      ],
+      "notas": []
+    },
+    {
+      "id": "anthropic/claude-sonnet-4",
+      "nome": "Claude Sonnet 4",
+      "tipo": "texto",
+      "pesos_abertos": false,
+      "lancado_em": null,
+      "status": "desativado",
+      "desativa_em": "2026-06-15",
+      "contexto_tokens": null,
+      "preco": {
+        "entrada_usd_mtok": 3,
+        "saida_usd_mtok": 15,
+        "fonte_url": "https://platform.claude.com/docs/en/about-claude/pricing",
+        "divergencia": "Retirado da API da Anthropic; ainda disponível em Bedrock e/ou Google Cloud, que têm preço próprio. Preço listado é o da tabela oficial."
+      },
+      "outros_precos": [
+        {
+          "unidade": "mtok_cache",
+          "valor_usd": 3.75,
+          "condicao": "escrita de cache 5 min",
+          "fonte_url": "https://platform.claude.com/docs/en/about-claude/pricing"
+        },
+        {
+          "unidade": "mtok_cache",
+          "valor_usd": 6,
+          "condicao": "escrita de cache 1 h",
+          "fonte_url": "https://platform.claude.com/docs/en/about-claude/pricing"
+        },
+        {
+          "unidade": "mtok_cache",
+          "valor_usd": 0.3,
+          "condicao": "leitura de cache (hit/refresh)",
+          "fonte_url": "https://platform.claude.com/docs/en/about-claude/pricing"
+        },
+        {
+          "unidade": "outro",
+          "valor_usd": 1.5,
+          "condicao": "Batch API, entrada por MTok (50% de desconto)",
+          "fonte_url": "https://platform.claude.com/docs/en/about-claude/pricing"
+        },
+        {
+          "unidade": "outro",
+          "valor_usd": 7.5,
+          "condicao": "Batch API, saída por MTok (50% de desconto)",
+          "fonte_url": "https://platform.claude.com/docs/en/about-claude/pricing"
+        }
+      ],
+      "notas": []
+    },
+    {
+      "id": "anthropic/claude-haiku-3.5",
+      "nome": "Claude Haiku 3.5",
+      "tipo": "texto",
+      "pesos_abertos": false,
+      "lancado_em": null,
+      "status": "desativado",
+      "desativa_em": "2026-02-19",
+      "contexto_tokens": null,
+      "preco": {
+        "entrada_usd_mtok": 0.8,
+        "saida_usd_mtok": 4,
+        "fonte_url": "https://platform.claude.com/docs/en/about-claude/pricing",
+        "divergencia": "Retirado da API da Anthropic; ainda disponível em Bedrock e/ou Google Cloud, que têm preço próprio. Preço listado é o da tabela oficial."
+      },
+      "outros_precos": [
+        {
+          "unidade": "mtok_cache",
+          "valor_usd": 1,
+          "condicao": "escrita de cache 5 min",
+          "fonte_url": "https://platform.claude.com/docs/en/about-claude/pricing"
+        },
+        {
+          "unidade": "mtok_cache",
+          "valor_usd": 1.6,
+          "condicao": "escrita de cache 1 h",
+          "fonte_url": "https://platform.claude.com/docs/en/about-claude/pricing"
+        },
+        {
+          "unidade": "mtok_cache",
+          "valor_usd": 0.08,
+          "condicao": "leitura de cache (hit/refresh)",
+          "fonte_url": "https://platform.claude.com/docs/en/about-claude/pricing"
+        },
+        {
+          "unidade": "outro",
+          "valor_usd": 0.4,
+          "condicao": "Batch API, entrada por MTok (50% de desconto)",
+          "fonte_url": "https://platform.claude.com/docs/en/about-claude/pricing"
+        },
+        {
+          "unidade": "outro",
+          "valor_usd": 2,
+          "condicao": "Batch API, saída por MTok (50% de desconto)",
+          "fonte_url": "https://platform.claude.com/docs/en/about-claude/pricing"
+        }
+      ],
+      "notas": []
+    },
+    {
+      "id": "anthropic/claude-mythos-preview",
+      "nome": "Claude Mythos Preview",
+      "tipo": "texto",
+      "pesos_abertos": false,
+      "lancado_em": null,
+      "status": "restrito",
+      "desativa_em": null,
+      "contexto_tokens": null,
+      "preco": {
+        "entrada_usd_mtok": null,
+        "saida_usd_mtok": null,
+        "fonte_url": "https://platform.claude.com/docs/en/about-claude/model-deprecations",
+        "divergencia": "Depreciado em 2026-06-09 (data de retirada 'To be announced'); acesso restrito ao Project Glasswing; preço não listado na página oficial."
+      },
+      "outros_precos": [],
+      "notas": []
+    }
+  ],
+  "capacidades": [
+    {
+      "capacidade": "texto",
+      "produto": "Claude (app e API)",
+      "como_acessar": [
+        "app",
+        "web",
+        "api"
+      ],
+      "plano_minimo": "Free",
+      "gratis": true,
+      "headless": true,
+      "comando": null,
+      "limites": "Free com uso limitado; API cobrada por token.",
+      "fonte_url": "https://claude.com/pricing"
+    },
+    {
+      "capacidade": "codigo",
+      "produto": "Claude Code",
+      "como_acessar": [
+        "cli",
+        "ide",
+        "web",
+        "app",
+        "nuvem"
+      ],
+      "plano_minimo": "Pro",
+      "gratis": false,
+      "headless": true,
+      "comando": "claude",
+      "limites": "Consome o uso da assinatura; também funciona com chave de API (cobrança por token).",
+      "fonte_url": "https://claude.com/pricing"
+    },
+    {
+      "capacidade": "cli_headless",
+      "produto": "Claude Code -p (Agent SDK via CLI)",
+      "como_acessar": [
+        "cli",
+        "api"
+      ],
+      "plano_minimo": "Pro",
+      "gratis": false,
+      "headless": true,
+      "comando": "claude -p \"<prompt>\" --output-format json --allowedTools \"Read,Edit,Bash\"",
+      "limites": "Modo --bare exige ANTHROPIC_API_KEY (não usa login da assinatura). Saída text/json/stream-json; --json-schema para saída estruturada.",
+      "fonte_url": "https://code.claude.com/docs/en/headless"
+    },
+    {
+      "capacidade": "agente_agendado",
+      "produto": "Claude Code routines",
+      "como_acessar": [
+        "nuvem",
+        "web",
+        "cli",
+        "app"
+      ],
+      "plano_minimo": "Pro",
+      "gratis": false,
+      "headless": true,
+      "comando": "/schedule daily PR review at 9am  (ou POST https://api.anthropic.com/v1/claude_code/routines/<id>/fire)",
+      "limites": "Research preview. Gatilhos: agenda (mínimo 1 h), API e eventos do GitHub. 100 execuções agendadas/hora por conta; 30/h por routine para Run now+API; consome o uso da assinatura.",
+      "fonte_url": "https://code.claude.com/docs/en/routines"
+    },
+    {
+      "capacidade": "agente_nuvem",
+      "produto": "Claude Code na web / cloud sessions",
+      "como_acessar": [
+        "web",
+        "app",
+        "cli",
+        "nuvem"
+      ],
+      "plano_minimo": "Pro",
+      "gratis": false,
+      "headless": true,
+      "comando": "claude --cloud \"<tarefa>\"; claude -p \"<msg>\" --cloud <session-id>",
+      "limites": "Pro, Max, Team e Enterprise (premium ou Chat+Claude Code). Compartilha rate limits com o resto do uso; sem cobrança separada pela VM. Requer GitHub para clonar e abrir PR.",
+      "fonte_url": "https://code.claude.com/docs/en/claude-code-on-the-web"
+    },
+    {
+      "capacidade": "agente_nuvem",
+      "produto": "Claude Managed Agents",
+      "como_acessar": [
+        "api",
+        "nuvem"
+      ],
+      "plano_minimo": null,
+      "gratis": false,
+      "headless": true,
+      "comando": null,
+      "limites": "Tokens a preço de tabela + US$ 0,08 por hora de sessão em execução; sem desconto Batch.",
+      "fonte_url": "https://platform.claude.com/docs/en/about-claude/pricing"
+    },
+    {
+      "capacidade": "busca_web",
+      "produto": "Web search tool (API) / busca no app",
+      "como_acessar": [
+        "api",
+        "app",
+        "web"
+      ],
+      "plano_minimo": "Free",
+      "gratis": true,
+      "headless": true,
+      "comando": null,
+      "limites": "API: US$ 10 por 1.000 buscas + tokens. App: incluso no Free.",
+      "fonte_url": "https://platform.claude.com/docs/en/about-claude/pricing"
+    },
+    {
+      "capacidade": "computer_use",
+      "produto": "Computer use / browser use tools",
+      "como_acessar": [
+        "api"
+      ],
+      "plano_minimo": null,
+      "gratis": false,
+      "headless": true,
+      "comando": null,
+      "limites": "Preço normal de tool use; toolset adiciona ~4.500 (computer) ou ~6.600 (browser) tokens de entrada por requisição.",
+      "fonte_url": "https://platform.claude.com/docs/en/about-claude/pricing"
+    },
+    {
+      "capacidade": "mcp",
+      "produto": "Conectores MCP (Claude apps, Claude Code, API MCP connector)",
+      "como_acessar": [
+        "app",
+        "web",
+        "cli",
+        "api"
+      ],
+      "plano_minimo": "Free",
+      "gratis": true,
+      "headless": true,
+      "comando": "claude mcp add ...",
+      "limites": "Free lista 'app connections'; routines usam os conectores da conta.",
+      "fonte_url": "https://claude.com/pricing"
+    },
+    {
+      "capacidade": "pesquisa_profunda",
+      "produto": "Claude Science",
+      "como_acessar": [
+        "app",
+        "web"
+      ],
+      "plano_minimo": "Pro",
+      "gratis": false,
+      "headless": false,
+      "comando": null,
+      "limites": "Incluído a partir do Pro e no Team; workbench para cientistas com artefatos auditáveis.",
+      "fonte_url": "https://claude.com/pricing"
+    }
+  ],
+  "gratis": [
+    {
+      "titulo": "Plano Free do Claude",
+      "resumo": "Chat com busca web, execução de código, arquivos, memória e conectores, sem pagar.",
+      "limites": "Uso limitado; sem Claude Code.",
+      "chamavel_por_agente": false,
+      "url": "https://claude.com/pricing",
+      "valido_ate": null,
+      "origem": "verificado"
+    },
+    {
+      "titulo": "Créditos iniciais da API",
+      "resumo": "Novos usuários recebem uma pequena quantia de créditos grátis para testar a API.",
+      "limites": "Valor não informado na página oficial; agregadores citam US$ 5.",
+      "chamavel_por_agente": true,
+      "url": "https://platform.claude.com/docs/en/about-claude/pricing",
+      "valido_ate": null,
+      "origem": "verificado"
+    },
+    {
+      "titulo": "Execução de código: 1.550 h grátis/mês",
+      "resumo": "Cada organização da API recebe 1.550 horas grátis por mês da ferramenta de execução de código; grátis também sempre que usada junto com web search/web fetch.",
+      "limites": "Acima disso, US$ 0,05/h por contêiner; mínimo de 5 min por execução.",
+      "chamavel_por_agente": true,
+      "url": "https://platform.claude.com/docs/en/about-claude/pricing",
+      "valido_ate": null,
+      "origem": "verificado"
+    },
+    {
+      "titulo": "Web fetch sem custo extra",
+      "resumo": "A ferramenta web fetch da API não tem cobrança adicional além dos tokens do conteúdo trazido.",
+      "limites": "Paga os tokens de entrada.",
+      "chamavel_por_agente": true,
+      "url": "https://platform.claude.com/docs/en/about-claude/pricing",
+      "valido_ate": null,
+      "origem": "verificado"
+    },
+    {
+      "titulo": "Team plan for scientists (assento Standard grátis)",
+      "resumo": "Grupo de pesquisa liderado por PI ganha assentos Standard do Team grátis por 12 meses e Premium a US$ 15/mês.",
+      "limites": "PI precisa abrir; 1-25 assentos; revisão em 5-7 dias úteis.",
+      "chamavel_por_agente": false,
+      "url": "https://claude.com/programs/team-plan-for-scientists",
+      "valido_ate": null,
+      "origem": "verificado"
+    }
+  ],
+  "programas": [
+    {
+      "nome": "AI for Science",
+      "publico": "pesquisador",
+      "beneficio": "Créditos de API para projetos científicos (biologia e ciências da vida e, desde ago/2026, outras áreas, inclusive ciência ambiental e da Terra).",
+      "valor_usd": 50000,
+      "requisitos": "Pesquisador com projeto científico de alto impacto; formulário descrevendo equipe e projeto. Créditos valem só para a API.",
+      "elegivel": "talvez",
+      "elegivel_motivo": "O post de 2026-08-27 diz que 'qualquer pesquisador' pode aplicar e a área ambiental está coberta; o projeto UrbVerde (dados urbano-ambientais) encaixa melhor com o orientador como proponente. Útil para a Mari (RAG) e o transcritor via API.",
+      "como_aplicar": "Formulário Google: https://docs.google.com/forms/d/e/1FAIpQLSfwDGfVg2lHJ0cc0oF_ilEnjvr_r4_paYi7VLlr5cLNXASdvA/viewform ; avaliação na primeira segunda-feira de cada mês.",
+      "url": "https://www.anthropic.com/news/expanding-support-for-scientists",
+      "status": "continuo",
+      "prazo": null,
+      "verificado_em": "2026-10-01"
+    },
+    {
+      "nome": "Claude Team plan for scientists",
+      "publico": "pesquisador",
+      "beneficio": "Assentos Standard do Team grátis (normal US$ 20/mês) e Premium a US$ 15/mês (normal US$ 100/mês) por 12 meses; inclui Claude Code e Claude Science.",
+      "valor_usd": null,
+      "requisitos": "PI ou equivalente em universidade credenciada ou instituto sem fins lucrativos (ciências naturais, matemática, computação, engenharia e afins). Alunos entram como membros do grupo.",
+      "elegivel": "talvez",
+      "elegivel_motivo": "Guilherme é graduando e não pode abrir a conta, mas o orientador (docente USP) pode, e incluí-lo como membro. Ele já tem Max; o ganho seria para o grupo UrbVerde.",
+      "como_aplicar": "Orientador clica em 'Verify now' na página e descreve a pesquisa; revisão em 5-7 dias úteis.",
+      "url": "https://claude.com/programs/team-plan-for-scientists",
+      "status": "aberto",
+      "prazo": null,
+      "verificado_em": "2026-10-01"
+    },
+    {
+      "nome": "Claude Campus Ambassadors (Builder Clubs, Campus Conversations, Science workshops)",
+      "publico": "estudante",
+      "beneficio": "Bolsa de US$ 3.600 em dinheiro para cada embaixador, créditos de API para os membros do clube, contato com palestrantes da Anthropic.",
+      "valor_usd": 3600,
+      "requisitos": "Estudante de qualquer país, 18+, com autorização de trabalho no país de estudo. Graduação lidera Builder Club; pós e doutorado podem ter lista restrita de universidades no piloto.",
+      "elegivel": "nao",
+      "elegivel_motivo": "Perfil encaixa (graduando, qualquer país, trilha Builder Club), mas as inscrições da turma 2026-27 fecharam em 2026-09-12. Acompanhar a próxima turma.",
+      "como_aplicar": "Formulário na página do programa quando reabrir.",
+      "url": "https://claude.com/programs/campus",
+      "status": "fechado",
+      "prazo": "2026-09-12",
+      "verificado_em": "2026-10-01"
+    },
+    {
+      "nome": "Claude for Education",
+      "publico": "estudante",
+      "beneficio": "Plano institucional para a universidade toda com learning mode, Claude Code e créditos de API para pesquisa.",
+      "valor_usd": null,
+      "requisitos": "Contrato da instituição com a Anthropic.",
+      "elegivel": "nao",
+      "elegivel_motivo": "Depende da USP contratar; não há adesão individual. Não há menção à USP ou ao Brasil entre as universidades participantes.",
+      "como_aplicar": "A instituição contata o time de Education pela página.",
+      "url": "https://claude.com/solutions/education",
+      "status": "continuo",
+      "prazo": null,
+      "verificado_em": "2026-10-01"
+    },
+    {
+      "nome": "Claude for Open Source",
+      "publico": "todos",
+      "beneficio": "6 meses de Claude Max 20x grátis para mantenedores de open source.",
+      "valor_usd": null,
+      "requisitos": "Mantenedor de pacote com 500+ repositórios dependentes ou 200 mil+ downloads/mês, core contributor de fundação, 100+ PRs aceitos em repositórios de terceiros nos últimos 12 meses, repo com 20+ contribuidores externos, ou OpenSSF criticality ≥ 0,4.",
+      "elegivel": "nao",
+      "elegivel_motivo": "Pelo que se sabe, os projetos do Guilherme não atingem esses limiares; e ele já tem Max.",
+      "como_aplicar": "Formulário em claude.com/contact-sales/claude-for-oss.",
+      "url": "https://claude.com/contact-sales/claude-for-oss",
+      "status": "desconhecido",
+      "prazo": null,
+      "verificado_em": "2026-10-01"
+    }
+  ],
+  "indicadores": [
+    {
+      "modelo_id": "anthropic/claude-opus-5.5",
+      "nome": "custo por tarefa do Intelligence Index (AA), max effort",
+      "valor": 5.98,
+      "unidade": "USD",
+      "descricao": "Custo médio por tarefa do Artificial Analysis Intelligence Index com Opus 5.5 em max effort (nota 58); em medium ~US$ 1,34 (nota 51) e low ~US$ 0,55 (nota 42). Obtido via busca; site da AA bloqueado pelo proxy. Valor de terceiro, a verificar.",
+      "medido_em": "2026-09-22",
+      "fonte_url": "https://artificialanalysis.ai/articles/claude-opus-5-5"
+    },
+    {
+      "modelo_id": "anthropic/claude-opus-5",
+      "nome": "custo por tarefa do Intelligence Index (AA)",
+      "valor": 2.03,
+      "unidade": "USD",
+      "descricao": "Custo médio por tarefa do Intelligence Index com Opus 5 (max), segundo artigo da AA de julho/2026 (versão anterior do índice). Obtido via busca, a verificar.",
+      "medido_em": "2026-07-24",
+      "fonte_url": "https://artificialanalysis.ai/articles/opus-5"
+    },
+    {
+      "modelo_id": "anthropic/claude-fable-5.1",
+      "nome": "custo por tarefa do Intelligence Index (AA), max effort",
+      "valor": 3.76,
+      "unidade": "USD",
+      "descricao": "Custo por tarefa do Intelligence Index com Fable 5.1 em max effort (nota 66 na versão do índice vigente em set/2026, antes da recalibração que pôs Opus 5.5 em 58). Obtido via busca, a verificar.",
+      "medido_em": "2026-09-01",
+      "fonte_url": "https://artificialanalysis.ai/articles/claude-fable-5-1"
+    }
+  ],
+  "observacoes": "Fonte de preços: tabela oficial completa em platform.claude.com (2026-10-01). A Anthropic só tem modelos de texto (entrada texto+imagem → texto); não há modelos próprios de imagem, vídeo, voz ou embeddings. Modelos retirados da API 1st-party (Opus 4.1, Opus 4, Sonnet 4, Haiku 3.5) foram incluídos como 'desativado' porque ainda aparecem na tabela de preços e seguem em Bedrock/Google Cloud; data de lançamento e contexto deles ficaram null (não conferidos nesta coleta). Mythos 5.1 / Mythos 5 marcados 'restrito' (só convite, Project Glasswing); contexto null porque a página só diz que compartilham as especificações do Fable. Claude Mythos Preview: depreciado em 2026-06-09, retirada 'to be announced', preço não listado. Divergência AI for Science: o post de 2026-08-27 fala em 'até US$ 50.000 por projeto' e 'qualquer pesquisador'; a central de ajuda ainda diz 'até US$ 20.000 por 6 meses' para instituições acadêmicas/sem fins lucrativos — registrei o valor do post mais recente. Notas: artificialanalysis.ai, lmarena.ai, officechai, deeplearning.ai e didcodexreset bloqueados pelo proxy; aa_index de Opus 5.5 (58) e Sonnet 5.5 (56) vieram de resultados de busca citando a AA (a verificar). O índice da AA foi recalibrado em set/2026 (Sonnet 5 caiu de 53 para 38), por isso não registrei notas antigas de outros modelos. LMArena: sem valor confiável (busca trouxe Fable 5 = 1506 e Fable 5.1-max = 1498 de agregadores, sem Opus 5.5), não incluído. OpenRouter não consultado (bloqueado). Routines: a busca citou limites diários de 5 (Pro) / 15 (Max) / 25 (Team/Enterprise) execuções, mas a página atual não os mostra; registrei só os limites por hora. Max 20x: página de preços mostra 'From $100'; US$ 200 vem da central de ajuda. Preço anual do Pro = US$ 200 (US$ 17/mês). Team/Enterprise: a página dá o preço anual como valor por assento/mês (US$ 20 Standard, US$ 100 Premium, US$ 20 Enterprise); preco_anual_usd deixado null para não calcular, valor descrito em limites."
+}

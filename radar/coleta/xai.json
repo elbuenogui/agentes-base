@@ -1,0 +1,1209 @@
+{
+  "provedor": {
+    "id": "xai",
+    "nome": "xAI",
+    "grupo": "laboratorio",
+    "site": "https://x.ai",
+    "pais": "EUA",
+    "resumo": "Laboratório de Elon Musk (hoje com a marca SpaceXAI) que faz a família Grok: modelos de texto com contexto de até 1M tokens e preço baixo por token, geração de imagem e vídeo (Grok Imagine, entre os primeiros nas arenas de vídeo) e API de voz. Tem busca ao vivo no X como ferramenta própria e o agente de código Grok Build no terminal.",
+    "fontes": [
+      "https://docs.x.ai/developers/models",
+      "https://docs.x.ai/developers/pricing",
+      "https://x.ai/pricing",
+      "https://docs.x.ai/build/overview",
+      "https://docs.x.ai/developers/migration/may-15-retirement",
+      "https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json"
+    ]
+  },
+  "coletado_em": "2026-10-01",
+  "canais": [
+    {
+      "tipo": "x_oficial",
+      "nome": "xAI / SpaceXAI",
+      "url": "https://x.com/xai",
+      "handle": "@xai",
+      "observacao": "posts recentes aparecem também como x.com/SpaceXAI (mesmo id de status); conta pode ter sido renomeada"
+    },
+    {
+      "tipo": "x_oficial",
+      "nome": "Grok",
+      "url": "https://x.com/grok",
+      "handle": "@grok",
+      "observacao": null
+    },
+    {
+      "tipo": "x_ceo",
+      "nome": "Elon Musk",
+      "url": "https://x.com/elonmusk",
+      "handle": "@elonmusk",
+      "observacao": "anuncia lançamentos do Grok"
+    },
+    {
+      "tipo": "blog",
+      "nome": "x.ai/news",
+      "url": "https://x.ai/news",
+      "handle": null,
+      "observacao": null
+    },
+    {
+      "tipo": "docs",
+      "nome": "Documentação da API",
+      "url": "https://docs.x.ai/overview",
+      "handle": null,
+      "observacao": null
+    },
+    {
+      "tipo": "precos",
+      "nome": "Modelos e preços da API",
+      "url": "https://docs.x.ai/developers/models",
+      "handle": null,
+      "observacao": "tabela de preços também em docs.x.ai/developers/pricing"
+    },
+    {
+      "tipo": "precos",
+      "nome": "Planos do Grok",
+      "url": "https://x.ai/pricing",
+      "handle": null,
+      "observacao": null
+    },
+    {
+      "tipo": "changelog",
+      "nome": "Release notes da API",
+      "url": "https://docs.x.ai/developers/release-notes",
+      "handle": null,
+      "observacao": null
+    },
+    {
+      "tipo": "changelog",
+      "nome": "Changelog do Grok Build",
+      "url": "https://x.ai/build/changelog",
+      "handle": null,
+      "observacao": null
+    },
+    {
+      "tipo": "changelog",
+      "nome": "Release notes do app Grok",
+      "url": "https://grok.com/release-notes",
+      "handle": null,
+      "observacao": null
+    },
+    {
+      "tipo": "github",
+      "nome": "xai-org",
+      "url": "https://github.com/xai-org",
+      "handle": null,
+      "observacao": "inclui o código do Grok Build (xai-org/grok-build)"
+    }
+  ],
+  "planos": [
+    {
+      "nome": "Free",
+      "publico": "individual",
+      "preco_mensal_usd": 0,
+      "preco_anual_usd": null,
+      "inclui": "Grok no app e na web com limites menores",
+      "limites": "limites não publicados em número",
+      "fonte_url": "https://x.ai/pricing",
+      "conferido_em": "2026-10-01"
+    },
+    {
+      "nome": "SuperGrok Lite",
+      "publico": "individual",
+      "preco_mensal_usd": 10,
+      "preco_anual_usd": null,
+      "inclui": "acesso avulso e leve ao Grok",
+      "limites": "preço lido só em agregador (ai-toolbox.co); a página oficial aparece nas buscas sem o valor",
+      "fonte_url": "https://www.ai-toolbox.co/grok-models/grok-pricing-plans-api-2026",
+      "conferido_em": "2026-10-01"
+    },
+    {
+      "nome": "SuperGrok",
+      "publico": "individual",
+      "preco_mensal_usd": 30,
+      "preco_anual_usd": null,
+      "inclui": "Grok 4.6, Grok Bot, conectores, limites maiores, geração de imagem e vídeo; dá acesso ao Grok Build (CLI)",
+      "limites": "anual existe (troca na tela de upgrade), valor não confirmado em fonte oficial",
+      "fonte_url": "https://x.ai/pricing",
+      "conferido_em": "2026-10-01"
+    },
+    {
+      "nome": "SuperGrok Plus",
+      "publico": "individual",
+      "preco_mensal_usd": 100,
+      "preco_anual_usd": null,
+      "inclui": "tudo do SuperGrok + vídeo 1080p, uso muito maior em Chat, Imagine, Voice e Build, prioridade em pico, acesso antecipado",
+      "limites": null,
+      "fonte_url": "https://x.ai/pricing",
+      "conferido_em": "2026-10-01"
+    },
+    {
+      "nome": "SuperGrok Heavy",
+      "publico": "individual",
+      "preco_mensal_usd": 300,
+      "preco_anual_usd": null,
+      "inclui": "tudo do Plus + Grok Heavy (multiagente) e limites máximos",
+      "limites": "agregadores citam anual de US$ 3.000 (não confirmado em fonte oficial)",
+      "fonte_url": "https://x.ai/pricing",
+      "conferido_em": "2026-10-01"
+    },
+    {
+      "nome": "SuperGrok Business",
+      "publico": "equipe",
+      "preco_mensal_usd": 30,
+      "preco_anual_usd": null,
+      "inclui": "por assento: SuperGrok + compartilhamento, faturamento central, gestão de assentos, sem treino nos dados por padrão",
+      "limites": "preço por assento lido em agregador; a página oficial lista o plano Business",
+      "fonte_url": "https://www.ai-toolbox.co/grok-models/grok-pricing-plans-api-2026",
+      "conferido_em": "2026-10-01"
+    },
+    {
+      "nome": "Enterprise",
+      "publico": "empresa",
+      "preco_mensal_usd": null,
+      "preco_anual_usd": null,
+      "inclui": "contrato sob consulta",
+      "limites": null,
+      "fonte_url": "https://x.ai/pricing",
+      "conferido_em": "2026-10-01"
+    },
+    {
+      "nome": "X Premium+",
+      "publico": "individual",
+      "preco_mensal_usd": 40,
+      "preco_anual_usd": 395,
+      "inclui": "assinatura do X que inclui SuperGrok e Grok Bot; dá acesso ao Grok Build",
+      "limites": "preço lido em agregador (ai-toolbox.co); help.x.com/x.com não lidos",
+      "fonte_url": "https://www.ai-toolbox.co/grok-models/grok-pricing-plans-api-2026",
+      "conferido_em": "2026-10-01"
+    },
+    {
+      "nome": "API (pré-pago)",
+      "publico": "api",
+      "preco_mensal_usd": null,
+      "preco_anual_usd": null,
+      "inclui": "créditos pré-pagos ou fatura mensal; recarga mínima de US$ 5",
+      "limites": "Batch API com 20% de desconto nos modelos que suportam",
+      "fonte_url": "https://docs.x.ai/console/billing",
+      "conferido_em": "2026-10-01"
+    }
+  ],
+  "modelos": [
+    {
+      "id": "xai/grok-4.7",
+      "nome": "Grok 4.7",
+      "tipo": "texto",
+      "pesos_abertos": false,
+      "lancado_em": "2026-09-21",
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": 500000,
+      "preco": {
+        "entrada_usd_mtok": 2,
+        "saida_usd_mtok": 6,
+        "fonte_url": "https://docs.x.ai/developers/models",
+        "divergencia": "LiteLLM (agregador) confere: US$ 2 / US$ 6, cache US$ 0,50."
+      },
+      "outros_precos": [
+        {
+          "unidade": "mtok_cache",
+          "valor_usd": 0.5,
+          "condicao": "leitura de cache, prompt < 200k tokens",
+          "fonte_url": "https://docs.x.ai/developers/models"
+        },
+        {
+          "unidade": "outro",
+          "valor_usd": 4,
+          "condicao": "entrada por 1M tokens com prompt >= 200k tokens",
+          "fonte_url": "https://docs.x.ai/developers/models"
+        },
+        {
+          "unidade": "mtok_cache",
+          "valor_usd": 1,
+          "condicao": "entrada em cache com prompt >= 200k tokens",
+          "fonte_url": "https://docs.x.ai/developers/models"
+        },
+        {
+          "unidade": "outro",
+          "valor_usd": 12,
+          "condicao": "saída por 1M tokens com prompt >= 200k tokens",
+          "fonte_url": "https://docs.x.ai/developers/models"
+        }
+      ],
+      "notas": [
+        {
+          "benchmark": "aa_index",
+          "valor": 46,
+          "medido_em": "2026-10-01",
+          "fonte_url": "https://artificialanalysis.ai/models/grok-4-7",
+          "observacao": "valor lido via resultado de busca (artificialanalysis.ai bloqueado no proxy); variante xhigh (maior nota); a variante high também é publicada"
+        }
+      ]
+    },
+    {
+      "id": "xai/grok-4.6",
+      "nome": "Grok 4.6",
+      "tipo": "texto",
+      "pesos_abertos": false,
+      "lancado_em": "2026-08-12",
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": 500000,
+      "preco": {
+        "entrada_usd_mtok": 2,
+        "saida_usd_mtok": 6,
+        "fonte_url": "https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json",
+        "divergencia": "Preço da página oficial não lido (docs.x.ai bloqueado); valor do LiteLLM (agregador), a verificar."
+      },
+      "outros_precos": [
+        {
+          "unidade": "mtok_cache",
+          "valor_usd": 0.5,
+          "condicao": "leitura de cache, prompt < 200k tokens (LiteLLM, a verificar)",
+          "fonte_url": "https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json"
+        },
+        {
+          "unidade": "outro",
+          "valor_usd": 4,
+          "condicao": "entrada por 1M tokens com prompt >= 200k tokens",
+          "fonte_url": "https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json"
+        },
+        {
+          "unidade": "mtok_cache",
+          "valor_usd": 1,
+          "condicao": "entrada em cache com prompt >= 200k tokens",
+          "fonte_url": "https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json"
+        },
+        {
+          "unidade": "outro",
+          "valor_usd": 12,
+          "condicao": "saída por 1M tokens com prompt >= 200k tokens",
+          "fonte_url": "https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json"
+        }
+      ],
+      "notas": [
+        {
+          "benchmark": "aa_index",
+          "valor": 44,
+          "medido_em": "2026-10-01",
+          "fonte_url": "https://artificialanalysis.ai/models/grok-4-6",
+          "observacao": "valor lido via resultado de busca (artificialanalysis.ai bloqueado no proxy); variante high"
+        }
+      ]
+    },
+    {
+      "id": "xai/grok-4.5",
+      "nome": "Grok 4.5",
+      "tipo": "texto",
+      "pesos_abertos": false,
+      "lancado_em": "2026-07-16",
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": 500000,
+      "preco": {
+        "entrada_usd_mtok": 2,
+        "saida_usd_mtok": 6,
+        "fonte_url": "https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json",
+        "divergencia": "Preço da página oficial não lido (docs.x.ai bloqueado); valor do LiteLLM (agregador), a verificar."
+      },
+      "outros_precos": [
+        {
+          "unidade": "mtok_cache",
+          "valor_usd": 0.3,
+          "condicao": "leitura de cache, prompt < 200k tokens (LiteLLM, a verificar)",
+          "fonte_url": "https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json"
+        },
+        {
+          "unidade": "outro",
+          "valor_usd": 4,
+          "condicao": "entrada por 1M tokens com prompt >= 200k tokens",
+          "fonte_url": "https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json"
+        },
+        {
+          "unidade": "mtok_cache",
+          "valor_usd": 0.6,
+          "condicao": "entrada em cache com prompt >= 200k tokens",
+          "fonte_url": "https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json"
+        },
+        {
+          "unidade": "outro",
+          "valor_usd": 12,
+          "condicao": "saída por 1M tokens com prompt >= 200k tokens",
+          "fonte_url": "https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json"
+        }
+      ],
+      "notas": [
+        {
+          "benchmark": "aa_index",
+          "valor": 39,
+          "medido_em": "2026-10-01",
+          "fonte_url": "https://artificialanalysis.ai/models/grok-4-5",
+          "observacao": "valor lido via resultado de busca (artificialanalysis.ai bloqueado no proxy); variante high"
+        }
+      ]
+    },
+    {
+      "id": "xai/grok-4.3",
+      "nome": "Grok 4.3",
+      "tipo": "texto",
+      "pesos_abertos": false,
+      "lancado_em": null,
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": 1000000,
+      "preco": {
+        "entrada_usd_mtok": 1.25,
+        "saida_usd_mtok": 2.5,
+        "fonte_url": "https://docs.x.ai/developers/models",
+        "divergencia": "LiteLLM (agregador) confere: US$ 1,25 / US$ 2,50, cache US$ 0,20."
+      },
+      "outros_precos": [
+        {
+          "unidade": "mtok_cache",
+          "valor_usd": 0.2,
+          "condicao": "leitura de cache, prompt < 200k tokens",
+          "fonte_url": "https://docs.x.ai/developers/models"
+        },
+        {
+          "unidade": "outro",
+          "valor_usd": 1,
+          "condicao": "entrada via Batch API (desconto de 20%), prompt < 200k (LiteLLM, a verificar)",
+          "fonte_url": "https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json"
+        },
+        {
+          "unidade": "outro",
+          "valor_usd": 2.5,
+          "condicao": "entrada por 1M tokens com prompt >= 200k tokens",
+          "fonte_url": "https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json"
+        },
+        {
+          "unidade": "mtok_cache",
+          "valor_usd": 0.4,
+          "condicao": "entrada em cache com prompt >= 200k tokens",
+          "fonte_url": "https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json"
+        },
+        {
+          "unidade": "outro",
+          "valor_usd": 5,
+          "condicao": "saída por 1M tokens com prompt >= 200k tokens",
+          "fonte_url": "https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json"
+        }
+      ],
+      "notas": [
+        {
+          "benchmark": "aa_index",
+          "valor": 25,
+          "medido_em": "2026-10-01",
+          "fonte_url": "https://artificialanalysis.ai/models/grok-4-3",
+          "observacao": "valor lido via resultado de busca (artificialanalysis.ai bloqueado no proxy); variante high"
+        }
+      ]
+    },
+    {
+      "id": "xai/grok-4.20-0309-reasoning",
+      "nome": "Grok 4.20 (reasoning)",
+      "tipo": "texto",
+      "pesos_abertos": false,
+      "lancado_em": null,
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": 1000000,
+      "preco": {
+        "entrada_usd_mtok": 1.25,
+        "saida_usd_mtok": 2.5,
+        "fonte_url": "https://docs.x.ai/developers/pricing",
+        "divergencia": "Preço igual ao do grok-4.3 segundo a página de preços; confere com LiteLLM."
+      },
+      "outros_precos": [
+        {
+          "unidade": "mtok_cache",
+          "valor_usd": 0.2,
+          "condicao": "leitura de cache, prompt < 200k tokens",
+          "fonte_url": "https://docs.x.ai/developers/pricing"
+        },
+        {
+          "unidade": "outro",
+          "valor_usd": 2.5,
+          "condicao": "entrada por 1M tokens com prompt >= 200k tokens",
+          "fonte_url": "https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json"
+        },
+        {
+          "unidade": "mtok_cache",
+          "valor_usd": 0.4,
+          "condicao": "entrada em cache com prompt >= 200k tokens",
+          "fonte_url": "https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json"
+        },
+        {
+          "unidade": "outro",
+          "valor_usd": 5,
+          "condicao": "saída por 1M tokens com prompt >= 200k tokens",
+          "fonte_url": "https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json"
+        }
+      ],
+      "notas": []
+    },
+    {
+      "id": "xai/grok-4.20-0309-non-reasoning",
+      "nome": "Grok 4.20 (non-reasoning)",
+      "tipo": "texto",
+      "pesos_abertos": false,
+      "lancado_em": null,
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": 1000000,
+      "preco": {
+        "entrada_usd_mtok": 1.25,
+        "saida_usd_mtok": 2.5,
+        "fonte_url": "https://docs.x.ai/developers/pricing",
+        "divergencia": null
+      },
+      "outros_precos": [
+        {
+          "unidade": "mtok_cache",
+          "valor_usd": 0.2,
+          "condicao": "leitura de cache, prompt < 200k tokens",
+          "fonte_url": "https://docs.x.ai/developers/pricing"
+        },
+        {
+          "unidade": "outro",
+          "valor_usd": 2.5,
+          "condicao": "entrada por 1M tokens com prompt >= 200k tokens",
+          "fonte_url": "https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json"
+        },
+        {
+          "unidade": "mtok_cache",
+          "valor_usd": 0.4,
+          "condicao": "entrada em cache com prompt >= 200k tokens",
+          "fonte_url": "https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json"
+        },
+        {
+          "unidade": "outro",
+          "valor_usd": 5,
+          "condicao": "saída por 1M tokens com prompt >= 200k tokens",
+          "fonte_url": "https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json"
+        }
+      ],
+      "notas": []
+    },
+    {
+      "id": "xai/grok-4.20-multi-agent-0309",
+      "nome": "Grok 4.20 Multi-Agent",
+      "tipo": "texto",
+      "pesos_abertos": false,
+      "lancado_em": null,
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": 1000000,
+      "preco": {
+        "entrada_usd_mtok": 1.25,
+        "saida_usd_mtok": 2.5,
+        "fonte_url": "https://docs.x.ai/developers/pricing",
+        "divergencia": "Vários agentes em paralelo para pesquisa profunda; tokens de todos os agentes são cobrados."
+      },
+      "outros_precos": [
+        {
+          "unidade": "mtok_cache",
+          "valor_usd": 0.2,
+          "condicao": "leitura de cache, prompt < 200k tokens",
+          "fonte_url": "https://docs.x.ai/developers/pricing"
+        },
+        {
+          "unidade": "outro",
+          "valor_usd": 2.5,
+          "condicao": "entrada por 1M tokens com prompt >= 200k tokens",
+          "fonte_url": "https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json"
+        },
+        {
+          "unidade": "mtok_cache",
+          "valor_usd": 0.4,
+          "condicao": "entrada em cache com prompt >= 200k tokens",
+          "fonte_url": "https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json"
+        },
+        {
+          "unidade": "outro",
+          "valor_usd": 5,
+          "condicao": "saída por 1M tokens com prompt >= 200k tokens",
+          "fonte_url": "https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json"
+        }
+      ],
+      "notas": []
+    },
+    {
+      "id": "xai/grok-build-0.1",
+      "nome": "Grok Build 0.1 (modelo de código)",
+      "tipo": "texto",
+      "pesos_abertos": false,
+      "lancado_em": null,
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": 256000,
+      "preco": {
+        "entrada_usd_mtok": 1,
+        "saida_usd_mtok": 2,
+        "fonte_url": "https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json",
+        "divergencia": "Preço da página oficial não lido (docs.x.ai bloqueado); valor do LiteLLM (agregador), a verificar. Substitui o grok-code-fast-1."
+      },
+      "outros_precos": [
+        {
+          "unidade": "mtok_cache",
+          "valor_usd": 0.2,
+          "condicao": "leitura de cache (LiteLLM, a verificar)",
+          "fonte_url": "https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json"
+        },
+        {
+          "unidade": "outro",
+          "valor_usd": 2,
+          "condicao": "entrada por 1M tokens com prompt >= 200k tokens",
+          "fonte_url": "https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json"
+        },
+        {
+          "unidade": "mtok_cache",
+          "valor_usd": 0.4,
+          "condicao": "entrada em cache com prompt >= 200k tokens",
+          "fonte_url": "https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json"
+        },
+        {
+          "unidade": "outro",
+          "valor_usd": 4,
+          "condicao": "saída por 1M tokens com prompt >= 200k tokens",
+          "fonte_url": "https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json"
+        }
+      ],
+      "notas": []
+    },
+    {
+      "id": "xai/grok-imagine-image",
+      "nome": "Grok Imagine Image",
+      "tipo": "imagem",
+      "pesos_abertos": false,
+      "lancado_em": null,
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": null,
+      "preco": {
+        "entrada_usd_mtok": null,
+        "saida_usd_mtok": null,
+        "fonte_url": null,
+        "divergencia": null
+      },
+      "outros_precos": [
+        {
+          "unidade": "imagem",
+          "valor_usd": 0.02,
+          "condicao": "por imagem gerada",
+          "fonte_url": "https://docs.x.ai/developers/models/grok-imagine-image"
+        }
+      ],
+      "notas": []
+    },
+    {
+      "id": "xai/grok-imagine-image-pro",
+      "nome": "Grok Imagine Image Pro",
+      "tipo": "imagem",
+      "pesos_abertos": false,
+      "lancado_em": null,
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": null,
+      "preco": {
+        "entrada_usd_mtok": null,
+        "saida_usd_mtok": null,
+        "fonte_url": null,
+        "divergencia": null
+      },
+      "outros_precos": [
+        {
+          "unidade": "imagem",
+          "valor_usd": 0.05,
+          "condicao": "por imagem (LiteLLM, agregador; a verificar na página oficial)",
+          "fonte_url": "https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json"
+        }
+      ],
+      "notas": []
+    },
+    {
+      "id": "xai/grok-imagine-image-quality",
+      "nome": "Grok Imagine Image Quality",
+      "tipo": "imagem",
+      "pesos_abertos": false,
+      "lancado_em": null,
+      "status": "desativacao_anunciada",
+      "desativa_em": "2026-11-02",
+      "contexto_tokens": null,
+      "preco": {
+        "entrada_usd_mtok": null,
+        "saida_usd_mtok": null,
+        "fonte_url": null,
+        "divergencia": null
+      },
+      "outros_precos": [
+        {
+          "unidade": "imagem",
+          "valor_usd": 0.07,
+          "condicao": "por imagem em 2K (2048x2048), página oficial; LiteLLM registra US$ 0,05 (divergência)",
+          "fonte_url": "https://docs.x.ai/developers/migration/imagine-image-quality-nov-2"
+        }
+      ],
+      "notas": []
+    },
+    {
+      "id": "xai/grok-imagine-image-2.0",
+      "nome": "Grok Imagine Image 2.0",
+      "tipo": "imagem",
+      "pesos_abertos": false,
+      "lancado_em": null,
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": null,
+      "preco": {
+        "entrada_usd_mtok": null,
+        "saida_usd_mtok": null,
+        "fonte_url": null,
+        "divergencia": null
+      },
+      "outros_precos": [
+        {
+          "unidade": "imagem",
+          "valor_usd": 0.04,
+          "condicao": "saída 1K, qualidade low",
+          "fonte_url": "https://docs.x.ai/developers/models/grok-imagine-image-2.0"
+        },
+        {
+          "unidade": "imagem",
+          "valor_usd": 0.06,
+          "condicao": "saída 2K low ou 1K medium",
+          "fonte_url": "https://docs.x.ai/developers/models/grok-imagine-image-2.0"
+        },
+        {
+          "unidade": "imagem",
+          "valor_usd": 0.08,
+          "condicao": "saída 2K, qualidade medium",
+          "fonte_url": "https://docs.x.ai/developers/models/grok-imagine-image-2.0"
+        },
+        {
+          "unidade": "imagem",
+          "valor_usd": 0.01,
+          "condicao": "imagem de entrada (edição)",
+          "fonte_url": "https://docs.x.ai/developers/models/grok-imagine-image-2.0"
+        }
+      ],
+      "notas": [
+        {
+          "benchmark": "lmarena_image_elo",
+          "valor": 1320,
+          "medido_em": "2026-10-01",
+          "fonte_url": "https://the-decoder.com/xais-imagine-image-2-0-lands-just-behind-openais-gpt-image-2-in-arena-benchmarks/",
+          "observacao": "Text-to-Image Arena (arena.ai), lido em matéria de terceiro; no Image Edit Arena: 1439"
+        }
+      ]
+    },
+    {
+      "id": "xai/grok-imagine-video",
+      "nome": "Grok Imagine Video",
+      "tipo": "video",
+      "pesos_abertos": false,
+      "lancado_em": null,
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": null,
+      "preco": {
+        "entrada_usd_mtok": null,
+        "saida_usd_mtok": null,
+        "fonte_url": null,
+        "divergencia": null
+      },
+      "outros_precos": [
+        {
+          "unidade": "segundo_video",
+          "valor_usd": 0.05,
+          "condicao": "480p",
+          "fonte_url": "https://docs.x.ai/developers/models"
+        },
+        {
+          "unidade": "segundo_video",
+          "valor_usd": 0.07,
+          "condicao": "720p",
+          "fonte_url": "https://docs.x.ai/developers/models"
+        }
+      ],
+      "notas": []
+    },
+    {
+      "id": "xai/grok-imagine-video-1.5",
+      "nome": "Grok Imagine Video 1.5",
+      "tipo": "video",
+      "pesos_abertos": false,
+      "lancado_em": null,
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": null,
+      "preco": {
+        "entrada_usd_mtok": null,
+        "saida_usd_mtok": null,
+        "fonte_url": null,
+        "divergencia": null
+      },
+      "outros_precos": [
+        {
+          "unidade": "segundo_video",
+          "valor_usd": 0.08,
+          "condicao": "480p",
+          "fonte_url": "https://docs.x.ai/developers/models"
+        },
+        {
+          "unidade": "segundo_video",
+          "valor_usd": 0.14,
+          "condicao": "720p",
+          "fonte_url": "https://docs.x.ai/developers/models"
+        },
+        {
+          "unidade": "segundo_video",
+          "valor_usd": 0.25,
+          "condicao": "1080p",
+          "fonte_url": "https://docs.x.ai/developers/models"
+        },
+        {
+          "unidade": "imagem",
+          "valor_usd": 0.01,
+          "condicao": "imagem de entrada (image-to-video) (LiteLLM, a verificar)",
+          "fonte_url": "https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json"
+        }
+      ],
+      "notas": [
+        {
+          "benchmark": "aa_video_elo",
+          "valor": 1404,
+          "medido_em": "2026-10-01",
+          "fonte_url": "https://theplanettools.ai/blog/xai-grok-imagine-video-1-5-image-to-video-native-audio-arena-june-2026",
+          "observacao": "Image-to-Video, Artificial Analysis Video Arena, no lançamento (maio/jun 2026); lido em blog de terceiro"
+        }
+      ]
+    },
+    {
+      "id": "xai/grok-imagine-video-1.5-preview",
+      "nome": "Grok Imagine Video 1.5 Preview",
+      "tipo": "video",
+      "pesos_abertos": false,
+      "lancado_em": null,
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": null,
+      "preco": {
+        "entrada_usd_mtok": null,
+        "saida_usd_mtok": null,
+        "fonte_url": null,
+        "divergencia": null
+      },
+      "outros_precos": [
+        {
+          "unidade": "segundo_video",
+          "valor_usd": 0.08,
+          "condicao": "480p (LiteLLM, a verificar)",
+          "fonte_url": "https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json"
+        },
+        {
+          "unidade": "segundo_video",
+          "valor_usd": 0.14,
+          "condicao": "720p (LiteLLM, a verificar)",
+          "fonte_url": "https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json"
+        },
+        {
+          "unidade": "segundo_video",
+          "valor_usd": 0.25,
+          "condicao": "1080p (LiteLLM, a verificar)",
+          "fonte_url": "https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json"
+        }
+      ],
+      "notas": []
+    },
+    {
+      "id": "xai/grok-voice-think-fast-2.0",
+      "nome": "Grok Voice Think Fast 2.0 (Voice Agent; alias grok-voice-latest)",
+      "tipo": "audio",
+      "pesos_abertos": false,
+      "lancado_em": null,
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": null,
+      "preco": {
+        "entrada_usd_mtok": null,
+        "saida_usd_mtok": null,
+        "fonte_url": null,
+        "divergencia": null
+      },
+      "outros_precos": [
+        {
+          "unidade": "minuto_audio",
+          "valor_usd": 0.08,
+          "condicao": "Voice Agent API (fala para fala), por minuto",
+          "fonte_url": "https://docs.x.ai/developers/pricing"
+        }
+      ],
+      "notas": []
+    },
+    {
+      "id": "xai/grok-voice-transcribe-2.0",
+      "nome": "Grok Voice Transcribe 2.0",
+      "tipo": "audio_stt",
+      "pesos_abertos": false,
+      "lancado_em": null,
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": null,
+      "preco": {
+        "entrada_usd_mtok": null,
+        "saida_usd_mtok": null,
+        "fonte_url": null,
+        "divergencia": null
+      },
+      "outros_precos": [
+        {
+          "unidade": "hora_audio",
+          "valor_usd": 0.1,
+          "condicao": "lote (batch)",
+          "fonte_url": "https://docs.x.ai/developers/pricing"
+        },
+        {
+          "unidade": "hora_audio",
+          "valor_usd": 0.2,
+          "condicao": "streaming",
+          "fonte_url": "https://docs.x.ai/developers/pricing"
+        }
+      ],
+      "notas": []
+    },
+    {
+      "id": "xai/grok-voice-transcribe-1.0",
+      "nome": "Grok Voice Transcribe 1.0",
+      "tipo": "audio_stt",
+      "pesos_abertos": false,
+      "lancado_em": null,
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": null,
+      "preco": {
+        "entrada_usd_mtok": null,
+        "saida_usd_mtok": null,
+        "fonte_url": null,
+        "divergencia": null
+      },
+      "outros_precos": [
+        {
+          "unidade": "hora_audio",
+          "valor_usd": 0.1,
+          "condicao": "lote (batch); LiteLLM registra o mesmo preço da 2.0",
+          "fonte_url": "https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json"
+        }
+      ],
+      "notas": []
+    },
+    {
+      "id": "xai/grok-tts",
+      "nome": "Grok Text to Speech (id exato do modelo não confirmado)",
+      "tipo": "audio_tts",
+      "pesos_abertos": false,
+      "lancado_em": null,
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": null,
+      "preco": {
+        "entrada_usd_mtok": null,
+        "saida_usd_mtok": null,
+        "fonte_url": null,
+        "divergencia": null
+      },
+      "outros_precos": [
+        {
+          "unidade": "outro",
+          "valor_usd": 15,
+          "condicao": "por 1 milhão de caracteres",
+          "fonte_url": "https://docs.x.ai/developers/pricing"
+        }
+      ],
+      "notas": []
+    },
+    {
+      "id": "xai/grok-4-0709",
+      "nome": "Grok 4 (0709)",
+      "tipo": "texto",
+      "pesos_abertos": false,
+      "lancado_em": null,
+      "status": "desativado",
+      "desativa_em": "2026-05-15",
+      "contexto_tokens": null,
+      "preco": null,
+      "outros_precos": [],
+      "notas": []
+    },
+    {
+      "id": "xai/grok-4-fast-reasoning",
+      "nome": "Grok 4 Fast (reasoning)",
+      "tipo": "texto",
+      "pesos_abertos": false,
+      "lancado_em": null,
+      "status": "desativado",
+      "desativa_em": "2026-05-15",
+      "contexto_tokens": null,
+      "preco": null,
+      "outros_precos": [],
+      "notas": []
+    },
+    {
+      "id": "xai/grok-4-1-fast-reasoning",
+      "nome": "Grok 4.1 Fast (reasoning)",
+      "tipo": "texto",
+      "pesos_abertos": false,
+      "lancado_em": null,
+      "status": "desativado",
+      "desativa_em": "2026-05-15",
+      "contexto_tokens": null,
+      "preco": null,
+      "outros_precos": [],
+      "notas": []
+    },
+    {
+      "id": "xai/grok-code-fast-1",
+      "nome": "Grok Code Fast 1",
+      "tipo": "texto",
+      "pesos_abertos": false,
+      "lancado_em": null,
+      "status": "desativado",
+      "desativa_em": "2026-05-15",
+      "contexto_tokens": null,
+      "preco": null,
+      "outros_precos": [],
+      "notas": []
+    },
+    {
+      "id": "xai/grok-3",
+      "nome": "Grok 3",
+      "tipo": "texto",
+      "pesos_abertos": false,
+      "lancado_em": null,
+      "status": "desativado",
+      "desativa_em": "2026-05-15",
+      "contexto_tokens": null,
+      "preco": null,
+      "outros_precos": [],
+      "notas": []
+    }
+  ],
+  "capacidades": [
+    {
+      "capacidade": "texto",
+      "produto": "Grok (app/web) e API de chat",
+      "como_acessar": [
+        "app",
+        "web",
+        "api"
+      ],
+      "plano_minimo": "Free",
+      "gratis": true,
+      "headless": true,
+      "comando": null,
+      "limites": "API compatível com SDKs da OpenAI e da Anthropic",
+      "fonte_url": "https://docs.x.ai/developers/models"
+    },
+    {
+      "capacidade": "codigo",
+      "produto": "Grok Build",
+      "como_acessar": [
+        "cli",
+        "ide"
+      ],
+      "plano_minimo": "SuperGrok",
+      "gratis": false,
+      "headless": true,
+      "comando": "grok -p \"sua instrução\" --output-format json",
+      "limites": "exige SuperGrok, X Premium+ ou XAI_API_KEY cobrada por uso; integra com editores via Agent Client Protocol (ACP)",
+      "fonte_url": "https://docs.x.ai/build/overview"
+    },
+    {
+      "capacidade": "cli_headless",
+      "produto": "Grok Build (modo headless)",
+      "como_acessar": [
+        "cli"
+      ],
+      "plano_minimo": "SuperGrok",
+      "gratis": false,
+      "headless": true,
+      "comando": "curl -fsSL https://x.ai/cli/install.sh | bash && export XAI_API_KEY=... && grok -p \"...\"",
+      "limites": "login por navegador, device code ou XAI_API_KEY (CI)",
+      "fonte_url": "https://github.com/xai-org/grok-build"
+    },
+    {
+      "capacidade": "mcp",
+      "produto": "Remote MCP Tools (API) e servidores MCP no Grok Build",
+      "como_acessar": [
+        "api",
+        "cli"
+      ],
+      "plano_minimo": null,
+      "gratis": false,
+      "headless": true,
+      "comando": null,
+      "limites": "na API, a chamada da ferramenta MCP remota não é cobrada, só os tokens",
+      "fonte_url": "https://docs.x.ai/developers/tools/tool-usage-details"
+    },
+    {
+      "capacidade": "busca_web",
+      "produto": "Web Search e X Search (ferramentas da API)",
+      "como_acessar": [
+        "api",
+        "app"
+      ],
+      "plano_minimo": null,
+      "gratis": false,
+      "headless": true,
+      "comando": null,
+      "limites": "Web Search US$ 5 / 1 mil chamadas; X Search US$ 5 / 1 mil posts e US$ 10 / 1 mil perfis; Code Execution US$ 5 / 1 mil; Collections Search US$ 2,50 / 1 mil; além dos tokens",
+      "fonte_url": "https://docs.x.ai/developers/pricing"
+    },
+    {
+      "capacidade": "pesquisa_profunda",
+      "produto": "Grok 4.20 Multi-Agent (API) / DeepSearch (app)",
+      "como_acessar": [
+        "api",
+        "app"
+      ],
+      "plano_minimo": null,
+      "gratis": false,
+      "headless": true,
+      "comando": null,
+      "limites": "multiagente cobrado por token de todos os agentes",
+      "fonte_url": "https://docs.x.ai/developers/model-capabilities/text/multi-agent"
+    },
+    {
+      "capacidade": "imagem_gerar",
+      "produto": "Grok Imagine Image",
+      "como_acessar": [
+        "api",
+        "app"
+      ],
+      "plano_minimo": null,
+      "gratis": false,
+      "headless": true,
+      "comando": null,
+      "limites": "US$ 0,02 a 0,08 por imagem conforme modelo e resolução",
+      "fonte_url": "https://docs.x.ai/developers/model-capabilities/imagine"
+    },
+    {
+      "capacidade": "imagem_editar",
+      "produto": "Grok Imagine Image 2.0 (edição)",
+      "como_acessar": [
+        "api",
+        "app"
+      ],
+      "plano_minimo": null,
+      "gratis": false,
+      "headless": true,
+      "comando": null,
+      "limites": "imagem de entrada US$ 0,01",
+      "fonte_url": "https://docs.x.ai/developers/models/grok-imagine-image-2.0"
+    },
+    {
+      "capacidade": "video_gerar",
+      "produto": "Grok Imagine Video",
+      "como_acessar": [
+        "api",
+        "app"
+      ],
+      "plano_minimo": "SuperGrok",
+      "gratis": false,
+      "headless": true,
+      "comando": null,
+      "limites": "API a partir de US$ 0,05/s (480p); 1080p no app só no SuperGrok Plus",
+      "fonte_url": "https://docs.x.ai/developers/models"
+    },
+    {
+      "capacidade": "audio_stt",
+      "produto": "Grok Voice Transcribe",
+      "como_acessar": [
+        "api"
+      ],
+      "plano_minimo": null,
+      "gratis": false,
+      "headless": true,
+      "comando": null,
+      "limites": "US$ 0,10/h em lote, US$ 0,20/h streaming",
+      "fonte_url": "https://docs.x.ai/developers/model-capabilities/audio/speech-to-text"
+    },
+    {
+      "capacidade": "audio_tts",
+      "produto": "Grok Text to Speech",
+      "como_acessar": [
+        "api"
+      ],
+      "plano_minimo": null,
+      "gratis": false,
+      "headless": true,
+      "comando": null,
+      "limites": "US$ 15 / 1M caracteres; 25+ idiomas",
+      "fonte_url": "https://docs.x.ai/developers/models/text-to-speech"
+    },
+    {
+      "capacidade": "audio_tempo_real",
+      "produto": "Grok Voice Agent API",
+      "como_acessar": [
+        "api",
+        "app"
+      ],
+      "plano_minimo": null,
+      "gratis": false,
+      "headless": true,
+      "comando": null,
+      "limites": "US$ 0,08/min",
+      "fonte_url": "https://docs.x.ai/developers/models/voice-agent-api"
+    }
+  ],
+  "gratis": [
+    {
+      "titulo": "Plano Free do Grok",
+      "resumo": "uso do Grok no app e na web sem pagar",
+      "limites": "limites não publicados em número",
+      "chamavel_por_agente": false,
+      "url": "https://x.ai/pricing",
+      "valido_ate": null,
+      "origem": "verificado"
+    },
+    {
+      "titulo": "Créditos promocionais de cadastro na API (US$ 25)",
+      "resumo": "contas novas no console.x.ai recebem créditos promocionais",
+      "limites": "valor e validade (citados como 30 dias) variam por promoção; só agregadores confirmam o valor atual",
+      "chamavel_por_agente": true,
+      "url": "https://toolfreebie.com/grok-api-free-credits/",
+      "valido_ate": null,
+      "origem": "a_verificar"
+    },
+    {
+      "titulo": "Programa de compartilhamento de dados (até US$ 150/mês)",
+      "resumo": "ao ativar 'Share API Inputs for Model Training' no console, o time recebe créditos mensais em troca de permitir treino nos dados da API",
+      "limites": "agregadores dizem que exige gasto prévio de US$ 5; a documentação oficial só diz que a xAI 'pode oferecer créditos' em troca de treino; não use com dados sensíveis da pesquisa",
+      "chamavel_por_agente": true,
+      "url": "https://aitoolsrecap.com/Blog/how-to-get-free-grok-api-key-2026-step-by-step",
+      "valido_ate": null,
+      "origem": "a_verificar"
+    },
+    {
+      "titulo": "Créditos xAI de volta por gasto na API do X",
+      "resumo": "até 20% do gasto em créditos da API do X volta como créditos da API xAI",
+      "limites": "proporcional ao gasto acumulado no X; não lido na íntegra (x.com bloqueado)",
+      "chamavel_por_agente": true,
+      "url": "https://x.com/xai/status/2019914112743219453",
+      "valido_ate": null,
+      "origem": "a_verificar"
+    }
+  ],
+  "programas": [],
+  "indicadores": [
+    {
+      "modelo_id": "xai/grok-4.7",
+      "nome": "custo para rodar o índice AA",
+      "valor": 3.74,
+      "unidade": "USD",
+      "descricao": "Grok 4.7 (xhigh); a variante high custa US$ 2,73. O texto da busca diz 'por tarefa' para o índice; a AA mediu 240M tokens de saída contra mediana de 94M (modelo verboso). Lido via busca (artificialanalysis.ai bloqueado).",
+      "medido_em": "2026-10-01",
+      "fonte_url": "https://artificialanalysis.ai/models/grok-4-7"
+    }
+  ],
+  "observacoes": "docs.x.ai, x.ai, artificialanalysis.ai, pricepertoken, models.dev, openrouter.ai e x.com bloqueados no proxy (EGRESS_BLOCKED). Preços oficiais vieram de trechos de busca restritos a docs.x.ai/x.ai e foram conferidos com o JSON do LiteLLM (raw.githubusercontent.com). Grok 4.7, 4.3, 4.20, Imagine, voz e ferramentas: oficial. Grok 4.6, 4.5, Grok Build 0.1, Imagine Image Pro e Video 1.5 Preview: só LiteLLM (a verificar). Divergências: grok-imagine-image-quality (oficial US$ 0,07 em 2K vs LiteLLM 0,05); grok-imagine-image-2.0 (oficial US$ 0,04–0,08 por resolução/qualidade vs LiteLLM 0,06 único). Datas de lançamento só onde a xAI publicou anúncio (4.5, 4.6, 4.7); Grok 4.3 (30/04/2026 segundo terceiros) ficou null. Grok Build 0.1 tem duas notas AA conflitantes em trechos de busca (27 e 41), por isso não foi registrada. LMArena de texto do Grok 4.7: entrou no leaderboard, mas o Elo não apareceu nas buscas. Id exato do modelo TTS não confirmado. Não há embeddings próprios na API (há Collections/file_search). Marca: a empresa aparece como 'SpaceXAI' nos sites oficiais em 2026. Programas: a xAI não tem programa público para estudante, pesquisador ou startup; créditos aparecem só embutidos em pacotes de terceiros, por isso a lista está vazia. Líderes técnicos (x_lider) não registrados: não foi possível confirmar quem anuncia lançamentos hoje sem ler o X. Preços em X Premium+ e SuperGrok Lite/Business vieram de agregador."
+}

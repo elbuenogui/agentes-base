@@ -1,0 +1,2964 @@
+{
+  "provedor": {
+    "id": "openai",
+    "nome": "OpenAI",
+    "grupo": "laboratorio",
+    "site": "https://openai.com",
+    "pais": "EUA",
+    "resumo": "Laboratório criador do ChatGPT, do Codex e da família GPT (hoje GPT-6 Astra/Sol/Luna). Destaca-se pela linha mais ampla de modelos de API (texto, imagem, voz em tempo real, transcrição, embeddings, moderação) e pelo agente de código Codex (CLI, IDE e nuvem) incluído nos planos do ChatGPT.",
+    "fontes": [
+      "https://developers.openai.com/api/docs/pricing",
+      "https://developers.openai.com/api/docs/deprecations",
+      "https://openai.com/chatgpt/pricing",
+      "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json"
+    ]
+  },
+  "coletado_em": "2026-10-01",
+  "canais": [
+    {
+      "tipo": "x_oficial",
+      "nome": "OpenAI",
+      "url": "https://x.com/OpenAI",
+      "handle": "@OpenAI",
+      "observacao": null
+    },
+    {
+      "tipo": "x_oficial",
+      "nome": "OpenAI Developers",
+      "url": "https://x.com/OpenAIDevs",
+      "handle": "@OpenAIDevs",
+      "observacao": "anúncios de API e Codex"
+    },
+    {
+      "tipo": "x_ceo",
+      "nome": "Sam Altman",
+      "url": "https://x.com/sama",
+      "handle": "@sama",
+      "observacao": "CEO"
+    },
+    {
+      "tipo": "x_lider",
+      "nome": "Greg Brockman",
+      "url": "https://x.com/gdb",
+      "handle": "@gdb",
+      "observacao": "presidente e cofundador"
+    },
+    {
+      "tipo": "x_lider",
+      "nome": "Kevin Weil",
+      "url": "https://x.com/kevinweil",
+      "handle": "@kevinweil",
+      "observacao": "OpenAI for Science"
+    },
+    {
+      "tipo": "x_lider",
+      "nome": "Nick Turley",
+      "url": "https://x.com/nickaturley",
+      "handle": "@nickaturley",
+      "observacao": "chefe do ChatGPT"
+    },
+    {
+      "tipo": "x_lider",
+      "nome": "Mark Chen",
+      "url": "https://x.com/markchen90",
+      "handle": "@markchen90",
+      "observacao": "Chief Research Officer"
+    },
+    {
+      "tipo": "x_lider",
+      "nome": "Jakub Pachocki",
+      "url": "https://x.com/merettm",
+      "handle": "@merettm",
+      "observacao": "Chief Scientist"
+    },
+    {
+      "tipo": "x_lider",
+      "nome": "Alexander Embiricos",
+      "url": "https://x.com/embirico",
+      "handle": "@embirico",
+      "observacao": "líder do Codex"
+    },
+    {
+      "tipo": "blog",
+      "nome": "OpenAI News",
+      "url": "https://openai.com/news/",
+      "handle": null,
+      "observacao": null
+    },
+    {
+      "tipo": "rss",
+      "nome": "OpenAI News RSS",
+      "url": "https://openai.com/news/rss.xml",
+      "handle": null,
+      "observacao": null
+    },
+    {
+      "tipo": "changelog",
+      "nome": "Changelog da API",
+      "url": "https://developers.openai.com/api/docs/changelog",
+      "handle": null,
+      "observacao": null
+    },
+    {
+      "tipo": "changelog",
+      "nome": "Release notes do ChatGPT",
+      "url": "https://help.openai.com/en/articles/6825453-chatgpt-release-notes",
+      "handle": null,
+      "observacao": null
+    },
+    {
+      "tipo": "docs",
+      "nome": "Documentação da API",
+      "url": "https://developers.openai.com/api/docs",
+      "handle": null,
+      "observacao": "platform.openai.com/docs redireciona para cá"
+    },
+    {
+      "tipo": "docs",
+      "nome": "Deprecations",
+      "url": "https://developers.openai.com/api/docs/deprecations",
+      "handle": null,
+      "observacao": "calendário de desativações"
+    },
+    {
+      "tipo": "docs",
+      "nome": "Documentação do Codex",
+      "url": "https://developers.openai.com/codex",
+      "handle": null,
+      "observacao": null
+    },
+    {
+      "tipo": "precos",
+      "nome": "Preços da API",
+      "url": "https://developers.openai.com/api/docs/pricing",
+      "handle": null,
+      "observacao": null
+    },
+    {
+      "tipo": "precos",
+      "nome": "Preços do ChatGPT",
+      "url": "https://openai.com/chatgpt/pricing",
+      "handle": null,
+      "observacao": null
+    },
+    {
+      "tipo": "status",
+      "nome": "OpenAI Status",
+      "url": "https://status.openai.com",
+      "handle": null,
+      "observacao": null
+    },
+    {
+      "tipo": "github",
+      "nome": "openai (GitHub)",
+      "url": "https://github.com/openai",
+      "handle": null,
+      "observacao": "inclui openai/codex (Codex CLI)"
+    },
+    {
+      "tipo": "youtube",
+      "nome": "OpenAI no YouTube",
+      "url": "https://www.youtube.com/@OpenAI",
+      "handle": "@OpenAI",
+      "observacao": null
+    },
+    {
+      "tipo": "discord",
+      "nome": "OpenAI Discord",
+      "url": "https://discord.com/invite/openai",
+      "handle": null,
+      "observacao": null
+    },
+    {
+      "tipo": "outro",
+      "nome": "Fórum de desenvolvedores",
+      "url": "https://community.openai.com",
+      "handle": null,
+      "observacao": "avisos de desativação são postados na categoria Deprecations"
+    }
+  ],
+  "planos": [
+    {
+      "nome": "Free",
+      "publico": "individual",
+      "preco_mensal_usd": 0,
+      "preco_anual_usd": null,
+      "inclui": "Chat de texto ilimitado (modelo padrão GPT-5.6 Luna; GPT-6 Luna no app desktop em Work e Codex); acesso limitado a imagem, upload, voz, deep research e Codex",
+      "limites": "Ferramentas com teto; com anúncios; sem recursos de nuvem do Codex",
+      "fonte_url": "https://geotoolbox.ai/blog/chatgpt-pricing",
+      "conferido_em": "2026-10-01"
+    },
+    {
+      "nome": "Go",
+      "publico": "individual",
+      "preco_mensal_usd": 8,
+      "preco_anual_usd": null,
+      "inclui": "Mesmo modelo padrão do Free com mais mensagens com ferramentas e mais uploads; Codex só com GPT-6 Luna no app desktop",
+      "limites": "Com anúncios; sem ferramentas avançadas nem nuvem do Codex. Preço de US$8 é o dos EUA",
+      "fonte_url": "https://geotoolbox.ai/blog/chatgpt-pricing",
+      "conferido_em": "2026-10-01"
+    },
+    {
+      "nome": "Plus",
+      "publico": "individual",
+      "preco_mensal_usd": 20,
+      "preco_anual_usd": null,
+      "inclui": "ChatGPT Work, GPT-6 Astra/Sol/Luna, Codex (CLI, IDE, nuvem), deep research, agente",
+      "limites": "Codex em janela de 5 h + teto semanal: 5-45 mensagens locais no GPT-6 Astra, 15-150 no GPT-6 Sol, 350-3.000 no GPT-6 Luna por 5 h",
+      "fonte_url": "https://www.cloudzero.com/blog/openai-codex-pricing/",
+      "conferido_em": "2026-10-01"
+    },
+    {
+      "nome": "Pro 100",
+      "publico": "individual",
+      "preco_mensal_usd": 100,
+      "preco_anual_usd": null,
+      "inclui": "Cerca de 5x o uso do Plus; elegível a Dots (primeiro dot incluso)",
+      "limites": "5x Plus",
+      "fonte_url": "https://felloai.com/openai-dots/",
+      "conferido_em": "2026-10-01"
+    },
+    {
+      "nome": "Pro 200",
+      "publico": "individual",
+      "preco_mensal_usd": 200,
+      "preco_anual_usd": null,
+      "inclui": "10x o uso do Plus em ChatGPT Work e Codex; GPT-6 Pro no chat",
+      "limites": "Reduzido no DevDay 2026-09-29: de 20x para 10x Plus; GPT-6 Pro de 200 para 100 mensagens/semana. Assinantes atuais mantêm a cota anterior até 2026-10-29",
+      "fonte_url": "https://thenextweb.com/news/openai-devday-pro-200-usage-cut-pro-500-plan",
+      "conferido_em": "2026-10-01"
+    },
+    {
+      "nome": "Pro 500",
+      "publico": "individual",
+      "preco_mensal_usd": 500,
+      "preco_anual_usd": null,
+      "inclui": "25x o uso do Plus e Astra Ultrafast (tier de velocidade mais rápido)",
+      "limites": "Lançado no DevDay 2026-09-29",
+      "fonte_url": "https://fortune.com/2026/09/29/openai-takes-on-metas-muse-with-new-dot-agents-and-unveils-a-potential-google-workspace-competitor/",
+      "conferido_em": "2026-10-01"
+    },
+    {
+      "nome": "Business",
+      "publico": "equipe",
+      "preco_mensal_usd": 25,
+      "preco_anual_usd": 240,
+      "inclui": "Workspace de equipe, ChatGPT Work, Codex, conectores, sem treino com dados",
+      "limites": "US$25/usuário/mês mensal ou US$20/usuário/mês no anual (anual registrado = 12 x 20 por usuário); mínimo de 2 assentos",
+      "fonte_url": "https://www.cloudzero.com/blog/how-much-does-chatgpt-cost/",
+      "conferido_em": "2026-10-01"
+    },
+    {
+      "nome": "Enterprise",
+      "publico": "empresa",
+      "preco_mensal_usd": null,
+      "preco_anual_usd": null,
+      "inclui": "Controles corporativos, SSO, retenção de dados, Codex, ChatGPT Work",
+      "limites": "Preço sob consulta com vendas",
+      "fonte_url": "https://openai.com/chatgpt/pricing",
+      "conferido_em": "2026-10-01"
+    },
+    {
+      "nome": "Edu (ChatGPT Edu)",
+      "publico": "estudante",
+      "preco_mensal_usd": null,
+      "preco_anual_usd": null,
+      "inclui": "ChatGPT para universidades, contratado pela instituição; inclui Codex e ChatGPT Work",
+      "limites": "Preço sob consulta; contratado pela universidade, não pelo aluno",
+      "fonte_url": "https://www.cloudzero.com/blog/openai-codex-pricing/",
+      "conferido_em": "2026-10-01"
+    },
+    {
+      "nome": "API (pague pelo uso)",
+      "publico": "api",
+      "preco_mensal_usd": null,
+      "preco_anual_usd": null,
+      "inclui": "Acesso a todos os modelos por token; Batch e Flex com 50% de desconto; Priority com ágio",
+      "limites": "Compra mínima de US$5 de créditos; créditos expiram em 1 ano (segundo blogs)",
+      "fonte_url": "https://developers.openai.com/api/docs/pricing",
+      "conferido_em": "2026-10-01"
+    }
+  ],
+  "modelos": [
+    {
+      "id": "openai/gpt-6-astra",
+      "nome": "GPT-6 Astra",
+      "tipo": "texto",
+      "pesos_abertos": false,
+      "lancado_em": "2026-09-03",
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": 922000,
+      "preco": {
+        "entrada_usd_mtok": 10.0,
+        "saida_usd_mtok": 50.0,
+        "fonte_url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json",
+        "divergencia": "Confere com datanorth.ai/orcarouter.ai (US$10/US$50, cache US$1). Contexto: imprensa cita 1M/1,05M; LiteLLM 922.000 de entrada."
+      },
+      "outros_precos": [
+        {
+          "unidade": "mtok_cache",
+          "valor_usd": 1.0,
+          "condicao": "leitura de cache (entrada em cache), por 1M tokens",
+          "fonte_url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json"
+        },
+        {
+          "unidade": "mtok_cache",
+          "valor_usd": 12.5,
+          "condicao": "escrita de cache, por 1M tokens",
+          "fonte_url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json"
+        },
+        {
+          "unidade": "outro",
+          "valor_usd": 5.0,
+          "condicao": "entrada via Batch API, US$ por 1M tokens (saída Batch: 25.0)",
+          "fonte_url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json"
+        },
+        {
+          "unidade": "outro",
+          "valor_usd": 60.0,
+          "condicao": "entrada no modo Ultrafast, US$ por 1M tokens (saída Ultrafast: 300.0)",
+          "fonte_url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json"
+        },
+        {
+          "unidade": "outro",
+          "valor_usd": 20.0,
+          "condicao": "entrada acima de 272k tokens de prompt, US$ por 1M tokens (saída: 75.0)",
+          "fonte_url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json"
+        }
+      ],
+      "notas": [
+        {
+          "benchmark": "aa_index",
+          "valor": 53,
+          "medido_em": "2026-10-01",
+          "fonte_url": "https://artificialanalysis.ai/models/gpt-6-astra",
+          "observacao": "variante max (52,7 sem arredondar segundo orcarouter.ai). Artificial Analysis bloqueado pelo proxy; valor lido no trecho do resultado de busca que cita a página da AA"
+        }
+      ]
+    },
+    {
+      "id": "openai/gpt-6.1-sol",
+      "nome": "GPT-6.1 Sol",
+      "tipo": "texto",
+      "pesos_abertos": false,
+      "lancado_em": "2026-09-29",
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": 922000,
+      "preco": {
+        "entrada_usd_mtok": 2.0,
+        "saida_usd_mtok": 10.0,
+        "fonte_url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json",
+        "divergencia": "Confere com orcarouter.ai (US$2 / cache US$0,10 / US$10). Imprensa cita contexto de 1.050.000; LiteLLM 922.000 de entrada."
+      },
+      "outros_precos": [
+        {
+          "unidade": "mtok_cache",
+          "valor_usd": 0.1,
+          "condicao": "leitura de cache (entrada em cache), por 1M tokens",
+          "fonte_url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json"
+        },
+        {
+          "unidade": "mtok_cache",
+          "valor_usd": 2.5,
+          "condicao": "escrita de cache, por 1M tokens",
+          "fonte_url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json"
+        },
+        {
+          "unidade": "outro",
+          "valor_usd": 1.0,
+          "condicao": "entrada via Batch API, US$ por 1M tokens (saída Batch: 5.0)",
+          "fonte_url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json"
+        },
+        {
+          "unidade": "outro",
+          "valor_usd": 4.0,
+          "condicao": "entrada acima de 272k tokens de prompt, US$ por 1M tokens (saída: 15.0)",
+          "fonte_url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json"
+        }
+      ],
+      "notas": [
+        {
+          "benchmark": "aa_index",
+          "valor": 52,
+          "medido_em": "2026-10-01",
+          "fonte_url": "https://artificialanalysis.ai/models/releases/gpt-6-1-sol",
+          "observacao": "variante max (51,8 sem arredondar segundo orcarouter.ai). Artificial Analysis bloqueado pelo proxy; valor lido no trecho do resultado de busca que cita a página da AA"
+        }
+      ]
+    },
+    {
+      "id": "openai/gpt-6-sol",
+      "nome": "GPT-6 Sol",
+      "tipo": "texto",
+      "pesos_abertos": false,
+      "lancado_em": "2026-09-22",
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": 922000,
+      "preco": {
+        "entrada_usd_mtok": 2.0,
+        "saida_usd_mtok": 10.0,
+        "fonte_url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json",
+        "divergencia": "Confere com marktechpost/technology.org (Sol US$2/US$10; Luna US$0,10/US$0,50). GPT-6 Sol foi sucedido pelo GPT-6.1 Sol em 2026-09-29."
+      },
+      "outros_precos": [
+        {
+          "unidade": "mtok_cache",
+          "valor_usd": 0.2,
+          "condicao": "leitura de cache (entrada em cache), por 1M tokens",
+          "fonte_url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json"
+        },
+        {
+          "unidade": "mtok_cache",
+          "valor_usd": 2.5,
+          "condicao": "escrita de cache, por 1M tokens",
+          "fonte_url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json"
+        },
+        {
+          "unidade": "outro",
+          "valor_usd": 1.0,
+          "condicao": "entrada via Batch API, US$ por 1M tokens (saída Batch: 5.0)",
+          "fonte_url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json"
+        },
+        {
+          "unidade": "outro",
+          "valor_usd": 4.0,
+          "condicao": "entrada acima de 272k tokens de prompt, US$ por 1M tokens (saída: 15.0)",
+          "fonte_url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json"
+        }
+      ],
+      "notas": []
+    },
+    {
+      "id": "openai/gpt-6-luna",
+      "nome": "GPT-6 Luna",
+      "tipo": "texto",
+      "pesos_abertos": false,
+      "lancado_em": "2026-09-22",
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": 922000,
+      "preco": {
+        "entrada_usd_mtok": 0.1,
+        "saida_usd_mtok": 0.5,
+        "fonte_url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json",
+        "divergencia": "Confere com marktechpost/technology.org (Sol US$2/US$10; Luna US$0,10/US$0,50). GPT-6 Sol foi sucedido pelo GPT-6.1 Sol em 2026-09-29."
+      },
+      "outros_precos": [
+        {
+          "unidade": "mtok_cache",
+          "valor_usd": 0.01,
+          "condicao": "leitura de cache (entrada em cache), por 1M tokens",
+          "fonte_url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json"
+        },
+        {
+          "unidade": "mtok_cache",
+          "valor_usd": 0.125,
+          "condicao": "escrita de cache, por 1M tokens",
+          "fonte_url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json"
+        },
+        {
+          "unidade": "outro",
+          "valor_usd": 0.05,
+          "condicao": "entrada via Batch API, US$ por 1M tokens (saída Batch: 0.25)",
+          "fonte_url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json"
+        },
+        {
+          "unidade": "outro",
+          "valor_usd": 0.2,
+          "condicao": "entrada acima de 272k tokens de prompt, US$ por 1M tokens (saída: 0.75)",
+          "fonte_url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json"
+        }
+      ],
+      "notas": [
+        {
+          "benchmark": "aa_index",
+          "valor": 37,
+          "medido_em": "2026-10-01",
+          "fonte_url": "https://artificialanalysis.ai/models/gpt-6-luna",
+          "observacao": "variante max. Artificial Analysis bloqueado pelo proxy; valor lido no trecho do resultado de busca que cita a página da AA"
+        }
+      ]
+    },
+    {
+      "id": "openai/gpt-5.6-sol",
+      "nome": "GPT-5.6 Sol",
+      "tipo": "texto",
+      "pesos_abertos": false,
+      "lancado_em": "2026-06-26",
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": 922000,
+      "preco": {
+        "entrada_usd_mtok": 5,
+        "saida_usd_mtok": 30,
+        "fonte_url": "https://www.layer3labs.io/guides/gpt-5-6-pricing",
+        "divergencia": "LiteLLM lista US$4/US$20; buscas citando a página oficial (após corte de 2026-07-30) dão US$5/US$30. Oficial bloqueado pelo proxy; registrado o valor atribuído à oficial."
+      },
+      "outros_precos": [
+        {
+          "unidade": "mtok_cache",
+          "valor_usd": 0.4,
+          "condicao": "leitura de cache segundo LiteLLM (diverge do preço atribuído à oficial)",
+          "fonte_url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json"
+        },
+        {
+          "unidade": "mtok_cache",
+          "valor_usd": 5.0,
+          "condicao": "escrita de cache, por 1M tokens",
+          "fonte_url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json"
+        },
+        {
+          "unidade": "outro",
+          "valor_usd": 2.0,
+          "condicao": "entrada via Batch API, US$ por 1M tokens (saída Batch: 10.0)",
+          "fonte_url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json"
+        },
+        {
+          "unidade": "outro",
+          "valor_usd": 8.0,
+          "condicao": "entrada acima de 272k tokens de prompt, US$ por 1M tokens (saída: 30.0)",
+          "fonte_url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json"
+        }
+      ],
+      "notas": [
+        {
+          "benchmark": "aa_index",
+          "valor": 47,
+          "medido_em": "2026-10-01",
+          "fonte_url": "https://artificialanalysis.ai/models/gpt-5-6-sol",
+          "observacao": "variante max. Há nota divergente (61) em officechai.com, provavelmente de outra versão do índice. Artificial Analysis bloqueado pelo proxy; valor lido no trecho do resultado de busca que cita a página da AA"
+        }
+      ]
+    },
+    {
+      "id": "openai/gpt-5.6-terra",
+      "nome": "GPT-5.6 Terra",
+      "tipo": "texto",
+      "pesos_abertos": false,
+      "lancado_em": "2026-06-26",
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": 922000,
+      "preco": {
+        "entrada_usd_mtok": 2.0,
+        "saida_usd_mtok": 12.0,
+        "fonte_url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json",
+        "divergencia": "Confere com layer3labs.io/cloudzero (Terra US$2/US$12, Luna US$0,20/US$1,20 após corte de 2026-07-30)."
+      },
+      "outros_precos": [
+        {
+          "unidade": "mtok_cache",
+          "valor_usd": 0.2,
+          "condicao": "leitura de cache (entrada em cache), por 1M tokens",
+          "fonte_url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json"
+        },
+        {
+          "unidade": "mtok_cache",
+          "valor_usd": 2.5,
+          "condicao": "escrita de cache, por 1M tokens",
+          "fonte_url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json"
+        },
+        {
+          "unidade": "outro",
+          "valor_usd": 1.0,
+          "condicao": "entrada via Batch API, US$ por 1M tokens (saída Batch: 6.0)",
+          "fonte_url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json"
+        },
+        {
+          "unidade": "outro",
+          "valor_usd": 4.0,
+          "condicao": "entrada acima de 272k tokens de prompt, US$ por 1M tokens (saída: 18.0)",
+          "fonte_url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json"
+        }
+      ],
+      "notas": []
+    },
+    {
+      "id": "openai/gpt-5.6-luna",
+      "nome": "GPT-5.6 Luna",
+      "tipo": "texto",
+      "pesos_abertos": false,
+      "lancado_em": "2026-06-26",
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": 922000,
+      "preco": {
+        "entrada_usd_mtok": 0.2,
+        "saida_usd_mtok": 1.2,
+        "fonte_url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json",
+        "divergencia": "Confere com layer3labs.io/cloudzero (Terra US$2/US$12, Luna US$0,20/US$1,20 após corte de 2026-07-30)."
+      },
+      "outros_precos": [
+        {
+          "unidade": "mtok_cache",
+          "valor_usd": 0.02,
+          "condicao": "leitura de cache (entrada em cache), por 1M tokens",
+          "fonte_url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json"
+        },
+        {
+          "unidade": "mtok_cache",
+          "valor_usd": 0.25,
+          "condicao": "escrita de cache, por 1M tokens",
+          "fonte_url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json"
+        },
+        {
+          "unidade": "outro",
+          "valor_usd": 0.1,
+          "condicao": "entrada via Batch API, US$ por 1M tokens (saída Batch: 0.6)",
+          "fonte_url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json"
+        },
+        {
+          "unidade": "outro",
+          "valor_usd": 0.4,
+          "condicao": "entrada acima de 272k tokens de prompt, US$ por 1M tokens (saída: 1.8)",
+          "fonte_url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json"
+        }
+      ],
+      "notas": []
+    },
+    {
+      "id": "openai/gpt-5.6-cyber",
+      "nome": "GPT-5.6 Cyber",
+      "tipo": "texto",
+      "pesos_abertos": false,
+      "lancado_em": null,
+      "status": "restrito",
+      "desativa_em": null,
+      "contexto_tokens": 400000,
+      "preco": {
+        "entrada_usd_mtok": 12.5,
+        "saida_usd_mtok": 75.0,
+        "fonte_url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json",
+        "divergencia": null
+      },
+      "outros_precos": [
+        {
+          "unidade": "mtok_cache",
+          "valor_usd": 1.25,
+          "condicao": "leitura de cache (entrada em cache), por 1M tokens",
+          "fonte_url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json"
+        },
+        {
+          "unidade": "mtok_cache",
+          "valor_usd": 15.625,
+          "condicao": "escrita de cache, por 1M tokens",
+          "fonte_url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json"
+        },
+        {
+          "unidade": "outro",
+          "valor_usd": 25.0,
+          "condicao": "entrada acima de 272k tokens de prompt, US$ por 1M tokens (saída: 112.5)",
+          "fonte_url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json"
+        }
+      ],
+      "notas": []
+    },
+    {
+      "id": "openai/gpt-5.5",
+      "nome": "GPT-5.5",
+      "tipo": "texto",
+      "pesos_abertos": false,
+      "lancado_em": null,
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": 1050000,
+      "preco": {
+        "entrada_usd_mtok": 5.0,
+        "saida_usd_mtok": 30.0,
+        "fonte_url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json",
+        "divergencia": null
+      },
+      "outros_precos": [
+        {
+          "unidade": "mtok_cache",
+          "valor_usd": 0.5,
+          "condicao": "leitura de cache (entrada em cache), por 1M tokens",
+          "fonte_url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json"
+        },
+        {
+          "unidade": "outro",
+          "valor_usd": 2.5,
+          "condicao": "entrada via Batch API, US$ por 1M tokens (saída Batch: 15.0)",
+          "fonte_url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json"
+        },
+        {
+          "unidade": "outro",
+          "valor_usd": 10.0,
+          "condicao": "entrada acima de 272k tokens de prompt, US$ por 1M tokens (saída: 45.0)",
+          "fonte_url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json"
+        }
+      ],
+      "notas": []
+    },
+    {
+      "id": "openai/gpt-5.5-pro",
+      "nome": "GPT-5.5 Pro",
+      "tipo": "texto",
+      "pesos_abertos": false,
+      "lancado_em": null,
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": 1050000,
+      "preco": {
+        "entrada_usd_mtok": 30.0,
+        "saida_usd_mtok": 180.0,
+        "fonte_url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json",
+        "divergencia": null
+      },
+      "outros_precos": [
+        {
+          "unidade": "outro",
+          "valor_usd": 15.0,
+          "condicao": "entrada via Batch API, US$ por 1M tokens (saída Batch: 90.0)",
+          "fonte_url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json"
+        },
+        {
+          "unidade": "outro",
+          "valor_usd": 60.0,
+          "condicao": "entrada acima de 272k tokens de prompt, US$ por 1M tokens (saída: 270.0)",
+          "fonte_url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json"
+        }
+      ],
+      "notas": []
+    },
+    {
+      "id": "openai/gpt-5.5-cyber",
+      "nome": "GPT-5.5 Cyber",
+      "tipo": "texto",
+      "pesos_abertos": false,
+      "lancado_em": null,
+      "status": "restrito",
+      "desativa_em": null,
+      "contexto_tokens": null,
+      "preco": {
+        "entrada_usd_mtok": 12.5,
+        "saida_usd_mtok": 75.0,
+        "fonte_url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json",
+        "divergencia": null
+      },
+      "outros_precos": [
+        {
+          "unidade": "mtok_cache",
+          "valor_usd": 1.25,
+          "condicao": "leitura de cache (entrada em cache), por 1M tokens",
+          "fonte_url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json"
+        }
+      ],
+      "notas": []
+    },
+    {
+      "id": "openai/gpt-rosalind-research",
+      "nome": "GPT Rosalind Research",
+      "tipo": "texto",
+      "pesos_abertos": false,
+      "lancado_em": null,
+      "status": "restrito",
+      "desativa_em": null,
+      "contexto_tokens": null,
+      "preco": {
+        "entrada_usd_mtok": 5.0,
+        "saida_usd_mtok": 25.0,
+        "fonte_url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json",
+        "divergencia": null
+      },
+      "outros_precos": [
+        {
+          "unidade": "mtok_cache",
+          "valor_usd": 0.5,
+          "condicao": "leitura de cache (entrada em cache), por 1M tokens",
+          "fonte_url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json"
+        }
+      ],
+      "notas": []
+    },
+    {
+      "id": "openai/gpt-5.4",
+      "nome": "GPT-5.4",
+      "tipo": "texto",
+      "pesos_abertos": false,
+      "lancado_em": null,
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": 1050000,
+      "preco": {
+        "entrada_usd_mtok": 2.5,
+        "saida_usd_mtok": 15.0,
+        "fonte_url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json",
+        "divergencia": null
+      },
+      "outros_precos": [
+        {
+          "unidade": "mtok_cache",
+          "valor_usd": 0.25,
+          "condicao": "leitura de cache (entrada em cache), por 1M tokens",
+          "fonte_url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json"
+        },
+        {
+          "unidade": "outro",
+          "valor_usd": 1.25,
+          "condicao": "entrada via Batch API, US$ por 1M tokens (saída Batch: 7.5)",
+          "fonte_url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json"
+        },
+        {
+          "unidade": "outro",
+          "valor_usd": 5.0,
+          "condicao": "entrada acima de 272k tokens de prompt, US$ por 1M tokens (saída: 22.5)",
+          "fonte_url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json"
+        }
+      ],
+      "notas": []
+    },
+    {
+      "id": "openai/gpt-5.4-pro",
+      "nome": "GPT-5.4 Pro",
+      "tipo": "texto",
+      "pesos_abertos": false,
+      "lancado_em": null,
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": 1050000,
+      "preco": {
+        "entrada_usd_mtok": 30.0,
+        "saida_usd_mtok": 180.0,
+        "fonte_url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json",
+        "divergencia": null
+      },
+      "outros_precos": [
+        {
+          "unidade": "outro",
+          "valor_usd": 15.0,
+          "condicao": "entrada via Batch API, US$ por 1M tokens (saída Batch: 90.0)",
+          "fonte_url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json"
+        },
+        {
+          "unidade": "outro",
+          "valor_usd": 60.0,
+          "condicao": "entrada acima de 272k tokens de prompt, US$ por 1M tokens (saída: 270.0)",
+          "fonte_url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json"
+        }
+      ],
+      "notas": []
+    },
+    {
+      "id": "openai/gpt-5.4-mini",
+      "nome": "GPT-5.4 mini",
+      "tipo": "texto",
+      "pesos_abertos": false,
+      "lancado_em": null,
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": 272000,
+      "preco": {
+        "entrada_usd_mtok": 0.75,
+        "saida_usd_mtok": 4.5,
+        "fonte_url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json",
+        "divergencia": null
+      },
+      "outros_precos": [
+        {
+          "unidade": "mtok_cache",
+          "valor_usd": 0.075,
+          "condicao": "leitura de cache (entrada em cache), por 1M tokens",
+          "fonte_url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json"
+        },
+        {
+          "unidade": "outro",
+          "valor_usd": 0.375,
+          "condicao": "entrada via Batch API, US$ por 1M tokens (saída Batch: 2.25)",
+          "fonte_url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json"
+        }
+      ],
+      "notas": []
+    },
+    {
+      "id": "openai/gpt-5.4-nano",
+      "nome": "GPT-5.4 nano",
+      "tipo": "texto",
+      "pesos_abertos": false,
+      "lancado_em": null,
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": 272000,
+      "preco": {
+        "entrada_usd_mtok": 0.2,
+        "saida_usd_mtok": 1.25,
+        "fonte_url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json",
+        "divergencia": null
+      },
+      "outros_precos": [
+        {
+          "unidade": "mtok_cache",
+          "valor_usd": 0.02,
+          "condicao": "leitura de cache (entrada em cache), por 1M tokens",
+          "fonte_url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json"
+        },
+        {
+          "unidade": "outro",
+          "valor_usd": 0.1,
+          "condicao": "entrada via Batch API, US$ por 1M tokens (saída Batch: 0.625)",
+          "fonte_url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json"
+        }
+      ],
+      "notas": []
+    },
+    {
+      "id": "openai/gpt-5.3-codex",
+      "nome": "GPT-5.3-Codex",
+      "tipo": "texto",
+      "pesos_abertos": false,
+      "lancado_em": null,
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": 272000,
+      "preco": {
+        "entrada_usd_mtok": 1.75,
+        "saida_usd_mtok": 14.0,
+        "fonte_url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json",
+        "divergencia": null
+      },
+      "outros_precos": [
+        {
+          "unidade": "mtok_cache",
+          "valor_usd": 0.175,
+          "condicao": "leitura de cache (entrada em cache), por 1M tokens",
+          "fonte_url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json"
+        }
+      ],
+      "notas": []
+    },
+    {
+      "id": "openai/gpt-5.2",
+      "nome": "GPT-5.2",
+      "tipo": "texto",
+      "pesos_abertos": false,
+      "lancado_em": null,
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": 272000,
+      "preco": {
+        "entrada_usd_mtok": 1.75,
+        "saida_usd_mtok": 14.0,
+        "fonte_url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json",
+        "divergencia": null
+      },
+      "outros_precos": [
+        {
+          "unidade": "mtok_cache",
+          "valor_usd": 0.175,
+          "condicao": "leitura de cache (entrada em cache), por 1M tokens",
+          "fonte_url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json"
+        },
+        {
+          "unidade": "outro",
+          "valor_usd": 0.875,
+          "condicao": "entrada via Batch API, US$ por 1M tokens (saída Batch: 7.0)",
+          "fonte_url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json"
+        }
+      ],
+      "notas": []
+    },
+    {
+      "id": "openai/gpt-5.2-pro",
+      "nome": "GPT-5.2 Pro",
+      "tipo": "texto",
+      "pesos_abertos": false,
+      "lancado_em": null,
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": 272000,
+      "preco": {
+        "entrada_usd_mtok": 21.0,
+        "saida_usd_mtok": 168.0,
+        "fonte_url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json",
+        "divergencia": null
+      },
+      "outros_precos": [
+        {
+          "unidade": "outro",
+          "valor_usd": 10.5,
+          "condicao": "entrada via Batch API, US$ por 1M tokens (saída Batch: 84.0)",
+          "fonte_url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json"
+        }
+      ],
+      "notas": []
+    },
+    {
+      "id": "openai/gpt-5.1",
+      "nome": "GPT-5.1",
+      "tipo": "texto",
+      "pesos_abertos": false,
+      "lancado_em": null,
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": 272000,
+      "preco": {
+        "entrada_usd_mtok": 1.25,
+        "saida_usd_mtok": 10.0,
+        "fonte_url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json",
+        "divergencia": null
+      },
+      "outros_precos": [
+        {
+          "unidade": "mtok_cache",
+          "valor_usd": 0.125,
+          "condicao": "leitura de cache (entrada em cache), por 1M tokens",
+          "fonte_url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json"
+        },
+        {
+          "unidade": "outro",
+          "valor_usd": 0.625,
+          "condicao": "entrada via Batch API, US$ por 1M tokens (saída Batch: 5.0)",
+          "fonte_url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json"
+        }
+      ],
+      "notas": []
+    },
+    {
+      "id": "openai/gpt-5",
+      "nome": "GPT-5",
+      "tipo": "texto",
+      "pesos_abertos": false,
+      "lancado_em": "2025-08-07",
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": 272000,
+      "preco": {
+        "entrada_usd_mtok": 1.25,
+        "saida_usd_mtok": 10.0,
+        "fonte_url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json",
+        "divergencia": null
+      },
+      "outros_precos": [
+        {
+          "unidade": "mtok_cache",
+          "valor_usd": 0.125,
+          "condicao": "leitura de cache (entrada em cache), por 1M tokens",
+          "fonte_url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json"
+        },
+        {
+          "unidade": "outro",
+          "valor_usd": 0.625,
+          "condicao": "entrada via Batch API, US$ por 1M tokens (saída Batch: 5.0)",
+          "fonte_url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json"
+        }
+      ],
+      "notas": []
+    },
+    {
+      "id": "openai/gpt-5-pro",
+      "nome": "GPT-5 Pro",
+      "tipo": "texto",
+      "pesos_abertos": false,
+      "lancado_em": null,
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": 400000,
+      "preco": {
+        "entrada_usd_mtok": 15.0,
+        "saida_usd_mtok": 120.0,
+        "fonte_url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json",
+        "divergencia": null
+      },
+      "outros_precos": [
+        {
+          "unidade": "outro",
+          "valor_usd": 7.5,
+          "condicao": "entrada via Batch API, US$ por 1M tokens (saída Batch: 60.0)",
+          "fonte_url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json"
+        }
+      ],
+      "notas": []
+    },
+    {
+      "id": "openai/gpt-5-mini",
+      "nome": "GPT-5 mini",
+      "tipo": "texto",
+      "pesos_abertos": false,
+      "lancado_em": "2025-08-07",
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": 272000,
+      "preco": {
+        "entrada_usd_mtok": 0.25,
+        "saida_usd_mtok": 2.0,
+        "fonte_url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json",
+        "divergencia": null
+      },
+      "outros_precos": [
+        {
+          "unidade": "mtok_cache",
+          "valor_usd": 0.025,
+          "condicao": "leitura de cache (entrada em cache), por 1M tokens",
+          "fonte_url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json"
+        },
+        {
+          "unidade": "outro",
+          "valor_usd": 0.125,
+          "condicao": "entrada via Batch API, US$ por 1M tokens (saída Batch: 1.0)",
+          "fonte_url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json"
+        }
+      ],
+      "notas": []
+    },
+    {
+      "id": "openai/gpt-5-nano",
+      "nome": "GPT-5 nano",
+      "tipo": "texto",
+      "pesos_abertos": false,
+      "lancado_em": "2025-08-07",
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": 272000,
+      "preco": {
+        "entrada_usd_mtok": 0.05,
+        "saida_usd_mtok": 0.4,
+        "fonte_url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json",
+        "divergencia": null
+      },
+      "outros_precos": [
+        {
+          "unidade": "mtok_cache",
+          "valor_usd": 0.005,
+          "condicao": "leitura de cache (entrada em cache), por 1M tokens",
+          "fonte_url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json"
+        },
+        {
+          "unidade": "outro",
+          "valor_usd": 0.025,
+          "condicao": "entrada via Batch API, US$ por 1M tokens (saída Batch: 0.2)",
+          "fonte_url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json"
+        }
+      ],
+      "notas": []
+    },
+    {
+      "id": "openai/gpt-5-search-api",
+      "nome": "GPT-5 Search API",
+      "tipo": "texto",
+      "pesos_abertos": false,
+      "lancado_em": null,
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": 272000,
+      "preco": {
+        "entrada_usd_mtok": 1.25,
+        "saida_usd_mtok": 10.0,
+        "fonte_url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json",
+        "divergencia": null
+      },
+      "outros_precos": [
+        {
+          "unidade": "mtok_cache",
+          "valor_usd": 0.125,
+          "condicao": "leitura de cache (entrada em cache), por 1M tokens",
+          "fonte_url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json"
+        }
+      ],
+      "notas": []
+    },
+    {
+      "id": "openai/gpt-4.1",
+      "nome": "GPT-4.1",
+      "tipo": "texto",
+      "pesos_abertos": false,
+      "lancado_em": "2025-04-14",
+      "status": "legado",
+      "desativa_em": null,
+      "contexto_tokens": 1047576,
+      "preco": {
+        "entrada_usd_mtok": 2.0,
+        "saida_usd_mtok": 8.0,
+        "fonte_url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json",
+        "divergencia": null
+      },
+      "outros_precos": [
+        {
+          "unidade": "mtok_cache",
+          "valor_usd": 0.5,
+          "condicao": "leitura de cache (entrada em cache), por 1M tokens",
+          "fonte_url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json"
+        },
+        {
+          "unidade": "outro",
+          "valor_usd": 1.0,
+          "condicao": "entrada via Batch API, US$ por 1M tokens (saída Batch: 4.0)",
+          "fonte_url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json"
+        }
+      ],
+      "notas": []
+    },
+    {
+      "id": "openai/gpt-4.1-mini",
+      "nome": "GPT-4.1 mini",
+      "tipo": "texto",
+      "pesos_abertos": false,
+      "lancado_em": "2025-04-14",
+      "status": "legado",
+      "desativa_em": null,
+      "contexto_tokens": 1047576,
+      "preco": {
+        "entrada_usd_mtok": 0.4,
+        "saida_usd_mtok": 1.6,
+        "fonte_url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json",
+        "divergencia": null
+      },
+      "outros_precos": [
+        {
+          "unidade": "mtok_cache",
+          "valor_usd": 0.1,
+          "condicao": "leitura de cache (entrada em cache), por 1M tokens",
+          "fonte_url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json"
+        },
+        {
+          "unidade": "outro",
+          "valor_usd": 0.2,
+          "condicao": "entrada via Batch API, US$ por 1M tokens (saída Batch: 0.8)",
+          "fonte_url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json"
+        }
+      ],
+      "notas": []
+    },
+    {
+      "id": "openai/gpt-4.1-nano",
+      "nome": "GPT-4.1 nano",
+      "tipo": "texto",
+      "pesos_abertos": false,
+      "lancado_em": "2025-04-14",
+      "status": "desativacao_anunciada",
+      "desativa_em": "2026-10-23",
+      "contexto_tokens": 1047576,
+      "preco": {
+        "entrada_usd_mtok": 0.1,
+        "saida_usd_mtok": 0.4,
+        "fonte_url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json",
+        "divergencia": null
+      },
+      "outros_precos": [
+        {
+          "unidade": "mtok_cache",
+          "valor_usd": 0.025,
+          "condicao": "leitura de cache (entrada em cache), por 1M tokens",
+          "fonte_url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json"
+        },
+        {
+          "unidade": "outro",
+          "valor_usd": 0.05,
+          "condicao": "entrada via Batch API, US$ por 1M tokens (saída Batch: 0.2)",
+          "fonte_url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json"
+        }
+      ],
+      "notas": []
+    },
+    {
+      "id": "openai/gpt-4o",
+      "nome": "GPT-4o",
+      "tipo": "texto",
+      "pesos_abertos": false,
+      "lancado_em": "2024-05-13",
+      "status": "legado",
+      "desativa_em": null,
+      "contexto_tokens": 128000,
+      "preco": {
+        "entrada_usd_mtok": 2.5,
+        "saida_usd_mtok": 10.0,
+        "fonte_url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json",
+        "divergencia": null
+      },
+      "outros_precos": [
+        {
+          "unidade": "mtok_cache",
+          "valor_usd": 1.25,
+          "condicao": "leitura de cache (entrada em cache), por 1M tokens",
+          "fonte_url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json"
+        },
+        {
+          "unidade": "outro",
+          "valor_usd": 1.25,
+          "condicao": "entrada via Batch API, US$ por 1M tokens (saída Batch: 5.0)",
+          "fonte_url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json"
+        }
+      ],
+      "notas": []
+    },
+    {
+      "id": "openai/gpt-4o-mini",
+      "nome": "GPT-4o mini",
+      "tipo": "texto",
+      "pesos_abertos": false,
+      "lancado_em": "2024-07-18",
+      "status": "legado",
+      "desativa_em": null,
+      "contexto_tokens": 128000,
+      "preco": {
+        "entrada_usd_mtok": 0.15,
+        "saida_usd_mtok": 0.6,
+        "fonte_url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json",
+        "divergencia": null
+      },
+      "outros_precos": [
+        {
+          "unidade": "mtok_cache",
+          "valor_usd": 0.075,
+          "condicao": "leitura de cache (entrada em cache), por 1M tokens",
+          "fonte_url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json"
+        },
+        {
+          "unidade": "outro",
+          "valor_usd": 0.075,
+          "condicao": "entrada via Batch API, US$ por 1M tokens (saída Batch: 0.3)",
+          "fonte_url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json"
+        }
+      ],
+      "notas": []
+    },
+    {
+      "id": "openai/gpt-4o-search-preview",
+      "nome": "GPT-4o Search Preview",
+      "tipo": "texto",
+      "pesos_abertos": false,
+      "lancado_em": null,
+      "status": "legado",
+      "desativa_em": null,
+      "contexto_tokens": 128000,
+      "preco": {
+        "entrada_usd_mtok": 2.5,
+        "saida_usd_mtok": 10.0,
+        "fonte_url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json",
+        "divergencia": null
+      },
+      "outros_precos": [
+        {
+          "unidade": "mtok_cache",
+          "valor_usd": 1.25,
+          "condicao": "leitura de cache (entrada em cache), por 1M tokens",
+          "fonte_url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json"
+        },
+        {
+          "unidade": "outro",
+          "valor_usd": 1.25,
+          "condicao": "entrada via Batch API, US$ por 1M tokens (saída Batch: 5.0)",
+          "fonte_url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json"
+        }
+      ],
+      "notas": []
+    },
+    {
+      "id": "openai/gpt-4o-mini-search-preview",
+      "nome": "GPT-4o mini Search Preview",
+      "tipo": "texto",
+      "pesos_abertos": false,
+      "lancado_em": null,
+      "status": "legado",
+      "desativa_em": null,
+      "contexto_tokens": 128000,
+      "preco": {
+        "entrada_usd_mtok": 0.15,
+        "saida_usd_mtok": 0.6,
+        "fonte_url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json",
+        "divergencia": null
+      },
+      "outros_precos": [
+        {
+          "unidade": "mtok_cache",
+          "valor_usd": 0.075,
+          "condicao": "leitura de cache (entrada em cache), por 1M tokens",
+          "fonte_url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json"
+        },
+        {
+          "unidade": "outro",
+          "valor_usd": 0.075,
+          "condicao": "entrada via Batch API, US$ por 1M tokens (saída Batch: 0.3)",
+          "fonte_url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json"
+        }
+      ],
+      "notas": []
+    },
+    {
+      "id": "openai/o3",
+      "nome": "o3",
+      "tipo": "texto",
+      "pesos_abertos": false,
+      "lancado_em": "2025-04-16",
+      "status": "legado",
+      "desativa_em": null,
+      "contexto_tokens": 200000,
+      "preco": {
+        "entrada_usd_mtok": 2.0,
+        "saida_usd_mtok": 8.0,
+        "fonte_url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json",
+        "divergencia": null
+      },
+      "outros_precos": [
+        {
+          "unidade": "mtok_cache",
+          "valor_usd": 0.5,
+          "condicao": "leitura de cache (entrada em cache), por 1M tokens",
+          "fonte_url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json"
+        },
+        {
+          "unidade": "outro",
+          "valor_usd": 1.0,
+          "condicao": "entrada via Batch API, US$ por 1M tokens (saída Batch: 4.0)",
+          "fonte_url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json"
+        }
+      ],
+      "notas": []
+    },
+    {
+      "id": "openai/o3-pro",
+      "nome": "o3-pro",
+      "tipo": "texto",
+      "pesos_abertos": false,
+      "lancado_em": null,
+      "status": "legado",
+      "desativa_em": null,
+      "contexto_tokens": 200000,
+      "preco": {
+        "entrada_usd_mtok": 20.0,
+        "saida_usd_mtok": 80.0,
+        "fonte_url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json",
+        "divergencia": null
+      },
+      "outros_precos": [
+        {
+          "unidade": "outro",
+          "valor_usd": 10.0,
+          "condicao": "entrada via Batch API, US$ por 1M tokens (saída Batch: 40.0)",
+          "fonte_url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json"
+        }
+      ],
+      "notas": []
+    },
+    {
+      "id": "openai/o4-mini",
+      "nome": "o4-mini",
+      "tipo": "texto",
+      "pesos_abertos": false,
+      "lancado_em": "2025-04-16",
+      "status": "desativacao_anunciada",
+      "desativa_em": "2026-10-23",
+      "contexto_tokens": 200000,
+      "preco": {
+        "entrada_usd_mtok": 1.1,
+        "saida_usd_mtok": 4.4,
+        "fonte_url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json",
+        "divergencia": null
+      },
+      "outros_precos": [
+        {
+          "unidade": "mtok_cache",
+          "valor_usd": 0.275,
+          "condicao": "leitura de cache (entrada em cache), por 1M tokens",
+          "fonte_url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json"
+        },
+        {
+          "unidade": "outro",
+          "valor_usd": 0.55,
+          "condicao": "entrada via Batch API, US$ por 1M tokens (saída Batch: 2.2)",
+          "fonte_url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json"
+        }
+      ],
+      "notas": []
+    },
+    {
+      "id": "openai/o3-mini",
+      "nome": "o3-mini",
+      "tipo": "texto",
+      "pesos_abertos": false,
+      "lancado_em": "2025-01-31",
+      "status": "desativacao_anunciada",
+      "desativa_em": "2026-10-23",
+      "contexto_tokens": 200000,
+      "preco": {
+        "entrada_usd_mtok": 1.1,
+        "saida_usd_mtok": 4.4,
+        "fonte_url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json",
+        "divergencia": null
+      },
+      "outros_precos": [
+        {
+          "unidade": "mtok_cache",
+          "valor_usd": 0.55,
+          "condicao": "leitura de cache (entrada em cache), por 1M tokens",
+          "fonte_url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json"
+        },
+        {
+          "unidade": "outro",
+          "valor_usd": 0.55,
+          "condicao": "entrada via Batch API, US$ por 1M tokens (saída Batch: 2.2)",
+          "fonte_url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json"
+        }
+      ],
+      "notas": []
+    },
+    {
+      "id": "openai/o1",
+      "nome": "o1",
+      "tipo": "texto",
+      "pesos_abertos": false,
+      "lancado_em": "2024-12-17",
+      "status": "desativacao_anunciada",
+      "desativa_em": "2026-10-23",
+      "contexto_tokens": 200000,
+      "preco": {
+        "entrada_usd_mtok": 15.0,
+        "saida_usd_mtok": 60.0,
+        "fonte_url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json",
+        "divergencia": null
+      },
+      "outros_precos": [
+        {
+          "unidade": "mtok_cache",
+          "valor_usd": 7.5,
+          "condicao": "leitura de cache (entrada em cache), por 1M tokens",
+          "fonte_url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json"
+        },
+        {
+          "unidade": "outro",
+          "valor_usd": 7.5,
+          "condicao": "entrada via Batch API, US$ por 1M tokens (saída Batch: 30.0)",
+          "fonte_url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json"
+        }
+      ],
+      "notas": []
+    },
+    {
+      "id": "openai/o1-pro",
+      "nome": "o1-pro",
+      "tipo": "texto",
+      "pesos_abertos": false,
+      "lancado_em": null,
+      "status": "desativacao_anunciada",
+      "desativa_em": "2026-10-23",
+      "contexto_tokens": 200000,
+      "preco": {
+        "entrada_usd_mtok": 150.0,
+        "saida_usd_mtok": 600.0,
+        "fonte_url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json",
+        "divergencia": null
+      },
+      "outros_precos": [
+        {
+          "unidade": "outro",
+          "valor_usd": 75.0,
+          "condicao": "entrada via Batch API, US$ por 1M tokens (saída Batch: 300.0)",
+          "fonte_url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json"
+        }
+      ],
+      "notas": []
+    },
+    {
+      "id": "openai/gpt-4-turbo",
+      "nome": "GPT-4 Turbo",
+      "tipo": "texto",
+      "pesos_abertos": false,
+      "lancado_em": null,
+      "status": "desativacao_anunciada",
+      "desativa_em": "2026-10-23",
+      "contexto_tokens": 128000,
+      "preco": {
+        "entrada_usd_mtok": 10.0,
+        "saida_usd_mtok": 30.0,
+        "fonte_url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json",
+        "divergencia": null
+      },
+      "outros_precos": [],
+      "notas": []
+    },
+    {
+      "id": "openai/gpt-4",
+      "nome": "GPT-4",
+      "tipo": "texto",
+      "pesos_abertos": false,
+      "lancado_em": null,
+      "status": "desativacao_anunciada",
+      "desativa_em": "2026-10-23",
+      "contexto_tokens": 8192,
+      "preco": {
+        "entrada_usd_mtok": 30.0,
+        "saida_usd_mtok": 60.0,
+        "fonte_url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json",
+        "divergencia": null
+      },
+      "outros_precos": [],
+      "notas": []
+    },
+    {
+      "id": "openai/gpt-3.5-turbo",
+      "nome": "GPT-3.5 Turbo",
+      "tipo": "texto",
+      "pesos_abertos": false,
+      "lancado_em": null,
+      "status": "desativacao_anunciada",
+      "desativa_em": "2026-10-23",
+      "contexto_tokens": 16385,
+      "preco": {
+        "entrada_usd_mtok": 0.5,
+        "saida_usd_mtok": 1.5,
+        "fonte_url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json",
+        "divergencia": null
+      },
+      "outros_precos": [],
+      "notas": []
+    },
+    {
+      "id": "openai/gpt-3.5-turbo-16k",
+      "nome": "GPT-3.5 Turbo 16k",
+      "tipo": "texto",
+      "pesos_abertos": false,
+      "lancado_em": null,
+      "status": "desativacao_anunciada",
+      "desativa_em": "2026-10-23",
+      "contexto_tokens": 16385,
+      "preco": {
+        "entrada_usd_mtok": 3.0,
+        "saida_usd_mtok": 4.0,
+        "fonte_url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json",
+        "divergencia": null
+      },
+      "outros_precos": [],
+      "notas": []
+    },
+    {
+      "id": "openai/gpt-image-2.5-flare",
+      "nome": "GPT Image 2.5 Flare",
+      "tipo": "imagem",
+      "pesos_abertos": false,
+      "lancado_em": null,
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": null,
+      "preco": {
+        "entrada_usd_mtok": 5.0,
+        "saida_usd_mtok": 30.0,
+        "fonte_url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json",
+        "divergencia": "Confere com orcarouter/atlascloud: US$5 entrada de texto, US$8 entrada de imagem, US$30 saída de imagem por 1M tokens. 'saida_usd_mtok' aqui = saída de imagem."
+      },
+      "outros_precos": [
+        {
+          "unidade": "mtok_cache",
+          "valor_usd": 1.25,
+          "condicao": "leitura de cache (entrada em cache), por 1M tokens",
+          "fonte_url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json"
+        },
+        {
+          "unidade": "outro",
+          "valor_usd": 8.0,
+          "condicao": "entrada de imagem, US$ por 1M tokens de imagem",
+          "fonte_url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json"
+        },
+        {
+          "unidade": "imagem",
+          "valor_usd": 0.053,
+          "condicao": "1024x1024 qualidade high (low US$0,006; medium US$0,013; x-high US$0,094; segundo blog)",
+          "fonte_url": "https://www.atlascloud.ai/blog/tips/gpt-image-2.5-api-cost"
+        }
+      ],
+      "notas": []
+    },
+    {
+      "id": "openai/gpt-image-2.5-sunburst",
+      "nome": "GPT Image 2.5 Sunburst",
+      "tipo": "imagem",
+      "pesos_abertos": false,
+      "lancado_em": null,
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": null,
+      "preco": {
+        "entrada_usd_mtok": 5.0,
+        "saida_usd_mtok": 30.0,
+        "fonte_url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json",
+        "divergencia": "Confere com orcarouter/atlascloud: US$5 entrada de texto, US$8 entrada de imagem, US$30 saída de imagem por 1M tokens. 'saida_usd_mtok' aqui = saída de imagem."
+      },
+      "outros_precos": [
+        {
+          "unidade": "mtok_cache",
+          "valor_usd": 1.25,
+          "condicao": "leitura de cache (entrada em cache), por 1M tokens",
+          "fonte_url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json"
+        },
+        {
+          "unidade": "outro",
+          "valor_usd": 8.0,
+          "condicao": "entrada de imagem, US$ por 1M tokens de imagem",
+          "fonte_url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json"
+        },
+        {
+          "unidade": "imagem",
+          "valor_usd": 0.053,
+          "condicao": "1024x1024 qualidade high (low US$0,006; medium US$0,013; x-high US$0,094; segundo blog)",
+          "fonte_url": "https://www.atlascloud.ai/blog/tips/gpt-image-2.5-api-cost"
+        }
+      ],
+      "notas": []
+    },
+    {
+      "id": "openai/gpt-image-2",
+      "nome": "GPT Image 2",
+      "tipo": "imagem",
+      "pesos_abertos": false,
+      "lancado_em": null,
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": null,
+      "preco": {
+        "entrada_usd_mtok": 5.0,
+        "saida_usd_mtok": 30.0,
+        "fonte_url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json",
+        "divergencia": "'saida_usd_mtok' = saída de imagem por 1M tokens de imagem; entrada = texto."
+      },
+      "outros_precos": [
+        {
+          "unidade": "mtok_cache",
+          "valor_usd": 1.25,
+          "condicao": "leitura de cache (entrada em cache), por 1M tokens",
+          "fonte_url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json"
+        },
+        {
+          "unidade": "outro",
+          "valor_usd": 8.0,
+          "condicao": "entrada de imagem, US$ por 1M tokens de imagem",
+          "fonte_url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json"
+        }
+      ],
+      "notas": []
+    },
+    {
+      "id": "openai/gpt-image-1.5",
+      "nome": "GPT Image 1.5",
+      "tipo": "imagem",
+      "pesos_abertos": false,
+      "lancado_em": null,
+      "status": "desativacao_anunciada",
+      "desativa_em": "2026-12-01",
+      "contexto_tokens": null,
+      "preco": {
+        "entrada_usd_mtok": 5.0,
+        "saida_usd_mtok": 32.0,
+        "fonte_url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json",
+        "divergencia": "'saida_usd_mtok' = saída de imagem por 1M tokens de imagem; entrada = texto."
+      },
+      "outros_precos": [
+        {
+          "unidade": "mtok_cache",
+          "valor_usd": 1.25,
+          "condicao": "leitura de cache (entrada em cache), por 1M tokens",
+          "fonte_url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json"
+        },
+        {
+          "unidade": "outro",
+          "valor_usd": 8.0,
+          "condicao": "entrada de imagem, US$ por 1M tokens de imagem",
+          "fonte_url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json"
+        }
+      ],
+      "notas": []
+    },
+    {
+      "id": "openai/chatgpt-image-latest",
+      "nome": "ChatGPT Image (latest)",
+      "tipo": "imagem",
+      "pesos_abertos": false,
+      "lancado_em": null,
+      "status": "desativacao_anunciada",
+      "desativa_em": "2026-12-01",
+      "contexto_tokens": null,
+      "preco": {
+        "entrada_usd_mtok": 5.0,
+        "saida_usd_mtok": 32.0,
+        "fonte_url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json",
+        "divergencia": "'saida_usd_mtok' = saída de imagem por 1M tokens de imagem; entrada = texto."
+      },
+      "outros_precos": [
+        {
+          "unidade": "mtok_cache",
+          "valor_usd": 1.25,
+          "condicao": "leitura de cache (entrada em cache), por 1M tokens",
+          "fonte_url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json"
+        },
+        {
+          "unidade": "outro",
+          "valor_usd": 8.0,
+          "condicao": "entrada de imagem, US$ por 1M tokens de imagem",
+          "fonte_url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json"
+        }
+      ],
+      "notas": []
+    },
+    {
+      "id": "openai/gpt-image-1-mini",
+      "nome": "GPT Image 1 mini",
+      "tipo": "imagem",
+      "pesos_abertos": false,
+      "lancado_em": null,
+      "status": "desativacao_anunciada",
+      "desativa_em": "2026-12-01",
+      "contexto_tokens": null,
+      "preco": {
+        "entrada_usd_mtok": 2.0,
+        "saida_usd_mtok": 8.0,
+        "fonte_url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json",
+        "divergencia": "'saida_usd_mtok' = saída de imagem por 1M tokens de imagem; entrada = texto."
+      },
+      "outros_precos": [
+        {
+          "unidade": "mtok_cache",
+          "valor_usd": 0.2,
+          "condicao": "leitura de cache (entrada em cache), por 1M tokens",
+          "fonte_url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json"
+        },
+        {
+          "unidade": "outro",
+          "valor_usd": 2.5,
+          "condicao": "entrada de imagem, US$ por 1M tokens de imagem",
+          "fonte_url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json"
+        }
+      ],
+      "notas": []
+    },
+    {
+      "id": "openai/gpt-image-1",
+      "nome": "GPT Image 1",
+      "tipo": "imagem",
+      "pesos_abertos": false,
+      "lancado_em": null,
+      "status": "desativacao_anunciada",
+      "desativa_em": "2026-10-23",
+      "contexto_tokens": null,
+      "preco": {
+        "entrada_usd_mtok": 5.0,
+        "saida_usd_mtok": 40.0,
+        "fonte_url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json",
+        "divergencia": "'saida_usd_mtok' = saída de imagem por 1M tokens de imagem; entrada = texto."
+      },
+      "outros_precos": [
+        {
+          "unidade": "mtok_cache",
+          "valor_usd": 1.25,
+          "condicao": "leitura de cache (entrada em cache), por 1M tokens",
+          "fonte_url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json"
+        },
+        {
+          "unidade": "outro",
+          "valor_usd": 10.0,
+          "condicao": "entrada de imagem, US$ por 1M tokens de imagem",
+          "fonte_url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json"
+        }
+      ],
+      "notas": []
+    },
+    {
+      "id": "openai/gpt-realtime-2.1",
+      "nome": "GPT Realtime 2.1",
+      "tipo": "audio",
+      "pesos_abertos": false,
+      "lancado_em": null,
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": 128000,
+      "preco": {
+        "entrada_usd_mtok": 4.0,
+        "saida_usd_mtok": 24.0,
+        "fonte_url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json",
+        "divergencia": null
+      },
+      "outros_precos": [
+        {
+          "unidade": "mtok_cache",
+          "valor_usd": 0.4,
+          "condicao": "leitura de cache (entrada em cache), por 1M tokens",
+          "fonte_url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json"
+        },
+        {
+          "unidade": "outro",
+          "valor_usd": 32.0,
+          "condicao": "entrada de áudio, US$ por 1M tokens de áudio",
+          "fonte_url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json"
+        },
+        {
+          "unidade": "outro",
+          "valor_usd": 64.0,
+          "condicao": "saída de áudio, US$ por 1M tokens de áudio",
+          "fonte_url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json"
+        },
+        {
+          "unidade": "outro",
+          "valor_usd": 5.0,
+          "condicao": "entrada de imagem, US$ por 1M tokens de imagem",
+          "fonte_url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json"
+        }
+      ],
+      "notas": []
+    },
+    {
+      "id": "openai/gpt-realtime-2.1-mini",
+      "nome": "GPT Realtime 2.1 mini",
+      "tipo": "audio",
+      "pesos_abertos": false,
+      "lancado_em": null,
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": 128000,
+      "preco": {
+        "entrada_usd_mtok": 0.6,
+        "saida_usd_mtok": 2.4,
+        "fonte_url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json",
+        "divergencia": null
+      },
+      "outros_precos": [
+        {
+          "unidade": "mtok_cache",
+          "valor_usd": 0.06,
+          "condicao": "leitura de cache (entrada em cache), por 1M tokens",
+          "fonte_url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json"
+        },
+        {
+          "unidade": "outro",
+          "valor_usd": 10.0,
+          "condicao": "entrada de áudio, US$ por 1M tokens de áudio",
+          "fonte_url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json"
+        },
+        {
+          "unidade": "outro",
+          "valor_usd": 20.0,
+          "condicao": "saída de áudio, US$ por 1M tokens de áudio",
+          "fonte_url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json"
+        },
+        {
+          "unidade": "outro",
+          "valor_usd": 0.8,
+          "condicao": "entrada de imagem, US$ por 1M tokens de imagem",
+          "fonte_url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json"
+        }
+      ],
+      "notas": []
+    },
+    {
+      "id": "openai/gpt-realtime-2",
+      "nome": "GPT Realtime 2",
+      "tipo": "audio",
+      "pesos_abertos": false,
+      "lancado_em": null,
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": 128000,
+      "preco": {
+        "entrada_usd_mtok": 4.0,
+        "saida_usd_mtok": 24.0,
+        "fonte_url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json",
+        "divergencia": null
+      },
+      "outros_precos": [
+        {
+          "unidade": "mtok_cache",
+          "valor_usd": 0.4,
+          "condicao": "leitura de cache (entrada em cache), por 1M tokens",
+          "fonte_url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json"
+        },
+        {
+          "unidade": "outro",
+          "valor_usd": 32.0,
+          "condicao": "entrada de áudio, US$ por 1M tokens de áudio",
+          "fonte_url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json"
+        },
+        {
+          "unidade": "outro",
+          "valor_usd": 64.0,
+          "condicao": "saída de áudio, US$ por 1M tokens de áudio",
+          "fonte_url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json"
+        },
+        {
+          "unidade": "outro",
+          "valor_usd": 5.0,
+          "condicao": "entrada de imagem, US$ por 1M tokens de imagem",
+          "fonte_url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json"
+        }
+      ],
+      "notas": []
+    },
+    {
+      "id": "openai/gpt-realtime-1.5",
+      "nome": "GPT Realtime 1.5",
+      "tipo": "audio",
+      "pesos_abertos": false,
+      "lancado_em": null,
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": 32000,
+      "preco": {
+        "entrada_usd_mtok": 4.0,
+        "saida_usd_mtok": 16.0,
+        "fonte_url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json",
+        "divergencia": null
+      },
+      "outros_precos": [
+        {
+          "unidade": "mtok_cache",
+          "valor_usd": 0.4,
+          "condicao": "leitura de cache (entrada em cache), por 1M tokens",
+          "fonte_url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json"
+        },
+        {
+          "unidade": "outro",
+          "valor_usd": 32.0,
+          "condicao": "entrada de áudio, US$ por 1M tokens de áudio",
+          "fonte_url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json"
+        },
+        {
+          "unidade": "outro",
+          "valor_usd": 64.0,
+          "condicao": "saída de áudio, US$ por 1M tokens de áudio",
+          "fonte_url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json"
+        },
+        {
+          "unidade": "outro",
+          "valor_usd": 5.0,
+          "condicao": "entrada de imagem, US$ por 1M tokens de imagem",
+          "fonte_url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json"
+        }
+      ],
+      "notas": []
+    },
+    {
+      "id": "openai/gpt-realtime",
+      "nome": "GPT Realtime",
+      "tipo": "audio",
+      "pesos_abertos": false,
+      "lancado_em": null,
+      "status": "desativacao_anunciada",
+      "desativa_em": "2027-01-20",
+      "contexto_tokens": 32000,
+      "preco": {
+        "entrada_usd_mtok": 4.0,
+        "saida_usd_mtok": 16.0,
+        "fonte_url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json",
+        "divergencia": null
+      },
+      "outros_precos": [
+        {
+          "unidade": "mtok_cache",
+          "valor_usd": 0.4,
+          "condicao": "leitura de cache (entrada em cache), por 1M tokens",
+          "fonte_url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json"
+        },
+        {
+          "unidade": "outro",
+          "valor_usd": 32.0,
+          "condicao": "entrada de áudio, US$ por 1M tokens de áudio",
+          "fonte_url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json"
+        },
+        {
+          "unidade": "outro",
+          "valor_usd": 64.0,
+          "condicao": "saída de áudio, US$ por 1M tokens de áudio",
+          "fonte_url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json"
+        },
+        {
+          "unidade": "outro",
+          "valor_usd": 5.0,
+          "condicao": "entrada de imagem, US$ por 1M tokens de imagem",
+          "fonte_url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json"
+        }
+      ],
+      "notas": []
+    },
+    {
+      "id": "openai/gpt-realtime-mini",
+      "nome": "GPT Realtime mini",
+      "tipo": "audio",
+      "pesos_abertos": false,
+      "lancado_em": null,
+      "status": "desativacao_anunciada",
+      "desativa_em": "2027-01-20",
+      "contexto_tokens": 32000,
+      "preco": {
+        "entrada_usd_mtok": 0.6,
+        "saida_usd_mtok": 2.4,
+        "fonte_url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json",
+        "divergencia": null
+      },
+      "outros_precos": [
+        {
+          "unidade": "mtok_cache",
+          "valor_usd": 0.06,
+          "condicao": "leitura de cache (entrada em cache), por 1M tokens",
+          "fonte_url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json"
+        },
+        {
+          "unidade": "outro",
+          "valor_usd": 10.0,
+          "condicao": "entrada de áudio, US$ por 1M tokens de áudio",
+          "fonte_url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json"
+        },
+        {
+          "unidade": "outro",
+          "valor_usd": 20.0,
+          "condicao": "saída de áudio, US$ por 1M tokens de áudio",
+          "fonte_url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json"
+        },
+        {
+          "unidade": "outro",
+          "valor_usd": 0.8,
+          "condicao": "entrada de imagem, US$ por 1M tokens de imagem",
+          "fonte_url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json"
+        }
+      ],
+      "notas": []
+    },
+    {
+      "id": "openai/gpt-live-1",
+      "nome": "GPT-Live-1",
+      "tipo": "audio",
+      "pesos_abertos": false,
+      "lancado_em": "2026-09-10",
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": null,
+      "preco": null,
+      "outros_precos": [
+        {
+          "unidade": "minuto_audio",
+          "valor_usd": 0.05,
+          "condicao": "voz full-duplex, cobrada por segundo; modelo de raciocínio de backend cobrado à parte",
+          "fonte_url": "https://cellcog.ai/blog/gpt-live-1/"
+        }
+      ],
+      "notas": []
+    },
+    {
+      "id": "openai/gpt-realtime-translate",
+      "nome": "GPT Realtime Translate",
+      "tipo": "audio",
+      "pesos_abertos": false,
+      "lancado_em": null,
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": 16000,
+      "preco": null,
+      "outros_precos": [
+        {
+          "unidade": "minuto_audio",
+          "valor_usd": 0.034,
+          "condicao": "entrada de áudio, US$ por minuto (LiteLLM guarda por segundo: 0.000566666666667)",
+          "fonte_url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json"
+        }
+      ],
+      "notas": []
+    },
+    {
+      "id": "openai/gpt-audio-1.5",
+      "nome": "GPT Audio 1.5",
+      "tipo": "audio",
+      "pesos_abertos": false,
+      "lancado_em": null,
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": 128000,
+      "preco": {
+        "entrada_usd_mtok": 2.5,
+        "saida_usd_mtok": 10.0,
+        "fonte_url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json",
+        "divergencia": null
+      },
+      "outros_precos": [
+        {
+          "unidade": "outro",
+          "valor_usd": 32.0,
+          "condicao": "entrada de áudio, US$ por 1M tokens de áudio",
+          "fonte_url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json"
+        },
+        {
+          "unidade": "outro",
+          "valor_usd": 64.0,
+          "condicao": "saída de áudio, US$ por 1M tokens de áudio",
+          "fonte_url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json"
+        }
+      ],
+      "notas": []
+    },
+    {
+      "id": "openai/gpt-audio",
+      "nome": "GPT Audio",
+      "tipo": "audio",
+      "pesos_abertos": false,
+      "lancado_em": null,
+      "status": "desativacao_anunciada",
+      "desativa_em": "2027-01-20",
+      "contexto_tokens": 128000,
+      "preco": {
+        "entrada_usd_mtok": 2.5,
+        "saida_usd_mtok": 10.0,
+        "fonte_url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json",
+        "divergencia": null
+      },
+      "outros_precos": [
+        {
+          "unidade": "outro",
+          "valor_usd": 32.0,
+          "condicao": "entrada de áudio, US$ por 1M tokens de áudio",
+          "fonte_url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json"
+        },
+        {
+          "unidade": "outro",
+          "valor_usd": 64.0,
+          "condicao": "saída de áudio, US$ por 1M tokens de áudio",
+          "fonte_url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json"
+        }
+      ],
+      "notas": []
+    },
+    {
+      "id": "openai/gpt-audio-mini",
+      "nome": "GPT Audio mini",
+      "tipo": "audio",
+      "pesos_abertos": false,
+      "lancado_em": null,
+      "status": "desativacao_anunciada",
+      "desativa_em": "2027-01-20",
+      "contexto_tokens": 128000,
+      "preco": {
+        "entrada_usd_mtok": 0.6,
+        "saida_usd_mtok": 2.4,
+        "fonte_url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json",
+        "divergencia": null
+      },
+      "outros_precos": [
+        {
+          "unidade": "outro",
+          "valor_usd": 10.0,
+          "condicao": "entrada de áudio, US$ por 1M tokens de áudio",
+          "fonte_url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json"
+        },
+        {
+          "unidade": "outro",
+          "valor_usd": 20.0,
+          "condicao": "saída de áudio, US$ por 1M tokens de áudio",
+          "fonte_url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json"
+        }
+      ],
+      "notas": []
+    },
+    {
+      "id": "openai/gpt-transcribe",
+      "nome": "GPT Transcribe",
+      "tipo": "audio_stt",
+      "pesos_abertos": false,
+      "lancado_em": null,
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": null,
+      "preco": null,
+      "outros_precos": [
+        {
+          "unidade": "minuto_audio",
+          "valor_usd": 0.0045,
+          "condicao": "entrada de áudio, US$ por minuto (LiteLLM guarda por segundo: 7.5e-05)",
+          "fonte_url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json"
+        }
+      ],
+      "notas": []
+    },
+    {
+      "id": "openai/gpt-live-transcribe",
+      "nome": "GPT Live Transcribe",
+      "tipo": "audio_stt",
+      "pesos_abertos": false,
+      "lancado_em": null,
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": null,
+      "preco": null,
+      "outros_precos": [
+        {
+          "unidade": "minuto_audio",
+          "valor_usd": 0.017,
+          "condicao": "entrada de áudio, US$ por minuto (LiteLLM guarda por segundo: 0.000283333333333)",
+          "fonte_url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json"
+        }
+      ],
+      "notas": []
+    },
+    {
+      "id": "openai/gpt-realtime-whisper",
+      "nome": "GPT Realtime Whisper",
+      "tipo": "audio_stt",
+      "pesos_abertos": false,
+      "lancado_em": null,
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": null,
+      "preco": null,
+      "outros_precos": [
+        {
+          "unidade": "minuto_audio",
+          "valor_usd": 0.017,
+          "condicao": "entrada de áudio, US$ por minuto (LiteLLM guarda por segundo: 0.000283333333333)",
+          "fonte_url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json"
+        }
+      ],
+      "notas": []
+    },
+    {
+      "id": "openai/gpt-4o-transcribe",
+      "nome": "GPT-4o Transcribe",
+      "tipo": "audio_stt",
+      "pesos_abertos": false,
+      "lancado_em": null,
+      "status": "desativacao_anunciada",
+      "desativa_em": "2027-02-26",
+      "contexto_tokens": 16000,
+      "preco": {
+        "entrada_usd_mtok": 2.5,
+        "saida_usd_mtok": 10.0,
+        "fonte_url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json",
+        "divergencia": null
+      },
+      "outros_precos": [
+        {
+          "unidade": "minuto_audio",
+          "valor_usd": 0.006,
+          "condicao": "entrada de áudio, US$ por minuto (LiteLLM guarda por segundo: 0.0001)",
+          "fonte_url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json"
+        }
+      ],
+      "notas": []
+    },
+    {
+      "id": "openai/gpt-4o-mini-transcribe",
+      "nome": "GPT-4o mini Transcribe",
+      "tipo": "audio_stt",
+      "pesos_abertos": false,
+      "lancado_em": null,
+      "status": "desativacao_anunciada",
+      "desativa_em": "2027-02-26",
+      "contexto_tokens": 16000,
+      "preco": {
+        "entrada_usd_mtok": 1.25,
+        "saida_usd_mtok": 5.0,
+        "fonte_url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json",
+        "divergencia": null
+      },
+      "outros_precos": [
+        {
+          "unidade": "minuto_audio",
+          "valor_usd": 0.003,
+          "condicao": "entrada de áudio, US$ por minuto (LiteLLM guarda por segundo: 5e-05)",
+          "fonte_url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json"
+        }
+      ],
+      "notas": []
+    },
+    {
+      "id": "openai/gpt-4o-transcribe-diarize",
+      "nome": "GPT-4o Transcribe Diarize",
+      "tipo": "audio_stt",
+      "pesos_abertos": false,
+      "lancado_em": null,
+      "status": "desativacao_anunciada",
+      "desativa_em": "2027-02-26",
+      "contexto_tokens": 16000,
+      "preco": {
+        "entrada_usd_mtok": 2.5,
+        "saida_usd_mtok": 10.0,
+        "fonte_url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json",
+        "divergencia": null
+      },
+      "outros_precos": [
+        {
+          "unidade": "minuto_audio",
+          "valor_usd": 0.006,
+          "condicao": "entrada de áudio, US$ por minuto (LiteLLM guarda por segundo: 0.0001)",
+          "fonte_url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json"
+        }
+      ],
+      "notas": []
+    },
+    {
+      "id": "openai/whisper-1",
+      "nome": "Whisper",
+      "tipo": "audio_stt",
+      "pesos_abertos": false,
+      "lancado_em": "2023-03-01",
+      "status": "desativacao_anunciada",
+      "desativa_em": "2027-02-26",
+      "contexto_tokens": null,
+      "preco": null,
+      "outros_precos": [
+        {
+          "unidade": "minuto_audio",
+          "valor_usd": 0.006,
+          "condicao": "entrada de áudio, US$ por minuto (LiteLLM guarda por segundo: 0.0001)",
+          "fonte_url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json"
+        }
+      ],
+      "notas": []
+    },
+    {
+      "id": "openai/gpt-4o-mini-tts",
+      "nome": "GPT-4o mini TTS",
+      "tipo": "audio_tts",
+      "pesos_abertos": false,
+      "lancado_em": null,
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": null,
+      "preco": {
+        "entrada_usd_mtok": 0.6,
+        "saida_usd_mtok": 10.0,
+        "fonte_url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json",
+        "divergencia": null
+      },
+      "outros_precos": [
+        {
+          "unidade": "minuto_audio",
+          "valor_usd": 0.015,
+          "condicao": "saída de áudio, US$ por minuto (LiteLLM guarda por segundo: 0.00025)",
+          "fonte_url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json"
+        }
+      ],
+      "notas": []
+    },
+    {
+      "id": "openai/tts-1",
+      "nome": "TTS-1",
+      "tipo": "audio_tts",
+      "pesos_abertos": false,
+      "lancado_em": null,
+      "status": "legado",
+      "desativa_em": null,
+      "contexto_tokens": null,
+      "preco": null,
+      "outros_precos": [
+        {
+          "unidade": "mil_caracteres",
+          "valor_usd": 0.015,
+          "condicao": "texto de entrada sintetizado",
+          "fonte_url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json"
+        }
+      ],
+      "notas": []
+    },
+    {
+      "id": "openai/tts-1-hd",
+      "nome": "TTS-1 HD",
+      "tipo": "audio_tts",
+      "pesos_abertos": false,
+      "lancado_em": null,
+      "status": "legado",
+      "desativa_em": null,
+      "contexto_tokens": null,
+      "preco": null,
+      "outros_precos": [
+        {
+          "unidade": "mil_caracteres",
+          "valor_usd": 0.03,
+          "condicao": "texto de entrada sintetizado",
+          "fonte_url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json"
+        }
+      ],
+      "notas": []
+    },
+    {
+      "id": "openai/text-embedding-3-large",
+      "nome": "text-embedding-3-large",
+      "tipo": "embedding",
+      "pesos_abertos": false,
+      "lancado_em": "2024-01-25",
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": 8191,
+      "preco": {
+        "entrada_usd_mtok": 0.13,
+        "saida_usd_mtok": null,
+        "fonte_url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json",
+        "divergencia": null
+      },
+      "outros_precos": [],
+      "notas": []
+    },
+    {
+      "id": "openai/text-embedding-3-small",
+      "nome": "text-embedding-3-small",
+      "tipo": "embedding",
+      "pesos_abertos": false,
+      "lancado_em": "2024-01-25",
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": 8191,
+      "preco": {
+        "entrada_usd_mtok": 0.02,
+        "saida_usd_mtok": null,
+        "fonte_url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json",
+        "divergencia": null
+      },
+      "outros_precos": [],
+      "notas": []
+    },
+    {
+      "id": "openai/text-embedding-ada-002",
+      "nome": "text-embedding-ada-002",
+      "tipo": "embedding",
+      "pesos_abertos": false,
+      "lancado_em": "2022-12-15",
+      "status": "legado",
+      "desativa_em": null,
+      "contexto_tokens": 8191,
+      "preco": {
+        "entrada_usd_mtok": 0.1,
+        "saida_usd_mtok": null,
+        "fonte_url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json",
+        "divergencia": null
+      },
+      "outros_precos": [],
+      "notas": []
+    },
+    {
+      "id": "openai/omni-moderation-latest",
+      "nome": "omni-moderation-latest (moderação)",
+      "tipo": "multimodal",
+      "pesos_abertos": false,
+      "lancado_em": null,
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": 32768,
+      "preco": {
+        "entrada_usd_mtok": 0.0,
+        "saida_usd_mtok": 0.0,
+        "fonte_url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json",
+        "divergencia": "Moderação gratuita (preço 0)."
+      },
+      "outros_precos": [],
+      "notas": []
+    },
+    {
+      "id": "openai/sora-2",
+      "nome": "Sora 2",
+      "tipo": "video",
+      "pesos_abertos": false,
+      "lancado_em": null,
+      "status": "desativado",
+      "desativa_em": "2026-09-24",
+      "contexto_tokens": null,
+      "preco": null,
+      "outros_precos": [
+        {
+          "unidade": "segundo_video",
+          "valor_usd": 0.1,
+          "condicao": "vídeo gerado (API desligada em 2026-09-24)",
+          "fonte_url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json"
+        }
+      ],
+      "notas": []
+    },
+    {
+      "id": "openai/sora-2-pro",
+      "nome": "Sora 2 Pro",
+      "tipo": "video",
+      "pesos_abertos": false,
+      "lancado_em": null,
+      "status": "desativado",
+      "desativa_em": "2026-09-24",
+      "contexto_tokens": null,
+      "preco": null,
+      "outros_precos": [
+        {
+          "unidade": "segundo_video",
+          "valor_usd": 0.3,
+          "condicao": "vídeo gerado (API desligada em 2026-09-24)",
+          "fonte_url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json"
+        }
+      ],
+      "notas": []
+    }
+  ],
+  "capacidades": [
+    {
+      "capacidade": "texto",
+      "produto": "ChatGPT / API Responses",
+      "como_acessar": [
+        "app",
+        "web",
+        "api"
+      ],
+      "plano_minimo": "Free",
+      "gratis": true,
+      "headless": true,
+      "comando": null,
+      "limites": "Chat de texto ilimitado no Free (modelo padrão pequeno)",
+      "fonte_url": "https://geotoolbox.ai/blog/chatgpt-pricing"
+    },
+    {
+      "capacidade": "codigo",
+      "produto": "Codex (app, IDE, CLI)",
+      "como_acessar": [
+        "app",
+        "ide",
+        "cli",
+        "web"
+      ],
+      "plano_minimo": "Free",
+      "gratis": true,
+      "headless": true,
+      "comando": "codex exec \"<tarefa>\"",
+      "limites": "Free e Go: só GPT-6 Luna no app desktop, sem nuvem; Plus+: janela de 5 h + teto semanal",
+      "fonte_url": "https://www.cloudzero.com/blog/openai-codex-pricing/"
+    },
+    {
+      "capacidade": "cli_headless",
+      "produto": "Codex CLI (codex exec)",
+      "como_acessar": [
+        "cli"
+      ],
+      "plano_minimo": "Free",
+      "gratis": true,
+      "headless": true,
+      "comando": "codex exec \"<tarefa>\"",
+      "limites": "Login com conta ChatGPT ou chave de API; cota compartilhada entre CLI, IDE, web e iOS",
+      "fonte_url": "https://github.com/openai/codex"
+    },
+    {
+      "capacidade": "agente_nuvem",
+      "produto": "Codex cloud",
+      "como_acessar": [
+        "web",
+        "nuvem",
+        "app"
+      ],
+      "plano_minimo": "Plus",
+      "gratis": false,
+      "headless": true,
+      "comando": null,
+      "limites": "Free e Go sem recursos de nuvem desde setembro de 2026",
+      "fonte_url": "https://www.cloudzero.com/blog/openai-codex-pricing/"
+    },
+    {
+      "capacidade": "agente_agendado",
+      "produto": "ChatGPT Work — Scheduled Tasks",
+      "como_acessar": [
+        "app",
+        "web"
+      ],
+      "plano_minimo": "Pro 100",
+      "gratis": false,
+      "headless": false,
+      "comando": null,
+      "limites": "Work aparece como modo em Pro, Business, Enterprise, Edu ou no app desktop de qualquer plano; tarefas recorrentes em cadência definida",
+      "fonte_url": "https://openai.com/chatgpt-work/"
+    },
+    {
+      "capacidade": "pesquisa_profunda",
+      "produto": "ChatGPT deep research",
+      "como_acessar": [
+        "app",
+        "web"
+      ],
+      "plano_minimo": "Free",
+      "gratis": true,
+      "headless": false,
+      "comando": null,
+      "limites": "Limitado no Free; mais no Plus/Pro",
+      "fonte_url": "https://geotoolbox.ai/blog/chatgpt-pricing"
+    },
+    {
+      "capacidade": "busca_web",
+      "produto": "ChatGPT search / ferramenta web_search da API",
+      "como_acessar": [
+        "app",
+        "web",
+        "api"
+      ],
+      "plano_minimo": "Free",
+      "gratis": true,
+      "headless": true,
+      "comando": null,
+      "limites": "Na API, US$10 por 1.000 chamadas (LiteLLM: US$0,01 por consulta)",
+      "fonte_url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json"
+    },
+    {
+      "capacidade": "imagem_gerar",
+      "produto": "GPT Image 2.5 (Flare/Sunburst) / ChatGPT Images",
+      "como_acessar": [
+        "app",
+        "web",
+        "api"
+      ],
+      "plano_minimo": "Free",
+      "gratis": true,
+      "headless": true,
+      "comando": null,
+      "limites": "Limitado no Free; API por token",
+      "fonte_url": "https://www.orcarouter.ai/blog/gpt-image-2-5-flare-sunburst"
+    },
+    {
+      "capacidade": "imagem_editar",
+      "produto": "GPT Image 2.5 (edição multi-turno, sketch)",
+      "como_acessar": [
+        "app",
+        "web",
+        "api"
+      ],
+      "plano_minimo": "Free",
+      "gratis": true,
+      "headless": true,
+      "comando": null,
+      "limites": "Limitado no Free",
+      "fonte_url": "https://markets.financialcontent.com/stocks/article/abnewswire-2026-9-12-gpt-image-25-launches-openai-introduces-flare-and-sunburst-dual-model-ai-image-generation-with-sketch-tool-multi-turn-editing-and-4k-output"
+    },
+    {
+      "capacidade": "audio_stt",
+      "produto": "gpt-transcribe / gpt-4o-transcribe / Whisper (API)",
+      "como_acessar": [
+        "api"
+      ],
+      "plano_minimo": "API",
+      "gratis": false,
+      "headless": true,
+      "comando": null,
+      "limites": "Por minuto de áudio; whisper-1 e gpt-4o-*-transcribe desligam em 2027-02-26",
+      "fonte_url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json"
+    },
+    {
+      "capacidade": "audio_tts",
+      "produto": "gpt-4o-mini-tts / tts-1 (API)",
+      "como_acessar": [
+        "api"
+      ],
+      "plano_minimo": "API",
+      "gratis": false,
+      "headless": true,
+      "comando": null,
+      "limites": null,
+      "fonte_url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json"
+    },
+    {
+      "capacidade": "audio_tempo_real",
+      "produto": "Realtime API (gpt-realtime-2.1) e GPT-Live-1; voz no ChatGPT",
+      "como_acessar": [
+        "api",
+        "app"
+      ],
+      "plano_minimo": "Free",
+      "gratis": true,
+      "headless": true,
+      "comando": null,
+      "limites": "Voz limitada no Free; API cobrada por token de áudio ou por minuto",
+      "fonte_url": "https://cellcog.ai/blog/gpt-live-1/"
+    },
+    {
+      "capacidade": "embeddings",
+      "produto": "text-embedding-3-small/large",
+      "como_acessar": [
+        "api"
+      ],
+      "plano_minimo": "API",
+      "gratis": false,
+      "headless": true,
+      "comando": null,
+      "limites": null,
+      "fonte_url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json"
+    },
+    {
+      "capacidade": "computer_use",
+      "produto": "GPT-6 Astra / ChatGPT agent",
+      "como_acessar": [
+        "api",
+        "app",
+        "web"
+      ],
+      "plano_minimo": "Plus",
+      "gratis": false,
+      "headless": true,
+      "comando": null,
+      "limites": "computer-use-preview foi desligado em 2026-07-23; o uso de computador migrou para os modelos GPT-6",
+      "fonte_url": "https://datanorth.ai/news/openai-launches-gpt-6-astra"
+    },
+    {
+      "capacidade": "mcp",
+      "produto": "Codex (cliente e servidor MCP) / conectores do ChatGPT / MCP remoto na API Responses",
+      "como_acessar": [
+        "cli",
+        "ide",
+        "api",
+        "app"
+      ],
+      "plano_minimo": "Free",
+      "gratis": true,
+      "headless": true,
+      "comando": "codex mcp add <nome> -- <comando>",
+      "limites": null,
+      "fonte_url": "https://github.com/openai/codex"
+    }
+  ],
+  "gratis": [
+    {
+      "titulo": "ChatGPT Free",
+      "resumo": "Chat de texto ilimitado com o modelo padrão pequeno e acesso limitado a imagem, voz, deep research e Codex",
+      "limites": "Ferramentas com teto; anúncios",
+      "chamavel_por_agente": false,
+      "url": "https://openai.com/chatgpt/pricing",
+      "valido_ate": null,
+      "origem": "a_verificar"
+    },
+    {
+      "titulo": "Codex no plano Free (CLI/app desktop)",
+      "resumo": "Codex CLI com login de conta ChatGPT Free, só com GPT-6 Luna e sem nuvem",
+      "limites": "Cota pequena em janela de 5 h + semanal",
+      "chamavel_por_agente": true,
+      "url": "https://www.cloudzero.com/blog/openai-codex-pricing/",
+      "valido_ate": null,
+      "origem": "a_verificar"
+    },
+    {
+      "titulo": "Tokens diários grátis por compartilhamento de dados (API)",
+      "resumo": "Organizações que aceitam compartilhar entradas/saídas com a OpenAI recebem tokens diários grátis",
+      "limites": "Tiers 1-2: 250 mil tokens/dia em modelos topo e 2,5 milhões em modelos pequenos; tiers 3-5: 1 milhão e 10 milhões. Há relato (freeainews) de que em 2026-05-13 a OpenAI trocou o free tier por crédito de teste de US$15 — não confirmado na oficial",
+      "chamavel_por_agente": true,
+      "url": "https://pricepertoken.com/endpoints/openai/free",
+      "valido_ate": null,
+      "origem": "a_verificar"
+    },
+    {
+      "titulo": "Moderação gratuita (omni-moderation-latest)",
+      "resumo": "Endpoint de moderação de texto e imagem sem custo",
+      "limites": "Precisa de conta de API",
+      "chamavel_por_agente": true,
+      "url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json",
+      "valido_ate": null,
+      "origem": "a_verificar"
+    },
+    {
+      "titulo": "ChatGPT Go grátis via parceiros no Brasil (Nubank, Rappi)",
+      "resumo": "Nubank: 1 mês grátis de Go para clientes, 3 meses Nubank+, 12 meses Ultravioleta. Rappi: 1 mês (6 meses no Pro Black)",
+      "limites": "Campanha da Rappi foi até 2026-05-15; a do Nubank sem data confirmada",
+      "chamavel_por_agente": false,
+      "url": "https://portalg.com.br/rappi-openai-chatgpt-go-gratis-brasil/",
+      "valido_ate": null,
+      "origem": "a_verificar"
+    }
+  ],
+  "programas": [
+    {
+      "nome": "Researcher Access Program",
+      "publico": "pesquisador",
+      "beneficio": "Até US$1.000 em créditos de API para pesquisa sobre implantação responsável, segurança, alinhamento e impactos sociais da IA",
+      "valor_usd": 1000,
+      "requisitos": "Pesquisador ou pequena equipe em país onde a API é suportada; prioridade a início de carreira e poucos recursos; créditos expiram em 1 ano",
+      "elegivel": "talvez",
+      "elegivel_motivo": "Guilherme é graduando com pesquisa vinculada (UrbVerde) e orientador; Brasil é país suportado. O tema precisa se encaixar em impacto social/uso responsável da IA (ex.: a Mari como RAG de dados urbanos) — vale enquadrar com o orientador",
+      "como_aplicar": "Formulário no SurveyMonkey Apply (openai.smapply.org); revisão trimestral em março, junho, setembro e dezembro",
+      "url": "https://openai.smapply.org/prog/openai_researcher_access_program/",
+      "status": "continuo",
+      "prazo": null,
+      "verificado_em": "2026-10-01"
+    },
+    {
+      "nome": "ChatGPT Back to School (4 meses de Plus para universitários)",
+      "publico": "estudante",
+      "beneficio": "4 meses grátis de ChatGPT Plus, incluindo ChatGPT Work",
+      "valor_usd": 80,
+      "requisitos": "Estudante de faculdade dos EUA verificado via SheerID com e-mail da instituição",
+      "elegivel": "nao",
+      "elegivel_motivo": "Restrito a universidades dos EUA; USP não é elegível",
+      "como_aplicar": "chatgpt.com/students com verificação SheerID",
+      "url": "https://chatgpt.com/students/2026/",
+      "status": "aberto",
+      "prazo": "2026-10-31",
+      "verificado_em": "2026-10-01"
+    },
+    {
+      "nome": "Codex for Students (US$100 em créditos)",
+      "publico": "estudante",
+      "beneficio": "US$100 em créditos do ChatGPT para usar no Codex, válidos por 12 meses",
+      "valor_usd": 100,
+      "requisitos": "Estudante universitário verificado nos EUA ou Canadá",
+      "elegivel": "nao",
+      "elegivel_motivo": "Restrito a EUA e Canadá",
+      "como_aplicar": "Página Codex for Students em developers.openai.com",
+      "url": "https://developers.openai.com/community/students",
+      "status": "aberto",
+      "prazo": null,
+      "verificado_em": "2026-10-01"
+    },
+    {
+      "nome": "OpenAI Student Collective (Campus Leads 2026-2027)",
+      "publico": "estudante",
+      "beneficio": "Assinatura do ChatGPT, créditos de Codex, verba para eventos e bolsa em dinheiro por semestre",
+      "valor_usd": null,
+      "requisitos": "Graduandos em EUA, Canadá, Reino Unido, França, Alemanha, Índia, Japão e Coreia do Sul",
+      "elegivel": "nao",
+      "elegivel_motivo": "Brasil não está entre os oito países",
+      "como_aplicar": "Inscrição como Campus Lead",
+      "url": "https://opportunitiesforyouth.org/2026/07/31/openai-student-collective-2026-2027-apply-to-become-a-campus-lead-and-receive-funding-chatgpt-access-codex-credits-and-a-cash-stipend/",
+      "status": "desconhecido",
+      "prazo": null,
+      "verificado_em": "2026-10-01"
+    },
+    {
+      "nome": "Codex open source fund",
+      "publico": "todos",
+      "beneficio": "Até US$25.000 em créditos de API para projetos open source que usam o Codex CLI e modelos OpenAI",
+      "valor_usd": 25000,
+      "requisitos": "Mantenedor de projeto open source",
+      "elegivel": "talvez",
+      "elegivel_motivo": "Só se algum projeto dele (ex.: a base de agentes) for open source e relevante",
+      "como_aplicar": "Formulário do fundo",
+      "url": "https://grantedai.com/grants/codex-open-source-fund-openai-685ed547",
+      "status": "desconhecido",
+      "prazo": null,
+      "verificado_em": "2026-10-01"
+    },
+    {
+      "nome": "Codex for Open Source (mantenedores)",
+      "publico": "todos",
+      "beneficio": "6 meses de ChatGPT Pro, acesso condicional ao Codex Security e créditos de API de um fundo de US$1M",
+      "valor_usd": null,
+      "requisitos": "Mantenedor de projeto público amplamente usado",
+      "elegivel": "nao",
+      "elegivel_motivo": "Exige projeto público com grande base de usuários",
+      "como_aplicar": "Aplicação pela OpenAI",
+      "url": "https://aicost.tools/blog/free-ai-compute-tiers-trials-grants/",
+      "status": "desconhecido",
+      "prazo": null,
+      "verificado_em": "2026-10-01"
+    },
+    {
+      "nome": "ChatGPT Edu / OpenAI for Education",
+      "publico": "educador",
+      "beneficio": "ChatGPT para a universidade inteira, contratado pela instituição",
+      "valor_usd": null,
+      "requisitos": "Contrato institucional da universidade",
+      "elegivel": "talvez",
+      "elegivel_motivo": "Depende de a USP contratar; não há indício de contrato da USP",
+      "como_aplicar": "Instituição contata vendas da OpenAI",
+      "url": "https://openai.com/chatgpt/education/",
+      "status": "continuo",
+      "prazo": null,
+      "verificado_em": "2026-10-01"
+    }
+  ],
+  "indicadores": [
+    {
+      "modelo_id": "openai/gpt-6.1-sol",
+      "nome": "custo por tarefa do índice AA",
+      "valor": 0.72,
+      "unidade": "USD",
+      "descricao": "Custo por tarefa avaliada no Artificial Analysis Intelligence Index (GPT-6 Astra: US$3,26; Sol é 4,5x mais barato a 0,84 ponto de distância). Citado por orcarouter.ai a partir da AA",
+      "medido_em": "2026-10-01",
+      "fonte_url": "https://www.orcarouter.ai/blog/gpt-6-1-sol-vs-gpt-6-astra"
+    },
+    {
+      "modelo_id": "openai/gpt-6-astra",
+      "nome": "custo por tarefa do índice AA",
+      "valor": 3.26,
+      "unidade": "USD",
+      "descricao": "Custo por tarefa avaliada no Artificial Analysis Intelligence Index, variante max. Citado por orcarouter.ai a partir da AA",
+      "medido_em": "2026-10-01",
+      "fonte_url": "https://www.orcarouter.ai/blog/gpt-6-1-sol-vs-gpt-6-astra"
+    }
+  ],
+  "observacoes": "Rede: o proxy desta sessão bloqueou platform.openai.com, developers.openai.com, openai.com, help.openai.com, community.openai.com, openai.smapply.org, artificialanalysis.ai, openrouter.ai, wikipedia e a maioria dos blogs. Por isso os preços de API vêm do arquivo de preços do LiteLLM (raw.githubusercontent.com, agregador de terceiros) e foram conferidos, para os modelos principais, contra trechos de resultados de busca (imprensa/blogs). Recomenda-se reconferir na página oficial. Divergência relevante: GPT-5.6 Sol — LiteLLM US$4/US$20; buscas citando a oficial US$5/US$30 (registrado o segundo). Contexto dos GPT-6/5.6: LiteLLM 922.000 tokens de entrada; imprensa cita 1.050.000 total (com 128k de saída). Modelos já desligados e omitidos: em 2026-07-23 (computer-use-preview, gpt-5-codex, gpt-5.1-codex/-mini/-max, gpt-5.2-codex, gpt-5-chat-latest, gpt-5.1-chat-latest, o3-deep-research, o4-mini-deep-research) e em 2026-08-10 (gpt-5.2-chat-latest, gpt-5.3-chat-latest), segundo datas do LiteLLM. Sora 2 e Sora 2 Pro incluídos como desativados (API desligada em 2026-09-24; app Sora encerrado em 2026-04-26). Omitidos também os aliases daybreak-red/blue-latest e chat-latest (programa Daybreak para empresas). Status 'legado' (gpt-4.1, gpt-4o, o3, tts-1 etc.) é julgamento desta coleta por não serem mais a linha atual; não há data de desligamento. Status 'restrito' para modelos Cyber e Rosalind (acesso controlado), sem confirmação oficial. Datas de lançamento só preenchidas quando achadas; GPT-5.5, 5.4, 5.2 e outros ficaram null. Notas: aa_index só para GPT-6 Astra, GPT-6.1 Sol, GPT-6 Luna e GPT-5.6 Sol (lidas em trechos de busca; AA bloqueada). Sem Elo do LMArena (arena.ai bloqueado e buscas não trouxeram o valor). Sem notas para imagem, voz e embeddings. Planos: preços de terceiros (página de preços do ChatGPT bloqueada); preço do Plus no Brasil citado em ~R$100/mês, não convertido. Preço do Edu e Enterprise sob consulta. Free tier da API: informação contraditória (tokens diários por compartilhamento de dados x troca por crédito de teste de US$15 em 2026-05-13), marcado a_verificar."
+}
