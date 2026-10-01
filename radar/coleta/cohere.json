@@ -1,0 +1,1145 @@
+{
+  "provedor": {
+    "id": "cohere",
+    "nome": "Cohere",
+    "grupo": "busca_embeddings",
+    "site": "https://cohere.com",
+    "pais": "Canadá",
+    "resumo": "Empresa canadense de IA para empresas: modelos Command (texto, raciocínio, visão, tradução), Embed e Rerank para busca/RAG, Transcribe e Parse, além da plataforma de agentes North e do Model Vault. Destaca-se em embeddings e rerank multilíngues e em vários modelos com pesos abertos (Apache 2.0 ou CC-BY-NC).",
+    "fontes": [
+      "https://cohere.com",
+      "https://docs.cohere.com/docs/models",
+      "https://github.com/cohere-ai/cohere-developer-experience"
+    ]
+  },
+  "coletado_em": "2026-10-01",
+  "canais": [
+    {
+      "tipo": "blog",
+      "nome": "Cohere Blog",
+      "url": "https://cohere.com/blog",
+      "handle": null,
+      "observacao": null
+    },
+    {
+      "tipo": "changelog",
+      "nome": "Cohere Changelog",
+      "url": "https://docs.cohere.com/changelog",
+      "handle": null,
+      "observacao": "fonte do changelog: github.com/cohere-ai/cohere-developer-experience/tree/main/fern/pages/changelog"
+    },
+    {
+      "tipo": "docs",
+      "nome": "Cohere Docs",
+      "url": "https://docs.cohere.com",
+      "handle": null,
+      "observacao": null
+    },
+    {
+      "tipo": "precos",
+      "nome": "Pricing",
+      "url": "https://cohere.com/pricing",
+      "handle": null,
+      "observacao": "bloqueado pelo proxy nesta coleta"
+    },
+    {
+      "tipo": "status",
+      "nome": "Cohere Status",
+      "url": "https://status.cohere.com",
+      "handle": null,
+      "observacao": null
+    },
+    {
+      "tipo": "x_oficial",
+      "nome": "Cohere",
+      "url": "https://x.com/cohere",
+      "handle": "@cohere",
+      "observacao": null
+    },
+    {
+      "tipo": "x_oficial",
+      "nome": "Cohere Labs",
+      "url": "https://x.com/Cohere_Labs",
+      "handle": "@Cohere_Labs",
+      "observacao": "braço de pesquisa aberta (ex-Cohere For AI)"
+    },
+    {
+      "tipo": "x_ceo",
+      "nome": "Aidan Gomez",
+      "url": "https://x.com/aidangomez",
+      "handle": "@aidangomez",
+      "observacao": "CEO e cofundador"
+    },
+    {
+      "tipo": "x_lider",
+      "nome": "Nick Frosst",
+      "url": "https://x.com/nickfrosst",
+      "handle": "@nickfrosst",
+      "observacao": "cofundador"
+    },
+    {
+      "tipo": "x_lider",
+      "nome": "Ivan Zhang",
+      "url": "https://x.com/1vnzh",
+      "handle": "@1vnzh",
+      "observacao": "cofundador"
+    },
+    {
+      "tipo": "x_lider",
+      "nome": "Joelle Pineau",
+      "url": "https://x.com/jpineau1",
+      "handle": "@jpineau1",
+      "observacao": "Chief AI Officer (handle não conferido no X)"
+    },
+    {
+      "tipo": "discord",
+      "nome": "Cohere Discord",
+      "url": "https://discord.gg/co-mmunity",
+      "handle": null,
+      "observacao": null
+    },
+    {
+      "tipo": "github",
+      "nome": "cohere-ai",
+      "url": "https://github.com/cohere-ai",
+      "handle": null,
+      "observacao": null
+    },
+    {
+      "tipo": "outro",
+      "nome": "Hugging Face — CohereLabs",
+      "url": "https://huggingface.co/CohereLabs",
+      "handle": null,
+      "observacao": "pesos abertos"
+    }
+  ],
+  "planos": [
+    {
+      "nome": "Trial (chave de avaliação)",
+      "publico": "api",
+      "preco_mensal_usd": 0,
+      "preco_anual_usd": null,
+      "inclui": "Todos os modelos e APIs da Cohere para teste e provas de conceito.",
+      "limites": "1.000 chamadas de API por mês; Chat 20 req/min por modelo; Embed 2.000 entradas/min; Embed imagens 5 entradas/min; Rerank 10 req/min; Audio Transcriptions 5 req/min. Uso comercial não permitido (segundo terceiros).",
+      "fonte_url": "https://docs.cohere.com/docs/rate-limits",
+      "conferido_em": "2026-10-01"
+    },
+    {
+      "nome": "Production (pay-as-you-go)",
+      "publico": "api",
+      "preco_mensal_usd": null,
+      "preco_anual_usd": null,
+      "inclui": "Cobrança por token (geração e embed) e por busca (rerank).",
+      "limites": "Chat 500 req/min (Command A, R+, R, R7B, North Mini Code); Command A+, Reasoning, Translate e Vision: chave de produção funciona como trial (1.000 chamadas/mês) — contatar vendas; Embed 2.000 entradas/min; Embed imagens 400/min; Rerank 1.000 req/min.",
+      "fonte_url": "https://docs.cohere.com/docs/rate-limits",
+      "conferido_em": "2026-10-01"
+    },
+    {
+      "nome": "Model Vault Standard (Fixed/Flex)",
+      "publico": "empresa",
+      "preco_mensal_usd": null,
+      "preco_anual_usd": null,
+      "inclui": "Implantação dedicada gerida pela Cohere, por instância; Embed e Rerank em autoatendimento, generativos via lista de espera.",
+      "limites": "Preço por instância-hora (ex.: Embed 5 Small US$ 3,00/h, US$ 2.000/mês, US$ 20.000/ano; Command A+ L US$ 17,50/h). Varia por modelo.",
+      "fonte_url": "https://docs.cohere.com/docs/model-vault/standard/pricing",
+      "conferido_em": "2026-10-01"
+    },
+    {
+      "nome": "Enterprise / North",
+      "publico": "empresa",
+      "preco_mensal_usd": null,
+      "preco_anual_usd": null,
+      "inclui": "North (plataforma de agentes para empresas), implantação privada e suporte.",
+      "limites": "Sob consulta com vendas.",
+      "fonte_url": "https://cohere.com/north",
+      "conferido_em": "2026-10-01"
+    }
+  ],
+  "modelos": [
+    {
+      "id": "cohere/command-a-plus-05-2026",
+      "nome": "Command A+",
+      "tipo": "multimodal",
+      "pesos_abertos": true,
+      "lancado_em": "2026-05-20",
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": 128000,
+      "preco": {
+        "entrada_usd_mtok": null,
+        "saida_usd_mtok": null,
+        "fonte_url": null,
+        "divergencia": null
+      },
+      "outros_precos": [
+        {
+          "unidade": "outro",
+          "valor_usd": 17.5,
+          "condicao": "Model Vault Standard, por instância-hora, tier L",
+          "fonte_url": "https://docs.cohere.com/docs/model-vault/standard/pricing"
+        },
+        {
+          "unidade": "outro",
+          "valor_usd": 32.5,
+          "condicao": "Model Vault Standard, por instância-hora, tier XL",
+          "fonte_url": "https://docs.cohere.com/docs/model-vault/standard/pricing"
+        }
+      ],
+      "notas": [
+        {
+          "benchmark": "aa_index",
+          "valor": 37,
+          "medido_em": "2026-05-20",
+          "fonte_url": "https://x.com/ArtificialAnlys/status/2057123594162077837",
+          "observacao": "Valor anunciado pela Artificial Analysis no X no lançamento (versão do índice daquela data). Um resumo de busca da página artificialanalysis.ai/models/command-a-plus cita 13 — provável versão posterior do índice; não conferido (domínio bloqueado). a_verificar"
+        }
+      ],
+      "observacao": "MoE 218B total / 25B ativos; entrada de visão, raciocínio, tradução, 48 idiomas; saída máx. 64k. Pesos abertos Apache 2.0 (huggingface.co/CohereLabs/command-a-plus-05-2026-w4a4). Preço por token na API não obtido (cohere.com/pricing bloqueado); o LiteLLM registra custo 0. Limite trial 20 req/min; produção: falar com vendas."
+    },
+    {
+      "id": "cohere/command-a-03-2025",
+      "nome": "Command A",
+      "tipo": "texto",
+      "pesos_abertos": true,
+      "lancado_em": "2025-03-13",
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": 256000,
+      "preco": {
+        "entrada_usd_mtok": 2.5,
+        "saida_usd_mtok": 10,
+        "fonte_url": "https://cohere.com/pricing",
+        "divergencia": "LiteLLM: 2.5e-06/1e-05 por token (= US$ 2,50/10,00 por M), igual. OpenRouter bloqueado pelo proxy; segunda fonte usada: tabela do LiteLLM (https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json).",
+        "origem": "a_verificar"
+      },
+      "outros_precos": [
+        {
+          "unidade": "outro",
+          "valor_usd": 40.0,
+          "condicao": "Model Vault Standard, por instância-hora, tier L",
+          "fonte_url": "https://docs.cohere.com/docs/model-vault/standard/pricing"
+        },
+        {
+          "unidade": "outro",
+          "valor_usd": 48.0,
+          "condicao": "Model Vault Standard, por instância-hora, tier XL",
+          "fonte_url": "https://docs.cohere.com/docs/model-vault/standard/pricing"
+        }
+      ],
+      "notas": [],
+      "observacao": "Saída máx. 8k. Pesos em huggingface.co/CohereForAI/c4ai-command-a-03-2025 (licença CC-BY-NC 4.0, não comercial). Preço via resumo de busca restrita a cohere.com + LiteLLM (página de preços bloqueada)."
+    },
+    {
+      "id": "cohere/command-a-reasoning-08-2025",
+      "nome": "Command A Reasoning",
+      "tipo": "texto",
+      "pesos_abertos": true,
+      "lancado_em": "2025-08-21",
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": 256000,
+      "preco": {
+        "entrada_usd_mtok": null,
+        "saida_usd_mtok": null,
+        "fonte_url": null,
+        "divergencia": null
+      },
+      "outros_precos": [
+        {
+          "unidade": "outro",
+          "valor_usd": 48.0,
+          "condicao": "Model Vault Standard, por instância-hora, tier L",
+          "fonte_url": "https://docs.cohere.com/docs/model-vault/standard/pricing"
+        },
+        {
+          "unidade": "outro",
+          "valor_usd": 57.5,
+          "condicao": "Model Vault Standard, por instância-hora, tier XL",
+          "fonte_url": "https://docs.cohere.com/docs/model-vault/standard/pricing"
+        }
+      ],
+      "notas": [],
+      "observacao": "Saída máx. 32k. Pesos publicados no Hugging Face sob CC-BY-NC 4.0 (não reconferido: huggingface.co bloqueado). Chaves de produção funcionam como trial (1.000 chamadas/mês); uso em produção exige contato com vendas, sem preço por token público."
+    },
+    {
+      "id": "cohere/command-a-vision-07-2025",
+      "nome": "Command A Vision",
+      "tipo": "multimodal",
+      "pesos_abertos": true,
+      "lancado_em": "2025-07-31",
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": 128000,
+      "preco": {
+        "entrada_usd_mtok": null,
+        "saida_usd_mtok": null,
+        "fonte_url": null,
+        "divergencia": null
+      },
+      "outros_precos": [
+        {
+          "unidade": "outro",
+          "valor_usd": 40.0,
+          "condicao": "Model Vault Standard, por instância-hora, tier L",
+          "fonte_url": "https://docs.cohere.com/docs/model-vault/standard/pricing"
+        },
+        {
+          "unidade": "outro",
+          "valor_usd": 48.0,
+          "condicao": "Model Vault Standard, por instância-hora, tier XL",
+          "fonte_url": "https://docs.cohere.com/docs/model-vault/standard/pricing"
+        }
+      ],
+      "notas": [],
+      "observacao": "Saída máx. 8k; imagens, gráficos, OCR. Pesos no Hugging Face sob CC-BY-NC 4.0 (não reconferido). Produção via vendas; sem preço por token público."
+    },
+    {
+      "id": "cohere/command-a-translate-08-2025",
+      "nome": "Command A Translate",
+      "tipo": "texto",
+      "pesos_abertos": true,
+      "lancado_em": "2025-08-28",
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": 8000,
+      "preco": {
+        "entrada_usd_mtok": null,
+        "saida_usd_mtok": null,
+        "fonte_url": null,
+        "divergencia": null
+      },
+      "outros_precos": [
+        {
+          "unidade": "outro",
+          "valor_usd": 40.0,
+          "condicao": "Model Vault Standard, por instância-hora, tier L",
+          "fonte_url": "https://docs.cohere.com/docs/model-vault/standard/pricing"
+        },
+        {
+          "unidade": "outro",
+          "valor_usd": 48.0,
+          "condicao": "Model Vault Standard, por instância-hora, tier XL",
+          "fonte_url": "https://docs.cohere.com/docs/model-vault/standard/pricing"
+        }
+      ],
+      "notas": [],
+      "observacao": "Tradução em 23 idiomas; contexto 8k entrada / 8k saída. Pesos no Hugging Face sob CC-BY-NC 4.0 (não reconferido). Produção via vendas; sem preço por token público."
+    },
+    {
+      "id": "cohere/command-r-plus-08-2024",
+      "nome": "Command R+ (08-2024)",
+      "tipo": "texto",
+      "pesos_abertos": true,
+      "lancado_em": "2024-08-30",
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": 128000,
+      "preco": {
+        "entrada_usd_mtok": 2.5,
+        "saida_usd_mtok": 10,
+        "fonte_url": "https://docs.cohere.com/changelog/command-gets-refreshed",
+        "divergencia": "LiteLLM: US$ 2,50/10,00 por M, igual. OpenRouter bloqueado pelo proxy; segunda fonte usada: tabela do LiteLLM (https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json)."
+      },
+      "outros_precos": [],
+      "notas": [],
+      "observacao": "Preço literal do changelog oficial: \"input tokens are priced at $2.50/M and output tokens at $10.00/M\". Saída máx. 4k. Pesos CC-BY-NC no Hugging Face (não reconferido). Os aliases antigos command-r-plus/command-r-plus-04-2024 foram descontinuados em 2025-09-15."
+    },
+    {
+      "id": "cohere/command-r-08-2024",
+      "nome": "Command R (08-2024)",
+      "tipo": "texto",
+      "pesos_abertos": true,
+      "lancado_em": "2024-08-30",
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": 128000,
+      "preco": {
+        "entrada_usd_mtok": 0.15,
+        "saida_usd_mtok": 0.6,
+        "fonte_url": "https://docs.cohere.com/changelog/command-gets-refreshed",
+        "divergencia": "LiteLLM: US$ 0,15/0,60 por M, igual. OpenRouter bloqueado pelo proxy; segunda fonte usada: tabela do LiteLLM (https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json)."
+      },
+      "outros_precos": [],
+      "notas": [],
+      "observacao": "Preço literal do changelog oficial: \"$0.15/M\" entrada e \"$0.60/M\" saída. Saída máx. 4k. Pesos CC-BY-NC no Hugging Face (não reconferido)."
+    },
+    {
+      "id": "cohere/command-r7b-12-2024",
+      "nome": "Command R7B",
+      "tipo": "texto",
+      "pesos_abertos": true,
+      "lancado_em": "2024-12-13",
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": 128000,
+      "preco": {
+        "entrada_usd_mtok": 0.0375,
+        "saida_usd_mtok": 0.15,
+        "fonte_url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json",
+        "divergencia": "Página oficial de preços bloqueada; valor só do LiteLLM. OpenRouter bloqueado pelo proxy; segunda fonte usada: tabela do LiteLLM (https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json).",
+        "origem": "a_verificar"
+      },
+      "outros_precos": [],
+      "notas": [],
+      "observacao": "Saída máx. 4k. Pesos em huggingface.co/CohereForAI/c4ai-command-r7b-12-2024 (CC-BY-NC 4.0)."
+    },
+    {
+      "id": "cohere/north-mini-code-1-0",
+      "nome": "North Mini Code 1.0",
+      "tipo": "texto",
+      "pesos_abertos": true,
+      "lancado_em": "2026-06-09",
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": 256000,
+      "preco": {
+        "entrada_usd_mtok": null,
+        "saida_usd_mtok": null,
+        "fonte_url": null,
+        "divergencia": null
+      },
+      "outros_precos": [
+        {
+          "unidade": "outro",
+          "valor_usd": 7.5,
+          "condicao": "Model Vault Standard, por instância-hora, tier L",
+          "fonte_url": "https://docs.cohere.com/docs/model-vault/standard/pricing"
+        },
+        {
+          "unidade": "outro",
+          "valor_usd": 10.5,
+          "condicao": "Model Vault Standard, por instância-hora, tier XL",
+          "fonte_url": "https://docs.cohere.com/docs/model-vault/standard/pricing"
+        }
+      ],
+      "notas": [],
+      "observacao": "MoE 30B total / 3B ativos para código agêntico; saída máx. 64k; Apache 2.0, pesos no Hugging Face. Na API Chat V2 (limite 20 req/min trial, 500 req/min produção); preço por token não obtido."
+    },
+    {
+      "id": "cohere/north-small-translate-1-0",
+      "nome": "North Small Translate 1.0",
+      "tipo": "texto",
+      "pesos_abertos": true,
+      "lancado_em": "2026-09-09",
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": 16000,
+      "preco": {
+        "entrada_usd_mtok": null,
+        "saida_usd_mtok": null,
+        "fonte_url": null,
+        "divergencia": null
+      },
+      "outros_precos": [],
+      "notas": [],
+      "observacao": "MoE 218B total / 25B ativos, tradução em mais de 50 idiomas. Disponível no tier gratuito da API Chat V2; pesos W4A16/FP8/BF16 sob CC BY-NC 4.0 (uso não comercial). Preço por token não publicado."
+    },
+    {
+      "id": "cohere/tiny-aya-global",
+      "nome": "Tiny Aya Global",
+      "tipo": "texto",
+      "pesos_abertos": true,
+      "lancado_em": null,
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": 8000,
+      "preco": {
+        "entrada_usd_mtok": null,
+        "saida_usd_mtok": null,
+        "fonte_url": null,
+        "divergencia": null
+      },
+      "outros_precos": [],
+      "notas": [],
+      "observacao": "3,35B, multilíngue (70 idiomas). Variantes regionais tiny-aya-earth, tiny-aya-fire e tiny-aya-water também na API (8k/8k). Pesos abertos no Hugging Face (licença não conferida: HF bloqueado). Lançamento em fev/2026 segundo terceiros; data oficial não encontrada. Preço não obtido."
+    },
+    {
+      "id": "cohere/c4ai-aya-expanse-32b",
+      "nome": "Aya Expanse 32B",
+      "tipo": "texto",
+      "pesos_abertos": true,
+      "lancado_em": null,
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": 128000,
+      "preco": {
+        "entrada_usd_mtok": 0.5,
+        "saida_usd_mtok": 1.5,
+        "fonte_url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json",
+        "divergencia": "Só LiteLLM (fonte declarada: docs.cohere.com/docs/models). OpenRouter bloqueado pelo proxy; segunda fonte usada: tabela do LiteLLM (https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json).",
+        "origem": "a_verificar"
+      },
+      "outros_precos": [],
+      "notas": [],
+      "observacao": "23 idiomas; saída máx. 4k. Pesos para pesquisa no Hugging Face (CohereForAI/aya-expanse-32b, CC-BY-NC). A versão 8B foi desativada em 2026-04-04."
+    },
+    {
+      "id": "cohere/c4ai-aya-vision-32b",
+      "nome": "Aya Vision 32B",
+      "tipo": "multimodal",
+      "pesos_abertos": true,
+      "lancado_em": "2025-03-04",
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": 16000,
+      "preco": {
+        "entrada_usd_mtok": null,
+        "saida_usd_mtok": null,
+        "fonte_url": null,
+        "divergencia": null
+      },
+      "outros_precos": [],
+      "notas": [],
+      "observacao": "Texto e imagem, 23 idiomas; saída máx. 4k. Pesos abertos para pesquisa no Hugging Face (CC-BY-NC). A versão 8B foi desativada em 2026-04-04. Preço não obtido."
+    },
+    {
+      "id": "cohere/embed-v5.0-pro",
+      "nome": "Embed 5 Pro",
+      "tipo": "embedding",
+      "pesos_abertos": false,
+      "lancado_em": "2026-09-30",
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": 128000,
+      "preco": {
+        "entrada_usd_mtok": 0.12,
+        "saida_usd_mtok": null,
+        "fonte_url": "https://cohere.com/blog/embed-5",
+        "divergencia": "Não está no LiteLLM; OpenRouter bloqueado.",
+        "origem": "a_verificar"
+      },
+      "outros_precos": [
+        {
+          "unidade": "outro",
+          "valor_usd": 0.4,
+          "condicao": "por 1M tokens de imagem (resumo de busca do blog oficial; a_verificar)",
+          "fonte_url": "https://cohere.com/blog/embed-5"
+        },
+        {
+          "unidade": "outro",
+          "valor_usd": 3.0,
+          "condicao": "Model Vault Standard, por instância-hora, tier Small",
+          "fonte_url": "https://docs.cohere.com/docs/model-vault/standard/pricing"
+        },
+        {
+          "unidade": "outro",
+          "valor_usd": 5.0,
+          "condicao": "Model Vault Standard, por instância-hora, tier Medium",
+          "fonte_url": "https://docs.cohere.com/docs/model-vault/standard/pricing"
+        }
+      ],
+      "notas": [],
+      "observacao": "Texto, imagem e misto; >100 idiomas; Matryoshka 256–2048. Preço só via resumo de busca (cohere.com bloqueado)."
+    },
+    {
+      "id": "cohere/embed-v5.0-fast",
+      "nome": "Embed 5 Fast",
+      "tipo": "embedding",
+      "pesos_abertos": false,
+      "lancado_em": "2026-09-30",
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": 128000,
+      "preco": {
+        "entrada_usd_mtok": 0.08,
+        "saida_usd_mtok": null,
+        "fonte_url": "https://cohere.com/blog/embed-5",
+        "divergencia": "Não está no LiteLLM; OpenRouter bloqueado.",
+        "origem": "a_verificar"
+      },
+      "outros_precos": [
+        {
+          "unidade": "outro",
+          "valor_usd": 0.4,
+          "condicao": "por 1M tokens de imagem (resumo de busca do blog oficial; a_verificar)",
+          "fonte_url": "https://cohere.com/blog/embed-5"
+        },
+        {
+          "unidade": "outro",
+          "valor_usd": 3.0,
+          "condicao": "Model Vault Standard, por instância-hora, tier Small",
+          "fonte_url": "https://docs.cohere.com/docs/model-vault/standard/pricing"
+        },
+        {
+          "unidade": "outro",
+          "valor_usd": 5.0,
+          "condicao": "Model Vault Standard, por instância-hora, tier Medium",
+          "fonte_url": "https://docs.cohere.com/docs/model-vault/standard/pricing"
+        }
+      ],
+      "notas": [],
+      "observacao": "Mesmo espaço vetorial do Pro (indexar com Pro, consultar com Fast)."
+    },
+    {
+      "id": "cohere/embed-v4.0",
+      "nome": "Embed 4",
+      "tipo": "embedding",
+      "pesos_abertos": false,
+      "lancado_em": "2025-04-15",
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": 128000,
+      "preco": {
+        "entrada_usd_mtok": 0.12,
+        "saida_usd_mtok": null,
+        "fonte_url": "https://cohere.com/pricing",
+        "divergencia": "LiteLLM: 1.2e-07 por token (= US$ 0,12/M), igual. OpenRouter bloqueado pelo proxy; segunda fonte usada: tabela do LiteLLM (https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json).",
+        "origem": "a_verificar"
+      },
+      "outros_precos": [
+        {
+          "unidade": "outro",
+          "valor_usd": 0.47,
+          "condicao": "por 1M tokens de imagem (resumo de busca de terceiros; a_verificar)",
+          "fonte_url": "https://cloudprice.net/models/cohere-embed-4"
+        },
+        {
+          "unidade": "outro",
+          "valor_usd": 4.0,
+          "condicao": "Model Vault Standard, por instância-hora, tier Small",
+          "fonte_url": "https://docs.cohere.com/docs/model-vault/standard/pricing"
+        },
+        {
+          "unidade": "outro",
+          "valor_usd": 5.0,
+          "condicao": "Model Vault Standard, por instância-hora, tier Medium",
+          "fonte_url": "https://docs.cohere.com/docs/model-vault/standard/pricing"
+        }
+      ],
+      "notas": [],
+      "observacao": "Multimodal (texto e imagem)."
+    },
+    {
+      "id": "cohere/embed-english-v3.0",
+      "nome": "Embed English v3",
+      "tipo": "embedding",
+      "pesos_abertos": false,
+      "lancado_em": null,
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": 512,
+      "preco": {
+        "entrada_usd_mtok": 0.1,
+        "saida_usd_mtok": null,
+        "fonte_url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json",
+        "divergencia": "Só LiteLLM. OpenRouter bloqueado pelo proxy; segunda fonte usada: tabela do LiteLLM (https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json).",
+        "origem": "a_verificar"
+      },
+      "outros_precos": [
+        {
+          "unidade": "imagem",
+          "valor_usd": 0.0001,
+          "condicao": "por imagem (LiteLLM; a_verificar)",
+          "fonte_url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json"
+        },
+        {
+          "unidade": "outro",
+          "valor_usd": 4.0,
+          "condicao": "Model Vault Standard, por instância-hora, Embed 3, tier Small",
+          "fonte_url": "https://docs.cohere.com/docs/model-vault/standard/pricing"
+        }
+      ],
+      "notas": [],
+      "observacao": null
+    },
+    {
+      "id": "cohere/embed-english-light-v3.0",
+      "nome": "Embed English Light v3",
+      "tipo": "embedding",
+      "pesos_abertos": false,
+      "lancado_em": null,
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": 512,
+      "preco": {
+        "entrada_usd_mtok": 0.1,
+        "saida_usd_mtok": null,
+        "fonte_url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json",
+        "divergencia": "Só LiteLLM. OpenRouter bloqueado pelo proxy; segunda fonte usada: tabela do LiteLLM (https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json).",
+        "origem": "a_verificar"
+      },
+      "outros_precos": [],
+      "notas": [],
+      "observacao": null
+    },
+    {
+      "id": "cohere/embed-multilingual-v3.0",
+      "nome": "Embed Multilingual v3",
+      "tipo": "embedding",
+      "pesos_abertos": false,
+      "lancado_em": null,
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": 512,
+      "preco": {
+        "entrada_usd_mtok": 0.1,
+        "saida_usd_mtok": null,
+        "fonte_url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json",
+        "divergencia": "Só LiteLLM. OpenRouter bloqueado pelo proxy; segunda fonte usada: tabela do LiteLLM (https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json).",
+        "origem": "a_verificar"
+      },
+      "outros_precos": [],
+      "notas": [],
+      "observacao": null
+    },
+    {
+      "id": "cohere/embed-multilingual-light-v3.0",
+      "nome": "Embed Multilingual Light v3",
+      "tipo": "embedding",
+      "pesos_abertos": false,
+      "lancado_em": null,
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": 512,
+      "preco": {
+        "entrada_usd_mtok": null,
+        "saida_usd_mtok": null,
+        "fonte_url": null,
+        "divergencia": null
+      },
+      "outros_precos": [],
+      "notas": [],
+      "observacao": "Preço não registrado: o LiteLLM traz 0.0001 por token (US$ 100/M), valor claramente inconsistente com a família; página oficial bloqueada."
+    },
+    {
+      "id": "cohere/rerank-v4.0-pro",
+      "nome": "Rerank 4 Pro",
+      "tipo": "rerank",
+      "pesos_abertos": false,
+      "lancado_em": "2025-12-11",
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": 32000,
+      "preco": {
+        "entrada_usd_mtok": null,
+        "saida_usd_mtok": null,
+        "fonte_url": null,
+        "divergencia": null
+      },
+      "outros_precos": [
+        {
+          "unidade": "mil_requisicoes",
+          "valor_usd": 2.5,
+          "condicao": "por mil buscas (até 100 documentos por busca). LiteLLM 0.0025/consulta, fonte declarada cohere.com/pricing; a_verificar",
+          "fonte_url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json"
+        },
+        {
+          "unidade": "outro",
+          "valor_usd": 5.0,
+          "condicao": "Model Vault Standard, por instância-hora, tier Medium",
+          "fonte_url": "https://docs.cohere.com/docs/model-vault/standard/pricing"
+        },
+        {
+          "unidade": "outro",
+          "valor_usd": 10.0,
+          "condicao": "Model Vault Standard, por instância-hora, tier Large",
+          "fonte_url": "https://docs.cohere.com/docs/model-vault/standard/pricing"
+        }
+      ],
+      "notas": [],
+      "observacao": null
+    },
+    {
+      "id": "cohere/rerank-v4.0-fast",
+      "nome": "Rerank 4 Fast",
+      "tipo": "rerank",
+      "pesos_abertos": false,
+      "lancado_em": "2025-12-11",
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": 32000,
+      "preco": {
+        "entrada_usd_mtok": null,
+        "saida_usd_mtok": null,
+        "fonte_url": null,
+        "divergencia": null
+      },
+      "outros_precos": [
+        {
+          "unidade": "mil_requisicoes",
+          "valor_usd": 2.0,
+          "condicao": "por mil buscas. LiteLLM 0.002/consulta, fonte declarada cohere.com/pricing; a_verificar",
+          "fonte_url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json"
+        },
+        {
+          "unidade": "outro",
+          "valor_usd": 5.0,
+          "condicao": "Model Vault Standard, por instância-hora, tier Medium",
+          "fonte_url": "https://docs.cohere.com/docs/model-vault/standard/pricing"
+        }
+      ],
+      "notas": [],
+      "observacao": null
+    },
+    {
+      "id": "cohere/rerank-v3.5",
+      "nome": "Rerank 3.5",
+      "tipo": "rerank",
+      "pesos_abertos": false,
+      "lancado_em": "2024-12-02",
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": 4000,
+      "preco": {
+        "entrada_usd_mtok": null,
+        "saida_usd_mtok": null,
+        "fonte_url": null,
+        "divergencia": null
+      },
+      "outros_precos": [
+        {
+          "unidade": "mil_requisicoes",
+          "valor_usd": 2.0,
+          "condicao": "por mil buscas. LiteLLM 0.002/consulta; a_verificar (um blog de terceiros diz US$ 0,001/busca na API direta — divergência)",
+          "fonte_url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json"
+        },
+        {
+          "unidade": "outro",
+          "valor_usd": 5.0,
+          "condicao": "Model Vault Standard, por instância-hora, tier Medium",
+          "fonte_url": "https://docs.cohere.com/docs/model-vault/standard/pricing"
+        }
+      ],
+      "notas": [],
+      "observacao": null
+    },
+    {
+      "id": "cohere/rerank-english-v3.0",
+      "nome": "Rerank English v3",
+      "tipo": "rerank",
+      "pesos_abertos": false,
+      "lancado_em": null,
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": 4000,
+      "preco": {
+        "entrada_usd_mtok": null,
+        "saida_usd_mtok": null,
+        "fonte_url": null,
+        "divergencia": null
+      },
+      "outros_precos": [
+        {
+          "unidade": "mil_requisicoes",
+          "valor_usd": 2.0,
+          "condicao": "por mil buscas (LiteLLM; a_verificar)",
+          "fonte_url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json"
+        }
+      ],
+      "notas": [],
+      "observacao": null
+    },
+    {
+      "id": "cohere/rerank-multilingual-v3.0",
+      "nome": "Rerank Multilingual v3",
+      "tipo": "rerank",
+      "pesos_abertos": false,
+      "lancado_em": null,
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": 4000,
+      "preco": {
+        "entrada_usd_mtok": null,
+        "saida_usd_mtok": null,
+        "fonte_url": null,
+        "divergencia": null
+      },
+      "outros_precos": [
+        {
+          "unidade": "mil_requisicoes",
+          "valor_usd": 2.0,
+          "condicao": "por mil buscas (LiteLLM; a_verificar)",
+          "fonte_url": "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json"
+        }
+      ],
+      "notas": [],
+      "observacao": null
+    },
+    {
+      "id": "cohere/cohere-transcribe-03-2026",
+      "nome": "Cohere Transcribe",
+      "tipo": "audio_stt",
+      "pesos_abertos": true,
+      "lancado_em": "2026-03-26",
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": null,
+      "preco": {
+        "entrada_usd_mtok": null,
+        "saida_usd_mtok": null,
+        "fonte_url": null,
+        "divergencia": null
+      },
+      "outros_precos": [
+        {
+          "unidade": "outro",
+          "valor_usd": 3.75,
+          "condicao": "Model Vault Standard, por instância-hora, tier Medium",
+          "fonte_url": "https://docs.cohere.com/docs/model-vault/standard/pricing"
+        },
+        {
+          "unidade": "outro",
+          "valor_usd": 7.5,
+          "condicao": "Model Vault Standard, por instância-hora, tier Large",
+          "fonte_url": "https://docs.cohere.com/docs/model-vault/standard/pricing"
+        }
+      ],
+      "notas": [],
+      "observacao": "Apache 2.0, 14 idiomas (inclui português). Grátis na API com limite (5 req/min trial); produção só via Model Vault por instância-hora."
+    },
+    {
+      "id": "cohere/cohere-transcribe-arabic-07-2026",
+      "nome": "Cohere Transcribe Arabic",
+      "tipo": "audio_stt",
+      "pesos_abertos": true,
+      "lancado_em": "2026-06-30",
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": null,
+      "preco": {
+        "entrada_usd_mtok": null,
+        "saida_usd_mtok": null,
+        "fonte_url": null,
+        "divergencia": null
+      },
+      "outros_precos": [],
+      "notas": [],
+      "observacao": "2B, árabe e inglês; Apache 2.0; pesos no Hugging Face. Data do createdAt do changelog oficial."
+    },
+    {
+      "id": "cohere/parse-v5.0",
+      "nome": "Cohere Parse 5",
+      "tipo": "multimodal",
+      "pesos_abertos": false,
+      "lancado_em": "2026-08-23",
+      "status": "ativo",
+      "desativa_em": null,
+      "contexto_tokens": 8000,
+      "preco": {
+        "entrada_usd_mtok": null,
+        "saida_usd_mtok": null,
+        "fonte_url": null,
+        "divergencia": null
+      },
+      "outros_precos": [
+        {
+          "unidade": "outro",
+          "valor_usd": 4.0,
+          "condicao": "Model Vault Standard, por instância-hora, tier Medium",
+          "fonte_url": "https://docs.cohere.com/docs/model-vault/standard/pricing"
+        },
+        {
+          "unidade": "outro",
+          "valor_usd": 8.0,
+          "condicao": "Model Vault Standard, por instância-hora, tier Large",
+          "fonte_url": "https://docs.cohere.com/docs/model-vault/standard/pricing"
+        },
+        {
+          "unidade": "outro",
+          "valor_usd": 7.0,
+          "condicao": "Model Vault Standard, por instância-hora, tier XL (valor literal da página, menor que Large)",
+          "fonte_url": "https://docs.cohere.com/docs/model-vault/standard/pricing"
+        }
+      ],
+      "notas": [],
+      "observacao": "2,3B, documentos→Markdown. Arquitetura descrita como proprietária. Data do createdAt do changelog (arquivo datado 2026-08-27). Preço por página/requisição na API não obtido."
+    }
+  ],
+  "capacidades": [
+    {
+      "capacidade": "texto",
+      "produto": "Chat API v2 (Command A/A+/R/R7B)",
+      "como_acessar": [
+        "api",
+        "web"
+      ],
+      "plano_minimo": "Trial",
+      "gratis": true,
+      "headless": true,
+      "comando": "co.chat(model=\"command-a-03-2025\", ...)",
+      "limites": "Trial 20 req/min, 1.000 chamadas/mês",
+      "fonte_url": "https://docs.cohere.com/docs/rate-limits"
+    },
+    {
+      "capacidade": "codigo",
+      "produto": "North Mini Code (Chat API v2 e pesos Apache 2.0)",
+      "como_acessar": [
+        "api"
+      ],
+      "plano_minimo": "Trial",
+      "gratis": true,
+      "headless": true,
+      "comando": null,
+      "limites": "20 req/min trial",
+      "fonte_url": "https://docs.cohere.com/changelog/north-mini-code-1-0"
+    },
+    {
+      "capacidade": "embeddings",
+      "produto": "Embed API (Embed 5/4/3)",
+      "como_acessar": [
+        "api"
+      ],
+      "plano_minimo": "Trial",
+      "gratis": true,
+      "headless": true,
+      "comando": "co.embed(model=\"embed-v5.0-pro\", ...)",
+      "limites": "Trial 2.000 entradas/min; imagens 5/min",
+      "fonte_url": "https://docs.cohere.com/docs/rate-limits"
+    },
+    {
+      "capacidade": "rerank",
+      "produto": "Rerank API (Rerank 4/3.5)",
+      "como_acessar": [
+        "api"
+      ],
+      "plano_minimo": "Trial",
+      "gratis": true,
+      "headless": true,
+      "comando": "co.rerank(model=\"rerank-v4.0-pro\", query=..., documents=...)",
+      "limites": "Trial 10 req/min; produção 1.000 req/min",
+      "fonte_url": "https://docs.cohere.com/docs/rate-limits"
+    },
+    {
+      "capacidade": "audio_stt",
+      "produto": "Audio Transcriptions API (Cohere Transcribe)",
+      "como_acessar": [
+        "api"
+      ],
+      "plano_minimo": "Trial",
+      "gratis": true,
+      "headless": true,
+      "comando": null,
+      "limites": "5 req/min trial; produção via Model Vault",
+      "fonte_url": "https://docs.cohere.com/docs/rate-limits"
+    },
+    {
+      "capacidade": "texto",
+      "produto": "Parse API (parse-v5.0, documentos→Markdown)",
+      "como_acessar": [
+        "api"
+      ],
+      "plano_minimo": "Trial",
+      "gratis": true,
+      "headless": true,
+      "comando": null,
+      "limites": "500 req/min",
+      "fonte_url": "https://docs.cohere.com/docs/rate-limits"
+    },
+    {
+      "capacidade": "agente_nuvem",
+      "produto": "North (plataforma de agentes)",
+      "como_acessar": [
+        "web",
+        "nuvem"
+      ],
+      "plano_minimo": "Enterprise",
+      "gratis": false,
+      "headless": false,
+      "comando": null,
+      "limites": "Sob contrato",
+      "fonte_url": "https://cohere.com/north"
+    },
+    {
+      "capacidade": "busca_web",
+      "produto": "RAG com citações na Chat API (documents/tools); conectores gerenciados foram descontinuados em 2025-09-15",
+      "como_acessar": [
+        "api"
+      ],
+      "plano_minimo": "Trial",
+      "gratis": true,
+      "headless": true,
+      "comando": null,
+      "limites": "Busca web não é nativa: o usuário fornece a ferramenta/documentos",
+      "fonte_url": "https://docs.cohere.com/docs/deprecations"
+    }
+  ],
+  "gratis": [
+    {
+      "titulo": "Chave Trial da API",
+      "resumo": "Chave gratuita com acesso a todos os modelos e endpoints (Chat, Embed, Rerank, Transcribe, Parse).",
+      "limites": "1.000 chamadas/mês; Chat 20 req/min; Embed 2.000 entradas/min; Rerank 10 req/min; Transcribe 5 req/min.",
+      "chamavel_por_agente": true,
+      "url": "https://docs.cohere.com/docs/rate-limits",
+      "valido_ate": null,
+      "origem": "verificado"
+    },
+    {
+      "titulo": "North Small Translate no tier gratuito",
+      "resumo": "Modelo de tradução para 50+ idiomas disponível no tier gratuito da Chat V2 API e como pesos abertos não comerciais.",
+      "limites": "Limites da chave Trial.",
+      "chamavel_por_agente": true,
+      "url": "https://docs.cohere.com/changelog/north-small-translate-1-0",
+      "valido_ate": null,
+      "origem": "verificado"
+    },
+    {
+      "titulo": "Pesos abertos (Command A+, North Mini Code, Transcribe — Apache 2.0)",
+      "resumo": "Rodar localmente sem custo de API; Command A+ exige 2×H100 ou 1×B200, North Mini Code roda em hardware local.",
+      "limites": "Custo do hardware próprio.",
+      "chamavel_por_agente": true,
+      "url": "https://huggingface.co/CohereLabs",
+      "valido_ate": null,
+      "origem": "verificado"
+    }
+  ],
+  "programas": [
+    {
+      "nome": "Cohere Labs Catalyst Grants",
+      "publico": "pesquisador",
+      "beneficio": "Créditos de API da Cohere aplicados ao uso com chave de produção.",
+      "valor_usd": null,
+      "requisitos": "Parceiros acadêmicos, organizações cívicas ou de impacto público; projetos de benefício público ou ciência aberta (educação, saúde, clima, sustentabilidade, IA multilíngue).",
+      "elegivel": "talvez",
+      "elegivel_motivo": "A pesquisa do UrbVerde (dados urbanos e ambientais, clima/sustentabilidade) é ciência aberta de benefício público e há vínculo acadêmico (USP, orientador); como graduando, provavelmente precisa submeter via orientador/grupo.",
+      "como_aplicar": "Formulário em cohere.com/research/grants (fluxo contínuo).",
+      "url": "https://cohere.com/research/grants",
+      "status": "continuo",
+      "prazo": null,
+      "verificado_em": "2026-10-01"
+    },
+    {
+      "nome": "Cohere Labs Scholars Program",
+      "publico": "estudante",
+      "beneficio": "Aprendizado em pesquisa de ML de 8 meses em tempo integral com a equipe da Cohere Labs (remunerado, segundo terceiros).",
+      "valor_usd": null,
+      "requisitos": "Disponibilidade em tempo integral, curiosidade em IA/ML; experiência prévia com artigos não é exigida. Candidatura: vídeo de 5 min + carta de até 500 palavras.",
+      "elegivel": "talvez",
+      "elegivel_motivo": "Aberto a quem não tem publicações, mas exige dedicação integral por 8 meses, conflitando com a graduação.",
+      "como_aplicar": "cohere.com/research/scholars-program quando abrir o ciclo.",
+      "url": "https://cohere.com/research/scholars-program",
+      "status": "em_breve",
+      "prazo": null,
+      "verificado_em": "2026-10-01"
+    },
+    {
+      "nome": "Cohere Labs Open Science Community",
+      "publico": "todos",
+      "beneficio": "Comunidade aberta de pesquisa (grupos de leitura, projetos colaborativos, palestras).",
+      "valor_usd": null,
+      "requisitos": "Inscrição aberta.",
+      "elegivel": "sim",
+      "elegivel_motivo": "Aberta a qualquer pessoa interessada em pesquisa em ML.",
+      "como_aplicar": "Inscrição pela página da Cohere Labs.",
+      "url": "https://cohere.com/research",
+      "status": "continuo",
+      "prazo": null,
+      "verificado_em": "2026-10-01"
+    },
+    {
+      "nome": "Cohere Startup Program (Cohere for Good)",
+      "publico": "startup",
+      "beneficio": "25% de desconto nos modelos por até 12 meses (programa de 2024).",
+      "valor_usd": null,
+      "requisitos": "Startups em estágio inicial.",
+      "elegivel": "nao",
+      "elegivel_motivo": "Guilherme não tem startup; além disso a página parece ter sido retirada.",
+      "como_aplicar": "Página oficial não localizada.",
+      "url": "https://betakit.com/cohere-launches-program-to-help-early-stage-startups-adopt-ai-and-secures-450-million-usd/",
+      "status": "desconhecido",
+      "prazo": null,
+      "verificado_em": "2026-10-01"
+    }
+  ],
+  "indicadores": [],
+  "observacoes": "Proxy bloqueou cohere.com, docs.cohere.com, openrouter.ai, huggingface.co, artificialanalysis.ai, vercel.com, web.archive.org e agregadores de preço. Docs, changelog, deprecações, limites de taxa e preços do Model Vault foram lidos literalmente do repositório-fonte oficial github.com/cohere-ai/cohere-developer-experience (commit de 2026-09-30); os fonte_url apontam para as páginas publicadas equivalentes em docs.cohere.com. PREÇOS POR TOKEN: só Command R e R+ (08-2024) têm valor literal oficial (changelog 2024-08-30). Command A, Embed 4/5 vieram de resumo de busca restrita a cohere.com + LiteLLM (marcados origem a_verificar); Command R7B, Aya Expanse 32B, Embed v3 e Rerank v3/v3.5/v4 vieram só do LiteLLM (a_verificar). Sem preço por token: Command A+, Reasoning, Vision, Translate (produção via vendas), North Mini Code, North Small Translate, Tiny Aya, Aya Vision 32B, Transcribe, Parse, Embed Multilingual Light v3 (LiteLLM com valor inconsistente). Preço de imagem do Embed 4 (US$ 0,47/M) e Embed 5 (US$ 0,40/M) não conferidos na fonte oficial. Segunda fonte OpenRouter indisponível (bloqueada); LiteLLM usado no lugar. Nenhum modelo ativo tem desativação anunciada; a última desativação (embed v2, aya 8B) ocorreu em 2026-04-04 e a anterior (command, command-light, command-r-03-2024, command-r-plus-04-2024) em 2025-09-15. NOTAS: aa_index só para Command A+ (37, post da AA no X; divergência com 13 citado em resumo de busca); lmarena_elo não incluído (só resumo de busca, sem valor literal); mteb_media não obtido (Hugging Face bloqueado). Licenças CC-BY-NC de Command A/Reasoning/Vision/Translate/R/R+ não reconferidas no HF. INDICADORES: nenhum encontrado (página AA bloqueada). Datas de lançamento de Tiny Aya, Aya Expanse 32B, Embed v3 e Rerank v3 não encontradas na fonte oficial. Programas: valores das Catalyst Grants não publicados; status do Scholars (em_breve, previsto para outono de 2026) vem de resumo de busca."
+}
