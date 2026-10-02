@@ -2,7 +2,7 @@
 
 > Para retomar em um chat novo: com este repositório conectado (ou numa sessão do Claude Code na
 > nuvem neste repositório), peça para ler este arquivo, ou cole a "mensagem pronta" do fim.
-> Trabalho normal, sem modo PM/EXEC. **Atualizado em 2026-10-02 (painel v2).**
+> Trabalho normal, sem modo PM/EXEC. **Atualizado em 2026-10-02 (chat do painel v2, encerrado).**
 
 ## Situar-se (ler nesta ordem)
 
@@ -11,6 +11,8 @@
 3. `radar/provedores.json`: os 32 provedores e a sessão de cada um.
 4. Doc `claude/painel-benchmark-ia.md` no Project do claude.ai: estado do banco e pendências.
 5. `coleta/2026-10-01_radar-coleta-e-importacao.md`: o que aconteceu na coleta e na importação.
+6. `coleta/2026-10-02_radar-painel-v2.md`: a função `painel_json()` v2 e a página v2.
+7. `radar/banco/painel_json.sql` e `radar/painel/painel.html`: a fonte do que está no ar.
 
 ## Objetivo da thread
 
@@ -36,7 +38,7 @@ canais oficiais), os recursos do Guilherme com previsão de esgotamento, e o que
   capacidades), `programas`, `gratis` (saiu de `novidades`), `biblioteca` (654 modelos, com preços por
   unidade e notas), `indicadores` e `historico_precos`. Sai com ~560 KB. A v1 ficou guardada em
   `radar.painel_json_v1()` para voltar atrás.
-- **Página versão 2 publicada**: `radar/painel/painel.html` (lê `dados.json`, a saída de
+- **Página versão 2 publicada** (versão 3 do artefato): `radar/painel/painel.html` (lê `dados.json`, a saída de
   `select radar.painel_json();`). Seções novas: programas para você, grátis, biblioteca de modelos com
   filtros, provedores, quem faz o quê, indicadores e histórico de preços; o gráfico ganhou "todos com nota".
 - **Como tirar o `dados.json` do banco nesta nuvem**: a rede do contêiner não alcança o Supabase. O
@@ -68,9 +70,22 @@ canais oficiais), os recursos do Guilherme com previsão de esgotamento, e o que
 2. ~~`radar.painel_json()` versão 2 e página versão 2~~. Feitas e publicadas em 2026-10-02.
    Para atualizar os dados: gerar o `dados.json` de novo e republicar no mesmo endereço (exige
    autorização do Guilherme).
-3. **Próximo:** medir o consumo de cada recurso (ccusage, `/status` do Codex, `/usage` do Antigravity, API de
+3. **Próximo (do assistente, com o Guilherme no computador dele):** medir o consumo de cada recurso (ccusage, `/status` do Codex, `/usage` do Antigravity, API de
    custos da OpenAI), gravar em `radar.leituras` e montar a previsão de esgotamento.
 4. Escrever a skill do radar e só então a tarefa agendada, seguindo a seção "Manutenção" do roteiro.
+
+## Armadilhas do ambiente
+
+- **A nuvem do Claude Code não alcança o Supabase nem o OpenRouter** (o proxy recusa a conexão). Para
+  tirar o `dados.json`: rodar `select radar.painel_json();` pelo `execute_sql`; a saída estoura o limite,
+  vai para um arquivo em `~/.claude/projects/.../tool-results/` e um script extrai o JSON de dentro do
+  bloco `<untrusted-data-…>`. Nunca colar o JSON na conversa (são ~200 mil tokens).
+- O script diário de preços (OpenRouter) não roda nesta nuvem sem liberar a rede do ambiente.
+- `delete` pela ferramenta do Supabase expira; apagar pelo painel do Supabase.
+- Ao testar a página localmente, o arquivo não tem `<meta charset>` (o artefato põe na publicação):
+  envolver com um cabeçalho de teste, senão os acentos e as expressões regulares quebram.
+- Republicar: `Artifact` com o `url` da página, `file_path` no `painel.html` e `files: {"dados.json": …}`.
+  Autorização do Guilherme a cada vez.
 
 ## Pendências
 

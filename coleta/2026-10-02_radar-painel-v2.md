@@ -27,6 +27,9 @@ anterior: coleta/2026-10-01_radar-coleta-e-importacao.md
   extrai o JSON. Vale lembrar para o script diário de preços: ele não roda nesta nuvem sem liberar a rede.
 - [DECISÃO] O Guilherme autorizou o commit e a republicação. Página v2 publicada no mesmo endereço
   (https://claude.ai/artifact/FGk5hSwv1fYD5f1spEtobM, versão 3 do artefato), com o `dados.json` novo.
+- [DIRECIONAMENTO] Chat encerrado a pedido do Guilherme. Retomada reescrita com a seção "Armadilhas do
+  ambiente". Esta thread não tem etapa no `PLANO.md` nem na `PROXIMA_TAREFA.md` (que são da thread do
+  transcritor), então o estado do método não foi tocado.
 
 ## 2. Resumo consolidado
 
