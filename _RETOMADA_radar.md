@@ -2,7 +2,7 @@
 
 > Para retomar em um chat novo: com este repositório conectado (ou numa sessão do Claude Code na
 > nuvem neste repositório), peça para ler este arquivo, ou cole a "mensagem pronta" do fim.
-> Trabalho normal, sem modo PM/EXEC. **Atualizado em 2026-10-02.**
+> Trabalho normal, sem modo PM/EXEC. **Atualizado em 2026-10-02 (painel v2).**
 
 ## Situar-se (ler nesta ordem)
 
@@ -20,8 +20,8 @@ canais oficiais), os recursos do Guilherme com previsão de esgotamento, e o que
 
 ## Onde estou
 
-- **Página publicada (versão 1):** Painel de Benchmark de IA, https://claude.ai/artifact/FGk5hSwv1fYD5f1spEtobM.
-  Lê o `dados.json`, que é a saída de `select radar.painel_json()`.
+- **Página publicada (versão 2, desde 2026-10-02):** Painel de Benchmark de IA, https://claude.ai/artifact/FGk5hSwv1fYD5f1spEtobM.
+  Lê o `dados.json`, que é a saída de `select radar.painel_json()`. Fonte da página: `radar/painel/painel.html`.
 - **Banco:** esquema `radar` no Supabase `rag-compartilhado`, já com as tabelas da biblioteca
   (`provedores`, `canais`, `planos`, `capacidades`, `programas`, `indicadores`, `precos_unidade`,
   `leituras`). A primeira carga tem 21 modelos, 7 análises e 43 novidades.
@@ -31,8 +31,17 @@ canais oficiais), os recursos do Guilherme com previsão de esgotamento, e o que
   242 capacidades, 93 programas, 109 ofertas grátis (em `novidades`, tipo `gratis`) e 26 indicadores.
 - **Importar de novo** (manutenção): `select radar.importar_coleta_url('https://raw.githubusercontent.com/elbuenogui/agentes-base/radar-coleta/radar/coleta/<id>.json');`
   É upsert: rodar duas vezes não duplica. Usa a extensão `http`, ativada para isso.
-- **`painel_json()` ainda é o da versão 1**: só lê `modelos` acompanhados, `precos`, `notas`,
-  `analises`, `novidades`, `recursos` e `gasto_por_modelo`. A página publicada não mostra a biblioteca nova.
+- **`painel_json()` já é a versão 2** (2026-10-02), aplicada no banco. Fonte em `radar/banco/painel_json.sql`.
+  Mantém as chaves da v1 e acrescenta `versao`, `contagens`, `provedores` (com canais, planos e
+  capacidades), `programas`, `gratis` (saiu de `novidades`), `biblioteca` (654 modelos, com preços por
+  unidade e notas), `indicadores` e `historico_precos`. Sai com ~560 KB. A v1 ficou guardada em
+  `radar.painel_json_v1()` para voltar atrás.
+- **Página versão 2 publicada**: `radar/painel/painel.html` (lê `dados.json`, a saída de
+  `select radar.painel_json();`). Seções novas: programas para você, grátis, biblioteca de modelos com
+  filtros, provedores, quem faz o quê, indicadores e histórico de preços; o gráfico ganhou "todos com nota".
+- **Como tirar o `dados.json` do banco nesta nuvem**: a rede do contêiner não alcança o Supabase. O
+  `execute_sql` com `select radar.painel_json();` estoura o limite de saída e o Claude Code grava o
+  resultado num arquivo em `tool-results/`; dali um script extrai o JSON. Não colar o JSON na conversa.
 
 ## Decisões já tomadas
 
@@ -56,11 +65,10 @@ canais oficiais), os recursos do Guilherme com previsão de esgotamento, e o que
 ## Próximos passos
 
 1. ~~Coleta completa~~ e ~~importação no banco~~. Feitas em 2026-10-01/02.
-2. **Próximo: atualizar `radar.painel_json()`** para incluir provedores, planos, capacidades,
-   programas (com `elegivel`), ofertas grátis, preços por unidade e o histórico de preços, e montar
-   a **página versão 2** no mesmo endereço (https://claude.ai/artifact/FGk5hSwv1fYD5f1spEtobM).
-   Republicar exige autorização do Guilherme.
-3. Medir o consumo de cada recurso (ccusage, `/status` do Codex, `/usage` do Antigravity, API de
+2. ~~`radar.painel_json()` versão 2 e página versão 2~~. Feitas e publicadas em 2026-10-02.
+   Para atualizar os dados: gerar o `dados.json` de novo e republicar no mesmo endereço (exige
+   autorização do Guilherme).
+3. **Próximo:** medir o consumo de cada recurso (ccusage, `/status` do Codex, `/usage` do Antigravity, API de
    custos da OpenAI), gravar em `radar.leituras` e montar a previsão de esgotamento.
 4. Escrever a skill do radar e só então a tarefa agendada, seguindo a seção "Manutenção" do roteiro.
 
@@ -81,4 +89,4 @@ canais oficiais), os recursos do Guilherme com previsão de esgotamento, e o que
 ## Mensagem pronta para colar no próximo chat
 
 > Estou retomando o Radar / Painel de Benchmark de IA no agentes-base. Leia `_RETOMADA_radar.md`
-> e os itens de "Situar-se". Quero continuar por: atualizar o `painel_json()` e montar a página versão 2.
+> e os itens de "Situar-se". Quero continuar por: medir o consumo dos recursos e montar a previsão de esgotamento.
